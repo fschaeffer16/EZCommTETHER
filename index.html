@@ -2895,14 +2895,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
             <sc-for list="{{ netflixSlots }}" as="w" hint-placeholder-count="16">
               <div style="display:flex;flex-direction:column;gap:4px;">
-                <div onClick="{{ w.onTap }}" style="position:relative;width:100%;aspect-ratio:16/9;border:3px solid #E50914;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(20,16,12,.1);background:var(--slot,#F0EDE7);cursor:pointer;" style-active="transform:scale(.96)">
+                <div onClick="{{ w.onTap }}" style="position:relative;width:100%;aspect-ratio:2/3;border:3px solid #E50914;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(20,16,12,.1);background:var(--slot,#F0EDE7);cursor:pointer;" style-active="transform:scale(.96)">
                   <image-slot id="{{ w.id }}" shape="rect" fit="cover" placeholder="Drop show" style="width:100%;height:100%;display:block;"></image-slot>
                 </div>
                 <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><input defaultValue="{{ w.titleLabel }}" onChange="{{ w.onTitle }}" placeholder="Show name…" style="box-sizing:border-box;width:100%;padding:6px 7px;border:1.5px solid var(--slot,#E6E1D8);border-radius:8px;font-size:12px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" /></sc-if>
                 <sc-if value="{{ notEditMode }}" hint-placeholder-val="{{ true }}"><div style="min-height:15px;font-size:11.5px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ w.titleLabel }}</div></sc-if>
               </div>
             </sc-for>
-            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div onClick="{{ addNetflix }}" style="width:100%;aspect-ratio:16/9;border:3px dashed #E50914;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#E50914;font-size:34px;font-weight:800;cursor:pointer;background:rgba(229,9,20,.05);" style-active="transform:scale(.96)">+</div></sc-if>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div onClick="{{ addNetflix }}" style="width:100%;aspect-ratio:2/3;border:3px dashed #E50914;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#E50914;font-size:34px;font-weight:800;cursor:pointer;background:rgba(229,9,20,.05);" style-active="transform:scale(.96)">+</div></sc-if>
           </div>
         </div>
       </div>
