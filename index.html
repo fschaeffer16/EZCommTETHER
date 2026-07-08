@@ -3442,7 +3442,27 @@ class Component extends DCLogic {
   speak(t) {
     try {
       const sy = window.speechSynthesis;
-      if (sy && t) { const u = new SpeechSynthesisUtterance(t); u.rate = 0.96; sy.cancel(); sy.speak(u); }
+      if (!sy || !t) return;
+      const text = String(t).trim();
+      if (!text) return;
+      const makeUtter = () => {
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.96;
+        u.lang = 'en-US';
+        const voices = sy.getVoices() || [];
+        const v = voices.find((x) => /en[-_]US/i.test(x.lang)) || voices.find((x) => /^en/i.test(x.lang));
+        if (v) u.voice = v;
+        return u;
+      };
+      // iOS Safari bug: cancel() immediately before speak() truncates the
+      // utterance (often only the last word) or drops it entirely. Cancel,
+      // then speak on the next tick so the queue clears first.
+      if (sy.speaking || sy.pending) {
+        sy.cancel();
+        setTimeout(() => { try { sy.speak(makeUtter()); } catch (e) {} }, 120);
+      } else {
+        sy.speak(makeUtter());
+      }
     } catch (e) {}
   }
 
