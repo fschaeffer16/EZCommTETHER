@@ -2827,11 +2827,26 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <!-- SOS SENT -->
     <sc-if value="{{ isSosSent }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 26px;text-align:center;">
-        <div style="width:88px;height:88px;border-radius:50%;background:#1F9E6E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(31,158,110,.32);">
-          <span style="color:#fff;font-size:50px;line-height:1;">✓</span>
-        </div>
-        <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">Your family was notified</div>
-        <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">We sent your SOS to {{ famNames }}.<br/>Someone will reach you soon.</div>
+        <sc-if value="{{ sosSending }}" hint-placeholder-val="{{ true }}">
+          <div style="width:88px;height:88px;border-radius:50%;background:#6366F1;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(99,102,241,.3);"><span style="color:#fff;font-size:44px;line-height:1;">📤</span></div>
+          <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">Sending your SOS…</div>
+          <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;">Please wait a moment.</div>
+        </sc-if>
+        <sc-if value="{{ sosOk }}" hint-placeholder-val="{{ false }}">
+          <div style="width:88px;height:88px;border-radius:50%;background:#1F9E6E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(31,158,110,.32);"><span style="color:#fff;font-size:50px;line-height:1;">✓</span></div>
+          <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">Your family was notified</div>
+          <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">We sent your SOS to {{ famNames }}.<br/>Someone will reach you soon.</div>
+        </sc-if>
+        <sc-if value="{{ sosFailed }}" hint-placeholder-val="{{ false }}">
+          <div style="width:88px;height:88px;border-radius:50%;background:#E23B2E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(226,59,46,.32);"><span style="color:#fff;font-size:50px;line-height:1;">✕</span></div>
+          <div style="font-size:25px;font-weight:800;margin-top:20px;color:#C0392B;">Could not send the text</div>
+          <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">The message did not go through. Use <b>Call 911</b> below, or reach someone directly.</div>
+        </sc-if>
+        <sc-if value="{{ sosPending }}" hint-placeholder-val="{{ false }}">
+          <div style="width:88px;height:88px;border-radius:50%;background:#F2920E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(242,146,14,.32);"><span style="color:#fff;font-size:48px;line-height:1;">!</span></div>
+          <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">Sent — not yet confirmed</div>
+          <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">We sent it but couldn't confirm it arrived. If unsure, use <b>Call 911</b>.</div>
+        </sc-if>
         <a href="tel:911" style="margin-top:30px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--card,#fff);color:#E23B2E;border:2px solid #E23B2E;border-radius:999px;padding:16px 36px;font-size:20px;font-weight:800;text-decoration:none;" style-active="transform:scale(.97)">📞 Call 911</a>
         <button onClick="{{ done }}" style="margin-top:14px;background:transparent;border:none;color:var(--sub,#8C857A);font-size:18px;font-weight:700;padding:10px;cursor:pointer;">I'm okay now</button>
       </div>
@@ -4640,6 +4655,10 @@ class Component extends DCLogic {
       sosText: (this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I NEED HELP!",
       isSos: s.screen === 'sos',
       isSosSent: s.screen === 'sosSent',
+      sosSending: (s.sosStatus || 'sending') === 'sending',
+      sosOk: s.sosStatus === 'sent',
+      sosFailed: s.sosStatus === 'failed',
+      sosPending: s.sosStatus === 'pending',
       openSos: () => this.setState({ screen: 'sos' }),
       cancelSos: () => this.setState({ screen: 'board' }),
       sendSos: () => {
@@ -4649,11 +4668,14 @@ class Component extends DCLogic {
         this.speak(msg);
         this.setState({ screen: 'sosSent', sosStatus: 'sending' });
         clearTimeout(this._t);
-        const finish = (ok) => {
-          this.setState({ sosStatus: ok ? 'sent' : 'failed' });
+        const finish = (j) => {
+          let st = 'failed';
+          if (j && j.delivered > 0) st = 'sent';
+          else if (j && j.failed === 0 && j.pending > 0) st = 'pending';
+          this.setState({ sosStatus: st });
           clearTimeout(this._t);
-          // Linger longer on failure so a nearby helper can react.
-          this._t = setTimeout(() => { if (this.state.screen === 'sosSent') this.done(); }, ok ? 9000 : 20000);
+          // Linger longer when it didn't clearly succeed, so a helper can react.
+          this._t = setTimeout(() => { if (this.state.screen === 'sosSent') this.done(); }, st === 'sent' ? 9000 : 25000);
         };
         const transmit = (location) => {
           try {
@@ -4661,8 +4683,8 @@ class Component extends DCLogic {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ message: msg, child: 'Evan', ts: new Date().toISOString(), location: location || null }),
-            }).then((r) => finish(!!(r && r.ok))).catch(() => finish(false));
-          } catch (e) { finish(false); }
+            }).then((r) => r.json().catch(() => null)).then((j) => finish(j)).catch(() => finish(null));
+          } catch (e) { finish(null); }
         };
         // Attach live location, but never let a slow/denied GPS block the alert.
         let sent = false;
