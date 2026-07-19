@@ -2,7 +2,25 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evan's Talker</title>
+<!-- Installable-app setup: home-screen icon, fullscreen, offline. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Evan's Talker">
+<meta name="theme-color" content="#4F46E5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<script>
+  // Register the offline service worker (ignored gracefully on old browsers).
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    });
+  }
+</script>
 <script>/**
  * @license React
  * react.production.min.js
@@ -2731,6 +2749,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </div>
   </div>
 
+  <!-- quick-needs strip: always-visible one-tap survival words -->
+  <div style="display:flex;gap:8px;overflow-x:auto;padding:2px 18px 12px;flex:none;-webkit-overflow-scrolling:touch;">
+    <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="8">
+      <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--slot,#F0EDE7);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;" style-active="transform:scale(.94)">
+        <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
+        <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
+      </div>
+    </sc-for>
+  </div>
+
   <!-- board -->
   <div style="flex:1;position:relative;overflow:hidden;">
     <div ref="{{ boardScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;padding:4px 18px 116px;">
@@ -3894,17 +3922,17 @@ class Component extends DCLogic {
   familyPeople() {
     return [
       { name: 'Dad', photo: 'dad', ring: '#2F6BFF', tint: '#DDE7FF' },
-      { name: 'Mom', photo: 'mom', ring: '#E5533D', tint: '#F6E2DC' },
-      { name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
-      { name: 'Chad Jr.', ring: '#1F9E6E', tint: '#D8F0E5' },
-      { name: 'Grandma', ring: '#F2920E', tint: '#FBE6C8' },
-      { name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
       { name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5' },
-      { name: 'Matthew', photo: 'matthew', ring: '#14B8A6', tint: '#D2F1ED' },
-      { name: 'Jared', photo: 'jared', ring: '#4F46E5', tint: '#DEDCFA' },
+      { name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
       { name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
       { name: 'JJ', ring: '#F59E0B', tint: '#FCEBCB' },
       { name: 'Tatum', ring: '#9333EA', tint: '#EDD9FB' },
+      { name: 'Matthew', photo: 'matthew', ring: '#14B8A6', tint: '#D2F1ED' },
+      { name: 'Jared', photo: 'jared', ring: '#4F46E5', tint: '#DEDCFA' },
+      { name: 'Mom', photo: 'mom', ring: '#E5533D', tint: '#F6E2DC' },
+      { name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { name: 'CJ', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
     ];
   }
 
@@ -3945,10 +3973,10 @@ class Component extends DCLogic {
 
   family() {
     return [
-      { id: 'mom', name: 'Mom', avatar: 'assets/mom.png', pos: 'center 26%', ring: '#E5533D', initial: 'M', tint: '#F6E2DC' },
       { id: 'dad', name: 'Dad', avatar: 'assets/dad.jpg', pos: 'center 30%', ring: '#2F6BFF', initial: 'D', tint: '#DDE7FF' },
-      { id: 'gma', name: 'Grandma', avatar: null, pos: '', ring: '#1F9E6E', initial: 'G', tint: '#D8F0E5' },
-      { id: 'uncle', name: 'Uncle Ray', avatar: null, pos: '', ring: '#7A5CFF', initial: 'R', tint: '#E6DEFB' },
+      { id: 'mom', name: 'Mom', avatar: 'assets/mom.png', pos: 'center 26%', ring: '#E5533D', initial: 'M', tint: '#F6E2DC' },
+      { id: 'chris', name: 'Chris', avatar: null, pos: '', ring: '#1F9E6E', initial: 'C', tint: '#D8F0E5' },
+      { id: 'matt', name: 'Matt', avatar: null, pos: '', ring: '#7A5CFF', initial: 'M', tint: '#E6DEFB' },
     ];
   }
 
@@ -3973,19 +4001,22 @@ class Component extends DCLogic {
   }
 
   baseFamily() {
+    // Evan's family. Dad's side (Dad; Chris + Caitlyn and their kids Brody, JJ,
+    // Tatum; Matthew and his son Jared), then Mom's side (Mom + Chad and their
+    // kids CJ and Egypt). Only Dad, Mom, Chris & Matthew get emergency alerts.
     return [
       { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF' },
-      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC' },
-      { id: 'egypt', name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
-      { id: 'cj', name: 'Chad Jr.', ring: '#1F9E6E', tint: '#D8F0E5' },
-      { id: 'grandma', name: 'Grandma', ring: '#F2920E', tint: '#FBE6C8' },
-      { id: 'chad', name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
       { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5' },
-      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED' },
-      { id: 'jared', name: 'Jared', photoAsset: 'assets/people/jared.jpg', ring: '#4F46E5', tint: '#DEDCFA' },
+      { id: 'caitlyn', name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
       { id: 'brody', name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
       { id: 'jj', name: 'JJ', ring: '#F59E0B', tint: '#FCEBCB' },
       { id: 'tatum', name: 'Tatum', ring: '#9333EA', tint: '#EDD9FB' },
+      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED' },
+      { id: 'jared', name: 'Jared', photoAsset: 'assets/people/jared.jpg', ring: '#4F46E5', tint: '#DEDCFA' },
+      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC' },
+      { id: 'chad', name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { id: 'cj', name: 'CJ', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'egypt', name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
     ];
   }
 
@@ -4019,7 +4050,79 @@ class Component extends DCLogic {
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: '#4F46E5', img: 'assets/night.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'night' }) },
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
+      { id: 'regulate', label: 'Too Much', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Too Much', '😵‍💫', this.regulationItems()) },
+      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      { id: 'chat', label: 'Chat', emoji: '💬', color: '#0EA5E9', onTap: () => this.openPhraseChooser('Chat', '💬', this.socialItems()) },
       { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => { const c = this.catChoosers().school; this.openPhraseChooser(c.label, c.emoji, c.items); } },
+    ];
+  }
+
+  // ── Teen communication boards (speed, regulation, refusal, social) ──────
+  // Always-visible survival words on the home screen. One tap = spoken.
+  quickNeeds() {
+    return [
+      { label: 'Help', emoji: '🆘', color: '#E23B2E', say: 'I need help.' },
+      { label: 'Stop', emoji: '🛑', color: '#EF4444', say: 'Stop.' },
+      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
+      { label: 'More', emoji: '➕', color: '#1F9E6E', say: 'More, please.' },
+      { label: 'All done', emoji: '✅', color: '#0EA5E9', say: "I'm all done." },
+      { label: 'Break', emoji: '⏸️', color: '#6366F1', say: 'I need a break.' },
+      { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
+      { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
+    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
+  }
+
+  // Regulation / sensory-overload language (fast access to "too much").
+  regulationItems() {
+    return [
+      { txt: "It's too loud.", glyph: '🔊' },
+      { txt: 'This is too much.', glyph: '😵‍💫' },
+      { txt: 'I need space.', glyph: '↔️' },
+      { txt: 'I need it quiet.', glyph: '🤫' },
+      { txt: 'I need a break.', glyph: '⏸️' },
+      { txt: 'I want to leave.', glyph: '🚪' },
+      { txt: "I'm okay.", glyph: '👍' },
+      { txt: "I'm not okay.", glyph: '👎' },
+      { txt: 'I have no energy.', glyph: '🔋' },
+      { txt: 'I need to lie down.', glyph: '🛏️' },
+      { txt: 'Please slow down.', glyph: '🐢' },
+      { txt: 'I need to move.', glyph: '🏃' },
+    ];
+  }
+
+  // Refusal / control language — the biggest gap in most AAC systems.
+  refusalItems() {
+    return [
+      { txt: 'No.', glyph: '✋' },
+      { txt: 'Not now.', glyph: '⏳' },
+      { txt: 'Stop.', glyph: '🛑' },
+      { txt: "I don't want that.", glyph: '🙅' },
+      { txt: 'I want something different.', glyph: '🔄' },
+      { txt: 'Maybe later.', glyph: '⏰' },
+      { txt: 'Leave me alone.', glyph: '🚷' },
+      { txt: "Please don't ask me again.", glyph: '🔁' },
+      { txt: 'Show me.', glyph: '👀' },
+      { txt: 'I need a choice.', glyph: '🔀' },
+      { txt: 'Wait.', glyph: '⏱️' },
+      { txt: 'I already said it.', glyph: '💬' },
+    ];
+  }
+
+  // Social language — greet, react, connect.
+  socialItems() {
+    return [
+      { txt: 'Hi!', glyph: '👋' },
+      { txt: 'Bye.', glyph: '🙋' },
+      { txt: "That's funny.", glyph: '😄' },
+      { txt: "That's cool.", glyph: '😎' },
+      { txt: 'This is boring.', glyph: '🥱' },
+      { txt: 'I like that.', glyph: '👍' },
+      { txt: "I don't like that.", glyph: '👎' },
+      { txt: 'Come here.', glyph: '🫱' },
+      { txt: 'Sit with me.', glyph: '🪑' },
+      { txt: 'I want to go with you.', glyph: '🤝' },
+      { txt: 'Look at this.', glyph: '👉' },
+      { txt: 'Thank you.', glyph: '💛' },
     ];
   }
 
@@ -4305,6 +4408,7 @@ class Component extends DCLogic {
       morningList: this.morningList().concat(this.customsFor('morning')),
       openMedicine: () => this.openPhraseChooser('Medicine', '💊', this.medicineItems()),
       homeTiles: this.homeTiles(),
+      quickNeeds: this.quickNeeds(),
       isSettings: s.screen === 'settings',
       openSettings: () => this.openSettings(),
       settingsFamily: this.data().family.map((p, i, arr) => ({
@@ -4366,17 +4470,47 @@ class Component extends DCLogic {
       syncErr: s.syncErr || '',
       syncLabel: this.fmtSync(),
       family: this.family().map((p) => ({ ...p, hasPhoto: !!p.avatar, noPhoto: !p.avatar, avatarEl: p.avatar ? React.createElement('img', { src: this.ph(p.avatar), style: { width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', objectPosition: p.pos, border: '2.5px solid ' + p.ring } }) : null })),
-      famNames: 'Mom, Dad, Grandma & Uncle Ray',
+      famNames: 'Dad, Mom, Chris & Matt',
       sosText: (this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I NEED HELP!",
       isSos: s.screen === 'sos',
       isSosSent: s.screen === 'sosSent',
       openSos: () => this.setState({ screen: 'sos' }),
       cancelSos: () => this.setState({ screen: 'board' }),
       sendSos: () => {
-        this.speak((this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I need help!");
-        this.setState({ screen: 'sosSent' });
+        const msg = (this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I NEED HELP!";
+        // Speak it aloud immediately and show the "sent" screen so Evan gets
+        // instant feedback, then transmit the alert (with live location).
+        this.speak(msg);
+        this.setState({ screen: 'sosSent', sosStatus: 'sending' });
         clearTimeout(this._t);
-        this._t = setTimeout(() => { if (this.state.screen === 'sosSent') this.done(); }, 8000);
+        const finish = (ok) => {
+          this.setState({ sosStatus: ok ? 'sent' : 'failed' });
+          clearTimeout(this._t);
+          // Linger longer on failure so a nearby helper can react.
+          this._t = setTimeout(() => { if (this.state.screen === 'sosSent') this.done(); }, ok ? 9000 : 20000);
+        };
+        const transmit = (location) => {
+          try {
+            fetch('/api/sos', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: msg, child: 'Evan', ts: new Date().toISOString(), location: location || null }),
+            }).then((r) => finish(!!(r && r.ok))).catch(() => finish(false));
+          } catch (e) { finish(false); }
+        };
+        // Attach live location, but never let a slow/denied GPS block the alert.
+        let sent = false;
+        const go = (loc) => { if (sent) return; sent = true; transmit(loc); };
+        try {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (p) => go({ lat: p.coords.latitude, lng: p.coords.longitude, acc: p.coords.accuracy }),
+              () => go(null),
+              { enableHighAccuracy: true, timeout: 6000, maximumAge: 30000 }
+            );
+            setTimeout(() => go(null), 6500);
+          } else { go(null); }
+        } catch (e) { go(null); }
       },
       done: () => this.done(),
     };
