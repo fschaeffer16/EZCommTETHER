@@ -102,6 +102,38 @@ On Evan's phone (and yours, and mom's):
    sound; the first Emergency will ask permission to use location — tap
    **Allow While Using**.
 
+## Part G — Family Sync (share changes between phones) · ~10 min
+
+This lets you edit on your phone, tap **Save**, and have Mom (or the brothers)
+pull your changes onto their phones with **Sync**. It needs a tiny free cloud
+store. *(Photos aren't synced — each phone keeps its own — everything else is:
+names, phone/email/address/birthday, buttons, wording, and arrangement.)*
+
+1. In **vercel.com** open your project → **Storage** tab → **Create Database**.
+   Pick a **Redis / KV** store (Upstash), free plan, and connect it to this
+   project. Vercel automatically adds the store's URL and token to your project
+   (`KV_REST_API_URL` and `KV_REST_API_TOKEN`) — you don't copy anything.
+2. Go to **Settings → Environment Variables** and add:
+
+   | Name | Value |
+   |---|---|
+   | `FAMILY_SYNC_PASSWORD` | your family password — **use the same value you set in the app**, and make it stronger than `1234` |
+
+3. If you set `ALLOWED_ORIGIN` earlier (Part D), you're done; it also protects
+   this. **Redeploy** (Vercel → Deployments → ⋯ → Redeploy).
+4. Test: open `https://YOUR-URL/api/settings` in a browser. You should see
+   `{"ok":true,"configured":{"storage":true,"password":true}}`. If either is
+   `false`, that piece isn't set yet.
+
+**How you'll use it day to day:**
+- On your phone: make changes in Settings, enter the family password, tap
+  **Save**. It saves on your phone *and* shares with the family automatically.
+- On another phone: open **⚙️ Settings → Sync from family**, enter the family
+  password, tap **Sync Now**. That phone pulls in your latest changes.
+
+> Keep the in-app family password and `FAMILY_SYNC_PASSWORD` the same. If you
+> change one, change the other, or sharing will stop matching.
+
 ---
 
 ## Good to know
