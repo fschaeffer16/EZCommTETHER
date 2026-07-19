@@ -3372,6 +3372,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <div onClick="{{ person.onTap }}" style="background:var(--card,#fff);border:2px solid var(--slot,#EDEAE3);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;" style-active="transform:scale(.94)">
                 {{ person.avatarEl }}
                 <span style="font-size:13.5px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ person.name }}</span>
+                {{ person.phoneEl }}
               </div>
             </sc-for>
           </div>
@@ -3496,6 +3497,9 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.applyTheme();
+    // Pull the family's saved contact info from the server and fill in any
+    // number this phone is missing — so numbers survive a storage wipe.
+    this.loadDirectory();
     // Bundled standalone loads icon/photo data scripts asynchronously (as blobs);
     // re-render once the data-URI maps are available so images don't fall back to server URLs.
     if (!(typeof window !== 'undefined' && window.TETHER_PHOTOS && window.TETHER_ICONS)) {
@@ -4029,9 +4033,20 @@ class Component extends DCLogic {
     const canText = !!(p.phone && String(p.phone).trim());
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
     const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: canText ? 'Tap to say it, or Text to send it' : 'Tap a phrase to say it', editPerson: () => this.requestPersonEdit(p), options: options.map((o) => ({ ...o, canText: canText, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
+    // At-a-glance number status on the Family card, so you can confirm daily
+    // (without opening the gear) that a person is ready to text. Key contacts
+    // who are missing a number show a loud red warning.
+    const fmtPhone = (n) => { const dd = String(n || '').replace(/[^0-9]/g, ''); if (dd.length === 11 && dd[0] === '1') return '(' + dd.slice(1, 4) + ') ' + dd.slice(4, 7) + '-' + dd.slice(7); if (dd.length === 10) return '(' + dd.slice(0, 3) + ') ' + dd.slice(3, 6) + '-' + dd.slice(6); return String(n || ''); };
+    let phoneEl = null;
+    if (canText) {
+      phoneEl = React.createElement('span', { style: { fontSize: '10.5px', fontWeight: 700, color: '#1F8A5B', lineHeight: 1.15, textAlign: 'center', wordBreak: 'break-word' } }, '📱 ' + fmtPhone(p.phone));
+    } else if (p.alert) {
+      phoneEl = React.createElement('span', { style: { fontSize: '10.5px', fontWeight: 800, color: '#D14343', lineHeight: 1.15, textAlign: 'center' } }, '⚠ No number');
+    }
     return {
       ...p,
       avatarEl: this.personAvatar(p, 64),
+      phoneEl,
       editable: !!this.state.editMode,
       onTap: () => { if (this.state.editMode) { this.openEditPerson(p); return; } normalTap(); },
     };
@@ -4093,15 +4108,15 @@ class Component extends DCLogic {
     // Tatum; Matthew and his son Jared), then Mom's side (Mom + Chad and their
     // kids CJ and Egypt). Only Dad, Mom, Chris & Matthew get emergency alerts.
     return [
-      { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF' },
-      { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5' },
+      { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
+      { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5', alert: true },
       { id: 'caitlyn', name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
       { id: 'brody', name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
       { id: 'jj', name: 'JJ', ring: '#F59E0B', tint: '#FCEBCB' },
       { id: 'tatum', name: 'Tatum', ring: '#9333EA', tint: '#EDD9FB' },
-      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED' },
+      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED', alert: true },
       { id: 'jared', name: 'Jared', photoAsset: 'assets/people/jared.jpg', ring: '#4F46E5', tint: '#DEDCFA' },
-      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC' },
+      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'chad', name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
       { id: 'cj', name: 'CJ', ring: '#1F9E6E', tint: '#D8F0E5' },
       { id: 'egypt', name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
@@ -4359,6 +4374,29 @@ class Component extends DCLogic {
   isDataUrl(v) { return typeof v === 'string' && v.slice(0, 5) === 'data:'; }
   // A small copy of the settings for the family cloud: no password, and no big
   // embedded photos (those stay on each phone).
+  // Fetch the server-side family directory and backfill any contact field this
+  // phone doesn't already have. Never overwrites a value entered on this device;
+  // it only restores what's missing (e.g. after the phone cleared its storage).
+  loadDirectory() {
+    try {
+      fetch('/api/family', { headers: { Accept: 'application/json' } })
+        .then((r) => r.json().catch(() => null))
+        .then((j) => {
+          if (!j || !j.ok || !j.people) return;
+          const d = this.data();
+          let changed = false;
+          (d.family || []).forEach((p) => {
+            const dir = j.people[p.id];
+            if (!dir) return;
+            ['phone', 'email', 'address', 'birthdate'].forEach((k) => {
+              if (dir[k] && !(p[k] && String(p[k]).trim())) { p[k] = dir[k]; changed = true; }
+            });
+          });
+          if (changed) { this.saveStore(); this.forceUpdate(); }
+        })
+        .catch(() => {});
+    } catch (e) {}
+  }
   exportForSync() {
     const d = this.data();
     const stripImg = (o) => { const c = { ...o }; ['photo', 'image', 'avatar'].forEach((k) => { if (this.isDataUrl(c[k])) delete c[k]; }); return c; };
@@ -4387,6 +4425,9 @@ class Component extends DCLogic {
     if (remote.homeOrder !== undefined) d.homeOrder = remote.homeOrder;
     this.saveStore();
     this.forceUpdate();
+    // A pulled-down family list can be missing numbers; restore them from the
+    // server directory so a Sync never leaves a contact un-textable.
+    this.loadDirectory();
   }
   // Best-effort: push current settings to the family cloud using the saved
   // family password, so an edit made here reaches other phones on their next Sync.
