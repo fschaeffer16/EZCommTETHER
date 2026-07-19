@@ -48,10 +48,19 @@ async function sendSms(to, body) {
     headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
     body: form.toString(),
   });
-  const ok = r.ok;
-  let detail = '';
-  if (!ok) { try { detail = (await r.json()).message || ''; } catch (e) {} }
-  return { to, ok, detail };
+  let j = {};
+  try { j = await r.json(); } catch (e) {}
+  return { to, accepted: r.ok, sid: (j && j.sid) || null, status: (j && j.status) || (r.ok ? 'queued' : 'failed'), detail: r.ok ? '' : ((j && j.message) || '') };
+}
+
+// Look up a message's current delivery status (delivered / undelivered / failed / ...).
+async function fetchStatus(messageSid) {
+  const sid = process.env.TWILIO_ACCOUNT_SID;
+  const token = process.env.TWILIO_AUTH_TOKEN;
+  const auth = Buffer.from(`${sid}:${token}`).toString('base64');
+  const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(sid)}/Messages/${messageSid}.json`, { headers: { Authorization: `Basic ${auth}` } });
+  const j = await r.json().catch(() => ({}));
+  return { status: j.status, errorCode: j.error_code };
 }
 
 async function sendEmail(toList, subject, text) {
@@ -131,14 +140,34 @@ module.exports = async (req, res) => {
     return res.status(500).json({ ok: false, error: 'sms_not_configured' });
   }
 
-  const smsResults = await Promise.all(smsTo.map((to) => sendSms(to, text).catch((e) => ({ to, ok: false, detail: String(e) }))));
   const emailResult = await sendEmail(emailTo, `EMERGENCY: ${payload.child || 'Evan'} needs help`, text).catch(() => ({ ok: false }));
+  const results = await Promise.all(smsTo.map((to) => sendSms(to, text).catch((e) => ({ to, accepted: false, sid: null, status: 'failed', detail: String((e && e.message) || e) }))));
 
-  const anySms = smsResults.some((r) => r.ok);
-  return res.status(anySms ? 200 : 502).json({
-    ok: anySms,
-    test: isTest,
-    sms: smsResults,
+  // Poll each message for a few seconds so we report the REAL delivery outcome
+  // (e.g. carrier-blocked / undelivered) instead of just "accepted by Twilio".
+  const TERMINAL = ['delivered', 'undelivered', 'failed', 'canceled'];
+  const deadline = Date.now() + 6500;
+  while (Date.now() < deadline && results.some((r) => r.sid && TERMINAL.indexOf(r.status) === -1)) {
+    await new Promise((done) => setTimeout(done, 1200));
+    await Promise.all(results.map(async (r) => {
+      if (r.sid && TERMINAL.indexOf(r.status) === -1) {
+        const s = await fetchStatus(r.sid).catch(() => null);
+        if (s && s.status) { r.status = s.status; if (s.errorCode) r.errorCode = s.errorCode; }
+      }
+    }));
+  }
+
+  const delivered = results.filter((r) => r.status === 'delivered').length;
+  const failed = results.filter((r) => !r.accepted || r.status === 'undelivered' || r.status === 'failed' || r.status === 'canceled').length;
+  const pending = results.length - delivered - failed;
+  return res.status(delivered > 0 ? 200 : 502).json({
+    ok: delivered > 0,
+    delivered,
+    failed,
+    pending,
+    recipients: results.length,
+    sms: results.map((r) => ({ to: r.to, status: r.status, errorCode: r.errorCode || null, detail: r.detail || '' })),
     email: emailResult,
+    test: isTest,
   });
 };
