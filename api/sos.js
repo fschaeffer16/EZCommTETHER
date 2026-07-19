@@ -72,15 +72,30 @@ async function sendEmail(toList, subject, text) {
 }
 
 module.exports = async (req, res) => {
-  // Health check: lets you confirm the server is configured without sending anything.
+  // Health check + diagnostics: confirm configuration and live-test the Twilio
+  // credentials, without sending a message or exposing any secret.
   if (req.method === 'GET') {
-    return res.status(200).json({
+    const sid = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN, from = process.env.TWILIO_FROM;
+    const out = {
       ok: true,
       configured: {
-        sms: Boolean(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM && process.env.SOS_SMS_TO),
+        sms: Boolean(sid && token && from && process.env.SOS_SMS_TO),
         email: Boolean(process.env.SENDGRID_API_KEY && process.env.SOS_EMAIL_FROM && process.env.SOS_EMAIL_TO),
       },
-    });
+      recipients: list(process.env.SOS_SMS_TO).length,
+      from: from ? (from.slice(0, 3) + '…' + from.slice(-4)) : null,
+    };
+    // Live credential check: ask Twilio for the account. 200 = credentials good.
+    if (sid && token) {
+      try {
+        const auth = Buffer.from(`${sid}:${token}`).toString('base64');
+        const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(sid)}.json`, { headers: { Authorization: `Basic ${auth}` } });
+        out.twilioAuth = r.ok ? 'ok' : 'FAILED';
+        out.twilioStatus = r.status;
+        if (!r.ok) { try { out.twilioError = (await r.json()).message || ''; } catch (e) {} }
+      } catch (e) { out.twilioAuth = 'ERROR'; out.twilioError = String(e && e.message || e); }
+    }
+    return res.status(200).json(out);
   }
 
   if (req.method !== 'POST') {
