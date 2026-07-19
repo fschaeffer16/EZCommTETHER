@@ -136,6 +136,45 @@ names, phone/email/address/birthday, buttons, wording, and arrangement.)*
 
 ---
 
+## Part H — Permanent phone numbers (so they never disappear) · ~5 min
+
+Phone numbers typed into a person's ⚙️ gear are saved on **that phone only**.
+iPhones clear a web app's saved data after about a week of not opening it, so
+those numbers can vanish and need re-entering. To make them **permanent**, store
+them once here, on the server — every phone fills them in automatically on
+startup, and a phone that got wiped restores them by itself.
+
+1. In **Vercel → Settings → Environment Variables**, add:
+
+   | Name | Value |
+   |---|---|
+   | `FAMILY_DIRECTORY` | a single line of JSON with each person's number (see below) |
+
+   The value is keyed by each person's **id** (all lowercase). Example:
+
+   ```json
+   {"dad":{"phone":"+17275551234"},"mom":{"phone":"+17275555678"},"chris":{"phone":"+17275550000"},"matthew":{"phone":"+17275559999"}}
+   ```
+
+   Ids for the built-in family: `dad`, `chris`, `caitlyn`, `brody`, `jj`,
+   `tatum`, `matthew`, `jared`, `mom`, `chad`, `cj`, `egypt`. Numbers should be
+   in `+1XXXXXXXXXX` form. You only need to list the people you want to text.
+
+2. **Redeploy** (Vercel → Deployments → ⋯ → Redeploy).
+3. Test: open `https://YOUR-URL/api/family` in a browser. You should see your
+   people and numbers echoed back as `{"ok":true,"people":{…}}`.
+
+**How you'll know day to day:** open **Family** in the app. Under each person you
+see either a green **📱 (number)** — ready to text — or, for a key contact
+(Dad, Mom, Chris, Matthew) with no number saved, a red **⚠ No number**. One
+glance tells you everyone Evan might need is set.
+
+> A number typed into a person's gear on a phone still works and takes
+> precedence; the server directory only fills in what's **missing**. Put the
+> real numbers in `FAMILY_DIRECTORY` and they can't be lost.
+
+---
+
 ## Good to know
 
 - **Updates are instant.** When the app is improved, the change deploys to the
