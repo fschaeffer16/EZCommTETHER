@@ -3383,6 +3383,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">What it says out loud</div>
               <input defaultValue="{{ edSay }}" onInput="{{ edOnSay }}" placeholder="{{ edSayPlaceholder }}" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
             </div></sc-if>
+            <sc-if value="{{ edIsPerson }}" hint-placeholder-val="{{ false }}"><div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">Mobile number (for Text it)</div>
+              <input type="tel" defaultValue="{{ edPhone }}" onInput="{{ edOnPhone }}" placeholder="e.g. +15551234567" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            </div></sc-if>
           </div>
         </div>
         <button onClick="{{ edSave }}" style="margin-top:18px;width:100%;background:#3B82F6;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);" style-active="transform:scale(.98)">Save</button>
@@ -3420,7 +3424,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
-            <button onClick="{{ opt.onTap }}" style="width:100%;background:{{ opt.color }};color:#fff;border:none;border-radius:18px;padding:18px;font-size:19px;font-weight:800;cursor:pointer;text-align:left;display:flex;align-items:center;gap:13px;line-height:1.2;" style-active="transform:scale(.98)"><span style="font-size:26px;flex:none;">{{ opt.glyph }}</span>{{ opt.txt }}</button>
+            <div style="display:flex;gap:8px;align-items:stretch;">
+              <button onClick="{{ opt.onTap }}" style="flex:1;min-width:0;background:{{ opt.color }};color:#fff;border:none;border-radius:18px;padding:18px;font-size:19px;font-weight:800;cursor:pointer;text-align:left;display:flex;align-items:center;gap:13px;line-height:1.2;" style-active="transform:scale(.98)"><span style="font-size:26px;flex:none;">{{ opt.glyph }}</span><span style="min-width:0;">{{ opt.txt }}</span></button>
+              <sc-if value="{{ opt.canText }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ opt.onText }}" title="Text it" style="flex:none;width:82px;background:#2F9E44;color:#fff;border:none;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:800;" style-active="transform:scale(.96)"><span style="font-size:26px;line-height:1;">📨</span>Text</button>
+              </sc-if>
+            </div>
           </sc-for>
         </div>
         <button onClick="{{ closeChooser }}" style="width:100%;background:transparent;border:none;color:var(--sub,#8C857A);font-size:17px;font-weight:700;padding:14px;margin-top:8px;cursor:pointer;">Cancel</button>
@@ -3621,6 +3630,7 @@ class Component extends DCLogic {
     if (e.isPerson && e.person) {
       if (e.label && e.label.trim()) e.person.name = e.label.trim();
       if (e.image) e.person.photo = e.image;
+      if (e.phone !== undefined) { const ph = (e.phone || '').trim(); if (ph) e.person.phone = ph; else delete e.person.phone; }
       this.saveStore(); this._ed = null; this.setState({ editSheet: false }); return;
     }
     const d = this.data(); if (!d.overrides) d.overrides = {};
@@ -3957,7 +3967,7 @@ class Component extends DCLogic {
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#F59E0B' },
     ];
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
-    const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: 'Tap photo to say their name', options: options.map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } }); };
+    const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: 'Tap to say it, or Text to send it', options: options.map((o) => ({ ...o, canText: true, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
     return {
       ...p,
       avatarEl: this.personAvatar(p, 64),
@@ -3966,8 +3976,25 @@ class Component extends DCLogic {
     };
   }
 
+  // Text a phrase to this person via the phone's Messages app. Uses a saved
+  // mobile number if set (Edit mode); otherwise Messages opens with the words
+  // ready and the recipient is chosen on the phone.
+  textPerson(p, message) {
+    const num = ((p && p.phone) || '').replace(/[^0-9+]/g, '');
+    const body = encodeURIComponent(message || '');
+    const href = num ? ('sms:' + num + '&body=' + body) : ('sms:&body=' + body);
+    try {
+      const a = document.createElement('a');
+      a.href = href; a.style.display = 'none';
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { try { document.body.removeChild(a); } catch (e) {} }, 0);
+    } catch (e) {
+      try { window.location.href = href; } catch (e2) {}
+    }
+  }
+
   openEditPerson(p) {
-    this._ed = { key: 'family:' + p.id, section: 'family', person: p, label: p.name || '', say: '', image: (p.photo || null), placeholder: '', isPerson: true };
+    this._ed = { key: 'family:' + p.id, section: 'family', person: p, label: p.name || '', say: '', image: (p.photo || null), placeholder: '', isPerson: true, phone: (p.phone || '') };
     this.setState({ editSheet: true, editSheetKey: 'family:' + p.id });
   }
 
@@ -4374,6 +4401,9 @@ class Component extends DCLogic {
       edHasOverride: !!(this._ed && !this._ed.isPerson && this.data().overrides && this.data().overrides[this._ed.key]),
       edShowSay: !(this._ed && this._ed.isPerson),
       edNameLabel: (this._ed && this._ed.isPerson) ? 'Name (spoken when tapped)' : 'Name on the button',
+      edIsPerson: !!(this._ed && this._ed.isPerson),
+      edPhone: this._ed ? (this._ed.phone || '') : '',
+      edOnPhone: (e) => { if (this._ed) this._ed.phone = e.target.value; },
       edOnImage: (e) => this.edSetImage(e.target.files && e.target.files[0]),
       edOnLabel: (e) => { if (this._ed) this._ed.label = e.target.value; },
       edOnSay: (e) => { if (this._ed) this._ed.say = e.target.value; },
