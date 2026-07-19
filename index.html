@@ -3370,7 +3370,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <div onClick="{{ edCancel }}" style="position:absolute;inset:0;background:rgba(20,16,12,.5);display:flex;flex-direction:column;justify-content:flex-end;">
       <div onClick="{{ sheetGuard }}" key="{{ editSheetKey }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:22px 20px 26px;box-shadow:0 -10px 40px rgba(0,0,0,.3);">
         <div style="width:40px;height:5px;border-radius:3px;background:var(--hint,#C9C2B8);margin:0 auto 16px;"></div>
-        <div style="font-size:21px;font-weight:800;text-align:center;color:var(--ink,#1A1714);margin-bottom:16px;">Edit Button</div>
+        <div style="font-size:21px;font-weight:800;text-align:center;color:var(--ink,#1A1714);margin-bottom:16px;">{{ edTitle }}</div>
         <div style="display:flex;gap:14px;align-items:flex-start;">
           <label style="position:relative;cursor:pointer;flex:none;display:block;width:84px;height:84px;border-radius:18px;overflow:hidden;border:2px dashed #C7C0B4;background:var(--slot,#F0EDE7);">
             <sc-if value="{{ edHasImage }}" hint-placeholder-val="{{ false }}">{{ edImageEl }}</sc-if>
@@ -3389,6 +3389,18 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <sc-if value="{{ edIsPerson }}" hint-placeholder-val="{{ false }}"><div>
               <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">Mobile number (for Text it)</div>
               <input type="tel" defaultValue="{{ edPhone }}" onInput="{{ edOnPhone }}" placeholder="e.g. +15551234567" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            </div></sc-if>
+            <sc-if value="{{ edIsPerson }}" hint-placeholder-val="{{ false }}"><div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">Birthday</div>
+              <input defaultValue="{{ edBirthdate }}" onInput="{{ edOnBirthdate }}" placeholder="e.g. March 5" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            </div></sc-if>
+            <sc-if value="{{ edIsPerson }}" hint-placeholder-val="{{ false }}"><div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">Email</div>
+              <input type="email" defaultValue="{{ edEmail }}" onInput="{{ edOnEmail }}" placeholder="name@example.com" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            </div></sc-if>
+            <sc-if value="{{ edIsPerson }}" hint-placeholder-val="{{ false }}"><div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">Address</div>
+              <input defaultValue="{{ edAddress }}" onInput="{{ edOnAddress }}" placeholder="Home address" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
             </div></sc-if>
           </div>
         </div>
@@ -3435,6 +3447,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </sc-for>
         </div>
+        <sc-if value="{{ chooser.editPerson }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ chooser.editPerson }}" style="width:100%;margin-top:14px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:18px;">⚙️</span>Edit this person</button>
+        </sc-if>
         <button onClick="{{ closeChooser }}" style="width:100%;background:transparent;border:none;color:var(--sub,#8C857A);font-size:17px;font-weight:700;padding:14px;margin-top:8px;cursor:pointer;">Cancel</button>
       </div>
     </div>
@@ -3633,8 +3648,14 @@ class Component extends DCLogic {
     if (e.isPerson && e.person) {
       if (e.label && e.label.trim()) e.person.name = e.label.trim();
       if (e.image) e.person.photo = e.image;
-      if (e.phone !== undefined) { const ph = (e.phone || '').trim(); if (ph) e.person.phone = ph; else delete e.person.phone; }
-      this.saveStore(); this._ed = null; this.setState({ editSheet: false }); return;
+      const setField = (k, v) => { const t = (v || '').trim(); if (t) e.person[k] = t; else delete e.person[k]; };
+      if (e.phone !== undefined) setField('phone', e.phone);
+      if (e.email !== undefined) setField('email', e.email);
+      if (e.address !== undefined) setField('address', e.address);
+      if (e.birthdate !== undefined) setField('birthdate', e.birthdate);
+      this.saveStore(); this._ed = null; this.setState({ editSheet: false });
+      this.shareToCloud();
+      return;
     }
     const d = this.data(); if (!d.overrides) d.overrides = {};
     const o = {};
@@ -3814,11 +3835,21 @@ class Component extends DCLogic {
     if (this.state.editUnlocked) { this.setState({ editMode: !this.state.editMode }); }
     else { this.setState({ unlockFor: key, unlockPw: '', unlockErr: '' }); }
   }
+  // Tap "Edit this person" in the pop-up: ask for the family password once,
+  // then open that person's editor (so Evan can't change things himself).
+  requestPersonEdit(p) {
+    this.setState({ chooser: null });
+    if (this.state.editUnlocked) { this.openEditPerson(p); return; }
+    this._afterUnlock = () => this.openEditPerson(p);
+    this.setState({ unlockFor: 'person', unlockPw: '', unlockErr: '' });
+  }
   submitUnlock() {
     if ((this._unlockPw || '') !== this.data().password) { this.setState({ unlockErr: 'Wrong family password.' }); return; }
-    this.setState({ editUnlocked: true, editMode: true, unlockFor: null, unlockErr: '' });
+    const after = this._afterUnlock; this._afterUnlock = null;
+    this.setState({ editUnlocked: true, editMode: !after, unlockFor: null, unlockErr: '' });
+    if (after) after();
   }
-  cancelUnlock() { this.setState({ unlockFor: null, unlockErr: '' }); }
+  cancelUnlock() { this._afterUnlock = null; this.setState({ unlockFor: null, unlockErr: '' }); }
 
   iconUri(key) {
     if (!key) return null;
@@ -3970,7 +4001,7 @@ class Component extends DCLogic {
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#F59E0B' },
     ];
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
-    const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: 'Tap to say it, or Text to send it', options: options.map((o) => ({ ...o, canText: true, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
+    const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: 'Tap to say it, or Text to send it', editPerson: () => this.requestPersonEdit(p), options: options.map((o) => ({ ...o, canText: true, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
     return {
       ...p,
       avatarEl: this.personAvatar(p, 64),
@@ -3997,7 +4028,7 @@ class Component extends DCLogic {
   }
 
   openEditPerson(p) {
-    this._ed = { key: 'family:' + p.id, section: 'family', person: p, label: p.name || '', say: '', image: (p.photo || null), placeholder: '', isPerson: true, phone: (p.phone || '') };
+    this._ed = { key: 'family:' + p.id, section: 'family', person: p, label: p.name || '', say: '', image: (p.photo || null), placeholder: '', isPerson: true, phone: (p.phone || ''), email: (p.email || ''), address: (p.address || ''), birthdate: (p.birthdate || '') };
     this.setState({ editSheet: true, editSheetKey: 'family:' + p.id });
   }
 
@@ -4326,6 +4357,14 @@ class Component extends DCLogic {
     this.saveStore();
     this.forceUpdate();
   }
+  // Best-effort: push current settings to the family cloud using the saved
+  // family password, so an edit made here reaches other phones on their next Sync.
+  shareToCloud() {
+    const pw = this.data().password || '';
+    try {
+      fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'save', password: pw, settings: this.exportForSync() }) }).catch(() => {});
+    } catch (e) {}
+  }
   cloudSaveMsg(j) {
     const e = j && j.error;
     if (e === 'storage_not_configured') return 'Saved on this phone (family Sync isn’t set up yet).';
@@ -4467,9 +4506,16 @@ class Component extends DCLogic {
       edHasOverride: !!(this._ed && !this._ed.isPerson && this.data().overrides && this.data().overrides[this._ed.key]),
       edShowSay: !(this._ed && this._ed.isPerson),
       edNameLabel: (this._ed && this._ed.isPerson) ? 'Name (spoken when tapped)' : 'Name on the button',
+      edTitle: (this._ed && this._ed.isPerson) ? 'Edit Person' : 'Edit Button',
       edIsPerson: !!(this._ed && this._ed.isPerson),
       edPhone: this._ed ? (this._ed.phone || '') : '',
       edOnPhone: (e) => { if (this._ed) this._ed.phone = e.target.value; },
+      edEmail: this._ed ? (this._ed.email || '') : '',
+      edOnEmail: (e) => { if (this._ed) this._ed.email = e.target.value; },
+      edAddress: this._ed ? (this._ed.address || '') : '',
+      edOnAddress: (e) => { if (this._ed) this._ed.address = e.target.value; },
+      edBirthdate: this._ed ? (this._ed.birthdate || '') : '',
+      edOnBirthdate: (e) => { if (this._ed) this._ed.birthdate = e.target.value; },
       edOnImage: (e) => this.edSetImage(e.target.files && e.target.files[0]),
       edOnLabel: (e) => { if (this._ed) this._ed.label = e.target.value; },
       edOnSay: (e) => { if (this._ed) this._ed.say = e.target.value; },
