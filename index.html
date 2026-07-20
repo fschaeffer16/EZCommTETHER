@@ -4055,9 +4055,13 @@ class Component extends DCLogic {
   // Text a phrase to this person via the phone's Messages app. Uses a saved
   // mobile number if set (Edit mode); otherwise Messages opens with the words
   // ready and the recipient is chosen on the phone.
+  // The message is prefixed with "From Evan:" so, since texts currently go out
+  // from a parent's phone number, the recipient knows it's from Evan.
   textPerson(p, message) {
     const num = ((p && p.phone) || '').replace(/[^0-9+]/g, '');
-    const body = encodeURIComponent(message || '');
+    const words = String(message || '').trim();
+    const full = /^from evan:/i.test(words) ? words : ('From Evan: ' + words);
+    const body = encodeURIComponent(full);
     const href = num ? ('sms:' + num + '&body=' + body) : ('sms:&body=' + body);
     try {
       const a = document.createElement('a');
