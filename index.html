@@ -3248,11 +3248,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
     <!-- FAMILY -->
-    <sc-if value="{{ isFamily }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ isPeopleBoard }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
           <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">Family</div>
+          <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">{{ peopleTitle }}</div>
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
@@ -3915,15 +3915,65 @@ class Component extends DCLogic {
     return this.initialEl(p, size);
   }
 
-  mapPerson(p) {
-    const nm = p.name;
-    const options = [
+  // Generic starter rosters for the School and Friends boards. Editable and
+  // fillable with real people/photos/numbers just like Family.
+  baseSchool() {
+    return [
+      { id: 'teacher', name: 'Teacher', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { id: 'aide', name: 'Aide', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'nurse', name: 'Nurse', ring: '#E23B2E', tint: '#FBD9D5' },
+      { id: 'principal', name: 'Principal', ring: '#7A5CFF', tint: '#E6DEFB' },
+      { id: 'classmate', name: 'Classmate', ring: '#F59E0B', tint: '#FCEBCB' },
+    ];
+  }
+  baseFriends() {
+    return [
+      { id: 'friend1', name: 'Friend 1', ring: '#14B8A6', tint: '#D2F1ED' },
+      { id: 'friend2', name: 'Friend 2', ring: '#FB7185', tint: '#FCDEE3' },
+      { id: 'friend3', name: 'Friend 3', ring: '#6366F1', tint: '#DEDCFA' },
+    ];
+  }
+
+  // Phrases shown when a person is tapped, by board type.
+  personPhrases(kind, nm) {
+    if (kind === 'school') return [
+      { glyph: '🙋', txt: 'Can you help me?', say: 'Can you help me?', color: '#0EA5E9' },
+      { glyph: '❓', txt: "I don't understand.", say: "I don't understand.", color: '#7A5CFF' },
+      { glyph: '⏸️', txt: 'Can I have a break?', say: 'Can I have a break?', color: '#6366F1' },
+      { glyph: '✅', txt: 'I finished my work.', say: 'I finished my work.', color: '#1F9E6E' },
+      { glyph: '🔁', txt: 'Can you say that again?', say: 'Can you say that again?', color: '#F59E0B' },
+      { glyph: '🚻', txt: 'Can I go to the bathroom?', say: 'Can I go to the bathroom?', color: '#14B8A6' },
+      { glyph: '🙏', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
+    ];
+    if (kind === 'friends') return [
+      { glyph: '👋', txt: 'Hi!', say: 'Hi!', color: '#0EA5E9' },
+      { glyph: '🎮', txt: 'Do you want to play?', say: 'Do you want to play?', color: '#14B8A6' },
+      { glyph: '🔄', txt: 'Can I have a turn?', say: 'Can I have a turn?', color: '#F59E0B' },
+      { glyph: '😎', txt: "That's cool.", say: "That's cool.", color: '#7A5CFF' },
+      { glyph: '🍿', txt: 'Do you want to hang out?', say: 'Do you want to hang out?', color: '#E5533D' },
+      { glyph: '👍', txt: 'I like that.', say: 'I like that.', color: '#1F9E6E' },
+      { glyph: '👋', txt: 'See you later.', say: 'See you later.', color: '#6366F1' },
+    ];
+    return [
       { glyph: '❤️', txt: 'I love you ' + nm, say: 'I love you ' + nm, color: '#E5533D' },
       { glyph: '🥰', txt: 'I miss you ' + nm, say: 'I miss you ' + nm, color: '#7A5CFF' },
       { glyph: '☀️', txt: 'Good morning ' + nm, say: 'Good morning ' + nm, color: '#F59E0B' },
       { glyph: '🌙', txt: 'Goodnight ' + nm, say: 'Goodnight ' + nm, color: '#4F46E5' },
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
     ];
+  }
+
+  // The roster shown on the active people board (Family / School / Friends).
+  activePeopleList() {
+    const s = this.state.screen;
+    if (s === 'school') return this.data().school.map((p) => this.mapPerson(p, 'school')).concat(this.customsFor('school'));
+    if (s === 'friends') return this.data().friends.map((p) => this.mapPerson(p, 'friends')).concat(this.customsFor('friends'));
+    return this.data().family.map((p) => this.mapPerson(p, 'family')).concat(this.customsFor('family'));
+  }
+
+  mapPerson(p, kind) {
+    const nm = p.name;
+    const options = this.personPhrases(kind || 'family', nm);
     const canText = !!(p.phone && String(p.phone).trim());
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
     const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: canText ? 'Tap to say it, or Text to send it' : 'Tap a phrase to say it', editPerson: () => this.requestPersonEdit(p), options: options.map((o) => ({ ...o, canText: canText, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
@@ -3997,6 +4047,8 @@ class Component extends DCLogic {
     if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
+    if (!d.school) d.school = this.baseSchool();
+    if (!d.friends) d.friends = this.baseFriends();
     this._data = d;
     return d;
   }
@@ -4054,7 +4106,8 @@ class Component extends DCLogic {
       { id: 'regulate', label: 'Too Much', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Too Much', '😵‍💫', this.regulationItems()) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'chat', label: 'Chat', emoji: '💬', color: '#0EA5E9', onTap: () => this.openPhraseChooser('Chat', '💬', this.socialItems()) },
-      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => { const c = this.catChoosers().school; this.openPhraseChooser(c.label, c.emoji, c.items); } },
+      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
+      { id: 'friends', label: 'Friends', emoji: '👫', color: '#14B8A6', onTap: () => this.setState({ screen: 'friends' }) },
     ];
   }
 
@@ -4440,8 +4493,10 @@ class Component extends DCLogic {
       placesList: this.places().map((p) => this.mapPlace(p)).concat(this.customsFor('places')),
       isPlaces: s.screen === 'places',
       openPlaces: () => this.setState({ screen: 'places' }),
-      peopleList: this.data().family.map((p) => this.mapPerson(p)).concat(this.customsFor('family')),
+      peopleList: this.activePeopleList(),
       isFamily: s.screen === 'family',
+      isPeopleBoard: s.screen === 'family' || s.screen === 'school' || s.screen === 'friends',
+      peopleTitle: s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family'),
       openFamily: () => this.setState({ screen: 'family' }),
       watchSlots: this.watchSlots(),
       netflixSlots: this.netflixSlots(),
