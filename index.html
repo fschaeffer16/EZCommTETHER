@@ -3391,6 +3391,9 @@ class Component extends DCLogic {
     // Pull the family's saved contact info from the server and fill in any
     // number this phone is missing — so numbers survive a storage wipe.
     this.loadDirectory();
+    // Birthday check for anything already saved on this phone — let the board
+    // paint first so the app never opens on top of a prompt.
+    setTimeout(() => { try { this.checkBirthdays(); } catch (e) {} }, 900);
     // Bundled standalone loads icon/photo data scripts asynchronously (as blobs);
     // re-render once the data-URI maps are available so images don't fall back to server URLs.
     if (!(typeof window !== 'undefined' && window.TETHER_PHOTOS && window.TETHER_ICONS)) {
@@ -4355,6 +4358,85 @@ class Component extends DCLogic {
   // Fetch the server-side family directory and backfill any contact field this
   // phone doesn't already have. Never overwrites a value entered on this device;
   // it only restores what's missing (e.g. after the phone cleared its storage).
+  // ── Birthday reminders ──────────────────────────────────────────────────
+  // When a family member's birthday is today, Evan gets one friendly prompt the
+  // first time he opens the app. If he taps "Not now" he gets exactly one more
+  // reminder later that day — then it leaves him alone.
+  todayKey() {
+    const t = new Date();
+    return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+  }
+  // Accepts "YYYY-MM-DD", "MM-DD", "MM/DD" or "MM/DD/YYYY" — the year is ignored.
+  birthdayIsToday(v) {
+    const s = String(v || '').trim();
+    if (!s) return false;
+    let m = 0, d = 0, x;
+    if ((x = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/))) { m = +x[2]; d = +x[3]; }
+    else if ((x = s.match(/^(\d{1,2})[-/](\d{1,2})(?:[-/](\d{2,4}))?$/))) { m = +x[1]; d = +x[2]; }
+    else return false;
+    const t = new Date();
+    return m === (t.getMonth() + 1) && d === t.getDate();
+  }
+  checkBirthdays() {
+    if (this.state.chooser || this.state.unlockFor || this.state.editMode) return; // never interrupt
+    const d = this.data();
+    const today = this.todayKey();
+    const log = d.bdayLog || (d.bdayLog = {});
+    // Drop other days so the log can't grow forever.
+    Object.keys(log).forEach((k) => { if (k.slice(-today.length) !== today) delete log[k]; });
+    const who = (d.family || []).filter((p) => p && p.birthdate && this.birthdayIsToday(p.birthdate))[0];
+    if (!who) return;
+    const k = who.id + ':' + today;
+    const seen = log[k];
+    if (seen === 'sent' || (typeof seen === 'number' && seen >= 2)) return; // sent, or already nudged twice
+    log[k] = (typeof seen === 'number' ? seen : 0) + 1;
+    this.saveStore();
+    this.promptBirthday(who);
+  }
+  promptBirthday(p) {
+    const nm = p.name || 'them';
+    const options = [
+      { glyph: '🎉', txt: 'Happy Birthday ' + nm + '! I love you!', color: '#2F9E44' },
+      { glyph: '🎂', txt: 'Happy Birthday ' + nm + '!', color: '#2F6BFF' },
+    ].map((o) => ({ ...o, onTap: () => this.sendBirthday(p, o.txt) }));
+    options.push({ glyph: '⏰', txt: 'Not now', color: '#8C857A', onTap: () => this.setState({ chooser: null }) });
+    this.setState({ chooser: {
+      label: 'Today is ' + nm + '’s birthday!',
+      emoji: '🎂', noIcon: true, hasIcon: false, iconEl: null,
+      avatarHint: 'Would you like to send a message?',
+      options,
+    } });
+  }
+  // Shows what was sent, in his own words, so he knows it went out.
+  birthdayReceipt(label, emoji, line, color) {
+    this.setState({ chooser: {
+      label, emoji, noIcon: true, hasIcon: false, iconEl: null,
+      options: [{ glyph: '💬', txt: line, color, onTap: () => this.setState({ chooser: null }) }],
+    } });
+  }
+  sendBirthday(p, message) {
+    this.speak(message);
+    const d = this.data();
+    // He made his choice — don't ask again today, however delivery goes.
+    (d.bdayLog || (d.bdayLog = {}))[p.id + ':' + this.todayKey()] = 'sent';
+    this.saveStore();
+    const nm = p.name || '';
+    this.birthdayReceipt('Sending to ' + nm + '…', '📨', message, '#8C857A');
+    // Cloud send (same path as the Emergency button) so his locked phone never
+    // has to open Messages. If cloud texting isn't wired up yet, fall back to
+    // the normal hand-off so the message still gets out.
+    const handoff = () => { this.setState({ chooser: null }); this.textPerson(p, message); };
+    try {
+      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ to: p.id, message }) })
+        .then((r) => r.json().catch(() => null))
+        .then((j) => {
+          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From Evan: ' + message), '#2F9E44');
+          else handoff();
+        })
+        .catch(handoff);
+    } catch (e) { handoff(); }
+  }
+
   loadDirectory() {
     try {
       fetch('/api/family', { headers: { Accept: 'application/json' } })
@@ -4371,6 +4453,8 @@ class Component extends DCLogic {
             });
           });
           if (changed) { this.saveStore(); this.forceUpdate(); }
+          // Birthdays can arrive with the directory, so check once it lands.
+          this.checkBirthdays();
         })
         .catch(() => {});
     } catch (e) {}
