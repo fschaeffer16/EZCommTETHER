@@ -24,7 +24,6 @@ program for low-income/disability families.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.
-  (`scratchpad/md2docx.js` converts them.)
 - **Keep the interactive model and the business plan in sync.** They are one artifact in two
   forms; if one changes, change the other.
 
