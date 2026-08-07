@@ -3269,6 +3269,75 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       </div>
     </sc-if>
 
+    <!-- SCHOOL HUB -->
+    <sc-if value="{{ isSchool }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">School</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Pick one.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div onClick="{{ openTeachers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👩‍🏫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Teachers</span></div>
+            <div onClick="{{ openStaff }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🏫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Staff</span></div>
+            <div onClick="{{ openFriendsBoard }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Friends</span></div>
+            <div onClick="{{ openABC }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔤</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
+            <div onClick="{{ openNumbers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔢</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SCHOOL: ABC SPELLING BOARD -->
+    <sc-if value="{{ isABC }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Spell it</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:4px 14px 18px;display:flex;flex-direction:column;">
+          <div style="min-height:58px;background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:16px;padding:12px 16px;font-size:26px;font-weight:800;color:var(--ink,#1A1714);word-break:break-word;">{{ spellText }}</div>
+          <div style="display:flex;gap:8px;margin:10px 0;">
+            <div onClick="{{ spellSpeak }}" style="flex:2;background:#1F8A5B;color:#fff;border-radius:14px;padding:13px;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">🔊 Speak</div>
+            <div onClick="{{ spellSpace }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border-radius:14px;padding:13px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.94)">Space</div>
+            <div onClick="{{ spellBack }}" style="flex:none;width:52px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border-radius:14px;padding:13px 0;text-align:center;font-size:18px;cursor:pointer;" style-active="transform:scale(.9)">⌫</div>
+            <div onClick="{{ spellClear }}" style="flex:none;width:62px;background:#FCE4E2;color:#E23B2E;border-radius:14px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;cursor:pointer;" style-active="transform:scale(.9)">Clear</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:7px;">
+            <sc-for list="{{ abcKeys }}" as="k" hint-placeholder-count="0">
+              <div onClick="{{ k.onTap }}" style="background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:12px;padding:15px 0;text-align:center;font-size:20px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;" style-active="transform:scale(.9)">{{ k.ch }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SCHOOL: NUMBERS + CALCULATOR -->
+    <sc-if value="{{ isNumbers }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Numbers</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:4px 16px 24px;">
+          <div style="font-size:14px;font-weight:800;color:var(--ink,#1A1714);margin:4px 2px 8px;">How many? — tap a number</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
+            <sc-for list="{{ numKeys }}" as="n" hint-placeholder-count="0">
+              <div onClick="{{ n.onTap }}" style="background:var(--card,#fff);border:2px solid #F59E0B;border-radius:12px;padding:15px 0;text-align:center;font-size:20px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;" style-active="transform:scale(.9)">{{ n.n }}</div>
+            </sc-for>
+          </div>
+          <div style="font-size:14px;font-weight:800;color:var(--ink,#1A1714);margin:20px 2px 8px;">Calculator</div>
+          <div style="background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:14px;padding:14px 16px;font-size:30px;font-weight:800;text-align:right;color:var(--ink,#1A1714);margin-bottom:10px;word-break:break-all;min-height:34px;">{{ calcDisplay }}</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+            <sc-for list="{{ calcKeys }}" as="k" hint-placeholder-count="0">
+              <div onClick="{{ k.onTap }}" style="background:{{ k.bg }};color:{{ k.ink }};border-radius:12px;padding:17px 0;text-align:center;font-size:20px;font-weight:800;cursor:pointer;{{ k.span }}" style-active="transform:scale(.92)">{{ k.k }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
   </div>
 
   <sc-if value="{{ showEditSheet }}" hint-placeholder-val="{{ false }}">
@@ -4066,18 +4135,104 @@ class Component extends DCLogic {
     // kids CJ and Egypt). Only Dad, Mom, Chris & Matthew get emergency alerts.
     return [
       { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
+      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5', alert: true },
+      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED', alert: true },
       { id: 'caitlyn', name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
       { id: 'brody', name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
       { id: 'jj', name: 'JJ', ring: '#F59E0B', tint: '#FCEBCB' },
       { id: 'tatum', name: 'Tatum', ring: '#9333EA', tint: '#EDD9FB' },
-      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED', alert: true },
       { id: 'jared', name: 'Jared', photoAsset: 'assets/people/jared.jpg', ring: '#4F46E5', tint: '#DEDCFA' },
-      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'chad', name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
       { id: 'cj', name: 'CJ', ring: '#1F9E6E', tint: '#D8F0E5' },
       { id: 'egypt', name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
     ];
+  }
+
+  // ── School hub: pre-loaded teen-appropriate phrase boards ────────────────
+  teacherPhrases() {
+    return [
+      { txt: 'Can you repeat that, please?', glyph: '🔁' },
+      { txt: "I don't understand. Can you help me?", glyph: '❓' },
+      { txt: 'Can I have more time, please?', glyph: '⏳' },
+      { txt: 'Can I go to the bathroom?', glyph: '🚻' },
+      { txt: 'I finished my work.', glyph: '✅' },
+      { txt: 'What is the homework?', glyph: '📝' },
+      { txt: 'Can I take a break?', glyph: '⏸️' },
+      { txt: 'Can I have help, please?', glyph: '🙋' },
+      { txt: 'I need a pencil, please.', glyph: '✏️' },
+      { txt: 'Thank you.', glyph: '🙏' },
+    ];
+  }
+  staffPhrases() {
+    return [
+      { txt: "I don't feel good.", glyph: '🤒' },
+      { txt: 'I need the nurse, please.', glyph: '🏥' },
+      { txt: 'Can I call home?', glyph: '📞' },
+      { txt: 'Can you help me find my class?', glyph: '🧭' },
+      { txt: 'I need help, please.', glyph: '🙋' },
+      { txt: "I'm here for lunch.", glyph: '🍽️' },
+      { txt: "I'm waiting for my bus.", glyph: '🚌' },
+      { txt: 'Where do I go?', glyph: '🚪' },
+      { txt: 'Thank you.', glyph: '🙏' },
+    ];
+  }
+  friendPhrases() {
+    return [
+      { txt: 'Hi! How are you?', glyph: '👋' },
+      { txt: 'Do you want to hang out?', glyph: '🤝' },
+      { txt: 'Can I sit here?', glyph: '🪑' },
+      { txt: "That's cool!", glyph: '😎' },
+      { txt: 'Do you want to play?', glyph: '🎮' },
+      { txt: "What's up?", glyph: '🙂' },
+      { txt: 'Want to eat lunch together?', glyph: '🍔' },
+      { txt: 'Nice to see you!', glyph: '😄' },
+      { txt: 'See you later!', glyph: '✌️' },
+    ];
+  }
+  // ── ABC spelling board ──────────────────────────────────────────────────
+  spellAdd(ch) { this.setState({ spellText: (this.state.spellText || '') + ch }); this.speak(ch); }
+  spellSpace() { this.setState({ spellText: (this.state.spellText || '') + ' ' }); }
+  spellBack() { const t = this.state.spellText || ''; this.setState({ spellText: t.slice(0, -1) }); }
+  spellClear() { this.setState({ spellText: '' }); }
+  spellSpeak() { const t = (this.state.spellText || '').trim(); if (t) this.speak(t); }
+  // ── Calculator (safe evaluator, no eval() so it works under strict CSP) ──
+  calcEval(s) {
+    const toks = String(s).match(/(\d+\.?\d*|\.\d+|[+\-*/])/g);
+    if (!toks) return null;
+    const a = [];
+    for (let i = 0; i < toks.length; i++) {
+      const t = toks[i];
+      if (t === '*' || t === '/') {
+        const prev = a.pop(); const next = parseFloat(toks[++i]);
+        if (typeof prev !== 'number' || isNaN(next)) return null;
+        a.push(t === '*' ? prev * next : prev / next);
+      } else if (t === '+' || t === '-') { a.push(t); }
+      else { a.push(parseFloat(t)); }
+    }
+    let res = a[0];
+    if (typeof res !== 'number') return null;
+    for (let i = 1; i < a.length; i += 2) {
+      const op = a[i], val = a[i + 1];
+      if (typeof val !== 'number') return null;
+      res = op === '+' ? res + val : res - val;
+    }
+    return res;
+  }
+  calcPress(k) {
+    const cur = this.state.calc || '';
+    if (k === 'C') { this.setState({ calc: '' }); return; }
+    if (k === '⌫') { this.setState({ calc: cur.slice(0, -1) }); return; }
+    if (k === '=') {
+      const expr = cur.replace(/×/g, '*').replace(/÷/g, '/');
+      const val = this.calcEval(expr);
+      if (val === null || !isFinite(val)) return;
+      const r = Math.round(val * 1e6) / 1e6;
+      this.setState({ calc: String(r) });
+      this.speak(String(r));
+      return;
+    }
+    this.setState({ calc: cur + k });
   }
 
   readFileAsDataUrl(file, cb) {
@@ -4104,6 +4259,7 @@ class Component extends DCLogic {
       { id: 'food', label: 'Food', emoji: '🍽️', color: '#F59E0B', img: 'assets/food_scene.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'food' }) },
       { id: 'fun', label: 'Fun', emoji: '🤸', color: '#14B8A6', img: 'assets/fun.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'fun' }) },
       { id: 'watch', label: 'Watch', emoji: '📺', color: '#3B82F6', img: 'assets/watch_scene.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'watch' }) },
+      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
       { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
       { id: 'morning', label: 'Morning', emoji: '🌅', color: '#FB7185', img: 'assets/morning.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'morning' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#1F9E6E', img: 'assets/bathroom.jpg', pos: 'center 35%', onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
@@ -4113,8 +4269,6 @@ class Component extends DCLogic {
       { id: 'regulate', label: 'Too Much', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Too Much', '😵‍💫', this.regulationItems()) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'chat', label: 'Chat', emoji: '💬', color: '#0EA5E9', onTap: () => this.openPhraseChooser('Chat', '💬', this.socialItems()) },
-      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
-      { id: 'friends', label: 'Friends', emoji: '👫', color: '#14B8A6', onTap: () => this.setState({ screen: 'friends' }) },
     ];
   }
 
@@ -4605,8 +4759,32 @@ class Component extends DCLogic {
       openPlaces: () => this.setState({ screen: 'places' }),
       peopleList: this.activePeopleList(),
       isFamily: s.screen === 'family',
-      isPeopleBoard: s.screen === 'family' || s.screen === 'school' || s.screen === 'friends',
+      isPeopleBoard: s.screen === 'family',
       peopleTitle: s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family'),
+      isSchool: s.screen === 'school',
+      isABC: s.screen === 'abc',
+      isNumbers: s.screen === 'numbers',
+      openTeachers: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()),
+      openStaff: () => this.openPhraseChooser('Staff', '🏫', this.staffPhrases()),
+      openFriendsBoard: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()),
+      openABC: () => this.setState({ screen: 'abc', spellText: '' }),
+      openNumbers: () => this.setState({ screen: 'numbers' }),
+      backToSchool: () => this.setState({ screen: 'school' }),
+      spellText: s.spellText || '',
+      spellSpeak: () => this.spellSpeak(),
+      spellSpace: () => this.spellSpace(),
+      spellBack: () => this.spellBack(),
+      spellClear: () => this.spellClear(),
+      abcKeys: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((ch) => ({ ch, onTap: () => this.spellAdd(ch) })),
+      numKeys: Array.from({ length: 20 }, (_, i) => ({ n: i + 1, onTap: () => this.speak('I want ' + (i + 1) + '.') })),
+      calcDisplay: s.calc || '0',
+      calcKeys: [
+        ['C', '#FCE4E2', '#E23B2E'], ['⌫', 'var(--slot,#F0EDE7)', 'var(--ink,#1A1714)'], ['÷', '#0EA5E9', '#fff'], ['×', '#0EA5E9', '#fff'],
+        ['7'], ['8'], ['9'], ['-', '#0EA5E9', '#fff'],
+        ['4'], ['5'], ['6'], ['+', '#0EA5E9', '#fff'],
+        ['1'], ['2'], ['3'], ['=', '#1F8A5B', '#fff'],
+        ['0', '', '', 'grid-column:span 2;'], ['.'],
+      ].map((r) => ({ k: r[0], bg: r[1] || 'var(--card,#fff)', ink: r[2] || 'var(--ink,#1A1714)', span: r[3] || '', onTap: () => this.calcPress(r[0]) })),
       openFamily: () => this.setState({ screen: 'family' }),
       watchSlots: this.watchSlots(),
       netflixSlots: this.netflixSlots(),
