@@ -2593,23 +2593,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1F9E6E"/><circle cx="50" cy="44" r="22" fill="#fff"/><rect x="44" y="62" width="12" height="9" rx="3" fill="#fff"/><text x="50" y="53" font-size="26" font-family="sans-serif" font-weight="800" fill="#1F9E6E" text-anchor="middle">T</text></svg>
 </template>
 
-<div ref="{{ rootRef }}" id="tether-root" style="width:393px;height:852px;margin:0 auto;background:var(--bg,#FBFAF7);color:var(--ink,#1A1714);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(20,16,12,.22);">
+<div ref="{{ rootRef }}" id="tether-root" style="width:100%;max-width:480px;height:100dvh;margin:0 auto;background:var(--bg,#FBFAF7);color:var(--ink,#1A1714);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(20,16,12,.22);">
 
-  <!-- status bar -->
-  <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;flex:none;">
-    <span style="font-size:16px;font-weight:700;color:var(--ink,#1A1714);">9:41</span>
-    <div style="display:flex;align-items:center;gap:7px;">
-      <span style="font-size:13px;font-weight:800;letter-spacing:.5px;color:var(--ink,#1A1714);">5G</span>
-      <div style="display:flex;align-items:flex-end;gap:2px;height:11px;">
-        <div style="width:3px;height:5px;background:var(--ink,#1A1714);border-radius:1px;"></div>
-        <div style="width:3px;height:8px;background:var(--ink,#1A1714);border-radius:1px;"></div>
-        <div style="width:3px;height:11px;background:var(--ink,#1A1714);border-radius:1px;"></div>
-      </div>
-      <div style="width:24px;height:12px;border:1.5px solid var(--ink,#1A1714);border-radius:3px;padding:1.5px;display:flex;align-items:center;">
-        <div style="width:75%;height:100%;background:var(--ink,#1A1714);border-radius:1px;"></div>
-      </div>
-    </div>
-  </div>
+  <!-- the real iPhone clock/battery draw over the app (black-translucent PWA);
+       this spacer just keeps our content clear of them -->
+  <div style="height:max(env(safe-area-inset-top,0px),14px);flex:none;"></div>
 
   <!-- header -->
   <div style="display:flex;align-items:center;gap:11px;padding:0 18px 6px;flex:none;">
@@ -3332,7 +3320,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
   <sc-if value="{{ hasChooser }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeChooser }}" style="position:absolute;inset:0;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:flex-end;">
-      <div onClick="{{ sheetGuard }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:20px 20px 28px;box-shadow:0 -10px 40px rgba(0,0,0,.3);">
+      <div onClick="{{ sheetGuard }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:20px 20px 28px;box-shadow:0 -10px 40px rgba(0,0,0,.3);max-height:calc(100% - max(env(safe-area-inset-top,0px),14px) - 12px);display:flex;flex-direction:column;">
         <div style="width:40px;height:5px;border-radius:3px;background:var(--hint,#C9C2B8);margin:0 auto 16px;"></div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px;">
           {{ chooser.iconEl }}
@@ -3342,7 +3330,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <span style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ chooser.label }}</span>
           <sc-if value="{{ chooser.avatarHint }}" hint-placeholder-val=""><span style="font-size:12px;font-weight:700;color:var(--sub,#8C857A);text-align:center;">👆 {{ chooser.avatarHint }}</span></sc-if>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;">
           <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
             <div style="display:flex;gap:8px;align-items:stretch;">
               <button onClick="{{ opt.onTap }}" style="flex:1;min-width:0;background:{{ opt.color }};color:#fff;border:none;border-radius:18px;padding:18px;font-size:19px;font-weight:800;cursor:pointer;text-align:left;display:flex;align-items:center;gap:13px;line-height:1.2;" style-active="transform:scale(.98)"><span style="font-size:26px;flex:none;">{{ opt.glyph }}</span><span style="min-width:0;">{{ opt.txt }}</span></button>
@@ -4244,8 +4232,14 @@ class Component extends DCLogic {
   // languages). Tapping one saves it and speaks a test line.
   openVoiceChooser() {
     const sy = window.speechSynthesis;
-    const voices = (sy && sy.getVoices && sy.getVoices()) || [];
-    if (!voices.length) {
+    const all = (sy && sy.getVoices && sy.getVoices()) || [];
+    // English voices only — the app speaks English, and a Korean or Telugu
+    // voice mangles it (the full 40-language list also buried the sheet).
+    const en = all.filter((v) => /^en[-_]/i.test(v.lang || ''));
+    const voices = (en.length ? en : all).sort((a, b) =>
+      ((/en[-_]US/i.test(a.lang) ? 0 : 1) - (/en[-_]US/i.test(b.lang) ? 0 : 1)) ||
+      String(a.name).localeCompare(String(b.name)));
+    if (!all.length) {
       // iOS quirk: the voice list is empty until the speech engine warms up
       // (normally after the app first speaks). Kick it and retry briefly so
       // the picker works on a cold open instead of telling the user to wait.
