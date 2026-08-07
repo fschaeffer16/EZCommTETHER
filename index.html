@@ -3384,6 +3384,14 @@ class Component extends DCLogic {
     // Warm the speech engine so the voice list is populated before the picker
     // is opened (iOS returns an empty list until the engine first loads).
     try { const sy = window.speechSynthesis; if (sy && sy.getVoices) sy.getVoices(); } catch (e) {}
+    // Is the AI voice (ElevenLabs) wired up? One cheap check at launch; if it
+    // is, every spoken phrase uses it, with the device voice as fallback.
+    try {
+      fetch('/api/speak', { headers: { Accept: 'application/json' } })
+        .then((r) => r.json().catch(() => null))
+        .then((j) => { this._cloudVoice = Boolean(j && j.ok && j.configured); })
+        .catch(() => {});
+    } catch (e) {}
     // Bundled standalone loads icon/photo data scripts asynchronously (as blobs);
     // re-render once the data-URI maps are available so images don't fall back to server URLs.
     if (!(typeof window !== 'undefined' && window.TETHER_PHOTOS && window.TETHER_ICONS)) {
@@ -3398,6 +3406,25 @@ class Component extends DCLogic {
   componentDidUpdate() { this.applyTheme(); }
 
   speak(t) {
+    const text = String(t == null ? '' : t).trim();
+    if (!text) return;
+    // AI voice first (Evan's real teen voice, via /api/speak). Any failure —
+    // not configured, offline, playback blocked — falls back to the device
+    // voice below, so a tap always speaks.
+    if (this._cloudVoice) {
+      try {
+        if (this._cloudAudio) { try { this._cloudAudio.pause(); } catch (e) {} }
+        const a = new Audio('/api/speak?text=' + encodeURIComponent(text));
+        this._cloudAudio = a;
+        a.onerror = () => this.speakLocal(text);
+        const p = a.play();
+        if (p && p.catch) p.catch(() => this.speakLocal(text));
+        return;
+      } catch (e) { /* fall through to the device voice */ }
+    }
+    this.speakLocal(text);
+  }
+  speakLocal(t) {
     try {
       const sy = window.speechSynthesis;
       if (!sy || !t) return;
