@@ -4286,6 +4286,10 @@ class Component extends DCLogic {
     return res;
   }
   calcPress(k) {
+    // The calculator uses the instant device voice, not the cloud voice:
+    // math answers are arbitrary numbers the audio cache has never seen, so
+    // the AI voice adds a lag on every "=" — and a calculator must feel
+    // immediate. Each key also speaks as it's tapped for feedback.
     const cur = this.state.calc || '';
     if (k === 'C') { this.setState({ calc: '' }); return; }
     if (k === '⌫') { this.setState({ calc: cur.slice(0, -1) }); return; }
@@ -4295,9 +4299,11 @@ class Component extends DCLogic {
       if (val === null || !isFinite(val)) return;
       const r = Math.round(val * 1e6) / 1e6;
       this.setState({ calc: String(r) });
-      this.speak(String(r));
+      this.speakLocal('equals ' + r);
       return;
     }
+    const say = { '+': 'plus', '-': 'minus', '×': 'times', '÷': 'divided by', '.': 'point' }[k] || k;
+    this.speakLocal(say);
     this.setState({ calc: cur + k });
   }
 
