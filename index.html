@@ -3389,7 +3389,7 @@ class Component extends DCLogic {
     try {
       fetch('/api/speak', { headers: { Accept: 'application/json' } })
         .then((r) => r.json().catch(() => null))
-        .then((j) => { this._cloudVoice = Boolean(j && j.ok && j.configured); })
+        .then((j) => { this._cloudVoice = Boolean(j && j.ok && j.configured); this._cloudVoiceV = (j && j.v) || ''; })
         .catch(() => {});
     } catch (e) {}
     // Bundled standalone loads icon/photo data scripts asynchronously (as blobs);
@@ -3414,7 +3414,9 @@ class Component extends DCLogic {
     if (this._cloudVoice) {
       try {
         if (this._cloudAudio) { try { this._cloudAudio.pause(); } catch (e) {} }
-        const a = new Audio('/api/speak?text=' + encodeURIComponent(text));
+        // The voice tag keys the phone's audio cache to the current voice, so
+        // swapping voices in Vercel re-fetches every phrase in the new voice.
+        const a = new Audio('/api/speak?text=' + encodeURIComponent(text) + '&v=' + encodeURIComponent(this._cloudVoiceV || ''));
         this._cloudAudio = a;
         a.onerror = () => this.speakLocal(text);
         const p = a.play();

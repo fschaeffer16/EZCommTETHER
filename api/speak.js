@@ -21,6 +21,13 @@
 
 const MAX_CHARS = 400; // AAC phrases are short; this is a safety valve, not a feature.
 
+const crypto = require('crypto');
+// Short fingerprint of the configured voice. The app appends it to every audio
+// URL, so cached phrases are keyed to the voice that spoke them — swap the
+// voice in Vercel and every phone re-fetches in the new voice automatically.
+const voiceTag = () =>
+  crypto.createHash('sha1').update(String(process.env.ELEVENLABS_VOICE_ID || '')).digest('hex').slice(0, 8);
+
 module.exports = async (req, res) => {
   const key = process.env.ELEVENLABS_API_KEY;
   const voice = process.env.ELEVENLABS_VOICE_ID;
@@ -43,7 +50,7 @@ module.exports = async (req, res) => {
   // Health check: /api/speak with no text says whether the AI voice is set up,
   // without exposing any secret. The app calls this once at launch.
   if (!text) {
-    return res.status(200).json({ ok: true, configured: Boolean(key && voice) });
+    return res.status(200).json({ ok: true, configured: Boolean(key && voice), v: voiceTag() });
   }
 
   if (!key || !voice) {
