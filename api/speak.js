@@ -22,11 +22,19 @@
 const MAX_CHARS = 400; // AAC phrases are short; this is a safety valve, not a feature.
 
 const crypto = require('crypto');
-// Short fingerprint of the configured voice. The app appends it to every audio
-// URL, so cached phrases are keyed to the voice that spoke them — swap the
-// voice in Vercel and every phone re-fetches in the new voice automatically.
+
+// Speaking speed. 1.0 is the voice's natural pace; lower is slower/clearer.
+// Tune with the ELEVENLABS_SPEED env var (clamped 0.7–1.2), no code change.
+const speed = () => {
+  const v = parseFloat(process.env.ELEVENLABS_SPEED || '0.92');
+  return Math.min(1.2, Math.max(0.7, isNaN(v) ? 0.92 : v));
+};
+
+// Short fingerprint of the configured voice + speed. The app appends it to
+// every audio URL, so cached phrases re-fetch automatically whenever the
+// voice or its pace changes in Vercel.
 const voiceTag = () =>
-  crypto.createHash('sha1').update(String(process.env.ELEVENLABS_VOICE_ID || '')).digest('hex').slice(0, 8);
+  crypto.createHash('sha1').update(String(process.env.ELEVENLABS_VOICE_ID || '') + ':' + speed()).digest('hex').slice(0, 8);
 
 module.exports = async (req, res) => {
   const key = process.env.ELEVENLABS_API_KEY;
@@ -67,7 +75,7 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
           text,
           model_id: model,
-          voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+          voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: speed() },
         }),
       }
     );
