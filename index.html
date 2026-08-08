@@ -4089,10 +4089,10 @@ class Component extends DCLogic {
     ];
     if (kind === 'friends') return [
       { glyph: '👋', txt: 'Hi!', say: 'Hi!', color: '#0EA5E9' },
-      { glyph: '🎮', txt: 'Do you want to play?', say: 'Do you want to play?', color: '#14B8A6' },
+      { glyph: '🎮', txt: 'Do you wanna play?', say: 'Do you wanna play?', color: '#14B8A6' },
       { glyph: '🔄', txt: 'Can I have a turn?', say: 'Can I have a turn?', color: '#F59E0B' },
       { glyph: '😎', txt: "That's cool.", say: "That's cool.", color: '#7A5CFF' },
-      { glyph: '🍿', txt: 'Do you want to hang out?', say: 'Do you want to hang out?', color: '#E5533D' },
+      { glyph: '🍿', txt: 'Do you wanna hang out?', say: 'Do you wanna hang out?', color: '#E5533D' },
       { glyph: '👍', txt: 'I like that.', say: 'I like that.', color: '#1F9E6E' },
       { glyph: '👋', txt: 'See you later.', say: 'See you later.', color: '#6366F1' },
     ];
@@ -4246,12 +4246,12 @@ class Component extends DCLogic {
   friendPhrases() {
     return [
       { txt: 'Hi! How are you?', glyph: '👋' },
-      { txt: 'Do you want to hang out?', glyph: '🤝' },
+      { txt: 'Do you wanna hang out?', glyph: '🤝' },
       { txt: 'Can I sit here?', glyph: '🪑' },
       { txt: "That's cool!", glyph: '😎' },
-      { txt: 'Do you want to play?', glyph: '🎮' },
+      { txt: 'Do you wanna play?', glyph: '🎮' },
       { txt: "What's up?", glyph: '🙂' },
-      { txt: 'Want to eat lunch together?', glyph: '🍔' },
+      { txt: 'Wanna sit together at lunch?', glyph: '🍔' },
       { txt: 'Nice to see you!', glyph: '😄' },
       { txt: 'See you later!', glyph: '✌️' },
     ];
@@ -4286,10 +4286,9 @@ class Component extends DCLogic {
     return res;
   }
   calcPress(k) {
-    // The calculator uses the instant device voice, not the cloud voice:
-    // math answers are arbitrary numbers the audio cache has never seen, so
-    // the AI voice adds a lag on every "=" — and a calculator must feel
-    // immediate. Each key also speaks as it's tapped for feedback.
+    // The calculator is silent while typing and answers on "=" with the
+    // instant device voice — math results are arbitrary numbers the audio
+    // cache has never seen, so the AI voice would lag on every answer.
     const cur = this.state.calc || '';
     if (k === 'C') { this.setState({ calc: '' }); return; }
     if (k === '⌫') { this.setState({ calc: cur.slice(0, -1) }); return; }
@@ -4302,8 +4301,6 @@ class Component extends DCLogic {
       this.speakLocal('equals ' + r);
       return;
     }
-    const say = { '+': 'plus', '-': 'minus', '×': 'times', '÷': 'divided by', '.': 'point' }[k] || k;
-    this.speakLocal(say);
     this.setState({ calc: cur + k });
   }
 
