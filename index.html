@@ -1940,6 +1940,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   ::-webkit-scrollbar{width:0;height:0;}
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
   @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
+  /* Fill the home-indicator strip below the app instead of showing white. */
+  html,body{background:var(--bg,#FBFAF7);min-height:100%;}
 </style>
 <script>// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
 /* BEGIN USAGE */
@@ -3439,6 +3441,9 @@ class Component extends DCLogic {
     if (!el) return;
     const c = this.colors(this.state.theme);
     Object.keys(c).forEach((k) => el.style.setProperty('--' + k, c[k]));
+    // Paint the page behind the app to match, so no white strip shows where
+    // the viewport extends past the app (iOS home-indicator area).
+    try { document.body.style.background = c.bg || '#FBFAF7'; document.documentElement.style.background = c.bg || '#FBFAF7'; } catch (e) {}
   }
 
   componentDidMount() {
