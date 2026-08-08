@@ -3583,8 +3583,11 @@ class Component extends DCLogic {
     return {
       school: { label: 'School', emoji: '🎒', items: [
         { txt: 'Can I stay home today?', glyph: '🏠' },
-        { txt: 'I am ready to go to school.', glyph: '🎒' },
-        { txt: 'I need help getting ready for school.', glyph: '🙋' },
+        { txt: "I'm ready.", glyph: '🎒' },
+        { txt: 'I need help getting ready.', glyph: '🙋' },
+        { txt: 'I need help getting dressed.', glyph: '👕' },
+        { txt: 'I need help finding something.', glyph: '🔎' },
+        { txt: 'I need help in the bathroom.', glyph: '🚻' },
       ] },
     };
   }
@@ -3792,12 +3795,12 @@ class Component extends DCLogic {
 
   fun() {
     return [
-      { label: 'Pool', scene: 'pool', q: 'Can I go in the pool?', s: 'I want to go in the pool.' },
-      { label: 'Beach', scene: 'beach', q: 'Can I go to the beach?', s: 'I want to go to the beach.' },
-      { label: 'Trampoline', scene: 'trampoline', q: 'Can I jump on the trampoline?', s: 'I want to jump on the trampoline.' },
-      { label: 'Bicycle', scene: 'bicycle', q: 'Can I ride my bike?', s: 'I want to ride my bike.' },
-      { label: 'Dogs', scene: 'dogs', q: 'Can I play with the dog?', s: 'I want to play with the dog.' },
-      { label: 'Soccer', scene: 'soccer', q: 'Can I play soccer?', s: 'I want to play soccer.' },
+      { label: 'Pool', scene: 'pool', q: 'Can I go to the pool?', s: 'I wanna go to the pool.' },
+      { label: 'Beach', scene: 'beach', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
+      { label: 'Trampoline', scene: 'trampoline', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
+      { label: 'Bicycle', scene: 'bicycle', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
+      { label: 'Dogs', scene: 'dogs', q: 'Can I play with the dog?', s: 'I wanna play with the dog.' },
+      { label: 'Soccer', scene: 'soccer', q: 'Can I play soccer?', s: 'I wanna play soccer.' },
     ];
   }
 
@@ -3988,7 +3991,7 @@ class Component extends DCLogic {
       { key: 'sky_zone', label: 'Sky Zone', q: 'Can we go to Sky Zone?', s: 'I want to go to Sky Zone.' },
       { key: 'soccer_field', label: 'Soccer Field', q: 'Can we go to the soccer field?', s: 'I want to go to the soccer field.' },
       { key: 'playground', label: 'Playground', q: 'Can we go to the playground?', s: 'I want to go to the playground.' },
-      { key: 'beach', label: 'Beach', q: 'Can we go to the beach?', s: 'I want to go to the beach.' },
+      { key: 'beach', label: 'Beach', q: 'Can we go to the beach?', s: 'I wanna go to the beach.' },
       { key: 'pool', label: 'Pool', q: 'Can we go to the pool?', s: 'I want to go to the pool.' },
     ];
   }
@@ -4088,13 +4091,13 @@ class Component extends DCLogic {
       { glyph: '🙏', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
     ];
     if (kind === 'friends') return [
-      { glyph: '👋', txt: 'Hi!', say: 'Hi!', color: '#0EA5E9' },
+      { glyph: '👋', txt: 'Hey!', say: 'Hey!', color: '#0EA5E9' },
       { glyph: '🎮', txt: 'Do you wanna play?', say: 'Do you wanna play?', color: '#14B8A6' },
       { glyph: '🔄', txt: 'Can I have a turn?', say: 'Can I have a turn?', color: '#F59E0B' },
       { glyph: '😎', txt: "That's cool.", say: "That's cool.", color: '#7A5CFF' },
       { glyph: '🍿', txt: 'Do you wanna hang out?', say: 'Do you wanna hang out?', color: '#E5533D' },
       { glyph: '👍', txt: 'I like that.', say: 'I like that.', color: '#1F9E6E' },
-      { glyph: '👋', txt: 'See you later.', say: 'See you later.', color: '#6366F1' },
+      { glyph: '👋', txt: 'See ya later.', say: 'See ya later.', color: '#6366F1' },
     ];
     return [
       { glyph: '❤️', txt: 'I love you ' + nm, say: 'I love you ' + nm, color: '#E5533D' },
@@ -4218,25 +4221,28 @@ class Component extends DCLogic {
   // ── School hub: pre-loaded teen-appropriate phrase boards ────────────────
   teacherPhrases() {
     return [
-      { txt: 'Can you repeat that, please?', glyph: '🔁' },
+      { txt: 'Can you say that again?', glyph: '🔁' },
       { txt: "I don't understand. Can you help me?", glyph: '❓' },
-      { txt: 'Can I have more time, please?', glyph: '⏳' },
+      { txt: 'I need more time.', glyph: '⏳' },
+      { txt: 'Can I have more time?', glyph: '⌛' },
       { txt: 'Can I go to the bathroom?', glyph: '🚻' },
       { txt: 'I finished my work.', glyph: '✅' },
       { txt: 'What is the homework?', glyph: '📝' },
       { txt: 'Can I take a break?', glyph: '⏸️' },
-      { txt: 'Can I have help, please?', glyph: '🙋' },
-      { txt: 'I need a pencil, please.', glyph: '✏️' },
+      { txt: 'Can you help me?', glyph: '🙋' },
+      { txt: 'Can I borrow a pencil?', glyph: '✏️' },
+      { txt: 'Can I borrow a pen?', glyph: '🖊️' },
+      { txt: 'Can I borrow a marker?', glyph: '🖍️' },
       { txt: 'Thank you.', glyph: '🙏' },
     ];
   }
   staffPhrases() {
     return [
       { txt: "I don't feel good.", glyph: '🤒' },
-      { txt: 'I need the nurse, please.', glyph: '🏥' },
+      { txt: 'I need to go to the nurse.', glyph: '🏥' },
       { txt: 'Can I call home?', glyph: '📞' },
       { txt: 'Can you help me find my class?', glyph: '🧭' },
-      { txt: 'I need help, please.', glyph: '🙋' },
+      { txt: 'I need help.', glyph: '🙋' },
       { txt: "I'm here for lunch.", glyph: '🍽️' },
       { txt: "I'm waiting for my bus.", glyph: '🚌' },
       { txt: 'Where do I go?', glyph: '🚪' },
@@ -4245,15 +4251,15 @@ class Component extends DCLogic {
   }
   friendPhrases() {
     return [
-      { txt: 'Hi! How are you?', glyph: '👋' },
+      { txt: "Hey, what's up?", glyph: '👋' },
       { txt: 'Do you wanna hang out?', glyph: '🤝' },
       { txt: 'Can I sit here?', glyph: '🪑' },
       { txt: "That's cool!", glyph: '😎' },
       { txt: 'Do you wanna play?', glyph: '🎮' },
       { txt: "What's up?", glyph: '🙂' },
       { txt: 'Wanna sit together at lunch?', glyph: '🍔' },
-      { txt: 'Nice to see you!', glyph: '😄' },
-      { txt: 'See you later!', glyph: '✌️' },
+      { txt: "That's funny.", glyph: '😂' },
+      { txt: 'See ya later!', glyph: '✌️' },
     ];
   }
   // ── ABC spelling board ──────────────────────────────────────────────────
@@ -4346,7 +4352,7 @@ class Component extends DCLogic {
   quickNeeds() {
     return [
       { label: 'Hello', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
-      { label: 'Good-bye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
+      { label: 'Bye', emoji: '✌️', color: '#7A5CFF', say: 'Bye!' },
       { label: 'Break', emoji: '⏸️', color: '#6366F1', say: 'I need a break.' },
       { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
       { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
@@ -4354,7 +4360,7 @@ class Component extends DCLogic {
       { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
       { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
       { label: 'More', emoji: '➕', color: '#1F9E6E', say: 'More, please.' },
-      { label: 'All done', emoji: '✅', color: '#10B981', say: "I'm all done." },
+      { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
       { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
       { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
     ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
@@ -4408,7 +4414,7 @@ class Component extends DCLogic {
       { txt: "I don't like that.", glyph: '👎' },
       { txt: 'Come here.', glyph: '🫱' },
       { txt: 'Sit with me.', glyph: '🪑' },
-      { txt: 'I want to go with you.', glyph: '🤝' },
+      { txt: 'I wanna go with you.', glyph: '🤝' },
       { txt: 'Look at this.', glyph: '👉' },
       { txt: 'Thank you.', glyph: '💛' },
     ];
@@ -4862,11 +4868,11 @@ class Component extends DCLogic {
       sayYes: () => this.speak('Yes'),
       sayNo: () => this.speak('No'),
       sayMore: () => this.speak('More'),
-      sayDone: () => this.speak('All done'),
+      sayDone: () => this.speak("I'm done"),
       sayPlease: () => this.speak('Please'),
       sayThankYou: () => this.speak('Thank you'),
       sayHelpTop: () => this.speak('I need help.'),
-      sayRestroomTop: () => this.speak('I need to use the restroom.'),
+      sayRestroomTop: () => this.speak('I need to use the bathroom.'),
       sayFamily: () => this.speak('Family'),
       goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       isFood: s.screen === 'food',
