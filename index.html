@@ -4147,6 +4147,25 @@ class Component extends DCLogic {
   // The message is prefixed with "From Evan:" so, since texts currently go out
   // from a parent's phone number, the recipient knows it's from Evan.
   textPerson(p, message) {
+    // Cloud send first (the same path as the Emergency button): Evan's phone
+    // is locked to this app, so the old Messages hand-off silently went
+    // nowhere under Guided Access. Falls back to the hand-off only when the
+    // cloud isn't set up or can't be reached (e.g. a parent's unlocked phone
+    // offline) — and shows a receipt either way so he knows what happened.
+    const nm = (p && p.name) || '';
+    const handoff = () => { this.setState({ chooser: null }); this.textHandoff(p, message); };
+    try {
+      this.birthdayReceipt('Sending to ' + nm + '…', '📨', message, '#8C857A');
+      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ to: (p && p.id) || '', message }) })
+        .then((r) => r.json().catch(() => null))
+        .then((j) => {
+          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From Evan: ' + message), '#2F9E44');
+          else handoff();
+        })
+        .catch(handoff);
+    } catch (e) { handoff(); }
+  }
+  textHandoff(p, message) {
     const num = ((p && p.phone) || '').replace(/[^0-9+]/g, '');
     const words = String(message || '').trim();
     const full = /^from evan:/i.test(words) ? words : ('From Evan: ' + words);
@@ -4681,7 +4700,7 @@ class Component extends DCLogic {
     // Cloud send (same path as the Emergency button) so his locked phone never
     // has to open Messages. If cloud texting isn't wired up yet, fall back to
     // the normal hand-off so the message still gets out.
-    const handoff = () => { this.setState({ chooser: null }); this.textPerson(p, message); };
+    const handoff = () => { this.setState({ chooser: null }); this.textHandoff(p, message); };
     try {
       fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ to: p.id, message }) })
         .then((r) => r.json().catch(() => null))
