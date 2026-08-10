@@ -3275,8 +3275,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div onClick="{{ openABC }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔤</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔢</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
             <div onClick="{{ openCalc }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="2" width="30" height="40" rx="6" fill="#1E293B"/><rect x="11" y="7" width="22" height="9" rx="2" fill="#B8F5D0"/><rect x="11" y="20" width="6" height="6" rx="1.6" fill="#CBD5E1"/><rect x="19" y="20" width="6" height="6" rx="1.6" fill="#CBD5E1"/><rect x="27" y="20" width="6" height="6" rx="1.6" fill="#0EA5E9"/><rect x="11" y="28" width="6" height="6" rx="1.6" fill="#CBD5E1"/><rect x="19" y="28" width="6" height="6" rx="1.6" fill="#CBD5E1"/><rect x="27" y="28" width="6" height="6" rx="1.6" fill="#0EA5E9"/><rect x="11" y="36" width="14" height="4" rx="1.6" fill="#CBD5E1"/><rect x="27" y="36" width="6" height="4" rx="1.6" fill="#F59E0B"/></svg><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
-            <div onClick="{{ openWords }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">💬</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Words</span></div>
-          </div>
+                      </div>
         </div>
       </div>
     </sc-if>
@@ -3345,8 +3344,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isWords }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Words</div>
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Sentence Build</div>
         </div>
         <div style="padding:0 14px;flex:none;">
           <div style="min-height:56px;background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:16px;padding:12px 14px;font-size:22px;font-weight:800;color:var(--ink,#1A1714);word-break:break-word;">{{ wordStrip }}<sc-if value="{{ wordEmpty }}" hint-placeholder-val="{{ true }}"><span style="color:var(--hint,#C9C2B8);font-size:15px;font-weight:600;">Tap words to build a sentence…</span></sc-if></div>
@@ -3596,9 +3595,12 @@ class Component extends DCLogic {
     return [
       { label: 'Good Night', emoji: '🌙', say: 'Good night.' },
       { label: 'Sleep', emoji: '🛏️', icon: 'sleep', phrases: ["I'm tired, can I go to bed?", "I'm tired, I want to go to bed."] },
+      // Every routine button follows the same three-way pattern: ask to do it,
+      // ask whether it's needed, report it's done.
+      { label: 'Shower', emoji: '🚿', phrases: ['Can I take my shower?', 'Do I need a shower?', 'I took my shower.', 'Can I just wash my hands and face?'] },
+      { label: 'Brush Teeth', emoji: '🪥', phrases: ['Can I brush my teeth?', 'Do I need to brush my teeth?', 'I brushed my teeth.'] },
+      { label: 'Pajamas', emoji: '🩳', phrases: ['Can I put my pajamas on?', 'Do I need to put my pajamas on?', 'I put my pajamas on.'] },
       { label: 'Goodnight Hugs', emoji: '🤗', phrases: ['Good night Dad', 'Good night Mom', 'Good night Egypt and CJ', 'Good night Chad'] },
-      { label: 'Brush Teeth', emoji: '🪥', phrases: ['I brushed my teeth.'] },
-      { label: 'Wash Up', emoji: '🚿', phrases: ['I took my shower.', 'Can I take a shower?', 'Can I just wash my hands and face?', 'I need help washing my face.'] },
       { label: 'Help', emoji: '🙋', phrases: ['Can you check me?', 'I need help in the bathroom.'] },
     ].map((b) => this.mapRoutine(b, 'night'));
   }
@@ -3606,9 +3608,10 @@ class Component extends DCLogic {
   morningList() {
     return [
       { label: 'Good Morning', emoji: '☀️', say: 'Good morning!' },
-      { label: 'Brush Teeth', emoji: '🪥', phrases: ['I brushed my teeth.'] },
-      { label: 'Wash Up', emoji: '🚿', phrases: ['I took my shower.', 'Can I take a shower?', 'Can I just wash my hands and face?', 'I need help washing my face.'] },
-      { label: 'Get Dressed', emoji: '👕', phrases: ["I'm getting dressed.", 'Can you help me get dressed?'] },
+      // Same three-way pattern as Night: ask to do it, ask if it's needed, report done.
+      { label: 'Shower', emoji: '🚿', phrases: ['Can I take my shower?', 'Do I need a shower?', 'I took my shower.', 'Can I just wash my hands and face?'] },
+      { label: 'Brush Teeth', emoji: '🪥', phrases: ['Can I brush my teeth?', 'Do I need to brush my teeth?', 'I brushed my teeth.'] },
+      { label: 'Get Dressed', emoji: '👕', phrases: ['Can I get dressed?', 'Do I need to get dressed?', 'I got dressed.', 'Can you help me get dressed?'] },
       { label: 'Breakfast', emoji: '🥞', phrases: ["I'm hungry.", 'Can I have breakfast?', 'What is for breakfast?'] },
       { label: 'Help', emoji: '🙋', phrases: ['Can you check me?', 'I need help in the bathroom.'] },
     ].map((b) => this.mapRoutine(b, 'morning'));
@@ -3661,6 +3664,11 @@ class Component extends DCLogic {
     return [
       { txt: 'I need to pee.', glyph: '🚽' },
       { txt: 'I need to poop.', glyph: '💩' },
+      { txt: 'Can I take my shower?', glyph: '🚿' },
+      { txt: 'Do I need a shower?', glyph: '❓' },
+      { txt: 'I took my shower.', glyph: '✅' },
+      { txt: 'Can I brush my teeth?', glyph: '🪥' },
+      { txt: 'I brushed my teeth.', glyph: '✅' },
       { txt: 'I need to wash my hands.', glyph: '🧼' },
       { txt: 'All done.', glyph: '✅' },
     ];
@@ -4204,6 +4212,26 @@ class Component extends DCLogic {
     try { const d = JSON.parse(localStorage.getItem(this.DATA_KEY)); if (d && d.family) return d; } catch (e) {}
     return null;
   }
+
+  // One-time layout refresh. A phone that already has the app saves its own
+  // home-tile order and family order, which would otherwise hide a new arrangement
+  // shipped here. This runs once per device (stamped by layoutRev), then never again,
+  // so later drag-reordering by the family still sticks.
+  //   rev 2 — Frank's home order + Mom at the opposite end of Family's top row.
+  applyLayoutRev(d) {
+    if ((d.layoutRev || 0) >= 2) return false;
+    d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
+    const fam = Array.isArray(d.family) ? d.family.slice() : [];
+    const pull = (id) => { const i = fam.findIndex((p) => p && p.id === id); return i < 0 ? null : fam.splice(i, 1)[0]; };
+    const dad = pull('dad');
+    const mom = pull('mom');
+    // The Family board is three across, so Dad and Mom sit at the two ends of
+    // the top row with one person between them.
+    if (dad && mom) d.family = [dad].concat(fam.splice(0, 1), [mom], fam);
+    else if (dad || mom) d.family = [dad || mom].concat(fam);
+    d.layoutRev = 2;
+    return true;
+  }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
   data() {
     if (this._data) return this._data;
@@ -4213,7 +4241,9 @@ class Component extends DCLogic {
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
     if (!d.friends) d.friends = this.baseFriends();
+    const moved = this.applyLayoutRev(d);
     this._data = d;
+    if (moved) this.saveStore();
     return d;
   }
 
@@ -4222,9 +4252,11 @@ class Component extends DCLogic {
     // Tatum; Matthew and his son Jared), then Mom's side (Mom + Chad and their
     // kids CJ and Egypt). Only Dad, Mom, Chris & Matthew get emergency alerts.
     return [
+      // Top row is Dad · Chris · Mom — the board is three across, so Evan's
+      // parents sit at either end of the first row.
       { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
-      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5', alert: true },
+      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED', alert: true },
       { id: 'caitlyn', name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
       { id: 'brody', name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
@@ -4349,20 +4381,23 @@ class Component extends DCLogic {
 
   homeBaseTiles() {
     return [
+      // Order is Frank's: the boards Evan reaches for most, first.
       { id: 'family', label: 'Family', emoji: '👪', color: '#F2920E', img: 'assets/family.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'family' }) },
       { id: 'food', label: 'Food', emoji: '🍽️', color: '#F59E0B', img: 'assets/food_scene.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'food' }) },
+      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
+      { id: 'morning', label: 'Morning', emoji: '🌅', color: '#FB7185', img: 'assets/morning.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'morning' }) },
       { id: 'fun', label: 'Fun', emoji: '🤸', color: '#14B8A6', img: 'assets/fun.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'fun' }) },
       { id: 'watch', label: 'Watch', emoji: '📺', color: '#3B82F6', img: 'assets/watch_scene.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'watch' }) },
-      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
-      { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
-      { id: 'morning', label: 'Morning', emoji: '🌅', color: '#FB7185', img: 'assets/morning.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'morning' }) },
-      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#1F9E6E', img: 'assets/bathroom.jpg', pos: 'center 35%', onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
-      { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: '#4F46E5', img: 'assets/night.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'night' }) },
-      { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
-      { id: 'regulate', label: 'Too Much', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Too Much', '😵‍💫', this.regulationItems()) },
+      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#1F9E6E', img: 'assets/bathroom.jpg', pos: 'center 35%', onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
+      { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
-      { id: 'chat', label: 'Chat', emoji: '💬', color: '#0EA5E9', onTap: () => this.openPhraseChooser('Chat', '💬', this.socialItems()) },
+      { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
+      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
+      { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
+      // Sentence Build (was "Words", was inside School) — building his own
+      // sentences is core communication, not a school subject.
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
     ];
   }
 
