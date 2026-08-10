@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#4A45C9">
+<title>EZvoxa — Revenue Model</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --voice:#4A45C9; --voice-soft:#6E69E0; --heart:#E0466C; --school:#1F7A99;
+    --paper:#F5F4FB; --card:#FFFFFF; --ink:#1B1A2E; --mute:#6B6982;
+    --line:#E4E1F0; --good:#1F9D6B; --track:#E0DDF0; --chip:#EEEBFA;
+    --shadow:0 1px 2px rgba(27,26,46,.05),0 8px 24px rgba(27,26,46,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0F0E1A; --card:#181628; --ink:#EDEBF7; --mute:#9B98B5;
+      --line:#282640; --track:#2A2842; --chip:#221F38; --voice:#8480F0; --voice-soft:#6E69E0; --school:#4FB3D6;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0F0E1A; --card:#181628; --ink:#EDEBF7; --mute:#9B98B5;
+    --line:#282640; --track:#2A2842; --chip:#221F38; --voice:#8480F0; --voice-soft:#6E69E0; --school:#4FB3D6;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --paper:#F5F4FB; --card:#FFFFFF; --ink:#1B1A2E; --mute:#6B6982;
+    --line:#E4E1F0; --track:#E0DDF0; --chip:#EEEBFA; --voice:#4A45C9; --voice-soft:#6E69E0; --school:#1F7A99;
+    --shadow:0 1px 2px rgba(27,26,46,.05),0 8px 24px rgba(27,26,46,.06);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-variant-numeric:tabular-nums; line-height:1.45; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:22px 20px 60px}
+  .num{font-variant-numeric:tabular-nums}
+
+  header.top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px}
+  .brand{display:flex; align-items:center; gap:11px}
+  .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--voice),var(--voice-soft));
+    display:grid;place-items:center;color:#fff;font-size:20px;box-shadow:var(--shadow)}
+  h1{font-size:19px; margin:0; letter-spacing:-.01em; font-weight:700}
+  .sub{color:var(--mute); font-size:12.5px; margin-top:1px}
+  .themebtn{border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:9px;
+    padding:8px 12px; font-size:12.5px; cursor:pointer; font-weight:600}
+
+  .hero{display:grid; grid-template-columns:1.15fr 1fr; gap:14px; margin-bottom:14px}
+  @media (max-width:760px){.hero{grid-template-columns:1fr}}
+  .headcard{background:linear-gradient(135deg,var(--voice),#3A36A8); color:#fff; border-radius:18px; padding:20px 22px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+  .headcard .lbl{font-size:12px; opacity:.85; text-transform:uppercase; letter-spacing:.09em; font-weight:600}
+  .headcard .big{font-size:42px; font-weight:800; letter-spacing:-.02em; margin:4px 0 2px; line-height:1}
+  .headcard .note{font-size:12.5px; opacity:.9}
+  .scn{display:flex; gap:7px; margin-top:16px}
+  .scn button{flex:1; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); color:#fff;
+    border-radius:10px; padding:9px 6px; font-size:12.5px; cursor:pointer; font-weight:700; transition:.12s}
+  .scn button.active{background:#fff; color:var(--voice); border-color:#fff}
+  .scn button:hover{background:rgba(255,255,255,.24)}
+  .scn button.active:hover{background:#fff}
+
+  .kpis{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .kpi{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px 15px; box-shadow:var(--shadow)}
+  .kpi .k{font-size:11.5px; color:var(--mute); text-transform:uppercase; letter-spacing:.06em; font-weight:600}
+  .kpi .v{font-size:25px; font-weight:800; letter-spacing:-.01em; margin-top:3px}
+  .kpi .v.small{font-size:21px}
+  .kpi .sub2{font-size:11.5px; color:var(--mute); margin-top:1px}
+
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden}
+  .scrollx{overflow-x:auto}
+  table{width:100%; border-collapse:collapse; font-size:12.5px; min-width:760px}
+  thead th{text-align:right; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--mute);
+    font-weight:700; padding:11px 13px; border-bottom:1px solid var(--line); white-space:nowrap; background:var(--card)}
+  thead th:first-child{text-align:left}
+  tbody td{text-align:right; padding:10px 13px; border-bottom:1px solid var(--line); white-space:nowrap}
+  tbody td:first-child{text-align:left; font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  .grp td:first-child{color:var(--voice); font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:800}
+  .grp td{border-bottom:none; padding-top:12px; padding-bottom:5px}
+  tfoot td{text-align:right; padding:12px 13px; font-weight:800; border-top:2px solid var(--line); background:var(--chip)}
+  tfoot td:first-child{text-align:left; text-transform:uppercase; font-size:11px; letter-spacing:.05em}
+
+  .penwrap{display:flex; align-items:center; gap:9px; justify-content:flex-end}
+  input[type=range]{-webkit-appearance:none; appearance:none; width:88px; height:5px; border-radius:5px;
+    background:var(--track); outline:none; cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:var(--voice); cursor:pointer; border:2px solid var(--card); box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--voice); cursor:pointer; border:2px solid var(--card)}
+  .penval{min-width:48px; text-align:right; font-weight:700; color:var(--voice); font-size:12.5px}
+  .muted{color:var(--mute)}
+  .pos{color:var(--good); font-weight:700}
+  .dev{color:var(--heart); font-weight:700}
+  .sch{color:var(--school); font-weight:700}
+
+  .ctrlbar{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:26px 0 10px}
+  .ctrlbar h2{margin:0; text-transform:uppercase; letter-spacing:.07em; color:var(--mute); font-size:13px; font-weight:700}
+  .spacer{flex:1}
+  .toggle{display:inline-flex; align-items:center; gap:9px; background:var(--card); border:1px solid var(--line);
+    border-radius:11px; padding:8px 13px; cursor:pointer; box-shadow:var(--shadow); user-select:none; font-size:13px; font-weight:600}
+  .switch{position:relative; width:38px; height:21px; border-radius:21px; background:var(--track); transition:.16s; flex:none}
+  .switch::after{content:""; position:absolute; top:2px; left:2px; width:17px; height:17px; border-radius:50%;
+    background:#fff; transition:.16s; box-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .toggle.on .switch{background:var(--heart)}
+  .toggle.on .switch::after{transform:translateX(17px)}
+  .toggle.edu.on .switch{background:var(--school)}
+  .toggle .cap{color:var(--mute)}
+  .toggle.on .cap{color:var(--ink)}
+
+  h2.sec{font-size:13px; text-transform:uppercase; letter-spacing:.07em; color:var(--mute); margin:26px 0 10px; font-weight:700}
+  .tag{display:inline-block; background:var(--chip); color:var(--voice); border-radius:6px; padding:1px 7px; font-size:11px; font-weight:700; margin-left:6px}
+  .tag.dv{background:rgba(224,70,108,.14); color:var(--heart)}
+  .tag.sc{background:rgba(31,122,153,.14); color:var(--school)}
+  .foot{margin-top:18px; font-size:12px; color:var(--mute); line-height:1.6}
+  .foot b{color:var(--ink)}
+  .foot a{color:var(--voice); text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+  .disc{margin-top:14px; padding:12px 14px; border:1px dashed var(--line); border-radius:12px; font-size:12px; color:var(--mute)}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:11.5px}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .g{background:var(--good)} .a{background:#C9962E}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🗣️</div>
+      <div>
+        <h1>EZvoxa — Revenue Model</h1>
+        <div class="sub">Nonverbal &amp; complex-communication needs · age 12+ · consumers + schools · research-grounded · English · Spanish · Japanese</div>
+      </div>
+    </div>
+    <button class="themebtn" id="themebtn">◐ Theme</button>
+  </header>
+
+  <div class="hero">
+    <div class="headcard">
+      <div class="lbl">5-Year Net Profit · <span id="scnLabel">Mid</span> case</div>
+      <div class="big num" id="heroNet">$0</div>
+      <div class="note"><span id="heroBuyers">0</span> app buyers · <span id="heroSubs">0</span> active subs by Yr 5<span id="heroDev"></span><span id="heroEdu"></span></div>
+      <div class="note" id="heroAll" style="margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.25);font-weight:700"></div>
+      <div class="scn">
+        <button data-scn="floor">Floor</button>
+        <button data-scn="mid" class="active">Mid</button>
+        <button data-scn="ceiling">Ceiling</button>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="k">App buyers (5-yr)</div><div class="v num" id="kBuyers">0</div><div class="sub2">$79.99 one-time each · after 30-day free trial</div></div>
+      <div class="kpi"><div class="k">Active subscribers</div><div class="v num" id="kSubs">0</div><div class="sub2">Yr 5 · $12.99/mo each</div></div>
+      <div class="kpi"><div class="k">One-time revenue</div><div class="v small num" id="kOne">$0</div><div class="sub2">app, net of fees</div></div>
+      <div class="kpi"><div class="k">Recurring / yr</div><div class="v small num" id="kRec">$0</div><div class="sub2">Yr 5, at maturity</div></div>
+    </div>
+  </div>
+
+  <div class="ctrlbar">
+    <h2>Market &amp; penetration — slide any region</h2>
+    <div class="spacer"></div>
+    <div class="toggle edu on" id="eduToggle"><span class="switch"></span><span class="cap">Include school districts</span></div>
+    <div class="toggle" id="devToggle"><span class="switch"></span><span class="cap">Include dedicated device (Phase 2)</span></div>
+  </div>
+  <div class="panel scrollx">
+    <table id="regionTable">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Population 12+</th>
+          <th>Requires AAC <span class="muted">(0.5%)</span></th>
+          <th>Touch-app reachable <span class="muted">(65%)</span></th>
+          <th>Penetration</th>
+          <th>App buyers</th>
+          <th>Subscribers</th>
+          <th>5-yr value</th>
+        </tr>
+      </thead>
+      <tbody id="regionBody"></tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td class="num" id="tPop">0</td>
+          <td class="num" id="tAac">0</td>
+          <td class="num" id="tReach">0</td>
+          <td></td>
+          <td class="num" id="tBuyers">0</td>
+          <td class="num" id="tSubs">0</td>
+          <td class="num" id="tValue">$0</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <h2 class="sec">5-year projection <span class="tag">live</span><span class="tag sc" id="eduTag">+ schools</span><span class="tag dv" id="devTag" style="display:none">+ dedicated device</span></h2>
+  <div class="panel scrollx">
+    <table id="projTable">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>App buyers</th>
+          <th>Active subs</th>
+          <th style="color:var(--school)">Districts · seats</th>
+          <th>One-time</th>
+          <th>Recurring</th>
+          <th style="color:var(--school)">Schools</th>
+          <th style="color:var(--heart)">Device</th>
+          <th>Expenses</th>
+          <th>Net profit</th>
+          <th>Cumulative</th>
+        </tr>
+      </thead>
+      <tbody id="projBody"></tbody>
+    </table>
+  </div>
+
+  <div class="disc">
+    <b style="color:var(--ink)">How the market is built (every step sourced):</b>
+    population 12+ → <b style="color:var(--ink)">0.5% require AAC</b> (ASHA/UK prevalence) →
+    <b style="color:var(--ink)">×65% reachable by a touch app</b> (AAC-on-iOS survey: 90% of users use an iPad, 25%+ an iPhone, only 15–20% a dedicated device) →
+    <b style="color:var(--ink)">your penetration</b>. Penetration is anchored so 5-year totals stay a <i>fraction</i> of Proloquo2Go's install
+    base — the 15-year category leader, used by "hundreds of thousands" worldwide. Covers all causes 12+ (autism, apraxia, CP, Down
+    syndrome, stroke, ALS, TBI). US includes English- &amp; Spanish-speaking families; Spain + Latin America are the added Spanish markets.
+    <b style="color:var(--ink)">Latin America penetration</b> is discounted for willingness-to-pay + lower diagnosis/awareness only — <i>not</i> device access,
+    since LatAm is mobile-first (~76% smartphone adoption), which a phone product fits.
+  </div>
+
+  <div class="disc" id="eduDisc" style="border-color:rgba(31,122,153,.45)">
+    <b style="color:var(--school)">School districts (education channel):</b> the US has
+    <b style="color:var(--ink)">13,194 public school districts</b> (NCES 2023–24); Florida alone has 67. Under
+    <b style="color:var(--ink)">IDEA</b>, AAC written into a student's IEP must be provided by the district at no cost to the
+    family — school AAC purchasing is an existing legal obligation, not a new behavior. Pricing:
+    <b style="color:var(--ink)">$99/student/yr</b> (net ~$97, invoiced), all premium features + SLP usage log; school seats span
+    <b style="color:var(--ink)">IDEA ages 3–21</b> incl. 18–21 transition programs. Scale check: 0.5% prevalence ≈
+    <b style="color:var(--ink)">~200 AAC-need students in a 40k-student district</b>, so 50 seats/district is ~a quarter of one
+    district's need. Ramp is a <b style="color:var(--ink)">labeled assumption</b>, pilot-gated: Year 1 is the free pilot at the
+    founder's son's school (the ESE director requested the trial unprompted). <b style="color:var(--ink)">Floor</b>: 10 districts,
+    classroom-scale (30 seats). <b style="color:var(--ink)">Mid</b>: 28 districts (fewer than half of Florida alone) × 50 seats.
+    <b style="color:var(--ink)">Ceiling</b>: the cascade — pilots trigger state networks → 200 districts (1.5% of US) × 50 seats,
+    with a real education-support hire from Yr 3 (~$75–95k/yr) instead of the ~$2k conference budget the small cases carry.
+    Competitive note: TD Snap classroom licenses are free — the school pitch is usage/abandonment, never price. Adult
+    institutional programs (day programs, voc rehab, group homes) are <i>not</i> modeled — consumer sales only; upside on purpose.
+    Schools also build Phase 3's SLP-evaluation network and device-trial documentation.
+  </div>
+
+  <div class="disc" id="devDisc" style="display:none; border-color:rgba(224,70,108,.4)">
+    <b style="color:var(--heart)">Dedicated device (Phase 2 — after certification):</b> <b style="color:var(--ink)">15% of buyers</b> take a
+    dedicated device (survey: 15–20% of AAC users use one). Split <b style="color:var(--ink)">30% funded / 70% cash</b> — funded kept
+    small on purpose: <b style="color:var(--ink)">Medicare funds only ~2,000–3,000 SGDs/year</b> (CMS), a tiny clinician-gated market a
+    new entrant enters slowly. Net/device: cash ~$94 (iPhone 11 build); funded ~$2,200 (sourced ~$4,500 reimbursement − device −
+    warranty/infra reserve − DME-partner cut). Requires FDA listing, PDAC coding &amp; DME enrollment first.
+  </div>
+
+  <div class="legend">
+    <span><span class="dot g"></span> <b style="color:var(--ink)">Grounded</b> — traces to a cited source</span>
+    <span><span class="dot a"></span> <b style="color:var(--ink)">Assumption</b> — set conservatively (unknowable pre-launch)</span>
+  </div>
+
+  <div class="foot">
+    <b><span style="color:var(--good)">●</span> Grounded:</b> population; 0.5% AAC prevalence; 65% touch-reachable;
+    <b>15% subscribe &amp; ~35% churn</b> (subscription-app benchmarks); ~$3/mo infra; ~4% refund/chargeback leakage;
+    CAC $40–70 paid → planned 60–80% organic → ~$12 blended; device-type split; ~$4,500 SGD reimbursement; ~2–3k/yr Medicare SGD volume;
+    13,194 US districts; IDEA at-no-cost AT obligation. &nbsp;
+    <b><span style="color:#C9962E">●</span> Assumptions (conservative):</b> penetration %; 5-yr ramp (8/16/22/26/28%);
+    buyers held at $49.99-case levels after the move to $79.99 (still &lt;⅓ of cheapest competitor; trial removes purchase risk);
+    district ramp &amp; seats (Floor 10×30 · Mid 0/3/8/16/28 ×50 seats · Ceiling cascade 200×50 w/ staff hire);
+    15% device attach; 30% funded split; opex $24k→$28k/yr.<br>
+    <b>Sources:</b>
+    <a href="https://www.asha.org/practice-portal/professional-issues/augmentative-and-alternative-communication/" target="_blank" rel="noopener">ASHA — AAC prevalence</a> ·
+    <a href="https://www.assistiveware.com/blog/taking-the-pulse-of-augmentative-and-alternative-communication-on-ios" target="_blank" rel="noopener">AssistiveWare — AAC on iOS survey</a> ·
+    <a href="https://www.revenuecat.com/state-of-subscription-apps-2024/" target="_blank" rel="noopener">RevenueCat — subscription benchmarks</a> ·
+    <a href="https://www.businessofapps.com/data/app-churn-rates/" target="_blank" rel="noopener">Business of Apps — churn</a> ·
+    <a href="https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleId=52469" target="_blank" rel="noopener">CMS — SGD funding/volume</a> ·
+    <a href="https://nces.ed.gov/ccd/tables/202324_summary_3.asp" target="_blank" rel="noopener">NCES — US district count</a> ·
+    <a href="https://ectacenter.org/topics/atech/funding.asp" target="_blank" rel="noopener">ECTA — AT funding under IDEA</a>.
+    Estimates for planning — distribution is the lever.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var fmt0 = function(n){ return Math.round(n).toLocaleString('en-US'); };
+  var money = function(n){
+    var a = Math.round(n);
+    if(Math.abs(a) >= 1000000) return '$' + (a/1000000).toFixed(2) + 'M';
+    if(Math.abs(a) >= 1000) return '$' + (a/1000).toFixed(0) + 'k';
+    return '$' + a.toLocaleString('en-US');
+  };
+  var moneyFull = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+
+  // ===== GROUNDED constants =====
+  var AAC_RATE = 0.005;      // 0.5% of population requires AAC (ASHA/UK)
+  var REACH = 0.65;          // share reachable by a touch app (AAC-on-iOS survey)
+  var NET_ONETIME = 74.00;   // $79.99 - Stripe fees - ~4% refund/chargeback leakage
+  var CAC = 12;              // blended acquisition cost/buyer (plan 60-80% organic; paid $40-70)
+  var SUB_PROFIT = 90;       // net/active sub/yr: $155.88 gross - fees - ~$3/mo infra - leakage
+  // grounded from subscription-app benchmarks (RevenueCat/Business of Apps/add-on attach):
+  var SUB_ATTACH = 0.15;     // paid-app add-on attach ~10-30%; 15% conservative
+  var CHURN = 0.35;          // consumer sub churn incl. involuntary (sticky/health end)
+  // device (Phase 2)
+  var DEVICE_ATTACH = 0.15;  // 15-20% of AAC users use a dedicated device
+  var FUNDED_SHARE = 0.30;   // kept small: Medicare funds only ~2-3k SGDs/yr
+  var FUNDED_NET = 2200;     // ~$4,500 reimb - device - reserve - partner cut
+  var CASH_DEV_NET = 94;     // iPhone 11 turnkey build
+  var DEVICE_NET = FUNDED_SHARE*FUNDED_NET + (1-FUNDED_SHARE)*CASH_DEV_NET; // ~$726
+  // schools (education channel) — ramp + seats are labeled, pilot-gated assumptions.
+  // Context: ~0.5% AAC prevalence means a 40k-student district has ~200 AAC-need
+  // students, so even 50 seats/district is a quarter of one district's need.
+  var SEAT_NET = 97;            // $99/student/yr net of invoicing/ACH costs
+  var EDU = {                   // districts active per year (Yr 1 = free pilot),
+    floor:   { d:[0,2,4,7,10],       seats:30,  // classroom-scale adoption only
+               costs:[0,2000,2000,2000,2000] },
+    mid:     { d:[0,3,8,16,28],      seats:50,  // partial district-wide adoption
+               costs:[0,2000,2000,10000,15000] },          // part-time support as seats near 1,000
+    ceiling: { d:[0,10,40,100,200],  seats:50,  // the cascade: pilots -> states follow (1.5% of US districts)
+               costs:[0,5000,75000,85000,95000] }          // education-support hire from Yr 3
+  };
+
+  var OPEX = [24000,16000,20000,24000,28000]; // fixed platform+tools+insurance+amortized setup
+  var RAMP = [0.08,0.16,0.22,0.26,0.28];
+
+  // population 12+ (grounded: census/ONS/statista)
+  var REGIONS = [
+    {grp:'English', name:'United States',   pop:285000000},
+    {grp:'English', name:'United Kingdom',  pop:57600000},
+    {grp:'English', name:'Canada',          pop:34500000},
+    {grp:'English', name:'Australia',       pop:22200000},
+    {grp:'English', name:'Ireland',         pop:4300000},
+    {grp:'Japanese',name:'Japan',           pop:112000000},
+    {grp:'Spanish', name:'Spain',           pop:41000000},
+    {grp:'Spanish', name:'Latin America',   pop:344000000}
+  ];
+  // penetration presets: % of the touch-app-reachable market
+  // LatAm (last value): mobile-first market (~76% smartphone adoption), so discount is for
+  // willingness-to-pay + lower diagnosis/awareness only — ~1/3 of US rate, not 1/9.
+  var PRESETS = {
+    floor:   [0.35,0.28,0.28,0.28,0.28,0.16,0.16,0.10],
+    mid:     [0.90,0.70,0.70,0.70,0.70,0.40,0.40,0.30],
+    ceiling: [2.20,1.80,1.80,1.80,1.80,1.00,1.00,0.70]
+  };
+  var scenario = 'mid';
+  var pen = PRESETS.mid.slice();
+  var includeDevice = false;
+  var includeEdu = true;   // schools are a core revenue line — on by default
+
+  function aacOf(r){ return r.pop * AAC_RATE; }
+  function reachOf(r){ return r.pop * AAC_RATE * REACH; }
+
+  var body = document.getElementById('regionBody');
+  var lastGrp = null;
+  REGIONS.forEach(function(r, i){
+    if(r.grp !== lastGrp){
+      var g = document.createElement('tr'); g.className='grp';
+      g.innerHTML = '<td colspan="8">'+r.grp+'</td>';
+      body.appendChild(g); lastGrp = r.grp;
+    }
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>'+r.name+'</td>'+
+      '<td class="num muted">'+fmt0(r.pop)+'</td>'+
+      '<td class="num muted">'+fmt0(aacOf(r))+'</td>'+
+      '<td class="num">'+fmt0(reachOf(r))+'</td>'+
+      '<td><div class="penwrap"><input type="range" min="0" max="3" step="0.05" value="'+pen[i]+'" data-i="'+i+'"><span class="penval" id="pv'+i+'">'+pen[i].toFixed(2)+'%</span></div></td>'+
+      '<td class="num" id="rb'+i+'">0</td>'+
+      '<td class="num" id="rs'+i+'">0</td>'+
+      '<td class="num" id="rv'+i+'">$0</td>';
+    body.appendChild(tr);
+  });
+
+  function project(totalBuyers, withDev, withEdu){
+    var cfg = EDU[scenario];
+    var activeSubs = 0, cumNet = 0, rows = [];
+    for(var y=0; y<5; y++){
+      var nb = totalBuyers * RAMP[y];
+      var ns = nb * SUB_ATTACH;
+      activeSubs = activeSubs*(1-CHURN) + ns;
+      var one = nb * NET_ONETIME;
+      var rec = activeSubs * SUB_PROFIT;
+      var dev = withDev ? nb * DEVICE_ATTACH * DEVICE_NET : 0;
+      var d = withEdu ? cfg.d[y] : 0;
+      var seats = d * cfg.seats;
+      var edu = withEdu && d > 0 ? seats * SEAT_NET - cfg.costs[y] : 0;
+      var exp = OPEX[y] + nb * CAC;   // fixed opex + acquisition cost
+      var net = one + rec + dev + edu - exp;
+      cumNet += net;
+      rows.push({y:y+1, nb:nb, subs:activeSubs, d:d, seats:seats, one:one, rec:rec, dev:dev, edu:edu, exp:exp, net:net, cum:cumNet});
+    }
+    return rows;
+  }
+
+  function recompute(){
+    var tPop=0,tAac=0,tReach=0,totalBuyers=0,totalSubs=0,totalValue=0;
+    REGIONS.forEach(function(r,i){
+      var reach = reachOf(r);
+      var buyers = reach * pen[i]/100;
+      var subs = buyers * SUB_ATTACH;
+      var value = buyers*NET_ONETIME + subs*(1-CHURN)*SUB_PROFIT*3.5;
+      document.getElementById('rb'+i).textContent = fmt0(buyers);
+      document.getElementById('rs'+i).textContent = fmt0(subs);
+      document.getElementById('rv'+i).textContent = money(value);
+      tPop+=r.pop; tAac+=aacOf(r); tReach+=reach; totalBuyers+=buyers; totalSubs+=subs; totalValue+=value;
+    });
+    document.getElementById('tPop').textContent = fmt0(tPop);
+    document.getElementById('tAac').textContent = fmt0(tAac);
+    document.getElementById('tReach').textContent = fmt0(tReach);
+    document.getElementById('tBuyers').textContent = fmt0(totalBuyers);
+    document.getElementById('tSubs').textContent = fmt0(totalSubs);
+    document.getElementById('tValue').textContent = money(totalValue);
+
+    var rows = project(totalBuyers, includeDevice, includeEdu);
+    var pb = document.getElementById('projBody'); pb.innerHTML='';
+    rows.forEach(function(row){
+      var tr=document.createElement('tr');
+      var eduCell;
+      if(!includeEdu) eduCell = '—';
+      else if(row.d === 0) eduCell = 'free pilot';
+      else eduCell = fmt0(row.d)+' · '+fmt0(row.seats);
+      tr.innerHTML =
+        '<td>Year '+row.y+'</td>'+
+        '<td class="num">'+fmt0(row.nb)+'</td>'+
+        '<td class="num">'+fmt0(row.subs)+'</td>'+
+        '<td class="num sch">'+eduCell+'</td>'+
+        '<td class="num">'+moneyFull(row.one)+'</td>'+
+        '<td class="num">'+moneyFull(row.rec)+'</td>'+
+        '<td class="num sch">'+(includeEdu ? moneyFull(row.edu) : '—')+'</td>'+
+        '<td class="num dev">'+(includeDevice ? moneyFull(row.dev) : '—')+'</td>'+
+        '<td class="num muted">('+fmt0(row.exp)+')</td>'+
+        '<td class="num pos">'+moneyFull(row.net)+'</td>'+
+        '<td class="num"><b>'+moneyFull(row.cum)+'</b></td>';
+      pb.appendChild(tr);
+    });
+
+    var last = rows[4];
+    document.getElementById('heroNet').textContent = money(last.cum);
+    document.getElementById('heroBuyers').textContent = fmt0(totalBuyers);
+    document.getElementById('heroSubs').textContent = fmt0(last.subs);
+    document.getElementById('kBuyers').textContent = fmt0(totalBuyers);
+    document.getElementById('kSubs').textContent = fmt0(last.subs);
+    document.getElementById('kOne').textContent = money(totalBuyers*NET_ONETIME);
+    document.getElementById('kRec').textContent = money(last.rec);
+
+    var devUnits = includeDevice ? totalBuyers*DEVICE_ATTACH : 0;
+    document.getElementById('heroDev').textContent = includeDevice
+      ? ' · ' + fmt0(devUnits) + ' devices (' + money(devUnits*DEVICE_NET) + ')' : '';
+    document.getElementById('heroEdu').textContent = includeEdu
+      ? ' · ' + fmt0(last.d) + ' districts / ' + fmt0(last.seats) + ' seats' : '';
+
+    // Always show the everything-on total so toggle states can never read as a "drop".
+    var appOnly = project(totalBuyers, false, false)[4].cum;
+    var allOn = project(totalBuyers, true, true)[4].cum;
+    document.getElementById('heroAll').textContent =
+      'App + subs alone: ' + money(appOnly) + '  ·  every channel on (schools + device): ' + money(allOn);
+  }
+
+  body.addEventListener('input', function(e){
+    if(e.target.type!=='range') return;
+    var i = +e.target.getAttribute('data-i');
+    pen[i] = +e.target.value;
+    document.getElementById('pv'+i).textContent = pen[i].toFixed(2)+'%';
+    recompute();
+  });
+
+  var scnLabel = {floor:'Floor', mid:'Mid', ceiling:'Ceiling'};
+  document.querySelectorAll('.scn button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      scenario = btn.getAttribute('data-scn');
+      pen = PRESETS[scenario].slice();
+      document.querySelectorAll('.scn button').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      document.getElementById('scnLabel').textContent = scnLabel[scenario];
+      REGIONS.forEach(function(r,i){
+        var sl = body.querySelector('input[data-i="'+i+'"]');
+        if(sl){ sl.value = pen[i]; document.getElementById('pv'+i).textContent = pen[i].toFixed(2)+'%'; }
+      });
+      recompute();
+    });
+  });
+
+  document.getElementById('devToggle').addEventListener('click', function(){
+    includeDevice = !includeDevice;
+    this.classList.toggle('on', includeDevice);
+    document.getElementById('devTag').style.display = includeDevice ? '' : 'none';
+    document.getElementById('devDisc').style.display = includeDevice ? '' : 'none';
+    recompute();
+  });
+
+  document.getElementById('eduToggle').addEventListener('click', function(){
+    includeEdu = !includeEdu;
+    this.classList.toggle('on', includeEdu);
+    document.getElementById('eduTag').style.display = includeEdu ? '' : 'none';
+    document.getElementById('eduDisc').style.display = includeEdu ? '' : 'none';
+    recompute();
+  });
+
+  document.getElementById('themebtn').addEventListener('click', function(){
+    var root = document.documentElement;
+    var cur = root.getAttribute('data-theme');
+    if(!cur){ cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+
+  recompute();
+})();
+</script>
+
+</body>
+</html>
