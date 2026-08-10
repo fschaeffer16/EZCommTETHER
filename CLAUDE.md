@@ -29,10 +29,21 @@ program for low-income/disability families.
 
 ## Deploys
 
-- **Vercel deploys `main`.** Merging to `main` puts code on Evan's phone within minutes.
-- Work on a branch, open/refresh a PR, let him review the Vercel **preview URL** on the phone,
-  then merge. Don't push straight to `main` without asking.
-- After a deploy he should force-close and reopen the app — the service worker caches hard.
+- **Vercel deploys `main`.** Merging to `main` puts code on **all three phones** — Evan's,
+  Frank's, and Raniyah's — within minutes. All three are production; there is no "staging" phone.
+- **Ship to `main` by default.** Frank's standing instruction: anything I build for him should
+  reach all three phones. Work on a branch, then merge it — don't leave finished work sitting on
+  a branch waiting for approval, and don't make him ask why the change didn't show up.
+- Because there's no preview step, **I verify before merging**: syntax-check the logic block,
+  check `sc-if`/`sc-for` balance, and confirm the change survives saved localStorage state (see
+  below). A broken deploy means Evan can't talk.
+- Only hold for a preview URL when a change is risky enough to be worth it (rewrites, the
+  emergency path, anything touching the store) — and say so plainly rather than silently sitting
+  on the work.
+- After a deploy each phone should force-close and reopen the app — the service worker caches hard.
+- **Saved state beats new defaults.** The store keeps `homeOrder`, family order, and overrides, so
+  shipping a new default order changes nothing on a phone that already has the app. Bump the
+  one-time `applyLayoutRev()` migration when a layout default changes, or the work is invisible.
 
 ## Architecture notes
 
