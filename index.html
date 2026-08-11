@@ -3502,7 +3502,7 @@ class Component extends DCLogic {
     try {
       fetch('/api/speak', { headers: { Accept: 'application/json' } })
         .then((r) => r.json().catch(() => null))
-        .then((j) => { this._cloudVoice = Boolean(j && j.ok && j.configured); this._cloudVoiceV = (j && j.v) || ''; })
+        .then((j) => { this._cloudVoice = Boolean(j && j.ok && j.configured); this._cloudVoiceV = (j && j.v) || ''; this.warmVoice(); })
         .catch(() => {});
     } catch (e) {}
     // Bundled standalone loads icon/photo data scripts asynchronously (as blobs);
@@ -3517,6 +3517,29 @@ class Component extends DCLogic {
     }
   }
   componentDidUpdate() { this.applyTheme(); }
+
+  // Fetch the handful of phrases Evan reaches for constantly so the first tap of
+  // the day doesn't wait on a cold server. The service worker keeps each one, so
+  // this is a one-time cost per phone per voice — not per launch — and it runs
+  // well after the app has painted, one at a time, so it never competes with him.
+  warmVoice() {
+    if (!this._cloudVoice || this._warmed) return;
+    this._warmed = true;
+    const wanted = ['Yes', 'No', 'I need help.', 'I need to use the bathroom.'];
+    try { this.quickNeeds().forEach((q) => { if (q.say) wanted.push(q.say); }); } catch (e) {}
+    const seen = Object.create(null);
+    const queue = wanted.filter((p) => p && !seen[p] && (seen[p] = true));
+    const tag = encodeURIComponent(this._cloudVoiceV || '');
+    let i = 0;
+    const next = () => {
+      if (i >= queue.length) return;
+      const t = queue[i++];
+      fetch('/api/speak?text=' + encodeURIComponent(t) + '&v=' + tag)
+        .catch(() => {})
+        .then(() => setTimeout(next, 300));
+    };
+    setTimeout(next, 2500);
+  }
 
   speak(t) {
     const text = String(t == null ? '' : t).trim();
