@@ -3236,6 +3236,27 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       </div>
     </sc-if>
 
+    <!-- COLORS -->
+    <sc-if value="{{ isColors }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#F2920E;flex:1;min-width:0;">Colors</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a color — it will say it out loud.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <sc-for list="{{ colorsList }}" as="c" hint-placeholder-count="0">
+              <div onClick="{{ c.onTap }}" style="background:var(--card,#fff);border:2px solid var(--slot,#EDEAE3);border-radius:18px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;" style-active="transform:scale(.94)">
+                {{ c.swatchEl }}
+                <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ c.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
     <!-- FAMILY -->
     <sc-if value="{{ isPeopleBoard }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
@@ -4139,6 +4160,26 @@ class Component extends DCLogic {
     ];
   }
 
+  // Colors. The swatch is the button — the word underneath is for the adult
+  // reading over his shoulder. White and yellow get a visible outline so they
+  // don't vanish against the card.
+  colorsList() {
+    return [
+      { label: 'red', hex: '#E23B2E' },
+      { label: 'orange', hex: '#F2920E' },
+      { label: 'yellow', hex: '#FACC15' },
+      { label: 'green', hex: '#1F9E6E' },
+      { label: 'blue', hex: '#2F6BFF' },
+      { label: 'purple', hex: '#7A5CFF' },
+      { label: 'pink', hex: '#DB2777' },
+      { label: 'brown', hex: '#8B5A2B' },
+      { label: 'black', hex: '#1A1714' },
+      { label: 'white', hex: '#FFFFFF' },
+      { label: 'gray', hex: '#9CA3AF' },
+      { label: 'gold', hex: '#D4A017' },
+    ];
+  }
+
   // The roster shown on the active people board (Family / School / Friends).
   activePeopleList() {
     const s = this.state.screen;
@@ -4417,6 +4458,10 @@ class Component extends DCLogic {
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
       { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
+      // The Friends phrases, reachable without going through School and without
+      // needing anyone saved — they're for talking to a kid, not a contact.
+      { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#DB2777', onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
+      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
@@ -5122,6 +5167,18 @@ class Component extends DCLogic {
       toggleTheme: () => this.setState({ theme: s.theme === 'light' ? 'dark' : 'light' }),
       tiles: this.tiles(),
       isNight: s.screen === 'night',
+      isColors: s.screen === 'colors',
+      colorsList: this.colorsList().map((c) => ({
+        label: c.label,
+        onTap: () => this.speak(c.label),
+        swatchEl: React.createElement('div', {
+          style: {
+            width: 62, height: 62, borderRadius: '50%', background: c.hex, flex: 'none',
+            border: '3px solid ' + (/^#(FFFFFF|FACC15)$/i.test(c.hex) ? '#D8D3C9' : 'rgba(0,0,0,.12)'),
+            boxShadow: 'inset 0 2px 0 rgba(255,255,255,.25)',
+          },
+        }),
+      })),
       isFeelings: s.screen === 'feelings',
       isMorning: s.screen === 'morning',
       nightList: this.nightList().concat(this.customsFor('night')),
