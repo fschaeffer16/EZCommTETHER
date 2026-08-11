@@ -3878,7 +3878,10 @@ class Component extends DCLogic {
 
   fun() {
     return [
-      { label: 'Pool', scene: 'pool', q: 'Can I go to the pool?', s: 'I wanna go to the pool.' },
+      { label: 'Pool', scene: 'pool', q: 'Can I go to the pool?', s: 'I wanna go to the pool.', extra: [
+        { glyph: '🛟', txt: 'Can I have a pool noodle?', say: 'Can I have a pool noodle?', color: '#0EA5E9' },
+        { glyph: '🛟', txt: 'I want a pool noodle.', say: 'I want a pool noodle.', color: '#7A5CFF' },
+      ]},
       { label: 'Beach', scene: 'beach', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
       { label: 'Trampoline', scene: 'trampoline', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
       { label: 'Bicycle', scene: 'bicycle', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
@@ -4025,6 +4028,8 @@ class Component extends DCLogic {
         { glyph: '🙋', txt: q, say: q, color: '#3B82F6' },
         { glyph: '💬', txt: s, say: s, color: '#1F9E6E' },
       ];
+      // Some places have their own things to ask for once he's there.
+      if (i.extra) options = options.concat(i.extra);
     } else {
       options = [
         { glyph: '🙋', txt: 'Can I have ' + base + '?', say: 'Can I have ' + base + '?', color: '#3B82F6' },
@@ -4313,8 +4318,10 @@ class Component extends DCLogic {
   // shipped here. This runs once per device (stamped by layoutRev), then never again,
   // so later drag-reordering by the family still sticks.
   //   rev 2 — Frank's home order + Mom at the opposite end of Family's top row.
+  //   rev 3 — Feelings beside Health, then Talk, Sentence Build, Colors, Places.
+  // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
-    if ((d.layoutRev || 0) >= 2) return false;
+    if ((d.layoutRev || 0) >= 3) return false;
     d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
     const fam = Array.isArray(d.family) ? d.family.slice() : [];
     const pull = (id) => { const i = fam.findIndex((p) => p && p.id === id); return i < 0 ? null : fam.splice(i, 1)[0]; };
@@ -4324,7 +4331,7 @@ class Component extends DCLogic {
     // the top row with one person between them.
     if (dad && mom) d.family = [dad].concat(fam.splice(0, 1), [mom], fam);
     else if (dad || mom) d.family = [dad || mom].concat(fam);
-    d.layoutRev = 2;
+    d.layoutRev = 3;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -4486,17 +4493,17 @@ class Component extends DCLogic {
       { id: 'night', label: 'Night', emoji: '🌙', color: '#4F46E5', img: 'assets/night.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#1F9E6E', img: 'assets/bathroom.jpg', pos: 'center 35%', onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
       { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
-      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
-      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
       { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#DB2777', onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
-      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
-      { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
+      { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
+      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
     ];
   }
 
