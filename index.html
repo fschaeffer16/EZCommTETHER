@@ -15,9 +15,40 @@
 <link rel="icon" type="image/png" href="icon192.png">
 <script>
   // Register the offline service worker (ignored gracefully on old browsers).
+  //
+  // Evan's phone runs inside Guided Access, so the app is never closed and would
+  // otherwise keep running whatever code it launched with — for weeks. This asks
+  // the server whether a newer version exists, and when one arrives it swaps to
+  // it during a quiet moment. Never mid-sentence: if he has touched the screen in
+  // the last 45 seconds it waits and asks again.
   if ('serviceWorker' in navigator) {
+    var lastTouch = 0;
+    document.addEventListener('pointerdown', function () { lastTouch = Date.now(); }, true);
+
+    var swapping = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (swapping) return;
+      swapping = true;
+      (function whenQuiet() {
+        if (Date.now() - lastTouch < 45000) return setTimeout(whenQuiet, 15000);
+        window.location.reload();
+      })();
+    });
+
+    function checkForUpdate() {
+      navigator.serviceWorker.getRegistration()
+        .then(function (r) { return r && r.update(); })
+        .catch(function () {});
+    }
+
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('sw.js').catch(function () {});
+      setTimeout(checkForUpdate, 60000);       // shortly after launch
+      setInterval(checkForUpdate, 1800000);    // and every half hour after that
+    });
+    // Also the moment the phone is unlocked and the app is back on screen.
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) checkForUpdate();
     });
   }
 </script>
