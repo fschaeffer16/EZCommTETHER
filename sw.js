@@ -8,6 +8,33 @@
 
 const CACHE = 'evans-talker-v1';
 
+// Spoken audio is kept separately and never expires: the same words in the same
+// voice are the same sound forever, so a phrase Evan has already used plays back
+// instantly and still works with no signal at all. The URL carries a voice tag,
+// so changing the voice or its speed simply asks for different files.
+const VOICE_CACHE = 'evans-voice-v1';
+const VOICE_MAX = 500;   // a few hundred short clips; well under any storage limit
+
+async function speakCacheFirst(req) {
+  const cache = await caches.open(VOICE_CACHE);
+  const hit = await cache.match(req);
+  if (hit) return hit;                       // no network at all — this is the win
+  const res = await fetch(req);
+  if (res && res.ok) {
+    cache.put(req, res.clone()).then(() => trimVoiceCache(cache)).catch(() => {});
+  }
+  return res;
+}
+
+// Oldest first — caches.keys() preserves insertion order.
+async function trimVoiceCache(cache) {
+  try {
+    const keys = await cache.keys();
+    if (keys.length <= VOICE_MAX) return;
+    await Promise.all(keys.slice(0, keys.length - VOICE_MAX).map((k) => cache.delete(k)));
+  } catch (e) {}
+}
+
 // App shell to pre-cache so the very first launch works offline.
 const CORE = [
   './',
@@ -32,7 +59,7 @@ self.addEventListener('activate', (event) => {
   // Remove caches left over from older versions.
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== VOICE_CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -43,6 +70,11 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // don't touch cross-origin requests
+  // The voice is the one /api/ route worth keeping a copy of — see above.
+  if (url.pathname === '/api/speak' && url.searchParams.get('text')) {
+    event.respondWith(speakCacheFirst(req));
+    return;
+  }
   if (url.pathname.startsWith('/api/')) return;    // emergency service must reach the network
 
   event.respondWith(
