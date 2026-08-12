@@ -2711,6 +2711,23 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       </sc-for>
     </div>
 
+    <!-- voice note from a parent: the one place he hears their real voice -->
+    <sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:14px;right:14px;bottom:130px;background:linear-gradient(135deg,#7A5CFF,#4F46E5);border-radius:20px;padding:16px 18px;box-shadow:0 12px 30px rgba(79,70,229,.38);">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <span style="font-size:30px;line-height:1;flex:none;">💜</span>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:19px;font-weight:800;color:#fff;line-height:1.15;">Message from {{ noteFrom }}</div>
+            <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,.82);margin-top:2px;">{{ noteState }}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:13px;">
+          <div onClick="{{ notePlay }}" style="flex:1;text-align:center;background:rgba(255,255,255,.2);color:#fff;border-radius:13px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play again</div>
+          <div onClick="{{ noteDone }}" style="flex:none;background:#fff;color:#4F46E5;border-radius:13px;padding:13px 20px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">OK</div>
+        </div>
+      </div>
+    </sc-if>
+
     <!-- SOS bar -->
     <div onClick="{{ openSos }}" style="position:absolute;left:16px;right:16px;bottom:14px;background:#E23B2E;border-radius:16px;padding:9px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 8px 20px rgba(226,59,46,.32);" style-active="transform:scale(.98)">
       <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;">🆘</div>
@@ -3087,6 +3104,46 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
           <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
+
+          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">This phone</div>
+          <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? Evan's phone plays voice messages; a parent's phone can record them. This stays on this phone and is never synced.</div>
+            <div style="display:flex;gap:8px;">
+              <sc-for list="{{ roleOptions }}" as="r" hint-placeholder-count="3">
+                <div onClick="{{ r.onTap }}" style="flex:1;text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};" style-active="transform:scale(.96)">{{ r.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <sc-if value="{{ canRecord }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Send Evan a voice message</div>
+            <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+              <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:12px;line-height:1.4;">{{ recHint }}</div>
+
+              <sc-if value="{{ recIdle }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ recStart }}" style="width:100%;background:#E23B2E;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 12px rgba(226,59,46,.26);" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Start recording</button>
+              </sc-if>
+
+              <sc-if value="{{ recRecording }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ recStop }}" style="width:100%;background:#1A1714;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;" style-active="transform:scale(.98)"><span style="font-size:14px;color:#FF6B5E;">●</span>Stop — {{ recSecs }}s</button>
+              </sc-if>
+
+              <sc-if value="{{ recReview }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;">
+                  <button onClick="{{ recPlay }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play</button>
+                  <button onClick="{{ recAgain }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">↺ Re-record</button>
+                </div>
+                <button onClick="{{ recSend }}" style="width:100%;margin-top:9px;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)">Send to Evan</button>
+                <button onClick="{{ recCancel }}" style="width:100%;margin-top:8px;background:transparent;color:var(--sub,#8C857A);border:none;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+              </sc-if>
+
+              <sc-if value="{{ recSending }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:16px;font-size:16px;font-weight:800;color:var(--sub,#8C857A);">Sending…</div>
+              </sc-if>
+
+              <sc-if value="{{ recMsg }}" hint-placeholder-val=""><div style="margin-top:10px;font-size:13.5px;font-weight:700;color:{{ recMsgColor }};">{{ recMsg }}</div></sc-if>
+            </div>
+          </sc-if>
 
           <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Sync from family</div>
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
@@ -3689,6 +3746,10 @@ class Component extends DCLogic {
       }
     }, 20000);
     this._wasBirthday = this.isBirthday();
+    // Watch for a voice message from a parent. Only Evan's phone does this, and
+    // only while the app is actually on screen.
+    setTimeout(() => { try { this.pollVoice(); } catch (e) {} }, 4000);
+    setInterval(() => { if (!document.hidden) { try { this.pollVoice(); } catch (e) {} } }, 25000);
     // Warm the speech engine so the voice list is populated before the picker
     // is opened (iOS returns an empty list until the engine first loads).
     try { const sy = window.speechSynthesis; if (sy && sy.getVoices) sy.getVoices(); } catch (e) {}
@@ -4337,6 +4398,126 @@ class Component extends DCLogic {
       { glyph: '🌙', txt: 'Goodnight ' + nm, say: 'Goodnight ' + nm, color: '#4F46E5' },
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
     ];
+  }
+
+  // ── Voice notes ────────────────────────────────────────────────────────
+  // Evan can't take a call and can't reach Messages, so this is how he hears
+  // his mother's and father's actual voices. Recording is a deliberate
+  // start / stop / listen back / send — never a held button that fires the
+  // moment a thumb slips, and nothing leaves the phone until Send.
+  //
+  // The role below is per-phone and never synced: sync would otherwise tell
+  // every phone it was Evan's.
+  ROLE_KEY() { return 'ezcomm.deviceRole'; }
+  deviceRole() {
+    try { return localStorage.getItem(this.ROLE_KEY()) || 'evan'; } catch (e) { return 'evan'; }
+  }
+  setDeviceRole(r) {
+    try { localStorage.setItem(this.ROLE_KEY(), r); } catch (e) {}
+    this.setState({ recMsg: '' });
+  }
+
+  recStop() {
+    const m = this._rec;
+    if (m && m.state === 'recording') m.stop();
+    if (this._recTimer) { clearInterval(this._recTimer); this._recTimer = null; }
+  }
+
+  async recStart() {
+    if (!navigator.mediaDevices || !window.MediaRecorder) {
+      this.setState({ recMsg: "This phone can't record audio.", recBad: true });
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const rec = new MediaRecorder(stream);
+      const chunks = [];
+      rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(chunks, { type: rec.mimeType || 'audio/mp4' });
+        const fr = new FileReader();
+        fr.onloadend = () => {
+          this._recBlobUrl = URL.createObjectURL(blob);
+          this._recData = String(fr.result || '');
+          this._recMime = blob.type || 'audio/mp4';
+          this.setState({ recPhase: 'review' });
+        };
+        fr.readAsDataURL(blob);
+      };
+      this._rec = rec;
+      rec.start();
+      this.setState({ recPhase: 'recording', recSecs: 0, recMsg: '' });
+      // Thirty seconds keeps a clip inside the shared store, so no new service.
+      this._recTimer = setInterval(() => {
+        const n = (this.state.recSecs || 0) + 1;
+        this.setState({ recSecs: n });
+        if (n >= 30) this.recStop();
+      }, 1000);
+    } catch (e) {
+      this.setState({ recMsg: 'Microphone permission is needed to record.', recBad: true });
+    }
+  }
+
+  recPlay() { if (this._recBlobUrl) { try { new Audio(this._recBlobUrl).play(); } catch (e) {} } }
+  recReset(msg, bad) {
+    if (this._recBlobUrl) { try { URL.revokeObjectURL(this._recBlobUrl); } catch (e) {} }
+    this._recBlobUrl = null; this._recData = null;
+    this.setState({ recPhase: 'idle', recSecs: 0, recMsg: msg || '', recBad: !!bad });
+  }
+
+  async recSend() {
+    if (!this._recData) return;
+    const who = this.deviceRole() === 'mom' ? 'Mom' : 'Dad';
+    this.setState({ recPhase: 'sending', recMsg: '' });
+    try {
+      const r = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'send', password: this.data().password, from: who, audio: this._recData, mime: this._recMime }),
+      });
+      const j = await r.json().catch(() => null);
+      if (j && j.ok) this.recReset('Sent to Evan ✓', false);
+      else if (j && j.error === 'too_long') this.recReset('That was too long — keep it under 30 seconds.', true);
+      else if (j && j.error === 'bad_password') this.recReset("The family password on this phone doesn't match the server.", true);
+      else this.recReset("Couldn't send. Check the connection and try again.", true);
+    } catch (e) {
+      this.recReset("Couldn't send. Check the connection and try again.", true);
+    }
+  }
+
+  // Evan's phone only: look for a clip he hasn't heard, play it once, and leave
+  // the bubble up so he can replay it.
+  async pollVoice() {
+    if (this.deviceRole() !== 'evan' || this.state.note) return;
+    let since = '';
+    try { since = localStorage.getItem('ezcomm.lastNote') || ''; } catch (e) {}
+    try {
+      const r = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'poll', password: this.data().password, since }),
+      });
+      const j = await r.json().catch(() => null);
+      if (!j || !j.ok || !j.note) return;
+      try { localStorage.setItem('ezcomm.lastNote', j.note.id); } catch (e) {}
+      this.setState({ note: j.note, noteState: 'Playing…' });
+      this.playNote();
+    } catch (e) {}
+  }
+
+  playNote() {
+    const n = this.state.note;
+    if (!n) return;
+    try {
+      if (this._noteAudio) { try { this._noteAudio.pause(); } catch (e) {} }
+      const a = new Audio(n.audio);
+      this._noteAudio = a;
+      a.onended = () => this.setState({ noteState: 'Tap play to hear it again' });
+      a.onerror = () => this.setState({ noteState: "Couldn't play this one" });
+      const p = a.play();
+      if (p && p.catch) p.catch(() => this.setState({ noteState: 'Tap play to hear it' }));
+    } catch (e) {}
   }
 
   // ── Houses ─────────────────────────────────────────────────────────────
@@ -5471,6 +5652,35 @@ class Component extends DCLogic {
         { label: 'Full', emoji: '🤚', color: '#1F9E6E', say: "I'm full." },
         { label: 'Snack', emoji: '🍪', color: '#DB2777', say: 'Can I have a snack?' },
       ].map((q) => ({ ...q, onTap: () => this.speak(q.say) })),
+
+      // Whose phone this is, and the recorder that follows from it.
+      roleOptions: [['evan', "Evan's"], ['dad', 'Dad'], ['mom', 'Mom']].map(([v, label]) => {
+        const on = this.deviceRole() === v;
+        return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setDeviceRole(v) };
+      }),
+      canRecord: this.deviceRole() !== 'evan',
+      recHint: this.deviceRole() === 'mom'
+        ? "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send."
+        : "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send.",
+      recIdle: (s.recPhase || 'idle') === 'idle',
+      recRecording: s.recPhase === 'recording',
+      recReview: s.recPhase === 'review',
+      recSending: s.recPhase === 'sending',
+      recSecs: s.recSecs || 0,
+      recMsg: s.recMsg || '',
+      recMsgColor: s.recBad ? '#C0473A' : '#1F8A5B',
+      recStart: () => this.recStart(),
+      recStop: () => this.recStop(),
+      recPlay: () => this.recPlay(),
+      recAgain: () => { this.recReset('', false); this.recStart(); },
+      recCancel: () => this.recReset('', false),
+      recSend: () => this.recSend(),
+
+      hasNote: !!s.note,
+      noteFrom: s.note ? s.note.from : '',
+      noteState: s.noteState || '',
+      notePlay: () => { this.setState({ noteState: 'Playing…' }); this.playNote(); },
+      noteDone: () => { if (this._noteAudio) { try { this._noteAudio.pause(); } catch (e) {} } this.setState({ note: null, noteState: '' }); },
 
       isHouses: s.screen === 'houses',
       houseCommon: this.houseCommonRooms().map((r) => ({ label: r.label, emoji: r.emoji, onTap: () => this.speak(r.say) }))
