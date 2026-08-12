@@ -3134,7 +3134,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
             <div style="font-size:14px;font-weight:700;color:var(--ink,#1A1714);">{{ syncLabel }}</div>
             <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:5px 0 12px;line-height:1.4;">Tap Sync to pull in the latest buttons &amp; info another family member saved. (When <b>you</b> Save, it shares automatically — you don’t need to Sync your own changes.)</div>
-            <input type="password" onInput="{{ onSyncPw }}" placeholder="Family password" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            <sc-if value="{{ pwLocked }}" hint-placeholder-val="{{ true }}">
+              <input type="password" onInput="{{ onSyncPw }}" placeholder="Family password" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            </sc-if>
             <sc-if value="{{ syncErr }}" hint-placeholder-val=""><div style="color:#C0473A;font-size:13px;font-weight:700;margin-top:9px;">{{ syncErr }}</div></sc-if>
             <button onClick="{{ doSync }}" style="margin-top:12px;width:100%;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)"><sc-if value="{{ syncing }}" hint-placeholder-val="{{ false }}">Syncing…</sc-if><sc-if value="{{ notSyncing }}" hint-placeholder-val="{{ true }}">Sync Now</sc-if></button>
           </div>
@@ -3273,7 +3275,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}"><div style="color:#1F8A5B;font-size:13px;font-weight:800;">✓ Saved to this device</div></sc-if>
           <sc-if value="{{ shareMsg }}" hint-placeholder-val=""><div style="color:#3253A8;font-size:13px;font-weight:700;">{{ shareMsg }}</div></sc-if>
           <div style="display:flex;gap:10px;align-items:center;">
-            <input type="password" onInput="{{ onPw }}" placeholder="Family password" style="flex:1;min-width:0;box-sizing:border-box;padding:13px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--bg,#FBFAF7);font-family:inherit;" />
+            <sc-if value="{{ pwLocked }}" hint-placeholder-val="{{ true }}">
+              <input type="password" onInput="{{ onPw }}" placeholder="Family password" style="flex:1;min-width:0;box-sizing:border-box;padding:13px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--bg,#FBFAF7);font-family:inherit;" />
+            </sc-if>
             <button onClick="{{ doSave }}" style="flex:none;background:#E23B2E;color:#fff;border:none;border-radius:12px;padding:14px 22px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(226,59,46,.28);" style-active="transform:scale(.97)">Save</button>
           </div>
         </div>
@@ -5130,7 +5134,7 @@ class Component extends DCLogic {
   }
 
   // ── Settings actions ────────────────────────────────────────────────────
-  openSettings() { this._nb = null; this.setState({ screen: 'settings', pwInput: '', pwErr: '' }); }
+  openSettings() { this._nb = null; this._pwSession = null; this._pw = ''; this._syncPw = ''; this.setState({ screen: 'settings', pwInput: '', pwErr: '', pwUnlocked: false, setOpen: '' }); }
 
   // Voice picker — lists the phone's built-in voices (free; also enables other
   // languages). Tapping one saves it and speaks a test line.
@@ -5428,9 +5432,18 @@ class Component extends DCLogic {
     if (e === 'too_large') return 'Saved here; too large to share (remove some custom photos).';
     return 'Saved on this phone (family sharing unavailable right now).';
   }
+  // Unlocks the whole Settings screen the moment the right password is typed
+  // in either field, and remembers it for this visit so Save and Sync stop
+  // asking. Deliberately not stored anywhere — closing Settings re-locks it.
+  checkUnlock(v) {
+    if (String(v || '') !== String(this.data().password)) return;
+    this._pwSession = String(v);
+    if (!this.state.pwUnlocked) this.setState({ pwUnlocked: true, pwErr: '', syncErr: '' });
+  }
+
   doSave() {
     const d = this.data();
-    const pw = (this._pw || '');
+    const pw = (this._pw || this._pwSession || '');
     if (pw !== d.password) { this.setState({ pwErr: 'Wrong family password.', saved: false }); return; }
     this.saveStore();
     this.setState({ pwErr: '', saved: true, shareMsg: 'Sharing with family…' });
@@ -5461,7 +5474,7 @@ class Component extends DCLogic {
     return 'Sync failed. Please try again.';
   }
   doSync() {
-    const pw = (this._syncPw || '');
+    const pw = (this._syncPw || this._pwSession || '');
     if (!pw) { this.setState({ syncErr: 'Enter the family password.' }); return; }
     this.setState({ syncErr: '', syncing: true });
     fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'load', password: pw }) })
@@ -5892,7 +5905,7 @@ class Component extends DCLogic {
       customButtonsList: this.data().buttons.map((b) => ({ ...b, sectionName: this.sectionLabel(b.section), isEditing: this.nb().editId === b.id, edit: () => this.editCustom(b.id), remove: () => this.removeCustom(b.id) })),
       hasCustomButtons: this.data().buttons.length > 0,
       noCustomButtons: this.data().buttons.length === 0,
-      onPw: (e) => { this._pw = e.target.value; },
+      onPw: (e) => { this._pw = e.target.value; this.checkUnlock(e.target.value); },
       doSave: () => this.doSave(),
       pwErr: s.pwErr || '',
       shareMsg: s.shareMsg || '',
@@ -5902,7 +5915,11 @@ class Component extends DCLogic {
       changePassword: () => this.changePassword(),
       pwChErr: s.pwChErr || '',
       pwChOk: !!s.pwChOk,
-      onSyncPw: (e) => { this._syncPw = e.target.value; },
+      // One password for the whole screen. The moment what's typed matches, both
+      // fields disappear and Save and Sync just work — it was the same password
+      // twice, and typing it again taught nobody anything.
+      onSyncPw: (e) => { this._syncPw = e.target.value; this.checkUnlock(e.target.value); },
+      pwLocked: !s.pwUnlocked,
       doSync: () => this.doSync(),
       syncing: !!s.syncing,
       notSyncing: !s.syncing,
