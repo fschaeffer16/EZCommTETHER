@@ -159,6 +159,7 @@
   <a class="logo" href="#top"><img src="icon192.png" alt=""><span>EZ</span>voxa</a>
   <nav>
     <a class="hide-sm" href="#what">What it does</a>
+    <a class="hide-sm" href="#avatars">Pictures</a>
     <a class="hide-sm" href="#price">Price</a>
     <a class="hide-sm" href="#schools">Schools</a>
     <button class="btn sm" data-open-demo>Try the demo</button>
@@ -229,9 +230,35 @@
     </ul>
     <ul class="plain">
       <li><span class="k">✓</span><span class="t"><b>Family sync</b><small>A parent edits buttons on their own phone; it lands on the child's.</small></span></li>
-      <li><span class="k">✓</span><span class="t"><b>AI avatars</b><small>Generated pictures for buttons, when a photo isn't available.</small></span></li>
+      <li><span class="k">✓</span><span class="t"><b>AI avatars of your child</b><small>Approve one avatar of them, and every button gets built around it.</small></span></li>
       <li><span class="k">✓</span><span class="t"><b>Cancel any time</b><small>The app you bought keeps working. You only lose the extras.</small></span></li>
     </ul>
+  </div>
+</div></section>
+
+<section id="avatars"><div class="wrap">
+  <p class="eyebrow">Pictures that mean something</p>
+  <h2>Buttons that look like the people and things they actually know.</h2>
+  <p class="lede">A generic symbol of a woman is not their mother. A photo of their mother is.</p>
+
+  <div class="two" style="margin-top:34px">
+    <div class="card">
+      <h3>Use your own photos <span class="tag free">Included</span></h3>
+      <p style="color:var(--mute);font-size:15.5px">Put a real photo on any button — their grandmother, their actual bedroom, the exact cereal they want. Straight from your phone, as many as you like, free forever.</p>
+    </div>
+    <div class="card">
+      <h3>Or let us draw them <span class="tag">Subscription</span></h3>
+      <p style="color:var(--mute);font-size:15.5px">We can generate an avatar of your child and each family member. Once you approve your child's avatar, <b>we build their whole set of buttons around it</b> — them at the pool, them at dinner, them going to bed — so the app is full of pictures of <i>them</i>, not clip art of somebody else.</p>
+    </div>
+  </div>
+
+  <div class="two" style="margin-top:26px;align-items:center">
+    <div class="hero-art" style="aspect-ratio:1/1;max-width:420px"><img src="icon512.png" alt="Evan's avatar, surrounded by the things he talks about"></div>
+    <div>
+      <h3>This is Evan's.</h3>
+      <p style="color:var(--mute)">One approved avatar of him, and then every part of his day drawn around it — the pool, the beach, the car, movie night, bedtime, his friends. He recognises himself in his own app, and people comment on it constantly.</p>
+      <p style="color:var(--mute)">You keep control: nothing is generated without you approving it first, and you can replace any of it with a real photograph at any time.</p>
+    </div>
   </div>
 </div></section>
 
@@ -301,7 +328,7 @@
   <div class="phone">
     <div class="d-head">
       <button class="d-back" id="back" style="visibility:hidden">‹</button>
-      <div class="d-title" id="title">Evan</div>
+      <div class="d-title" id="title">Sam</div>
     </div>
     <div class="d-body" id="body"></div>
     <button class="d-sos" id="sos"><span style="font-size:19px">🆘</span><span class="t">Emergency<span class="s">Tap to send an SOS to everyone</span></span></button>
@@ -384,7 +411,7 @@
 
   function home() {
     stack = [];
-    show('Evan', function () {
+    show('Sam', function () {
       var w = el('div');
       w.appendChild(note('Tap a picture — it says it out loud. This is a demo; the real app has many more boards.'));
       var quick = el('div');
@@ -507,6 +534,7 @@
         '<h4>Your photos. Your buttons. Your words.</h4>' +
         '<div>Every button can carry a photo from your own phone — their grandmother, their actual bedroom, the exact cereal they want. You can write your own phrases in the words your family already uses, and rearrange the home screen so what they use most is first.</div>' +
         '<div class="who" style="margin-top:12px"><b>Free forever.</b> Customising is not an upgrade and never costs extra — it is the whole reason this works better than a device somebody else configured.</div>' +
+        '<div class="who">Or let us draw an avatar of them and build every button around it — that part comes with the subscription.</div>' +
         '<div class="who">Editing is behind a password, so it stays the way you set it.</div>');
     });
   }
@@ -518,7 +546,7 @@
       w.appendChild(el('div','d-panel',
         '<h4>What one tap does</h4>' +
         '<div>Sends this to everyone on the family list, at once:</div>' +
-        '<div style="background:#F1EFE9;border-radius:11px;padding:12px;margin:11px 0;font-weight:700">“HELP! It’s Evan. I need help.”<br><span style="font-weight:600;color:#8C857A">…with a live map link to exactly where he is.</span></div>' +
+        '<div style="background:#F1EFE9;border-radius:11px;padding:12px;margin:11px 0;font-weight:700">“HELP! It’s Sam. I need help.”<br><span style="font-weight:600;color:#8C857A">…with a live map link to exactly where he is.</span></div>' +
         '<div class="who">Reaches Dad, Mom, and two more people — by text, wherever they are.</div>' +
         '<div class="who" style="margin-top:10px"><b style="color:#18B26B">Included when you buy the app.</b> It keeps working whether you subscribe or not, because an emergency button that stops working is not an emergency button.</div>'));
       return w;
