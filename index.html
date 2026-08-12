@@ -3116,33 +3116,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </div>
 
           <sc-if value="{{ canRecord }}" hint-placeholder-val="{{ false }}">
-            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Send Evan a voice message</div>
-            <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
-              <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:12px;line-height:1.4;">{{ recHint }}</div>
-
-              <sc-if value="{{ recIdle }}" hint-placeholder-val="{{ true }}">
-                <button onClick="{{ recStart }}" style="width:100%;background:#E23B2E;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 12px rgba(226,59,46,.26);" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Start recording</button>
-              </sc-if>
-
-              <sc-if value="{{ recRecording }}" hint-placeholder-val="{{ false }}">
-                <button onClick="{{ recStop }}" style="width:100%;background:#1A1714;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;" style-active="transform:scale(.98)"><span style="font-size:14px;color:#FF6B5E;">●</span>Stop — {{ recSecs }}s</button>
-              </sc-if>
-
-              <sc-if value="{{ recReview }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex;gap:8px;">
-                  <button onClick="{{ recPlay }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play</button>
-                  <button onClick="{{ recAgain }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">↺ Re-record</button>
-                </div>
-                <button onClick="{{ recSend }}" style="width:100%;margin-top:9px;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)">Send to Evan</button>
-                <button onClick="{{ recCancel }}" style="width:100%;margin-top:8px;background:transparent;color:var(--sub,#8C857A);border:none;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
-              </sc-if>
-
-              <sc-if value="{{ recSending }}" hint-placeholder-val="{{ false }}">
-                <div style="text-align:center;padding:16px;font-size:16px;font-weight:800;color:var(--sub,#8C857A);">Sending…</div>
-              </sc-if>
-
-              <sc-if value="{{ recMsg }}" hint-placeholder-val=""><div style="margin-top:10px;font-size:13.5px;font-weight:700;color:{{ recMsgColor }};">{{ recMsg }}</div></sc-if>
-            </div>
+            <button onClick="{{ openVoiceNote }}" style="width:100%;margin-top:14px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Send Evan a voice message</button>
           </sc-if>
 
           <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Sync from family</div>
@@ -3344,6 +3318,46 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       </div>
     </sc-if>
 
+    <!-- VOICE NOTE (a parent's phone) -->
+    <sc-if value="{{ isVoiceNote }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#7A5CFF;flex:1;min-width:0;">Voice message</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Send Evan a voice message</div>
+            <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+              <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:12px;line-height:1.4;">{{ recHint }}</div>
+
+              <sc-if value="{{ recIdle }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ recStart }}" style="width:100%;background:#E23B2E;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 12px rgba(226,59,46,.26);" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Start recording</button>
+              </sc-if>
+
+              <sc-if value="{{ recRecording }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ recStop }}" style="width:100%;background:#1A1714;color:#fff;border:none;border-radius:16px;padding:17px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;" style-active="transform:scale(.98)"><span style="font-size:14px;color:#FF6B5E;">●</span>Stop — {{ recSecs }}s</button>
+              </sc-if>
+
+              <sc-if value="{{ recReview }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;">
+                  <button onClick="{{ recPlay }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play</button>
+                  <button onClick="{{ recAgain }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">↺ Re-record</button>
+                </div>
+                <button onClick="{{ recSend }}" style="width:100%;margin-top:9px;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)">Send to Evan</button>
+                <button onClick="{{ recCancel }}" style="width:100%;margin-top:8px;background:transparent;color:var(--sub,#8C857A);border:none;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+              </sc-if>
+
+              <sc-if value="{{ recSending }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:16px;font-size:16px;font-weight:800;color:var(--sub,#8C857A);">Sending…</div>
+              </sc-if>
+
+              <sc-if value="{{ recMsg }}" hint-placeholder-val=""><div style="margin-top:10px;font-size:13.5px;font-weight:700;color:{{ recMsgColor }};">{{ recMsg }}</div></sc-if>
+            </div>
+          
+        </div>
+      </div>
+    </sc-if>
+
     <!-- HOUSES -->
     <sc-if value="{{ isHouses }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
@@ -3489,6 +3503,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a person to send them a message.</div>
+          <!-- only on a parent's phone: the way back to Evan -->
+          <sc-if value="{{ canVoiceHere }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ openVoiceNote }}" style="margin-bottom:16px;background:linear-gradient(135deg,#7A5CFF,#4F46E5);border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 6px 18px rgba(79,70,229,.3);" style-active="transform:scale(.98)">
+              <span style="font-size:30px;line-height:1;flex:none;">🎙️</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.15;">Send Evan a voice message</div>
+                <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,.82);margin-top:2px;">He'll hear it in your voice</div>
+              </div>
+              <span style="font-size:22px;color:rgba(255,255,255,.9);flex:none;">›</span>
+            </div>
+          </sc-if>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
             <sc-for list="{{ peopleList }}" as="person" hint-placeholder-count="0">
               <div onClick="{{ person.onTap }}" style="background:var(--card,#fff);border:2px solid var(--slot,#EDEAE3);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;" style-active="transform:scale(.94)">
@@ -5659,6 +5684,10 @@ class Component extends DCLogic {
         return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setDeviceRole(v) };
       }),
       canRecord: this.deviceRole() !== 'evan',
+      // The entrance sits on Family, where you already go to reach a person.
+      canVoiceHere: this.deviceRole() !== 'evan' && s.screen === 'family',
+      isVoiceNote: s.screen === 'voicenote',
+      openVoiceNote: () => this.recReset('', false) || this.setState({ screen: 'voicenote' }),
       recHint: this.deviceRole() === 'mom'
         ? "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send."
         : "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send.",
