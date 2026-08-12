@@ -3838,6 +3838,7 @@ class Component extends DCLogic {
     // A phone locked before it went in a pocket should still be locked if the
     // app reloads in there.
     try { if (localStorage.getItem('ezcomm.pocket') === '1') this.setState({ pocketLocked: true }); } catch (e) {}
+    try { this.installTapFilter(); } catch (e) {}
     // His first touch of the session buys the right to play a message to him
     // later without asking. Costs nothing and happens once.
     const unlock = () => {
@@ -4505,6 +4506,48 @@ class Component extends DCLogic {
   // a deliberate press-and-hold opens — a bump can't hold still for a second and
   // a half. It survives a reload so a pocketed phone stays locked.
   UNLOCK_MS() { return 1500; }
+
+  // A pocket presses buttons the way a leg does: it leans, or it drags. Evan
+  // taps — down and up in the same spot, quickly. So a touch only counts if it
+  // lifts within a beat, stays put, and is the only finger on the glass.
+  // Everything else is thrown away before it can reach a button and speak.
+  installTapFilter() {
+    const MIN = 40, MAX = 900, SLOP = 14;
+    let started = 0, x0 = 0, y0 = 0, drift = 0, multi = false;
+
+    document.addEventListener('touchstart', (e) => {
+      // Reset every time, including when a second finger lands mid-gesture —
+      // otherwise the last gesture's drift decides this one.
+      started = Date.now(); drift = 0;
+      multi = e.touches.length > 1;
+      const t = e.touches[0];
+      if (t) { x0 = t.clientX; y0 = t.clientY; }
+    }, true);
+
+    document.addEventListener('touchmove', (e) => {
+      if (!e.touches.length) return;
+      const t = e.touches[0];
+      const d = Math.sqrt(Math.pow(t.clientX - x0, 2) + Math.pow(t.clientY - y0, 2));
+      if (d > drift) drift = d;
+    }, true);
+
+    document.addEventListener('touchend', (e) => {
+      const held = Date.now() - started;
+      const deliberate = !multi && drift <= SLOP && held >= MIN && held <= MAX;
+      multi = false;
+      if (deliberate) return;
+      // Typing, scrolling a list, and the hold-to-unlock shield are all things
+      // this filter has no business touching.
+      const el = e.target;
+      if (el && el.closest && el.closest('input,textarea,select')) return;
+      if (this.state.pocketLocked) return;
+      // A real drag is a scroll, and the browser already refuses to turn one
+      // into a click — blocking it here would only break scrolling.
+      if (!multi && drift > SLOP) return;
+      e.preventDefault();                    // no click is synthesised, so nothing speaks
+      e.stopPropagation();
+    }, true);
+  }
   lockPocket() {
     try { localStorage.setItem('ezcomm.pocket', '1'); } catch (e) {}
     this.setState({ pocketLocked: true, unlockPct: 0 });
