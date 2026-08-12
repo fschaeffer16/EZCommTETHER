@@ -2676,7 +2676,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
   <!-- quick-needs strip: always-visible one-tap survival words -->
   <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 8px;flex:none;-webkit-overflow-scrolling:touch;">
-    <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="12">
+    <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="7">
       <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--slot,#F0EDE7);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;" style-active="transform:scale(.94)">
         <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
         <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
@@ -5048,12 +5048,6 @@ class Component extends DCLogic {
       { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
       { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
-      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
-      { label: 'Hot', emoji: '🥵', color: '#F2920E', say: 'Hot.' },
-      { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: 'Cold.' },
-      { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
-      // Not a phrase — opens the houses, where "my room" means the right room.
-      { label: 'Houses', emoji: '🏠', color: '#14B8A6', screen: 'houses' },
     ].map((q) => ({
       label: q.label,
       emoji: q.emoji,
@@ -5061,7 +5055,7 @@ class Component extends DCLogic {
       // Carried through so warmVoice() can pre-fetch these — they are the
       // phrases he taps most, and they were silently missing from the warm-up.
       say: q.say,
-      onTap: q.screen ? (() => this.setState({ screen: q.screen })) : (() => this.speak(q.say)),
+      onTap: () => this.speak(q.say),
     }));
   }
 
