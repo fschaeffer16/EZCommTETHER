@@ -2664,6 +2664,24 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </div>
   </div>
 
+  <!-- START SCREEN: what he lands on when the app opens. One button, so a
+       pocket has nothing to press and nothing to say. The emergency bar stays,
+       because it has to work from anywhere. -->
+  <sc-if value="{{ notStarted }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;z-index:70;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;">
+      <img src="icon512.png" alt="" style="width:min(62vw,260px);height:min(62vw,260px);border-radius:28%;box-shadow:0 14px 40px rgba(20,16,12,.28);" />
+      <div onClick="{{ startApp }}" style="width:min(78vw,320px);background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);color:#fff;border-radius:22px;padding:22px;text-align:center;font-size:28px;font-weight:800;cursor:pointer;letter-spacing:-.01em;box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 8px 22px rgba(61,143,29,.4);text-shadow:0 1px 2px rgba(0,0,0,.25);" style-active="transform:scale(.96)">Open</div>
+      <div onClick="{{ openSos }}" style="position:absolute;left:16px;right:16px;bottom:14px;background:#E23B2E;border-radius:16px;padding:9px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 8px 20px rgba(226,59,46,.32);" style-active="transform:scale(.98)">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;">🆘</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:16px;font-weight:800;color:#fff;line-height:1.15;">Emergency</div>
+          <div style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.15;">Tap to send an SOS to everyone</div>
+        </div>
+        <div style="font-size:22px;color:rgba(255,255,255,.9);line-height:1;">›</div>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- quick-needs strip: always-visible one-tap survival words -->
   <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 8px;flex:none;-webkit-overflow-scrolling:touch;">
     <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="8">
@@ -5866,6 +5884,11 @@ class Component extends DCLogic {
         });
         return out;
       })(),
+
+      // Guided Access can't guard a Home Screen, so the app brings its own: one
+      // picture, one button. Nothing here can speak by accident.
+      notStarted: !s.started,
+      startApp: () => this.setState({ started: true, screen: 'board' }),
 
       lockPocket: () => this.lockPocket(),
       pocketLocked: !!s.pocketLocked,
