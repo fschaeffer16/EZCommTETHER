@@ -4845,17 +4845,32 @@ class Component extends DCLogic {
   //   rev 3 — Feelings beside Health, then Talk, Sentence Build, Colors, Places.
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
-    if ((d.layoutRev || 0) >= 3) return false;
-    d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
-    const fam = Array.isArray(d.family) ? d.family.slice() : [];
-    const pull = (id) => { const i = fam.findIndex((p) => p && p.id === id); return i < 0 ? null : fam.splice(i, 1)[0]; };
-    const dad = pull('dad');
-    const mom = pull('mom');
-    // The Family board is three across, so Dad and Mom sit at the two ends of
-    // the top row with one person between them.
-    if (dad && mom) d.family = [dad].concat(fam.splice(0, 1), [mom], fam);
-    else if (dad || mom) d.family = [dad || mom].concat(fam);
-    d.layoutRev = 3;
+    const rev = d.layoutRev || 0;
+    if (rev >= 4) return false;
+
+    if (rev < 3) {
+      d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
+      const fam = Array.isArray(d.family) ? d.family.slice() : [];
+      const pull = (id) => { const i = fam.findIndex((p) => p && p.id === id); return i < 0 ? null : fam.splice(i, 1)[0]; };
+      const dad = pull('dad');
+      const mom = pull('mom');
+      // The Family board is three across, so Dad and Mom sit at the two ends of
+      // the top row with one person between them.
+      if (dad && mom) d.family = [dad].concat(fam.splice(0, 1), [mom], fam);
+      else if (dad || mom) d.family = [dad || mom].concat(fam);
+    }
+
+    // Rev 4: Houses left the quick strip and became a home tile. A saved
+    // homeOrder would push it to the very bottom of the grid, so slot it in
+    // next to Places instead — and leave the rest of his order alone, since
+    // wiping homeOrder here would undo any arranging done since rev 3.
+    if (rev >= 3 && Array.isArray(d.homeOrder) && d.homeOrder.length && d.homeOrder.indexOf('houses') < 0) {
+      const at = d.homeOrder.indexOf('places');
+      if (at < 0) d.homeOrder.push('houses');
+      else d.homeOrder.splice(at + 1, 0, 'houses');
+    }
+
+    d.layoutRev = 4;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5029,6 +5044,9 @@ class Component extends DCLogic {
       { id: 'clock', label: 'Time', emoji: '🕒', color: '#0EA5E9', onTap: () => this.setState({ screen: 'clock' }) },
       { id: 'calendar', label: 'Calendar', emoji: '📅', color: '#4F46E5', onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
+      // Dad's house and Mom's house, and the rooms in each — "my room" means
+      // the right room. Sits next to Places because both answer "where".
+      { id: 'houses', label: 'Houses', emoji: '🏠', color: '#0D9488', onTap: () => this.setState({ screen: 'houses' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
     ];
