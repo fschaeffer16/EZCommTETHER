@@ -2788,6 +2788,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">Food</div>
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
+        <!-- how he feels about eating, before naming anything in particular -->
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 10px;flex:none;-webkit-overflow-scrolling:touch;">
+          <sc-for list="{{ hungerRow }}" as="q" hint-placeholder-count="4">
+            <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
+              <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
+              <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
+            </div>
+          </sc-for>
+        </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="display:flex;gap:12px;margin-bottom:16px;">
             <div onClick="{{ openDrinks }}" style="flex:1;background:#3B82F6;color:#fff;border-radius:18px;padding:18px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:19px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.3);" style-active="transform:scale(.97)"><span style="font-size:24px;">🥤</span>Drinks</div>
@@ -3279,6 +3288,64 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 <sc-if value="{{ item.hasImg }}" hint-placeholder-val="{{ false }}">{{ item.imgEl }}</sc-if>
                 <sc-if value="{{ item.showEmoji }}" hint-placeholder-val="{{ true }}"><span style="font-size:46px;line-height:1;">{{ item.emoji }}</span></sc-if>
                 <span style="font-size:15.5px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ item.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- HOUSES -->
+    <sc-if value="{{ isHouses }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#14B8A6;flex:1;min-width:0;">Houses</div>
+          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
+        </div>
+        <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;padding:0 18px 8px;flex:none;">In every house</div>
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 12px;flex:none;-webkit-overflow-scrolling:touch;">
+          <sc-for list="{{ houseCommon }}" as="r" hint-placeholder-count="4">
+            <div onClick="{{ r.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid #14B8A6;border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
+              <span style="font-size:20px;line-height:1;">{{ r.emoji }}</span>
+              <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ r.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:2px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;margin:0 0 10px;">Which house?</div>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;">
+            <sc-for list="{{ housesList }}" as="h" hint-placeholder-count="2">
+              <div onClick="{{ h.onTap }}" style="background:var(--card,#fff);border:3px solid {{ h.color }};border-radius:20px;padding:20px 18px;display:flex;align-items:center;gap:15px;cursor:pointer;box-shadow:0 3px 10px rgba(20,16,12,.08);" style-active="transform:scale(.97)">
+                <span style="font-size:44px;line-height:1;flex:none;">{{ h.emoji }}</span>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:21px;font-weight:800;color:var(--ink,#1A1714);line-height:1.15;">{{ h.label }}</div>
+                  <div style="font-size:13px;font-weight:600;color:var(--sub,#8C857A);margin-top:2px;">{{ h.count }}</div>
+                </div>
+                <span style="font-size:24px;color:var(--hint,#C9C2B8);flex:none;">›</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- HOUSE ROOMS -->
+    <sc-if value="{{ isHouseRooms }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ backToHouses }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:{{ houseColor }};flex:1;min-width:0;">{{ houseTitle }}</div>
+          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a room — it will say it out loud.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <sc-for list="{{ houseRooms }}" as="r" hint-placeholder-count="0">
+              <div onClick="{{ r.onTap }}" style="background:var(--card,#fff);border:3px solid {{ houseColor }};border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:120px;justify-content:center;" style-active="transform:scale(.95)">
+                <sc-if value="{{ r.hasIcon }}" hint-placeholder-val="{{ false }}">{{ r.iconEl }}</sc-if>
+                <sc-if value="{{ r.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:44px;line-height:1;">{{ r.emoji }}</span></sc-if>
+                <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ r.label }}</span>
               </div>
             </sc-for>
           </div>
@@ -4280,6 +4347,34 @@ class Component extends DCLogic {
     ];
   }
 
+  // ── Houses ─────────────────────────────────────────────────────────────
+  // Evan lives in two places, so "my room" means two different rooms. Rooms that
+  // exist in both houses sit across the top and need no choice; the rest belong
+  // to a house. Each parent fills in their own house — these are ordinary custom
+  // buttons underneath, so they add, edit and sync like everything else.
+  houseCommonRooms() {
+    return [
+      { label: 'Bathroom', emoji: '🚻', say: 'Bathroom.' },
+      { label: 'Kitchen', emoji: '🍳', say: 'Kitchen.' },
+      { label: 'Living Room', emoji: '🛋️', say: 'Living room.' },
+      { label: 'Outside', emoji: '🌳', say: 'Outside.' },
+    ];
+  }
+  houses() {
+    return [
+      { id: 'dad', section: 'housedad', label: "Dad's House", emoji: '🏠', color: '#2F6BFF', rooms: [
+        { label: 'My Room', emoji: '🛏️', say: 'My room at Dad\'s house.' },
+        { label: "Dad's Room", emoji: '🚪', say: "Dad's room." },
+        { label: 'The Office', emoji: '💼', say: 'The office.' },
+      ]},
+      { id: 'mom', section: 'housemom', label: "Mom's House", emoji: '🏡', color: '#E5533D', rooms: [
+        { label: 'My Room', emoji: '🛏️', say: 'My room at Mom\'s house.' },
+        { label: "Mom's Room", emoji: '🚪', say: "Mom's room." },
+      ]},
+    ];
+  }
+  houseById(id) { return this.houses().find((h) => h.id === id) || this.houses()[0]; }
+
   // ── Calendar ───────────────────────────────────────────────────────────
   // One month at a time, opening on this one, with today ringed. Tapping a day
   // says the date out loud, so he can answer "when?" as well as read it.
@@ -4667,23 +4762,14 @@ class Component extends DCLogic {
   // Always-visible survival words on the home screen. One tap = spoken.
   quickNeeds() {
     return [
+      // Only what has to be reachable without a second thought — roughly what
+      // fits on screen without scrolling. Everything else lives one tap deep.
       { label: 'Hello', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
-      { label: 'Bye', emoji: '✌️', color: '#7A5CFF', say: 'Bye!' },
-      { label: 'Break', emoji: '⏸️', color: '#6366F1', say: 'I need a break.' },
-      { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
-      { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
       { label: 'Stop', emoji: '🛑', color: '#EF4444', say: 'Stop.' },
       { label: 'Need', emoji: '❗', color: '#E5533D', say: 'Need.' },
-      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
       { label: 'More', emoji: '➕', color: '#1F9E6E', say: 'More, please.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
-      // Rooms — one colour so they read as a group as he scrolls past them.
-      { label: 'My Room', emoji: '🛏️', color: '#14B8A6', say: 'My room.' },
-      { label: "Dad's Room", emoji: '🚪', color: '#14B8A6', say: "Dad's room." },
-      { label: 'Living Room', emoji: '🛋️', color: '#14B8A6', say: 'Living room.' },
-      { label: 'The Office', emoji: '💼', color: '#14B8A6', say: 'The office.' },
-      { label: 'Kitchen', emoji: '🍳', color: '#14B8A6', say: 'Kitchen.' },
-      { label: 'Bathroom', emoji: '🚻', color: '#14B8A6', say: 'Bathroom.' },
+      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
     ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
   }
 
@@ -4696,12 +4782,9 @@ class Component extends DCLogic {
       { label: 'Hot', emoji: '🥵', color: '#F2920E', say: 'Hot.' },
       { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: 'Cold.' },
       { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
-      { label: 'Found', emoji: '🙌', color: '#7A5CFF', say: 'I found it.' },
-      // Moved down from the top strip to make room — still one tap, just not
-      // in the way of the words he reaches for constantly.
-      { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
-      { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
-    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
+      // Not a phrase — opens the houses, where "my room" means the right room.
+      { label: 'Houses', emoji: '🏠', color: '#14B8A6', screen: 'houses' },
+    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: q.screen ? (() => this.setState({ screen: q.screen })) : (() => this.speak(q.say)) }));
   }
 
   // Regulation / sensory-overload language (fast access to "too much").
@@ -5151,7 +5234,7 @@ class Component extends DCLogic {
       .catch(() => this.setState({ syncing: false, syncErr: 'Could not reach family Sync. Check the internet.' }));
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick' }; return m[sec] || sec; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house" }; return m[sec] || sec; }
 
   // Core-word board for building sentences, colored with the Modified
   // Fitzgerald key used across AAC (pronouns yellow, verbs green, describers
@@ -5172,6 +5255,8 @@ class Component extends DCLogic {
         { t: 'I wanna go with you', e: '🤝', say: 'I wanna go with you.' },
         { t: 'look at this', e: '👉', say: 'Look at this.' },
         { t: 'thank you', e: '💛', say: 'Thank you.' },
+        { t: 'I found it', e: '🙌', say: 'I found it.' },
+        { t: 'bye', e: '✌️', say: 'Bye!' },
       ]},
       { label: 'Social', color: '#DB2777', words: [
         { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
@@ -5386,6 +5471,32 @@ class Component extends DCLogic {
       toggleTheme: () => this.setState({ theme: s.theme === 'light' ? 'dark' : 'light' }),
       tiles: this.tiles(),
       isNight: s.screen === 'night',
+      // Hungry and Thirsty moved off the home strip; they live here now, where
+      // he's already heading when either one is true.
+      hungerRow: [
+        { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
+        { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
+        { label: 'Full', emoji: '🤚', color: '#1F9E6E', say: "I'm full." },
+        { label: 'Snack', emoji: '🍪', color: '#DB2777', say: 'Can I have a snack?' },
+      ].map((q) => ({ ...q, onTap: () => this.speak(q.say) })),
+
+      isHouses: s.screen === 'houses',
+      houseCommon: this.houseCommonRooms().map((r) => ({ label: r.label, emoji: r.emoji, onTap: () => this.speak(r.say) }))
+        .concat(this.customsFor('housecommon').map((b) => ({ label: b.label, emoji: b.emoji, onTap: b.onTap }))),
+      housesList: this.houses().map((h) => {
+        const n = h.rooms.length + this.data().buttons.filter((b) => b.section === h.section).length;
+        return { label: h.label, emoji: h.emoji, color: h.color, count: n + (n === 1 ? ' room' : ' rooms'), onTap: () => this.setState({ screen: 'houserooms', houseId: h.id }) };
+      }),
+      isHouseRooms: s.screen === 'houserooms',
+      backToHouses: () => this.setState({ screen: 'houses' }),
+      houseTitle: this.houseById(s.houseId).label,
+      houseColor: this.houseById(s.houseId).color,
+      houseRooms: (() => {
+        const h = this.houseById(s.houseId);
+        const base = h.rooms.map((r) => ({ label: r.label, emoji: r.emoji, hasIcon: false, noIcon: true, iconEl: null, onTap: () => this.speak(r.say) }));
+        return base.concat(this.customsFor(h.section));
+      })(),
+
       isBirthday: this.isBirthday(),
       sayBirthday: () => this.speak("Today is my birthday! I'm " + this.childAge() + '.'),
 
@@ -5463,7 +5574,7 @@ class Component extends DCLogic {
       nbOnEmoji: (e) => { this.nb().emoji = e.target.value; },
       nbOnImage: (e) => this.nbSetImage(e.target.files && e.target.files[0]),
       nbAddPhrase: () => this.nbAddPhrase(),
-      nbSections: ['home', 'family', 'food', 'fun', 'night', 'feelings', 'places', 'hurt'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      nbSections: ['home', 'family', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',
