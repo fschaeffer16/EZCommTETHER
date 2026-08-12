@@ -3105,7 +3105,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
 
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">This phone</div>
+                    <div onClick="{{ setTog_phone }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">📱</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">This phone</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_phone }}</span>
+          </div>
+          <sc-if value="{{ setOpen_phone }}" hint-placeholder-val="{{ false }}">
+
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
             <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? Evan's phone plays voice messages; a parent's phone can record them. This stays on this phone and is never synced.</div>
             <div style="display:flex;gap:8px;">
@@ -3115,11 +3121,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </div>
 
-          <sc-if value="{{ canRecord }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ openVoiceNote }}" style="width:100%;margin-top:14px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Send Evan a voice message</button>
-          </sc-if>
 
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Sync from family</div>
+                    </sc-if>
+
+          <div onClick="{{ setTog_sync }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">🔄</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Sync from family</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_sync }}</span>
+          </div>
+          <sc-if value="{{ setOpen_sync }}" hint-placeholder-val="{{ false }}">
+
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
             <div style="font-size:14px;font-weight:700;color:var(--ink,#1A1714);">{{ syncLabel }}</div>
             <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:5px 0 12px;line-height:1.4;">Tap Sync to pull in the latest buttons &amp; info another family member saved. (When <b>you</b> Save, it shares automatically — you don’t need to Sync your own changes.)</div>
@@ -3128,7 +3139,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <button onClick="{{ doSync }}" style="margin-top:12px;width:100%;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)"><sc-if value="{{ syncing }}" hint-placeholder-val="{{ false }}">Syncing…</sc-if><sc-if value="{{ notSyncing }}" hint-placeholder-val="{{ true }}">Sync Now</sc-if></button>
           </div>
 
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Family Members</div>
+                    </sc-if>
+
+          <div onClick="{{ setTog_people }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">👪</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Family members</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_people }}</span>
+          </div>
+          <sc-if value="{{ setOpen_people }}" hint-placeholder-val="{{ false }}">
+
           <sc-for list="{{ settingsFamily }}" as="p" hint-placeholder-count="2">
             <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
               <div style="display:flex;align-items:center;gap:12px;">
@@ -3154,7 +3173,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </sc-for>
           <button onClick="{{ addFamily }}" style="width:100%;background:var(--card,#fff);border:2px dashed #B7CBF5;color:#3B82F6;border-radius:16px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.98)">+ Add Person</button>
 
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:26px 2px 12px;">Arrange Home Buttons</div>
+                    </sc-if>
+
+          <div onClick="{{ setTog_arrange }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">↕️</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Arrange home buttons</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_arrange }}</span>
+          </div>
+          <sc-if value="{{ setOpen_arrange }}" hint-placeholder-val="{{ false }}">
+
           <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:0 2px 12px;line-height:1.4;">Move a button Evan uses a lot nearer the top.</div>
           <sc-for list="{{ settingsHome }}" as="t" hint-placeholder-count="6">
             <div style="display:flex;align-items:center;gap:11px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:14px;padding:10px 12px;margin-bottom:8px;">
@@ -3165,7 +3192,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </sc-for>
 
-          <div id="nb-form" style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:26px 2px 12px;display:flex;align-items:center;gap:8px;"><sc-if value="{{ nbEditing }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;">✏️</span></sc-if>{{ nbFormTitle }}</div>
+                    </sc-if>
+
+          <div onClick="{{ setTog_buttons }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">➕</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Add & edit buttons</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_buttons }}</span>
+          </div>
+          <sc-if value="{{ setOpen_buttons }}" hint-placeholder-val="{{ false }}">
+<div id="nb-form" style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:26px 2px 12px;display:flex;align-items:center;gap:8px;"><sc-if value="{{ nbEditing }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;">✏️</span></sc-if>{{ nbFormTitle }}</div>
           <div key="{{ nbFormKey }}" style="background:var(--card,#fff);border:1.5px solid {{ nbFormBorder }};border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
             <div style="display:flex;gap:12px;align-items:flex-start;">
               <label style="position:relative;cursor:pointer;flex:none;display:block;width:72px;height:72px;border-radius:16px;overflow:hidden;border:2px dashed #C7C0B4;background:var(--slot,#F0EDE7);">
@@ -3212,14 +3247,24 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </sc-for>
           </sc-if>
 
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:26px 2px 12px;">Family Password</div>
+                    </sc-if>
+
+          <div onClick="{{ setTog_password }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">🔒</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Family password</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_password }}</span>
+          </div>
+          <sc-if value="{{ setOpen_password }}" hint-placeholder-val="{{ false }}">
+
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
             <input type="password" onInput="{{ onPwOld }}" placeholder="Current password" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;margin-bottom:8px;" />
             <input type="password" onInput="{{ onPwNew }}" placeholder="New password" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
             <sc-if value="{{ pwChErr }}" hint-placeholder-val=""><div style="color:#C0473A;font-size:13px;font-weight:700;margin-top:9px;">{{ pwChErr }}</div></sc-if>
             <sc-if value="{{ pwChOk }}" hint-placeholder-val="{{ false }}"><div style="color:#1F8A5B;font-size:13px;font-weight:700;margin-top:9px;">✓ Password changed</div></sc-if>
             <button onClick="{{ changePassword }}" style="margin-top:12px;width:100%;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.98)">Change Password</button>
-          </div>
+          </div>          </sc-if>
+
+
 
         </div>
 
@@ -5683,6 +5728,19 @@ class Component extends DCLogic {
         const on = this.deviceRole() === v;
         return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setDeviceRole(v) };
       }),
+      // Settings is a stack of long lists, so it opens as six closed cards and
+      // only one is open at a time — the page never grows past a screenful.
+      ...(() => {
+        const open = s.setOpen || '';
+        const out = {};
+        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password'].forEach((k) => {
+          out['setOpen_' + k] = open === k;
+          out['setChev_' + k] = open === k ? '▲' : '▼';
+          out['setTog_' + k] = () => this.setState({ setOpen: open === k ? '' : k });
+        });
+        return out;
+      })(),
+
       canRecord: this.deviceRole() !== 'evan',
       // The entrance sits on Family, where you already go to reach a person.
       canVoiceHere: this.deviceRole() !== 'evan' && s.screen === 'family',
@@ -5786,7 +5844,11 @@ class Component extends DCLogic {
       isSettings: s.screen === 'settings',
       openSettings: () => this.openSettings(),
       openVoiceChooser: () => this.openVoiceChooser(),
-      jumpToAddButton: () => { const el = document.getElementById('nb-form'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
+      // The form is inside a collapsed card now, so open it before scrolling.
+      jumpToAddButton: () => {
+        this.setState({ setOpen: 'buttons' });
+        setTimeout(() => { const el = document.getElementById('nb-form'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+      },
       settingsFamily: this.data().family.map((p, i, arr) => ({
         ...p,
         idx: i, isFirst: i === 0, isLast: i === arr.length - 1,
