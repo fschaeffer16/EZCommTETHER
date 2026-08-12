@@ -2666,7 +2666,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
   <!-- board -->
   <div style="flex:1;position:relative;overflow:hidden;">
-    <div ref="{{ boardScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;padding:4px 18px 116px;">
+    <div ref="{{ boardScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;padding:4px 18px 168px;">
 
       <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;gap:7px;margin:2px 2px 10px;color:var(--hint,#A8A095);">
@@ -2690,6 +2690,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </sc-for>
       </div>
 
+    </div>
+
+    <!-- states strip: how he's doing / where he is, right above the SOS bar -->
+    <div style="position:absolute;left:0;right:0;bottom:74px;display:flex;gap:8px;overflow-x:auto;padding:0 16px 6px;-webkit-overflow-scrolling:touch;">
+      <sc-for list="{{ quickStates }}" as="q" hint-placeholder-count="6">
+        <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ q.color }};border-radius:16px;padding:9px 13px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.10);" style-active="transform:scale(.94)">
+          <span style="font-size:19px;line-height:1;">{{ q.emoji }}</span>
+          <span style="font-size:15.5px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
+        </div>
+      </sc-for>
     </div>
 
     <!-- SOS bar -->
@@ -3360,7 +3370,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isNumbers }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ numBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Numbers</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:4px 16px 24px;">
@@ -4229,7 +4239,9 @@ class Component extends DCLogic {
     const options = this.personPhrases(kind || 'family', nm);
     const canText = !!(p.phone && String(p.phone).trim());
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
-    const normalTap = () => { this.speak(nm); this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: canText ? 'Tap to say it, or Text to send it' : 'Tap a phrase to say it', editPerson: () => this.requestPersonEdit(p), options: options.map((o) => ({ ...o, canText: canText, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
+    // Opening someone doesn't announce their name — tapping their face inside
+    // does. Saying a name and choosing a message are two different intentions.
+    const normalTap = () => { this.setState({ chooser: { label: nm, noIcon: false, hasIcon: true, iconEl: tappableAvatar(84), avatarHint: canText ? 'Tap to say it, or Text to send it' : 'Tap a phrase to say it', editPerson: () => this.requestPersonEdit(p), options: options.map((o) => ({ ...o, canText: canText, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); }, onText: () => { this.textPerson(p, o.say); this.setState({ chooser: null }); } })) } }); };
     // At-a-glance number status on the Family card, so you can confirm daily
     // (without opening the gear) that a person is ready to text. Key contacts
     // who are missing a number show a loud red warning.
@@ -4501,6 +4513,7 @@ class Component extends DCLogic {
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
+      { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#F59E0B', onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
@@ -4517,12 +4530,25 @@ class Component extends DCLogic {
       { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
       { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
       { label: 'Stop', emoji: '🛑', color: '#EF4444', say: 'Stop.' },
-      { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
+      { label: 'Need', emoji: '❗', color: '#E5533D', say: 'I need something.' },
       { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
       { label: 'More', emoji: '➕', color: '#1F9E6E', say: 'More, please.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
       { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
       { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
+    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
+  }
+
+  // Second strip, sitting just above the emergency bar — how he's doing and
+  // where he is. Lost lives down here now, next to Found, rather than up top.
+  quickStates() {
+    return [
+      { label: 'Good', emoji: '😄', color: '#1F9E6E', say: "I'm good." },
+      { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'I feel bad.' },
+      { label: 'Hot', emoji: '🥵', color: '#F2920E', say: "I'm hot." },
+      { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: "I'm cold." },
+      { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
+      { label: 'Found', emoji: '🙌', color: '#7A5CFF', say: 'I found it.' },
     ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
   }
 
@@ -5089,7 +5115,7 @@ class Component extends DCLogic {
       openStaff: () => this.openPhraseChooser('Staff', '🏫', this.staffPhrases()),
       openFriendsBoard: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()),
       openABC: () => this.setState({ screen: 'abc', spellText: '' }),
-      openNumbers: () => this.setState({ screen: 'numbers' }),
+      openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
       openCalc: () => this.setState({ screen: 'calc' }),
       // Words — core-word sentence builder. Tapping a word speaks it and adds
@@ -5119,7 +5145,10 @@ class Component extends DCLogic {
       spellBack: () => this.spellBack(),
       spellClear: () => this.spellClear(),
       abcKeys: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((ch) => ({ ch, onTap: () => this.spellAdd(ch) })),
-      numKeys: Array.from({ length: 20 }, (_, i) => ({ n: i + 1, onTap: () => this.speak('I want ' + (i + 1) + '.') })),
+      // Just the number. He uses these to count and to answer "how many?", and
+      // wrapping every one in "I want…" put words in his mouth he didn't choose.
+      numKeys: Array.from({ length: 25 }, (_, i) => ({ n: i + 1, onTap: () => this.speak(String(i + 1)) })),
+      numBack: () => this.setState({ screen: this.state.numFrom === 'school' ? 'school' : 'board' }),
       calcDisplay: s.calc || '0',
       calcKeys: [
         ['C', '#FCE4E2', '#E23B2E'], ['⌫', 'var(--slot,#F0EDE7)', 'var(--ink,#1A1714)'], ['÷', '#0EA5E9', '#fff'], ['×', '#0EA5E9', '#fff'],
@@ -5225,6 +5254,7 @@ class Component extends DCLogic {
       openMedicine: () => this.openPhraseChooser('Medicine', '💊', this.medicineItems()),
       homeTiles: this.homeTiles(),
       quickNeeds: this.quickNeeds(),
+      quickStates: this.quickStates(),
       isSettings: s.screen === 'settings',
       openSettings: () => this.openSettings(),
       openVoiceChooser: () => this.openVoiceChooser(),
