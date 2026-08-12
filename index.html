@@ -2639,6 +2639,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--ink,#1A1714);">Evan</div>
       <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;margin-top:2px;">Tap a picture to talk</div>
     </div>
+    <div onClick="{{ lockPocket }}" style="width:40px;height:40px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">🔒</div>
     <div onClick="{{ toggleTheme }}" style="width:40px;height:40px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">{{ themeIcon }}</div>
     <div onClick="{{ openSettings }}" style="width:40px;height:40px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">⚙️</div>
   </div>
@@ -2724,6 +2725,20 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="display:flex;gap:8px;margin-top:13px;">
           <div onClick="{{ notePlay }}" style="flex:1;text-align:center;background:rgba(255,255,255,.2);color:#fff;border-radius:13px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play again</div>
           <div onClick="{{ noteDone }}" style="flex:none;background:#fff;color:#4F46E5;border-radius:13px;padding:13px 20px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">OK</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- POCKET LOCK: covers everything so a pocket can't press buttons.
+         Held, not tapped — a bump can't hold for a second and a half. -->
+    <sc-if value="{{ pocketLocked }}" hint-placeholder-val="{{ false }}">
+      <div onPointerDown="{{ unlockDown }}" onPointerUp="{{ unlockUp }}" onPointerCancel="{{ unlockUp }}" onPointerLeave="{{ unlockUp }}"
+           style="position:absolute;inset:0;z-index:60;background:#0B0D14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;cursor:pointer;-webkit-user-select:none;user-select:none;">
+        <div style="font-size:64px;line-height:1;">🔒</div>
+        <div style="font-size:23px;font-weight:800;color:#fff;text-align:center;padding:0 30px;line-height:1.25;">Screen locked</div>
+        <div style="font-size:16px;font-weight:600;color:rgba(255,255,255,.62);text-align:center;padding:0 40px;line-height:1.35;">{{ unlockHint }}</div>
+        <div style="width:210px;height:10px;border-radius:5px;background:rgba(255,255,255,.16);overflow:hidden;">
+          <div style="height:100%;width:{{ unlockPct }};background:linear-gradient(90deg,#2EE68A,#2F6BFF);border-radius:5px;"></div>
         </div>
       </div>
     </sc-if>
@@ -3820,6 +3835,9 @@ class Component extends DCLogic {
       }
     }, 20000);
     this._wasBirthday = this.isBirthday();
+    // A phone locked before it went in a pocket should still be locked if the
+    // app reloads in there.
+    try { if (localStorage.getItem('ezcomm.pocket') === '1') this.setState({ pocketLocked: true }); } catch (e) {}
     // His first touch of the session buys the right to play a message to him
     // later without asking. Costs nothing and happens once.
     const unlock = () => {
@@ -4479,6 +4497,34 @@ class Component extends DCLogic {
       { glyph: '🌙', txt: 'Goodnight ' + nm, say: 'Goodnight ' + nm, color: '#4F46E5' },
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
     ];
+  }
+
+  // ── Pocket lock ────────────────────────────────────────────────────────
+  // In Guided Access the screen stays live, so a phone in a pocket presses its
+  // own buttons and talks to nobody. This covers the app with a shield that only
+  // a deliberate press-and-hold opens — a bump can't hold still for a second and
+  // a half. It survives a reload so a pocketed phone stays locked.
+  UNLOCK_MS() { return 1500; }
+  lockPocket() {
+    try { localStorage.setItem('ezcomm.pocket', '1'); } catch (e) {}
+    this.setState({ pocketLocked: true, unlockPct: 0 });
+  }
+  unlockDown() {
+    if (this._unlockTimer) return;
+    const started = Date.now();
+    this._unlockTimer = setInterval(() => {
+      const pct = Math.min(100, ((Date.now() - started) / this.UNLOCK_MS()) * 100);
+      this.setState({ unlockPct: pct });
+      if (pct >= 100) {
+        this.unlockUp();
+        try { localStorage.removeItem('ezcomm.pocket'); } catch (e) {}
+        this.setState({ pocketLocked: false, unlockPct: 0 });
+      }
+    }, 50);
+  }
+  unlockUp() {
+    if (this._unlockTimer) { clearInterval(this._unlockTimer); this._unlockTimer = null; }
+    if (this.state.pocketLocked) this.setState({ unlockPct: 0 });
   }
 
   // ── Voice notes ────────────────────────────────────────────────────────
@@ -5777,6 +5823,13 @@ class Component extends DCLogic {
         });
         return out;
       })(),
+
+      lockPocket: () => this.lockPocket(),
+      pocketLocked: !!s.pocketLocked,
+      unlockPct: Math.round(s.unlockPct || 0) + '%',
+      unlockHint: (s.unlockPct || 0) > 4 ? 'Keep holding…' : 'Press and hold to unlock',
+      unlockDown: () => this.unlockDown(),
+      unlockUp: () => this.unlockUp(),
 
       canRecord: this.deviceRole() !== 'evan',
       // The entrance sits on Family, where you already go to reach a person.
