@@ -2756,7 +2756,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;">
                 {{ p.avatarEl }}
                 <sc-if value="{{ p.noPhoto }}" hint-placeholder-val="{{ true }}">
-                  <div style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:{{ p.ring }};background:{{ p.tint }};border:2.5px solid {{ p.ring }};">{{ p.initial }}</div>
+                  <div style="width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:700;color:#fff;background:{{ p.ring }};line-height:1;">{{ p.initial }}</div>
                 </sc-if>
                 <span style="font-size:12px;font-weight:700;color:#5C544C;">{{ p.name }}</span>
               </div>
@@ -3589,7 +3589,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Pick one.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div onClick="{{ openTeachers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👩‍🏫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Teachers</span></div>
-            <div onClick="{{ openStaff }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🏫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Staff</span></div>
+            <div onClick="{{ openStaff }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🧑‍🔧</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Support Staff</span></div>
+            <div onClick="{{ openFrontOffice }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🗄️</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Front Office</span></div>
             <div onClick="{{ openFriendsBoard }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Friends</span></div>
             <div onClick="{{ openABC }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔤</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🔢</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
@@ -4098,7 +4099,58 @@ class Component extends DCLogic {
   edReset() { const e = this._ed; if (!e) return; const d = this.data(); if (d.overrides) delete d.overrides[e.key]; this.saveStore(); this._ed = null; this.setState({ editSheet: false }); }
   edCancel() { this._ed = null; this.setState({ editSheet: false }); }
 
-  foods() {
+  // Food is one of the few boards that isn't stored per-device — it's read
+  // straight from here every render. So the buyer's neutral list and Evan's
+  // real one both live in the code, and `profile` picks between them. Phones
+  // that already had the app are stamped 'evan' by the rev 5 migration; a
+  // fresh install gets the starter list.
+  isEvanProfile() { return this.data().profile === 'evan'; }
+
+  foods() { return this.isEvanProfile() ? this.evanFoods() : this.starterFoods(); }
+  drinks() { return this.isEvanProfile() ? this.evanDrinks() : this.starterDrinks(); }
+  snacks() { return this.isEvanProfile() ? this.evanSnacks() : this.starterSnacks(); }
+
+  // Foods almost any household recognises. Short on purpose — a buyer adds
+  // what their kid actually eats, and a short list is easier to add to than a
+  // long one is to prune.
+  starterFoods() {
+    return [
+      { label: 'Pizza', icon: 'pizza' },
+      { label: 'Chicken Fingers', icon: 'chicken_fingers' },
+      { label: 'Hamburger', icon: 'hamburger' },
+      { label: 'Hot Dogs', icon: 'hot_dogs' },
+      { label: 'Spaghetti', icon: 'spaghetti' },
+      { label: 'Sandwich', emoji: '🥪' },
+      { label: 'Soup', emoji: '🍲' },
+      { label: 'Cereal', emoji: '🥣' },
+      { label: 'Eggs', emoji: '🍳' },
+      { label: 'Apple', emoji: '🍎' },
+      { label: 'Bananas', icon: 'bananas' },
+      { label: 'Grapes', icon: 'red_grapes' },
+      { label: 'Strawberries', icon: 'strawberries' },
+      { label: 'Cookie', emoji: '🍪' },
+    ];
+  }
+  starterDrinks() {
+    return [
+      { label: 'Water', emoji: '💧' },
+      { label: 'Milk', emoji: '🥛' },
+      { label: 'Apple Juice', icon: 'apple_juice' },
+      { label: 'Orange Juice', emoji: '🍊' },
+      { label: 'Lemonade', emoji: '🍋' },
+      { label: 'Soda', emoji: '🥤' },
+    ];
+  }
+  starterSnacks() {
+    return [
+      { label: 'Chips', emoji: '🥔' },
+      { label: 'Popcorn', emoji: '🍿' },
+      { label: 'Pretzels', emoji: '🥨' },
+      { label: 'Crackers', emoji: '🧀' },
+    ];
+  }
+
+  evanFoods() {
     return [
       { label: 'Pizza', icon: 'pizza' },
       { label: 'Chicken Fingers', icon: 'chicken_fingers' },
@@ -4130,7 +4182,7 @@ class Component extends DCLogic {
     ];
   }
 
-  drinks() {
+  evanDrinks() {
     return [
       { label: 'Strawberry Banana Naked', icon: 'naked', say: 'a Strawberry Banana Naked drink' },
       { label: 'Apple Juice', icon: 'apple_juice' },
@@ -4157,7 +4209,7 @@ class Component extends DCLogic {
     ];
   }
 
-  snacks() {
+  evanSnacks() {
     return [
       { label: 'Salt & Vinegar Chips', icon: 'salt_vinegar_chips' },
       { label: 'Hot Fries', icon: 'hot_fries' },
@@ -4425,9 +4477,18 @@ class Component extends DCLogic {
     ];
   }
 
+  // The iPhone contact-card circle: a solid disc in the person's colour with
+  // their initials in white. Two letters when there's a first and last name,
+  // one otherwise. No ring — the fill is the identity.
+  initials(name) {
+    const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    const pick = (w) => (String(w || '').match(/[A-Za-z]/) || [''])[0];
+    const out = parts.length > 1 ? pick(parts[0]) + pick(parts[parts.length - 1]) : pick(parts[0]);
+    return out.toUpperCase() || '?';
+  }
   initialEl(person, size) {
-    const initial = person.name.replace(/[^A-Za-z]/g, '').charAt(0).toUpperCase();
-    return React.createElement('div', { style: { width: size, height: size, borderRadius: '50%', background: person.tint, border: '3px solid ' + person.ring, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: Math.round(size * 0.42), fontWeight: 800, color: person.ring } }, initial);
+    const txt = this.initials(person.name);
+    return React.createElement('div', { style: { width: size, height: size, borderRadius: '50%', background: person.ring, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: Math.round(size * (txt.length > 1 ? 0.36 : 0.44)), fontWeight: 700, color: '#fff', letterSpacing: txt.length > 1 ? '.01em' : '0', lineHeight: 1 } }, txt);
   }
 
   personAvatar(p, size) {
@@ -4443,9 +4504,9 @@ class Component extends DCLogic {
   baseSchool() {
     return [
       { id: 'teacher', name: 'Teacher', ring: '#0EA5E9', tint: '#D5EEFB' },
-      { id: 'aide', name: 'Aide', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'aide', name: 'Support Staff', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'office', name: 'Front Office', ring: '#7A5CFF', tint: '#E6DEFB' },
       { id: 'nurse', name: 'Nurse', ring: '#E23B2E', tint: '#FBD9D5' },
-      { id: 'principal', name: 'Principal', ring: '#7A5CFF', tint: '#E6DEFB' },
       { id: 'classmate', name: 'Classmate', ring: '#F59E0B', tint: '#FCEBCB' },
     ];
   }
@@ -4846,7 +4907,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 4) return false;
+    if (rev >= 5) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -4870,14 +4931,22 @@ class Component extends DCLogic {
       else d.homeOrder.splice(at + 1, 0, 'houses');
     }
 
-    d.layoutRev = 4;
+    // Rev 5: the food, drink and snack lists became the buyer's starter set.
+    // Any phone that already had the app is Evan's, his father's or his
+    // mother's — stamp it so it keeps his real lists. Only a brand-new install
+    // (stamped rev 5 at creation, below) ever sees the starter food.
+    if (rev < 5 && !d.profile) d.profile = 'evan';
+
+    d.layoutRev = 5;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
   data() {
     if (this._data) return this._data;
     let d = this.loadData();
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null };
+    // A fresh install is a buyer's phone: no profile, and already at the
+    // current layout, so none of the migrations above should touch it.
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 5 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -4889,24 +4958,21 @@ class Component extends DCLogic {
   }
 
   baseFamily() {
-    // Evan's family. Dad's side (Dad; Chris + Caitlyn and their kids Brody, JJ,
-    // Tatum; Matthew and his son Jared), then Mom's side (Mom + Chad and their
-    // kids CJ and Egypt). Only Dad, Mom, Chris & Matthew get emergency alerts.
+    // The starter family every new phone gets: relationships, not names, so a
+    // buyer renames rather than deletes. Nobody has a photo yet — they show as
+    // initial circles until someone drops a picture on them.
+    //
+    // The board is three across, so Mom and Dad sit at either end of the first
+    // row. Only Mom and Dad are set to receive emergency alerts.
     return [
-      // Top row is Dad · Chris · Mom — the board is three across, so Evan's
-      // parents sit at either end of the first row.
-      { id: 'dad', name: 'Dad', photoAsset: 'assets/people/dad.jpg', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
-      { id: 'chris', name: 'Chris', ring: '#E23B2E', tint: '#FBD9D5', alert: true },
-      { id: 'mom', name: 'Mom', photoAsset: 'assets/people/mom.jpg', ring: '#E5533D', tint: '#F6E2DC', alert: true },
-      { id: 'matthew', name: 'Matthew', photoAsset: 'assets/people/matthew.jpg', ring: '#14B8A6', tint: '#D2F1ED', alert: true },
-      { id: 'caitlyn', name: 'Caitlyn', ring: '#DB2777', tint: '#FBD5EA' },
-      { id: 'brody', name: 'Brody', ring: '#FB7185', tint: '#FCDEE3' },
-      { id: 'jj', name: 'JJ', ring: '#F59E0B', tint: '#FCEBCB' },
-      { id: 'tatum', name: 'Tatum', ring: '#9333EA', tint: '#EDD9FB' },
-      { id: 'jared', name: 'Jared', photoAsset: 'assets/people/jared.jpg', ring: '#4F46E5', tint: '#DEDCFA' },
-      { id: 'chad', name: 'Chad', ring: '#0EA5E9', tint: '#D5EEFB' },
-      { id: 'cj', name: 'CJ', ring: '#1F9E6E', tint: '#D8F0E5' },
-      { id: 'egypt', name: 'Egypt', ring: '#7A5CFF', tint: '#E6DEFB' },
+      { id: 'mom', name: 'Mom', ring: '#E5533D', tint: '#F6E2DC', alert: true },
+      { id: 'brother', name: 'Brother', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'dad', name: 'Dad', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
+      { id: 'sister', name: 'Sister', ring: '#DB2777', tint: '#FBD5EA' },
+      { id: 'grandma', name: 'Grandma', ring: '#9333EA', tint: '#EDD9FB' },
+      { id: 'grandpa', name: 'Grandpa', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { id: 'aunt', name: 'Aunt', ring: '#14B8A6', tint: '#D2F1ED' },
+      { id: 'uncle', name: 'Uncle', ring: '#F59E0B', tint: '#FCEBCB' },
     ];
   }
 
@@ -4928,16 +4994,32 @@ class Component extends DCLogic {
       { txt: 'Thank you.', glyph: '🙏' },
     ];
   }
+  // Support staff — aides, lunch, custodians, bus. The people you ask for help
+  // getting somewhere or getting something done.
   staffPhrases() {
     return [
-      { txt: "I don't feel good.", glyph: '🤒' },
-      { txt: 'I need to go to the nurse.', glyph: '🏥' },
-      { txt: 'Can I call home?', glyph: '📞' },
-      { txt: 'Can you help me find my class?', glyph: '🧭' },
       { txt: 'I need help.', glyph: '🙋' },
+      { txt: 'Can you help me find my class?', glyph: '🧭' },
+      { txt: 'Where do I go?', glyph: '🚪' },
       { txt: "I'm here for lunch.", glyph: '🍽️' },
       { txt: "I'm waiting for my bus.", glyph: '🚌' },
-      { txt: 'Where do I go?', glyph: '🚪' },
+      { txt: 'Can you help me carry this?', glyph: '🎒' },
+      { txt: 'I need help in the bathroom.', glyph: '🚻' },
+      { txt: 'I spilled something.', glyph: '🧽' },
+      { txt: 'Thank you.', glyph: '🙏' },
+    ];
+  }
+  // Front office — signing in and out, calling home, the nurse, going home early.
+  frontOfficePhrases() {
+    return [
+      { txt: 'Can I call home?', glyph: '📞' },
+      { txt: "I don't feel good.", glyph: '🤒' },
+      { txt: 'I need to go to the nurse.', glyph: '🏥' },
+      { txt: 'I need to sign in.', glyph: '📝' },
+      { txt: 'I need to sign out.', glyph: '🚪' },
+      { txt: "I'm late.", glyph: '⏰' },
+      { txt: 'Someone is picking me up early.', glyph: '🚗' },
+      { txt: 'I forgot my lunch.', glyph: '🍎' },
       { txt: 'Thank you.', glyph: '🙏' },
     ];
   }
@@ -5646,7 +5728,8 @@ class Component extends DCLogic {
       isABC: s.screen === 'abc',
       isNumbers: s.screen === 'numbers',
       openTeachers: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()),
-      openStaff: () => this.openPhraseChooser('Staff', '🏫', this.staffPhrases()),
+      openStaff: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()),
+      openFrontOffice: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()),
       openFriendsBoard: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()),
       openABC: () => this.setState({ screen: 'abc', spellText: '' }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
