@@ -3820,6 +3820,13 @@ class Component extends DCLogic {
       }
     }, 20000);
     this._wasBirthday = this.isBirthday();
+    // His first touch of the session buys the right to play a message to him
+    // later without asking. Costs nothing and happens once.
+    const unlock = () => {
+      document.removeEventListener('pointerdown', unlock, true);
+      try { this.unlockNoteAudio(); } catch (e) {}
+    };
+    document.addEventListener('pointerdown', unlock, true);
     // Watch for a voice message from a parent. Only Evan's phone does this, and
     // only while the app is actually on screen.
     setTimeout(() => { try { this.pollVoice(); } catch (e) {} }, 4000);
@@ -4580,15 +4587,32 @@ class Component extends DCLogic {
     } catch (e) {}
   }
 
+  // iOS only lets audio start on its own from an element a person has already
+  // set playing. A brand-new element each time means every message after the first
+  // arrives silent, waiting to be tapped. So one element is unlocked by his
+  // first touch of the session and reused for every message after it.
+  SILENT() { return 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='; }
+  unlockNoteAudio() {
+    if (this._noteAudio) return;
+    try {
+      const a = new Audio();
+      a.src = this.SILENT();
+      this._noteAudio = a;
+      const p = a.play();
+      if (p && p.then) p.then(() => { try { a.pause(); a.currentTime = 0; } catch (e) {} }).catch(() => {});
+    } catch (e) {}
+  }
+
   playNote() {
     const n = this.state.note;
     if (!n) return;
     try {
-      if (this._noteAudio) { try { this._noteAudio.pause(); } catch (e) {} }
-      const a = new Audio(n.audio);
-      this._noteAudio = a;
+      if (!this._noteAudio) this._noteAudio = new Audio();
+      const a = this._noteAudio;
+      try { a.pause(); } catch (e) {}
       a.onended = () => this.setState({ noteState: 'Tap play to hear it again' });
       a.onerror = () => this.setState({ noteState: "Couldn't play this one" });
+      a.src = n.audio;
       const p = a.play();
       if (p && p.catch) p.catch(() => this.setState({ noteState: 'Tap play to hear it' }));
     } catch (e) {}
