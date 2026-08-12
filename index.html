@@ -3134,6 +3134,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 <div onClick="{{ r.onTap }}" style="flex:1;text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};" style-active="transform:scale(.96)">{{ r.label }}</div>
               </sc-for>
             </div>
+            <div onClick="{{ toggleAutoLock }}" style="margin-top:12px;display:flex;align-items:center;gap:11px;cursor:pointer;padding-top:12px;border-top:1.5px solid var(--slot,#EDEAE3);" style-active="transform:scale(.99)">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);">Lock the screen by itself</div>
+                <div style="font-size:12px;font-weight:600;color:var(--sub,#8C857A);margin-top:2px;line-height:1.35;">After a minute and a half untouched, so a pocket can't press buttons. Hold the screen to unlock.</div>
+              </div>
+              <div style="flex:none;width:52px;height:31px;border-radius:31px;background:{{ autoLockBg }};position:relative;transition:.15s;">
+                <div style="position:absolute;top:3px;left:{{ autoLockKnob }};width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.15s;"></div>
+              </div>
+            </div>
           </div>
 
 
@@ -3838,6 +3847,7 @@ class Component extends DCLogic {
     // A phone locked before it went in a pocket should still be locked if the
     // app reloads in there.
     try { if (localStorage.getItem('ezcomm.pocket') === '1') this.setState({ pocketLocked: true }); } catch (e) {}
+    try { this.startAutoLock(); } catch (e) {}
     // His first touch of the session buys the right to play a message to him
     // later without asking. Costs nothing and happens once.
     const unlock = () => {
@@ -4505,6 +4515,30 @@ class Component extends DCLogic {
   // a deliberate press-and-hold opens — a bump can't hold still for a second and
   // a half. It survives a reload so a pocketed phone stays locked.
   UNLOCK_MS() { return 1500; }
+  // Any fix that depends on a sixteen-year-old remembering to press something
+  // before every pocket isn't a fix, so his phone shields itself once it has
+  // been sitting untouched. Off by default on a parent's phone, and switchable
+  // on his if it ever gets in his way.
+  AUTOLOCK_MS() { return 90000; }
+  autoLockOn() {
+    try { const v = localStorage.getItem('ezcomm.autolock'); if (v !== null) return v === '1'; } catch (e) {}
+    return this.deviceRole() === 'evan';
+  }
+  setAutoLock(on) {
+    try { localStorage.setItem('ezcomm.autolock', on ? '1' : '0'); } catch (e) {}
+    this.forceUpdate();
+  }
+  startAutoLock() {
+    this._lastTouch = Date.now();
+    document.addEventListener('pointerdown', () => { this._lastTouch = Date.now(); }, true);
+    setInterval(() => {
+      if (!this.autoLockOn() || this.state.pocketLocked || document.hidden) return;
+      // Never while he's mid-message from a parent, or the bubble would vanish
+      // behind the shield before he'd heard it.
+      if (this.state.note) return;
+      if (Date.now() - (this._lastTouch || 0) >= this.AUTOLOCK_MS()) this.lockPocket();
+    }, 10000);
+  }
   lockPocket() {
     try { localStorage.setItem('ezcomm.pocket', '1'); } catch (e) {}
     this.setState({ pocketLocked: true, unlockPct: 0 });
@@ -5823,6 +5857,10 @@ class Component extends DCLogic {
         });
         return out;
       })(),
+
+      autoLockBg: this.autoLockOn() ? '#1F9E6E' : 'var(--track,#D8D3C9)',
+      autoLockKnob: this.autoLockOn() ? '24px' : '3px',
+      toggleAutoLock: () => this.setAutoLock(!this.autoLockOn()),
 
       lockPocket: () => this.lockPocket(),
       pocketLocked: !!s.pocketLocked,
