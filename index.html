@@ -2676,7 +2676,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
   <!-- quick-needs strip: always-visible one-tap survival words -->
   <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 8px;flex:none;-webkit-overflow-scrolling:touch;">
-    <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="8">
+    <sc-for list="{{ quickNeeds }}" as="q" hint-placeholder-count="12">
       <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--slot,#F0EDE7);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;" style-active="transform:scale(.94)">
         <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
         <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
@@ -2686,7 +2686,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
   <!-- board -->
   <div style="flex:1;position:relative;overflow:hidden;">
-    <div ref="{{ boardScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;padding:4px 18px 168px;">
+    <div ref="{{ boardScrollRef }}" style="position:absolute;inset:0;overflow-y:auto;padding:4px 18px 110px;">
 
       <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;gap:7px;margin:2px 2px 10px;color:var(--hint,#A8A095);">
@@ -2710,16 +2710,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </sc-for>
       </div>
 
-    </div>
-
-    <!-- states strip: how he's doing / where he is, right above the SOS bar -->
-    <div style="position:absolute;left:0;right:0;bottom:74px;display:flex;gap:8px;overflow-x:auto;padding:0 16px 6px;-webkit-overflow-scrolling:touch;">
-      <sc-for list="{{ quickStates }}" as="q" hint-placeholder-count="6">
-        <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ q.color }};border-radius:16px;padding:9px 13px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.10);" style-active="transform:scale(.94)">
-          <span style="font-size:19px;line-height:1;">{{ q.emoji }}</span>
-          <span style="font-size:15.5px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
-        </div>
-      </sc-for>
     </div>
 
     <!-- voice note from a parent: the one place he hears their real voice -->
@@ -5045,34 +5035,34 @@ class Component extends DCLogic {
   }
 
   // ── Teen communication boards (speed, regulation, refusal, social) ──────
-  // Always-visible survival words on the home screen. One tap = spoken.
+  // The one strip. Always visible at the top of the home screen, one tap =
+  // spoken. This used to be two strips — survival words up here and states
+  // down by the emergency bar — but two scrolls meant two places to look.
   quickNeeds() {
     return [
-      // Only what has to be reachable without a second thought — roughly what
-      // fits on screen without scrolling. Everything else lives one tap deep.
+      // Ordered by how often he reaches for them, not by category.
       { label: 'Hello', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
       { label: 'Goodbye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
       { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
       { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
-      { label: 'Stop', emoji: '🛑', color: '#EF4444', say: 'Stop.' },
-      { label: 'Go', emoji: '🟢', color: '#1F9E6E', say: 'Go.' },
-      { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
-      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
-    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
-  }
-
-  // Second strip, sitting just above the emergency bar — how he's doing and
-  // where he is. Lost lives down here now, next to Found, rather than up top.
-  quickStates() {
-    return [
       { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
       { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
+      { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
+      { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
       { label: 'Hot', emoji: '🥵', color: '#F2920E', say: 'Hot.' },
       { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: 'Cold.' },
       { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
       // Not a phrase — opens the houses, where "my room" means the right room.
       { label: 'Houses', emoji: '🏠', color: '#14B8A6', screen: 'houses' },
-    ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: q.screen ? (() => this.setState({ screen: q.screen })) : (() => this.speak(q.say)) }));
+    ].map((q) => ({
+      label: q.label,
+      emoji: q.emoji,
+      color: q.color,
+      // Carried through so warmVoice() can pre-fetch these — they are the
+      // phrases he taps most, and they were silently missing from the warm-up.
+      say: q.say,
+      onTap: q.screen ? (() => this.setState({ screen: q.screen })) : (() => this.speak(q.say)),
+    }));
   }
 
   // Regulation / sensory-overload language (fast access to "too much").
@@ -5899,7 +5889,6 @@ class Component extends DCLogic {
       openMedicine: () => this.openPhraseChooser('Medicine', '💊', this.medicineItems()),
       homeTiles: this.homeTiles(),
       quickNeeds: this.quickNeeds(),
-      quickStates: this.quickStates(),
       isSettings: s.screen === 'settings',
       openSettings: () => this.openSettings(),
       openVoiceChooser: () => this.openVoiceChooser(),
