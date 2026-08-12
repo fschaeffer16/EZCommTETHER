@@ -3115,10 +3115,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <sc-if value="{{ setOpen_phone }}" hint-placeholder-val="{{ false }}">
 
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
-            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? Evan's phone plays voice messages; a parent's phone can record them. This stays on this phone and is never synced.</div>
-            <div style="display:flex;gap:8px;">
-              <sc-for list="{{ roleOptions }}" as="r" hint-placeholder-count="3">
-                <div onClick="{{ r.onTap }}" style="flex:1;text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};" style-active="transform:scale(.96)">{{ r.label }}</div>
+            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? Evan's phone plays voice messages; anyone else listed here can record them. The list is everyone on the Family board set to get emergency alerts. This stays on this phone and is never synced.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+              <sc-for list="{{ roleOptions }}" as="r" hint-placeholder-count="5">
+                <div onClick="{{ r.onTap }}" style="text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" style-active="transform:scale(.96)">{{ r.label }}</div>
               </sc-for>
             </div>
           </div>
@@ -4555,6 +4555,25 @@ class Component extends DCLogic {
   //
   // The role below is per-phone and never synced: sync would otherwise tell
   // every phone it was Evan's.
+  // Who may record a voice message, taken from the Family board rather than a
+  // hardcoded list: the people already trusted with an emergency alert are the
+  // people trusted to speak to him. On this phone that's Dad, Mom, Chris and
+  // Matthew; on a new phone it's whoever the family marks.
+  voiceSenders() {
+    const fam = this.data().family || [];
+    return fam.filter((p) => p && p.alert && p.id && p.name).map((p) => ({ id: p.id, name: String(p.name).slice(0, 24) }));
+  }
+  // The name a clip is signed with. Falls back to the stored role id, then to
+  // "Family", so a note is never delivered unattributed.
+  voiceSenderName() {
+    const r = this.deviceRole();
+    const hit = this.voiceSenders().find((p) => p.id === r);
+    if (hit) return hit.name;
+    if (r === 'dad') return 'Dad';
+    if (r === 'mom') return 'Mom';
+    return 'Family';
+  }
+
   ROLE_KEY() { return 'ezcomm.deviceRole'; }
   deviceRole() {
     try { return localStorage.getItem(this.ROLE_KEY()) || 'evan'; } catch (e) { return 'evan'; }
@@ -4615,7 +4634,7 @@ class Component extends DCLogic {
 
   async recSend() {
     if (!this._recData) return;
-    const who = this.deviceRole() === 'mom' ? 'Mom' : 'Dad';
+    const who = this.voiceSenderName();
     this.setState({ recPhase: 'sending', recMsg: '' });
     try {
       const r = await fetch('/api/voice', {
@@ -5861,7 +5880,7 @@ class Component extends DCLogic {
       ].map((q) => ({ ...q, onTap: () => this.speak(q.say) })),
 
       // Whose phone this is, and the recorder that follows from it.
-      roleOptions: [['evan', "Evan's"], ['dad', 'Dad'], ['mom', 'Mom']].map(([v, label]) => {
+      roleOptions: [['evan', "Evan's"]].concat(this.voiceSenders().map((p) => [p.id, p.name])).map(([v, label]) => {
         const on = this.deviceRole() === v;
         return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setDeviceRole(v) };
       }),
