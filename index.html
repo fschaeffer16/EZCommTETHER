@@ -4673,12 +4673,17 @@ class Component extends DCLogic {
       { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
       { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
       { label: 'Stop', emoji: '🛑', color: '#EF4444', say: 'Stop.' },
-      { label: 'Need', emoji: '❗', color: '#E5533D', say: 'I need something.' },
+      { label: 'Need', emoji: '❗', color: '#E5533D', say: 'Need.' },
       { label: 'Wait', emoji: '✋', color: '#F59E0B', say: 'Wait.' },
       { label: 'More', emoji: '➕', color: '#1F9E6E', say: 'More, please.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
-      { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
-      { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
+      // Rooms — one colour so they read as a group as he scrolls past them.
+      { label: 'My Room', emoji: '🛏️', color: '#14B8A6', say: 'My room.' },
+      { label: "Dad's Room", emoji: '🚪', color: '#14B8A6', say: "Dad's room." },
+      { label: 'Living Room', emoji: '🛋️', color: '#14B8A6', say: 'Living room.' },
+      { label: 'The Office', emoji: '💼', color: '#14B8A6', say: 'The office.' },
+      { label: 'Kitchen', emoji: '🍳', color: '#14B8A6', say: 'Kitchen.' },
+      { label: 'Bathroom', emoji: '🚻', color: '#14B8A6', say: 'Bathroom.' },
     ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
   }
 
@@ -4686,12 +4691,16 @@ class Component extends DCLogic {
   // where he is. Lost lives down here now, next to Found, rather than up top.
   quickStates() {
     return [
-      { label: 'Good', emoji: '😄', color: '#1F9E6E', say: "I'm good." },
-      { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'I feel bad.' },
-      { label: 'Hot', emoji: '🥵', color: '#F2920E', say: "I'm hot." },
-      { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: "I'm cold." },
+      { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
+      { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
+      { label: 'Hot', emoji: '🥵', color: '#F2920E', say: 'Hot.' },
+      { label: 'Cold', emoji: '🥶', color: '#0EA5E9', say: 'Cold.' },
       { label: 'Lost', emoji: '🧭', color: '#DC2626', say: 'I am lost. I need help. Please help me find my mom or dad.' },
       { label: 'Found', emoji: '🙌', color: '#7A5CFF', say: 'I found it.' },
+      // Moved down from the top strip to make room — still one tap, just not
+      // in the way of the words he reaches for constantly.
+      { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
+      { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
     ].map((q) => ({ label: q.label, emoji: q.emoji, color: q.color, onTap: () => this.speak(q.say) }));
   }
 
