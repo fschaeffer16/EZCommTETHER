@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZvoxa — a voice for people who don't have one</title>
+<meta name="description" content="A low-cost communication app for nonverbal teenagers and adults, built by a father for his son. Join the list to hear when it's available.">
+<meta name="theme-color" content="#2F6BFF">
+<link rel="icon" type="image/png" href="icon192.png">
+<link rel="apple-touch-icon" href="icon180.png">
+<style>
+  :root{
+    --ink:#101425; --mute:#5B6070; --line:#E4E2DC; --card:#FFFFFF; --bg:#FBFAF7;
+    --blue:#2F6BFF; --green:#22C07A; --amber:#F59E0B;
+    --shadow:0 1px 2px rgba(16,20,37,.05), 0 12px 34px rgba(16,20,37,.09);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF0F7; --mute:#9AA0B4; --line:#242A3C; --card:#151A28; --bg:#0A0D16;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 40px rgba(0,0,0,.5);
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:26px 20px 70px}
+  header{display:flex;align-items:center;gap:13px;margin-bottom:34px}
+  header img{width:52px;height:52px;border-radius:15px;display:block}
+  .brand{font-size:21px;font-weight:800;letter-spacing:-.02em}
+  .brand span{color:var(--blue)}
+  h1{font-size:34px;line-height:1.15;letter-spacing:-.03em;margin:0 0 14px;text-wrap:balance}
+  .lede{font-size:19px;color:var(--mute);margin:0 0 30px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);margin-bottom:22px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 0 12px;font-weight:800}
+  h3{font-size:20px;margin:0 0 10px;letter-spacing:-.01em}
+  p{margin:0 0 14px}
+  p:last-child{margin-bottom:0}
+  ul{margin:0;padding-left:20px}
+  li{margin-bottom:9px}
+  li:last-child{margin-bottom:0}
+  b{font-weight:700}
+  .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .price .now{font-size:34px;font-weight:800;letter-spacing:-.02em}
+  .price .unit{color:var(--mute);font-size:15px}
+  table{width:100%;border-collapse:collapse;font-size:15.5px;margin-top:4px}
+  td{padding:9px 0;border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mute)}
+  .ours td{font-weight:800}
+  .ours td:last-child{color:var(--green)}
+  label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
+  input,textarea{
+    width:100%;padding:14px;border:1.5px solid var(--line);border-radius:13px;background:var(--bg);
+    color:var(--ink);font:inherit;font-size:16px;
+  }
+  input:focus,textarea:focus{outline:3px solid rgba(47,107,255,.35);outline-offset:1px;border-color:var(--blue)}
+  textarea{min-height:84px;resize:vertical}
+  button{
+    width:100%;margin-top:18px;padding:17px;border:0;border-radius:15px;cursor:pointer;
+    background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;font:inherit;font-size:18px;font-weight:800;
+  }
+  button:disabled{opacity:.6;cursor:default}
+  .note{font-size:13.5px;color:var(--mute);margin-top:12px}
+  .msg{margin-top:14px;font-size:15.5px;font-weight:700}
+  .msg.ok{color:var(--green)} .msg.bad{color:#D8483A}
+  footer{color:var(--mute);font-size:13.5px;text-align:center;margin-top:34px;line-height:1.5}
+  .quiet{color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img src="icon192.png" alt="">
+    <div class="brand">EZ<span>voxa</span></div>
+  </header>
+
+  <h1>A voice for people who don't have one.</h1>
+  <p class="lede">A communication app for nonverbal teenagers and adults — on the phone they already carry, at a price a family can actually pay.</p>
+
+  <div class="card">
+    <h2>Why it exists</h2>
+    <p>My son Evan is sixteen and doesn't speak. His communication device was an iPad running software that cost thousands of dollars, and he stopped wanting to carry it years ago — too big, too clinical, built for a much younger child.</p>
+    <p>So I built him something else: on a phone, in a voice that sounds like a teenager instead of a robot, with the words he actually uses. It has a button that reaches his family in an emergency, and one that plays him a voice message from his mother.</p>
+    <p>He uses it every day. Other families keep asking where they can get it — so I'm making it available.</p>
+    <p class="quiet">— Frank Schaeffer</p>
+  </div>
+
+  <div class="card">
+    <h2>What it does</h2>
+    <ul>
+      <li><b>Speaks in a voice that fits.</b> Age-appropriate, not a robot and not a grown man.</li>
+      <li><b>Built around real life.</b> Family, food, school, feelings, routines — and every button can be changed to use your own words and photos.</li>
+      <li><b>Emergency button.</b> One tap reaches the people on your list, with your location.</li>
+      <li><b>Voice messages from family.</b> They hear their own mother's voice, not a transcript.</li>
+      <li><b>Runs on a phone.</b> Pocket-sized, so it's actually with them.</li>
+      <li><b>Customising is free.</b> Photos, buttons and phrases cost nothing extra, ever.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>What it will cost</h2>
+    <div class="price"><span class="now">$79.99</span><span class="unit">one time — no subscription needed</span></div>
+    <table>
+      <tr><td>Dedicated communication devices</td><td>$3,000–$5,000</td></tr>
+      <tr><td>Leading iPad apps</td><td>$250–$300</td></tr>
+      <tr class="ours"><td>EZvoxa</td><td>$79.99</td></tr>
+    </table>
+    <p class="note">A monthly option will add extras like AI voices and family sync. The app itself works without it. There will also be a hardship program for families who can't manage the price — nobody should lose a voice over $80.</p>
+  </div>
+
+  <div class="card">
+    <h2>Be first to know</h2>
+    <h3>It isn't for sale yet.</h3>
+    <p>Leave your name and I'll email you the day it is. No cost, no card, and I won't pass your details to anyone.</p>
+    <form id="f">
+      <label for="name">Your name</label>
+      <input id="name" name="name" autocomplete="name" placeholder="Your name">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+      <label for="about">Who is it for? <span class="quiet">(optional)</span></label>
+      <textarea id="about" name="about" placeholder="Anything you'd like me to know — their age, what they use now, whether it's for a school."></textarea>
+      <button id="go" type="submit">Add me to the list</button>
+      <div id="msg" class="msg" role="status" aria-live="polite"></div>
+      <p class="note">If you'd rather talk to a person, that's fine too — say so above and leave the best way to reach you.</p>
+    </form>
+  </div>
+
+  <footer>
+    EZvoxa is made by EZ Voice LLC in Florida.<br>
+    It helps someone communicate; it is not a medical device and does not replace calling 911.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var f = document.getElementById('f'), msg = document.getElementById('msg'), go = document.getElementById('go');
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) {
+      msg.className = 'msg bad'; msg.textContent = 'That email address doesn’t look right.'; return;
+    }
+    go.disabled = true; go.textContent = 'Adding…'; msg.textContent = '';
+    fetch('/api/waitlist', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: document.getElementById('name').value,
+        email: email,
+        about: document.getElementById('about').value,
+        source: document.referrer || 'direct'
+      })
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (j && j.ok) {
+        f.innerHTML = '<h3>You’re on the list.</h3><p>I’ll email you the day it’s ready. Thank you — genuinely.</p>';
+      } else {
+        go.disabled = false; go.textContent = 'Add me to the list';
+        msg.className = 'msg bad';
+        msg.textContent = (j && j.error === 'bad_email') ? 'That email address doesn’t look right.' : 'Something went wrong. Please try again in a moment.';
+      }
+    }).catch(function () {
+      go.disabled = false; go.textContent = 'Add me to the list';
+      msg.className = 'msg bad'; msg.textContent = 'No connection. Please try again in a moment.';
+    });
+  });
+})();
+</script>
+</body>
+</html>
