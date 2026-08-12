@@ -2798,9 +2798,19 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </sc-for>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
-          <div style="display:flex;gap:12px;margin-bottom:16px;">
-            <div onClick="{{ openDrinks }}" style="flex:1;background:#3B82F6;color:#fff;border-radius:18px;padding:18px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:19px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.3);" style-active="transform:scale(.97)"><span style="font-size:24px;">🥤</span>Drinks</div>
+          <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#3B82F6;margin:2px 2px 9px;">Drinks</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+            <sc-for list="{{ drinks }}" as="item" hint-placeholder-count="0">
+              <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.95)">
+                <div style="width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:3px solid #3B82F6;background:var(--slot,#F0EDE7);display:flex;align-items:center;justify-content:center;">
+                  <sc-if value="{{ item.hasIcon }}" hint-placeholder-val="{{ false }}">{{ item.iconEl }}</sc-if>
+                  <sc-if value="{{ item.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:38px;line-height:1;">{{ item.emoji }}</span></sc-if>
+                </div>
+                <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ item.label }}</span>
+              </div>
+            </sc-for>
           </div>
+          <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#F2920E;margin:2px 2px 9px;">Food</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
             <sc-for list="{{ foods }}" as="item" hint-placeholder-count="0">
               <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.93)">
@@ -2815,25 +2825,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
     <!-- DRINKS -->
-    <sc-if value="{{ isDrinks }}" hint-placeholder-val="{{ false }}">
-      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
-        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ openFood }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">Drinks</div>
-          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
-        </div>
-        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
-            <sc-for list="{{ drinks }}" as="item" hint-placeholder-count="0">
-              <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.93)">
-                {{ item.iconEl }}<sc-if value="{{ item.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:46px;line-height:1;">{{ item.emoji }}</span></sc-if>
-                <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ item.label }}</span>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-      </div>
-    </sc-if>
+    
 
     <!-- SNACKS -->
     <sc-if value="{{ isSnacks }}" hint-placeholder-val="{{ false }}">
@@ -5312,10 +5304,8 @@ class Component extends DCLogic {
       sayFamily: () => this.speak('Family'),
       goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       isFood: s.screen === 'food',
-      isDrinks: s.screen === 'drinks',
       isSnacks: s.screen === 'snacks',
       openFood: () => this.setState({ screen: 'food' }),
-      openDrinks: () => this.setState({ screen: 'drinks' }),
       openSnacks: () => this.setState({ screen: 'snacks' }),
       goBoard: () => this.setState({ screen: 'board', editMode: false }),
       foods: this.foods().map((i) => this.mapItem(i, 'food')).concat(this.customsFor('food')),
