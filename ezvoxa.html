@@ -4,169 +4,534 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EZvoxa — a voice for people who don't have one</title>
-<meta name="description" content="A low-cost communication app for nonverbal teenagers and adults, built by a father for his son. Join the list to hear when it's available.">
-<meta name="theme-color" content="#2F6BFF">
+<meta name="description" content="A communication app for nonverbal teenagers and adults, on the phone they already carry. Built by a father for his son. Try the demo.">
+<meta name="theme-color" content="#0A0D16">
 <link rel="icon" type="image/png" href="icon192.png">
 <link rel="apple-touch-icon" href="icon180.png">
 <style>
   :root{
-    --ink:#101425; --mute:#5B6070; --line:#E4E2DC; --card:#FFFFFF; --bg:#FBFAF7;
-    --blue:#2F6BFF; --green:#22C07A; --amber:#F59E0B;
-    --shadow:0 1px 2px rgba(16,20,37,.05), 0 12px 34px rgba(16,20,37,.09);
+    --ink:#0E1220; --mute:#5A6072; --faint:#8A90A2; --line:#E5E3DD;
+    --card:#FFFFFF; --bg:#FAF9F6; --sunk:#F1EFE9;
+    --blue:#2F6BFF; --green:#18B26B; --amber:#F59E0B; --red:#E23B2E; --violet:#7A5CFF;
+    --sh:0 1px 2px rgba(14,18,32,.05), 0 14px 40px rgba(14,18,32,.09);
+    --maxw:1120px;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
-      --ink:#EEF0F7; --mute:#9AA0B4; --line:#242A3C; --card:#151A28; --bg:#0A0D16;
-      --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 40px rgba(0,0,0,.5);
+      --ink:#EEF0F7; --mute:#9AA1B5; --faint:#6E7488; --line:#232838;
+      --card:#151A28; --bg:#090C14; --sunk:#10141F;
+      --sh:0 1px 2px rgba(0,0,0,.4), 0 16px 44px rgba(0,0,0,.5);
     }
   }
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
     font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Segoe UI,Roboto,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:680px;margin:0 auto;padding:26px 20px 70px}
-  header{display:flex;align-items:center;gap:13px;margin-bottom:34px}
-  header img{width:52px;height:52px;border-radius:15px;display:block}
-  .brand{font-size:21px;font-weight:800;letter-spacing:-.02em}
-  .brand span{color:var(--blue)}
-  h1{font-size:34px;line-height:1.15;letter-spacing:-.03em;margin:0 0 14px;text-wrap:balance}
-  .lede{font-size:19px;color:var(--mute);margin:0 0 30px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);margin-bottom:22px}
-  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 0 12px;font-weight:800}
-  h3{font-size:20px;margin:0 0 10px;letter-spacing:-.01em}
-  p{margin:0 0 14px}
-  p:last-child{margin-bottom:0}
-  ul{margin:0;padding-left:20px}
-  li{margin-bottom:9px}
-  li:last-child{margin-bottom:0}
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:var(--blue)}
   b{font-weight:700}
-  .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-  .price .now{font-size:34px;font-weight:800;letter-spacing:-.02em}
-  .price .unit{color:var(--mute);font-size:15px}
-  table{width:100%;border-collapse:collapse;font-size:15.5px;margin-top:4px}
-  td{padding:9px 0;border-bottom:1px solid var(--line)}
-  tr:last-child td{border-bottom:none}
-  td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mute)}
-  .ours td{font-weight:800}
-  .ours td:last-child{color:var(--green)}
-  label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
-  input,textarea{
-    width:100%;padding:14px;border:1.5px solid var(--line);border-radius:13px;background:var(--bg);
-    color:var(--ink);font:inherit;font-size:16px;
-  }
-  input:focus,textarea:focus{outline:3px solid rgba(47,107,255,.35);outline-offset:1px;border-color:var(--blue)}
-  textarea{min-height:84px;resize:vertical}
-  button{
-    width:100%;margin-top:18px;padding:17px;border:0;border-radius:15px;cursor:pointer;
-    background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;font:inherit;font-size:18px;font-weight:800;
-  }
-  button:disabled{opacity:.6;cursor:default}
-  .note{font-size:13.5px;color:var(--mute);margin-top:12px}
-  .msg{margin-top:14px;font-size:15.5px;font-weight:700}
-  .msg.ok{color:var(--green)} .msg.bad{color:#D8483A}
-  footer{color:var(--mute);font-size:13.5px;text-align:center;margin-top:34px;line-height:1.5}
-  .quiet{color:var(--mute)}
+
+  /* ── top bar ─────────────────────────────────────────── */
+  .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:14px;height:70px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+  .logo img{width:38px;height:38px;border-radius:11px;display:block}
+  .logo span{color:var(--blue)}
+  .top nav{margin-left:auto;display:flex;align-items:center;gap:26px}
+  .top nav a{color:var(--mute);text-decoration:none;font-size:15.5px;font-weight:600}
+  .top nav a:hover{color:var(--ink)}
+  @media (max-width:820px){ .top nav a.hide-sm{display:none} }
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;
+    font:inherit;font-weight:800;border-radius:14px;padding:15px 24px;font-size:17px;
+    background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;text-decoration:none;
+    box-shadow:0 6px 18px rgba(47,107,255,.28)}
+  .btn:hover{filter:brightness(1.05)}
+  .btn.sm{padding:11px 18px;font-size:15.5px;border-radius:12px;box-shadow:none}
+  .btn.ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+
+  /* ── hero ────────────────────────────────────────────── */
+  .hero{padding:70px 0 20px}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr;gap:36px} .hero{padding:44px 0 10px} }
+  h1{font-size:clamp(34px,5vw,56px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px;text-wrap:balance}
+  .sub{font-size:20px;color:var(--mute);margin:0 0 28px;max-width:34em}
+  .cta-row{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  .under{color:var(--faint);font-size:14.5px;margin-top:16px}
+  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:var(--sunk);aspect-ratio:1/1}
+  .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* ── sections ────────────────────────────────────────── */
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
+  h2{font-size:clamp(26px,3.4vw,38px);line-height:1.12;letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
+  h3{font-size:19px;margin:0 0 7px;letter-spacing:-.01em}
+  p{margin:0 0 16px} p:last-child{margin-bottom:0}
+  .lede{font-size:19px;color:var(--mute);max-width:46em}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+  @media (max-width:900px){ .two{grid-template-columns:1fr;gap:28px} }
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:34px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh)}
+  .card .ic{font-size:26px;line-height:1;margin-bottom:12px}
+  .card p{color:var(--mute);font-size:15.5px;margin:0}
+  .story{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px;box-shadow:var(--sh)}
+  .story p{font-size:18px}
+  .sig{color:var(--mute);font-size:15.5px;margin-top:18px}
+
+  .tag{display:inline-flex;align-items:center;gap:6px;background:rgba(122,92,255,.14);color:var(--violet);
+    border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;letter-spacing:.03em;white-space:nowrap}
+  .tag.free{background:rgba(24,178,107,.15);color:var(--green)}
+
+  table.price{width:100%;border-collapse:collapse;margin-top:22px;font-size:17px}
+  table.price td{padding:15px 0;border-bottom:1px solid var(--line)}
+  table.price tr:last-child td{border-bottom:0}
+  table.price td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mute)}
+  table.price tr.us td{font-weight:800;font-size:19px}
+  table.price tr.us td:last-child{color:var(--green)}
+
+  ul.plain{list-style:none;margin:0;padding:0}
+  ul.plain li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  ul.plain li:last-child{border-bottom:0}
+  ul.plain .k{flex:none;width:22px;color:var(--green);font-weight:900}
+  ul.plain .t{flex:1;min-width:0}
+  ul.plain .t small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+  /* ── waitlist ────────────────────────────────────────── */
+  form{max-width:520px}
+  label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px}
+  input,textarea{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:13px;
+    background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
+  input:focus,textarea:focus{outline:3px solid rgba(47,107,255,.32);outline-offset:1px;border-color:var(--blue)}
+  textarea{min-height:88px;resize:vertical}
+  form .btn{width:100%;margin-top:20px}
+  .msg{margin-top:14px;font-weight:700;font-size:15.5px}
+  .msg.bad{color:var(--red)} .msg.ok{color:var(--green)}
+  .fine{color:var(--faint);font-size:13.5px;margin-top:12px}
+
+  footer{padding:44px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+  footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+
+  /* ── phone demo ──────────────────────────────────────── */
+  .scrim{position:fixed;inset:0;z-index:50;background:rgba(6,8,14,.72);backdrop-filter:blur(6px);
+    display:none;align-items:center;justify-content:center;padding:20px}
+  .scrim.on{display:flex}
+  .phone{width:392px;max-width:100%;height:min(96vh,800px);background:#FBFAF7;border-radius:38px;
+    overflow:hidden;position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6);display:flex;flex-direction:column;
+    border:9px solid #14161F}
+  .phone-x{position:fixed;top:22px;right:22px;z-index:60;background:#fff;color:#14161F;
+    border:0;border-radius:50%;width:46px;height:46px;font-size:23px;font-weight:800;cursor:pointer;line-height:1;
+    box-shadow:0 6px 20px rgba(0,0,0,.4)}
+  @media (max-width:520px){ .phone{border-radius:0;border-width:0;height:100vh;width:100vw} .scrim{padding:0}
+    .phone-x{top:10px;right:10px;width:42px;height:42px;background:rgba(255,255,255,.94)} }
+  .d-head{display:flex;align-items:center;gap:10px;padding:16px 16px 10px;flex:none}
+  .d-back{width:38px;height:38px;border-radius:50%;background:#fff;border:0;font-size:22px;font-weight:700;
+    cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);color:#1A1714;line-height:1}
+  .d-title{font-size:21px;font-weight:800;letter-spacing:-.02em;color:#1A1714;flex:1;min-width:0}
+  .d-body{flex:1;overflow-y:auto;padding:4px 16px 18px;-webkit-overflow-scrolling:touch}
+  .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .d-tile{border:0;background:#fff;border-radius:17px;padding:16px 8px;cursor:pointer;font:inherit;
+    display:flex;flex-direction:column;align-items:center;gap:7px;box-shadow:0 2px 8px rgba(20,16,12,.08);
+    border:3px solid var(--tc,#2F6BFF)}
+  .d-tile .e{font-size:36px;line-height:1}
+  .d-tile .l{font-size:15.5px;font-weight:800;color:#1A1714}
+  .d-phr{width:100%;border:0;border-radius:15px;padding:15px 14px;margin-bottom:9px;cursor:pointer;font:inherit;
+    font-size:16.5px;font-weight:800;color:#fff;text-align:left;display:flex;align-items:center;gap:11px}
+  .d-note{font-size:13px;color:#8C857A;font-weight:600;margin:2px 2px 12px}
+  .d-sos{position:absolute;left:14px;right:14px;bottom:14px;background:#E23B2E;border:0;border-radius:16px;
+    padding:12px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;font:inherit;text-align:left}
+  .d-sos .t{flex:1;color:#fff;font-weight:800;font-size:16px}
+  .d-sos .s{display:block;font-weight:600;font-size:11.5px;color:rgba(255,255,255,.85)}
+  .d-sub{display:inline-block;background:rgba(255,255,255,.26);color:#fff;border-radius:999px;
+    padding:3px 10px;font-size:11px;font-weight:800;margin-left:8px;white-space:nowrap;
+    border:1px solid rgba(255,255,255,.5)}
+  .d-panel{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(20,16,12,.1);font-size:15px;color:#1A1714}
+  .d-panel h4{margin:0 0 8px;font-size:17px}
+  .d-panel .who{color:#8C857A;font-size:14px;margin-top:8px}
+  .d-warn{background:#FFF3CD;border:1.5px solid #F0D68A;color:#6B5300;border-radius:12px;padding:11px 13px;
+    font-size:13.5px;font-weight:700;margin-bottom:12px}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <img src="icon192.png" alt="">
-    <div class="brand">EZ<span>voxa</span></div>
-  </header>
+<div class="top"><div class="wrap">
+  <a class="logo" href="#top"><img src="icon192.png" alt=""><span>EZ</span>voxa</a>
+  <nav>
+    <a class="hide-sm" href="#what">What it does</a>
+    <a class="hide-sm" href="#price">Price</a>
+    <a class="hide-sm" href="#schools">Schools</a>
+    <button class="btn sm" data-open-demo>Try the demo</button>
+  </nav>
+</div></div>
 
-  <h1>A voice for people who don't have one.</h1>
-  <p class="lede">A communication app for nonverbal teenagers and adults — on the phone they already carry, at a price a family can actually pay.</p>
-
-  <div class="card">
-    <h2>Why it exists</h2>
-    <p>My son Evan is sixteen and doesn't speak. His communication device was an iPad running software that cost thousands of dollars, and he stopped wanting to carry it years ago — too big, too clinical, built for a much younger child.</p>
-    <p>So I built him something else: on a phone, in a voice that sounds like a teenager instead of a robot, with the words he actually uses. It has a button that reaches his family in an emergency, and one that plays him a voice message from his mother.</p>
-    <p>He uses it every day. Other families keep asking where they can get it — so I'm making it available.</p>
-    <p class="quiet">— Frank Schaeffer</p>
+<div class="hero" id="top"><div class="wrap">
+  <div>
+    <h1>A voice for people who don't have one.</h1>
+    <p class="sub">A communication app for nonverbal teenagers and adults — on the phone they already carry, for a fraction of what a dedicated device costs.</p>
+    <div class="cta-row">
+      <button class="btn" data-open-demo>Try the demo</button>
+      <a class="btn ghost" href="#list">Tell me when it's ready</a>
+    </div>
+    <p class="under">$79.99 once. The emergency button works whether you subscribe or not.</p>
   </div>
+  <div class="hero-art"><img src="icon512.png" alt="Evan, surrounded by the things he talks about"></div>
+</div></div>
 
-  <div class="card">
-    <h2>What it does</h2>
-    <ul>
-      <li><b>Speaks in a voice that fits.</b> Age-appropriate, not a robot and not a grown man.</li>
-      <li><b>Built around real life.</b> Family, food, school, feelings, routines — and every button can be changed to use your own words and photos.</li>
-      <li><b>Emergency button.</b> One tap reaches the people on your list, with your location.</li>
-      <li><b>Voice messages from family.</b> They hear their own mother's voice, not a transcript.</li>
-      <li><b>Runs on a phone.</b> Pocket-sized, so it's actually with them.</li>
-      <li><b>Customising is free.</b> Photos, buttons and phrases cost nothing extra, ever.</li>
+<section id="story"><div class="wrap">
+  <div class="two">
+    <div>
+      <p class="eyebrow">Why it exists</p>
+      <h2>My son is sixteen and doesn't speak.</h2>
+      <p class="lede">Everything in this app came from a real moment in his life. That's the difference you can hear in it.</p>
+    </div>
+    <div class="story">
+      <p>Evan's communication device was an iPad running software that cost thousands of dollars, and he stopped wanting to carry it years ago. Too big, too clinical, built for a much younger child.</p>
+      <p>So I built him something else. It's on a phone, so it's actually with him. It speaks in a voice that sounds like a sixteen-year-old instead of a robot. The buttons say the things he actually says, in the words our family uses.</p>
+      <p>There's a button that reaches all of us in an emergency, with his location. And one that plays him a voice message from his mother — in her own voice, not read out by a machine.</p>
+      <p>He uses it every day. Other families keep asking where they can get it. So here it is.</p>
+      <p class="sig">— Frank Schaeffer, Florida</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="what"><div class="wrap">
+  <p class="eyebrow">What you get</p>
+  <h2>Everything below is included when you buy it.</h2>
+  <p class="lede">One price, no subscription needed, and customising it never costs extra.</p>
+
+  <div class="cards">
+    <div class="card"><div class="ic">🗣️</div><h3>Boards built for a real day</h3>
+      <p>Family, food, school, feelings, routines, places, health — with the phrases that go with each, ready to tap.</p></div>
+    <div class="card"><div class="ic">✏️</div><h3>Make it theirs — free forever <span class="tag free">Included</span></h3>
+      <p>Your photos, your buttons, your words. Rearrange the home screen. No upgrade, no limit, no extra charge.</p></div>
+    <div class="card"><div class="ic">🧩</div><h3>Build a sentence</h3>
+      <p>Colour-coded words to say something nobody wrote in advance, for when the ready-made phrase isn't the right one.</p></div>
+    <div class="card"><div class="ic">🆘</div><h3>Emergency button <span class="tag free">Always free</span></h3>
+      <p>One tap reaches everyone on your list with a message and a live location. It keeps working whether you subscribe or not.</p></div>
+    <div class="card"><div class="ic">📵</div><h3>Works without a signal</h3>
+      <p>Everything they've said before still speaks with no bars and no wifi. It updates itself when there is.</p></div>
+    <div class="card"><div class="ic">🔒</div><h3>Lockable for a dedicated phone</h3>
+      <p>A start screen and a close button, so a phone in a pocket can't press its own buttons and start talking.</p></div>
+  </div>
+</div></section>
+
+<section id="plus"><div class="wrap">
+  <p class="eyebrow">And if you want more</p>
+  <h2>The subscription adds the parts that run on our servers.</h2>
+  <p class="lede">$12.99 a month, optional. Without it the app falls back to the phone's own voice and everything above still works.</p>
+
+  <div class="two" style="margin-top:30px">
+    <ul class="plain">
+      <li><span class="k">✓</span><span class="t"><b>AI voices</b><small>Age-appropriate voices instead of the phone's robot. Pick one that fits.</small></span></li>
+      <li><span class="k">✓</span><span class="t"><b>Texting from the app</b><small>They text family directly, without needing to open Messages.</small></span></li>
+      <li><span class="k">✓</span><span class="t"><b>Voice messages from family</b><small>A message arrives and plays in their mother's actual voice.</small></span></li>
+    </ul>
+    <ul class="plain">
+      <li><span class="k">✓</span><span class="t"><b>Family sync</b><small>A parent edits buttons on their own phone; it lands on the child's.</small></span></li>
+      <li><span class="k">✓</span><span class="t"><b>AI avatars</b><small>Generated pictures for buttons, when a photo isn't available.</small></span></li>
+      <li><span class="k">✓</span><span class="t"><b>Cancel any time</b><small>The app you bought keeps working. You only lose the extras.</small></span></li>
     </ul>
   </div>
+</div></section>
 
-  <div class="card">
-    <h2>What it will cost</h2>
-    <div class="price"><span class="now">$79.99</span><span class="unit">one time — no subscription needed</span></div>
-    <table>
-      <tr><td>Dedicated communication devices</td><td>$3,000–$5,000</td></tr>
-      <tr><td>Leading iPad apps</td><td>$250–$300</td></tr>
-      <tr class="ours"><td>EZvoxa</td><td>$79.99</td></tr>
-    </table>
-    <p class="note">A monthly option will add extras like AI voices and family sync. The app itself works without it. There will also be a hardship program for families who can't manage the price — nobody should lose a voice over $80.</p>
+<section id="price"><div class="wrap">
+  <div class="two">
+    <div>
+      <p class="eyebrow">What it costs</p>
+      <h2>$79.99, once.</h2>
+      <p class="lede">Against what families are asked to pay today for the same job.</p>
+      <table class="price">
+        <tr><td>Dedicated communication devices</td><td>$3,000–$5,000</td></tr>
+        <tr><td>Leading iPad apps</td><td>$250–$300</td></tr>
+        <tr class="us"><td>EZvoxa</td><td>$79.99</td></tr>
+      </table>
+      <p class="fine">Plus $12.99/month if you want the extras. A hardship programme will keep it reachable for families who can't manage the price — nobody should lose a voice over $80.</p>
+    </div>
+    <div class="card">
+      <h3>Try it before anything else</h3>
+      <p style="color:var(--mute);font-size:15.5px">Tap through the real boards, hear the real voice, and walk through the emergency button — nothing gets sent.</p>
+      <button class="btn" style="width:100%;margin-top:18px" data-open-demo>Open the demo</button>
+    </div>
   </div>
+</div></section>
 
-  <div class="card">
-    <h2>Be first to know</h2>
-    <h3>It isn't for sale yet.</h3>
-    <p>Leave your name and I'll email you the day it is. No cost, no card, and I won't pass your details to anyone.</p>
-    <form id="f">
-      <label for="name">Your name</label>
-      <input id="name" name="name" autocomplete="name" placeholder="Your name">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
-      <label for="about">Who is it for? <span class="quiet">(optional)</span></label>
-      <textarea id="about" name="about" placeholder="Anything you'd like me to know — their age, what they use now, whether it's for a school."></textarea>
-      <button id="go" type="submit">Add me to the list</button>
-      <div id="msg" class="msg" role="status" aria-live="polite"></div>
-      <p class="note">If you'd rather talk to a person, that's fine too — say so above and leave the best way to reach you.</p>
-    </form>
+<section id="schools"><div class="wrap">
+  <div class="two">
+    <div>
+      <p class="eyebrow">For schools</p>
+      <h2>Kids abandon the devices they're given.</h2>
+      <p>Every teacher and speech therapist knows it. The equipment is built for a young child at a desk, and by middle school it stays in the bag.</p>
+      <p>EZvoxa is built for the student who has outgrown that: portable, not clinical, and customised to how they actually talk.</p>
+    </div>
+    <div class="card">
+      <h3>$99 per student, per year</h3>
+      <p style="color:var(--mute);font-size:15.5px;margin-bottom:14px">Everything in the app plus the extras, on the iPads you already own. No new hardware.</p>
+      <p style="color:var(--mute);font-size:15.5px">Pilots welcome — a free semester, with usage data your team can take to an IEP meeting.</p>
+      <a class="btn ghost" style="width:100%;margin-top:18px" href="#list">Talk to us about a pilot</a>
+    </div>
   </div>
+</div></section>
 
-  <footer>
-    EZvoxa is made by EZ Voice LLC in Florida.<br>
-    It helps someone communicate; it is not a medical device and does not replace calling 911.
-  </footer>
+<section id="list"><div class="wrap">
+  <p class="eyebrow">Not for sale yet</p>
+  <h2>Leave your name and I'll tell you the day it is.</h2>
+  <p class="lede">No cost, no card, and your details go nowhere else.</p>
+  <form id="f">
+    <label for="name">Your name</label>
+    <input id="name" autocomplete="name" placeholder="Your name">
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <label for="about">Who is it for? <span style="color:var(--faint);font-weight:600">(optional)</span></label>
+    <textarea id="about" placeholder="Their age, what they use now, or whether you're asking for a school."></textarea>
+    <button class="btn" id="go" type="submit">Add me to the list</button>
+    <div id="msg" class="msg" role="status" aria-live="polite"></div>
+    <p class="fine">Prefer to talk to a person? Say so above and leave the best way to reach you.</p>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <div>EZvoxa is made by EZ Voice LLC in Florida.</div>
+  <div>It helps someone communicate. It is not a medical device and does not replace calling 911.</div>
+</div></footer>
+
+<!-- ── the demo ─────────────────────────────────────────── -->
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-label="EZvoxa demo">
+  <button class="phone-x" id="closeDemo" aria-label="Close the demo">✕</button>
+  <div class="phone">
+    <div class="d-head">
+      <button class="d-back" id="back" style="visibility:hidden">‹</button>
+      <div class="d-title" id="title">Evan</div>
+    </div>
+    <div class="d-body" id="body"></div>
+    <button class="d-sos" id="sos"><span style="font-size:19px">🆘</span><span class="t">Emergency<span class="s">Tap to send an SOS to everyone</span></span></button>
+  </div>
 </div>
 
 <script>
 (function () {
+  /* ---------- waitlist ---------- */
   var f = document.getElementById('f'), msg = document.getElementById('msg'), go = document.getElementById('go');
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = document.getElementById('email').value.trim();
-    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) {
-      msg.className = 'msg bad'; msg.textContent = 'That email address doesn’t look right.'; return;
-    }
+    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { msg.className='msg bad'; msg.textContent='That email address doesn’t look right.'; return; }
     go.disabled = true; go.textContent = 'Adding…'; msg.textContent = '';
-    fetch('/api/waitlist', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: document.getElementById('name').value,
-        email: email,
-        about: document.getElementById('about').value,
-        source: document.referrer || 'direct'
-      })
-    }).then(function (r) { return r.json(); }).then(function (j) {
-      if (j && j.ok) {
-        f.innerHTML = '<h3>You’re on the list.</h3><p>I’ll email you the day it’s ready. Thank you — genuinely.</p>';
-      } else {
-        go.disabled = false; go.textContent = 'Add me to the list';
-        msg.className = 'msg bad';
-        msg.textContent = (j && j.error === 'bad_email') ? 'That email address doesn’t look right.' : 'Something went wrong. Please try again in a moment.';
-      }
-    }).catch(function () {
-      go.disabled = false; go.textContent = 'Add me to the list';
-      msg.className = 'msg bad'; msg.textContent = 'No connection. Please try again in a moment.';
-    });
+    fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name:document.getElementById('name').value, email:email,
+        about:document.getElementById('about').value, source: location.pathname }) })
+      .then(function(r){return r.json()}).then(function(j){
+        if (j && j.ok) { f.innerHTML = '<h3>You’re on the list.</h3><p style="color:var(--mute)">I’ll email you the day it’s ready. Thank you — genuinely.</p>'; }
+        else { go.disabled=false; go.textContent='Add me to the list'; msg.className='msg bad';
+               msg.textContent = (j&&j.error==='bad_email') ? 'That email address doesn’t look right.' : 'Something went wrong. Please try again.'; }
+      }).catch(function(){ go.disabled=false; go.textContent='Add me to the list';
+        msg.className='msg bad'; msg.textContent='No connection. Please try again in a moment.'; });
   });
+
+  /* ---------- demo ---------- */
+  // Phrase ids match api/demo-audio.js exactly.
+  var P = { yes:0, no:1, help:2, bathroom:3, hello:4, bye:5, please:6, thanks:7, stop:8, go:9, done:10, wait:11,
+            pizza:12, morePizza:13, chicken:14, snack:15, hungry:16, thirsty:17, juice:18,
+            loveMom:19, missMom:20, morningMom:21, loveDad:22,
+            head:23, stomach:24, unwell:25, nurse:26, pool:27, happy:28, movie:29 };
+
+  var audio = null;
+  function say(id) {
+    try {
+      if (!audio) audio = new Audio();
+      audio.pause();
+      audio.src = '/api/demo-audio?p=' + id;
+      var p = audio.play(); if (p && p.catch) p.catch(function(){});
+    } catch (e) {}
+  }
+
+  var COL = ['#2F6BFF','#18B26B','#F59E0B','#7A5CFF','#E5533D','#0EA5E9','#DB2777','#14B8A6'];
+  var body = document.getElementById('body'), title = document.getElementById('title'), back = document.getElementById('back');
+  var stack = [];
+
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function note(t) { return el('div','d-note',t); }
+
+  function tiles(list) {
+    var g = el('div','d-grid');
+    list.forEach(function (t, i) {
+      var b = el('button','d-tile','<span class="e">'+t.e+'</span><span class="l">'+t.l+'</span>');
+      b.style.setProperty('--tc', t.c || COL[i % COL.length]);
+      b.onclick = t.go; g.appendChild(b);
+    });
+    return g;
+  }
+  function phrases(list) {
+    var w = el('div');
+    list.forEach(function (p, i) {
+      var b = el('button','d-phr','<span style="font-size:21px">'+(p.e||'💬')+'</span><span>'+p.t+(p.sub?'<span class="d-sub">Subscription</span>':'')+'</span>');
+      b.style.background = p.c || COL[i % COL.length];
+      b.onclick = p.go || function () { say(p.id); };
+      w.appendChild(b);
+    });
+    return w;
+  }
+
+  function show(name, render, isRoot) {
+    title.textContent = name;
+    body.innerHTML = '';
+    body.appendChild(render());
+    body.scrollTop = 0;
+    back.style.visibility = isRoot ? 'hidden' : 'visible';
+  }
+  function push(name, render) { stack.push(name); show(name, render, false); }
+  back.onclick = function () { stack.pop(); home(); };
+
+  function home() {
+    stack = [];
+    show('Evan', function () {
+      var w = el('div');
+      w.appendChild(note('Tap a picture — it says it out loud. This is a demo; the real app has many more boards.'));
+      var quick = el('div');
+      quick.style.cssText = 'display:flex;gap:8px;overflow-x:auto;padding-bottom:12px';
+      [['Hello',P.hello],['Stop',P.stop],['Go',P.go],['Please',P.please],['Thank you',P.thanks],['Wait',P.wait]].forEach(function (q) {
+        var b = el('button', null, q[0]);
+        b.style.cssText = 'flex:none;border:2.5px solid #2F6BFF;background:#fff;border-radius:15px;padding:10px 14px;font:inherit;font-size:15px;font-weight:800;color:#1A1714;cursor:pointer';
+        b.onclick = function () { say(q[1]); };
+        quick.appendChild(b);
+      });
+      w.appendChild(quick);
+      w.appendChild(tiles([
+        { e:'👪', l:'Family',  go:family },
+        { e:'🍽️', l:'Food',    go:food },
+        { e:'➕', l:'Health',  go:health, c:'#E23B2E' },
+        { e:'💬', l:'Sentence', go:sentence },
+        { e:'😊', l:'Feelings', go:function(){ push('Feelings', function(){ return phrases([
+            {e:'😄',t:'I feel happy',id:P.happy},{e:'🤢',t:"I don't feel good.",id:P.unwell},
+            {e:'🏊',t:'I want to go to the pool',id:P.pool},{e:'🍿',t:'I want to watch a movie',id:P.movie}]); }); } },
+        { e:'✏️', l:'Make it yours', go:custom, c:'#18B26B' },
+      ]));
+      return w;
+    }, true);
+  }
+
+  function food() {
+    push('Food', function () {
+      var w = el('div');
+      w.appendChild(note('Every food has its own phrases behind it — already written, ready to tap.'));
+      w.appendChild(tiles([
+        { e:'🍕', l:'Pizza', go:function(){ push('Pizza', function(){ return phrases([
+            {e:'🙋',t:'Can I have pizza?',id:P.pizza},{e:'➕',t:'Can I have more pizza?',id:P.morePizza},
+            {e:'✋',t:"I'm done",id:P.done}]); }); } },
+        { e:'🍗', l:'Chicken Fingers', go:function(){ push('Chicken Fingers', function(){ return phrases([
+            {e:'🙋',t:'Can I have chicken fingers?',id:P.chicken},{e:'✋',t:"I'm done",id:P.done}]); }); } },
+        { e:'🧃', l:'Apple Juice', go:function(){ push('Apple Juice', function(){ return phrases([
+            {e:'🙋',t:'Can I have apple juice?',id:P.juice},{e:'🥤',t:"I'm thirsty.",id:P.thirsty}]); }); } },
+        { e:'🍪', l:'Snack', go:function(){ push('Snack', function(){ return phrases([
+            {e:'🙋',t:'Can I have a snack?',id:P.snack},{e:'🍽️',t:"I'm hungry.",id:P.hungry}]); }); } },
+      ]));
+      return w;
+    });
+  }
+
+  function family() {
+    push('Family', function () {
+      var w = el('div');
+      w.appendChild(note('Tap a person to say something to them — or send it as a text or a voice message.'));
+      w.appendChild(tiles([
+        { e:'👩', l:'Mom', c:'#E5533D', go:function(){ push('Mom', function(){ return phrases([
+            {e:'❤️',t:'I love you Mom',id:P.loveMom},{e:'🥰',t:'I miss you Mom',id:P.missMom},
+            {e:'☀️',t:'Good morning Mom',id:P.morningMom},
+            {e:'📱',t:'Text this to Mom',sub:true,c:'#7A5CFF',go:function(){ push('Text to Mom', function(){
+                return el('div','d-panel','<h4>Sent to Mom ✓</h4><div>“I love you Mom”</div>'+
+                  '<div class="who">It arrives as an ordinary text message. She can text back.</div>'+
+                  '<div class="who"><b>Part of the $12.99/month subscription.</b></div>'); }); }},
+            {e:'🎙️',t:'Hear a voice message',sub:true,c:'#7A5CFF',go:function(){ push('From Mom', function(){
+                return el('div','d-panel','<h4>Message from Mom</h4><div>Mom records a message on her phone and it plays here — in her own voice, not read aloud by a machine.</div>'+
+                  '<div class="who">The real app plays her recording. This demo has no recording to play.</div>'+
+                  '<div class="who"><b>Part of the $12.99/month subscription.</b></div>'); }); }},
+          ]); }); } },
+        { e:'👨', l:'Dad', c:'#2F6BFF', go:function(){ push('Dad', function(){ return phrases([
+            {e:'❤️',t:'I love you Dad',id:P.loveDad},{e:'🙋',t:'I need help.',id:P.help}]); }); } },
+      ]));
+      return w;
+    });
+  }
+
+  function health() {
+    push('Health', function () {
+      var w = el('div');
+      w.appendChild(note('How he says what hurts, and where — without anyone guessing.'));
+      w.appendChild(phrases([
+        {e:'🤕',t:'My head hurts.',id:P.head},{e:'🤢',t:'My stomach hurts.',id:P.stomach},
+        {e:'😖',t:"I don't feel good.",id:P.unwell},{e:'🏥',t:'I need to go to the nurse.',id:P.nurse},
+      ]));
+      return w;
+    });
+  }
+
+  function sentence() {
+    push('Sentence Build', function () {
+      var w = el('div');
+      w.appendChild(note('For the things nobody wrote in advance. Tap words to build a sentence, then say it.'));
+      var strip = el('div', null, '<span style="color:#C9C2B8">Tap words to build a sentence…</span>');
+      strip.style.cssText = 'min-height:54px;background:#fff;border:2px solid #0EA5E9;border-radius:15px;padding:13px;font-size:19px;font-weight:800;color:#1A1714;margin-bottom:12px';
+      var picked = [];
+      w.appendChild(strip);
+      var row = el('div');
+      row.style.cssText = 'display:flex;gap:8px;margin-bottom:14px';
+      var sayIt = el('button', null, '🔊 Say it');
+      sayIt.style.cssText = 'flex:2;background:#18B26B;color:#fff;border:0;border-radius:13px;padding:13px;font:inherit;font-weight:800;cursor:pointer';
+      sayIt.onclick = function () { if (picked.length) say(P.movie); };
+      var clr = el('button', null, 'Clear');
+      clr.style.cssText = 'flex:1;background:#FCE4E2;color:#E23B2E;border:0;border-radius:13px;padding:13px;font:inherit;font-weight:800;cursor:pointer';
+      clr.onclick = function () { picked = []; strip.innerHTML = '<span style="color:#C9C2B8">Tap words to build a sentence…</span>'; };
+      row.appendChild(sayIt); row.appendChild(clr); w.appendChild(row);
+      var groups = [['Pronouns','#EAB308',['I','you','we','my']],['Actions','#18B26B',['want','need','like','go','see','help']],
+                    ['Describe','#2F6BFF',['more','done','good','big','funny']],['Questions','#7A5CFF',['what','where','when','why']]];
+      groups.forEach(function (g) {
+        var h = el('div', null, g[0]);
+        h.style.cssText = 'font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:'+g[1]+';margin:12px 2px 7px';
+        w.appendChild(h);
+        var grid = el('div'); grid.style.cssText = 'display:grid;grid-template-columns:repeat(4,1fr);gap:7px';
+        g[2].forEach(function (word) {
+          var b = el('button', null, word);
+          b.style.cssText = 'background:#fff;border:2.5px solid '+g[1]+';border-radius:12px;padding:10px 2px;font:inherit;font-size:13px;font-weight:800;color:#1A1714;cursor:pointer';
+          b.onclick = function () { picked.push(word); strip.textContent = picked.join(' '); };
+          grid.appendChild(b);
+        });
+        w.appendChild(grid);
+      });
+      return w;
+    });
+  }
+
+  function custom() {
+    push('Make it yours', function () {
+      return el('div','d-panel',
+        '<h4>Your photos. Your buttons. Your words.</h4>' +
+        '<div>Every button can carry a photo from your own phone — their grandmother, their actual bedroom, the exact cereal they want. You can write your own phrases in the words your family already uses, and rearrange the home screen so what they use most is first.</div>' +
+        '<div class="who" style="margin-top:12px"><b>Free forever.</b> Customising is not an upgrade and never costs extra — it is the whole reason this works better than a device somebody else configured.</div>' +
+        '<div class="who">Editing is behind a password, so it stays the way you set it.</div>');
+    });
+  }
+
+  document.getElementById('sos').onclick = function () {
+    push('Emergency', function () {
+      var w = el('div');
+      w.appendChild(el('div','d-warn','This is a demo. Nothing was sent to anyone.'));
+      w.appendChild(el('div','d-panel',
+        '<h4>What one tap does</h4>' +
+        '<div>Sends this to everyone on the family list, at once:</div>' +
+        '<div style="background:#F1EFE9;border-radius:11px;padding:12px;margin:11px 0;font-weight:700">“HELP! It’s Evan. I need help.”<br><span style="font-weight:600;color:#8C857A">…with a live map link to exactly where he is.</span></div>' +
+        '<div class="who">Reaches Dad, Mom, and two more people — by text, wherever they are.</div>' +
+        '<div class="who" style="margin-top:10px"><b style="color:#18B26B">Included when you buy the app.</b> It keeps working whether you subscribe or not, because an emergency button that stops working is not an emergency button.</div>'));
+      return w;
+    });
+  };
+
+  var scrim = document.getElementById('scrim');
+  function openDemo() { scrim.classList.add('on'); document.body.style.overflow = 'hidden'; home(); }
+  function closeDemo() { scrim.classList.remove('on'); document.body.style.overflow = ''; if (audio) { try { audio.pause(); } catch (e) {} } }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open-demo]'), function (b) { b.onclick = openDemo; });
+  document.getElementById('closeDemo').onclick = closeDemo;
+  scrim.addEventListener('click', function (e) { if (e.target === scrim) closeDemo(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && scrim.classList.contains('on')) closeDemo(); });
 })();
 </script>
 </body>
