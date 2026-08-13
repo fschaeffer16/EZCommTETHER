@@ -4399,7 +4399,8 @@ class Component extends DCLogic {
   mapItem(i, mode) {
     const base = i.say || i.label.toLowerCase();
     const iconSrc = i.icon ? this.iconUri(i.icon) : null;
-    const sceneSrc = i.scene ? ('assets/fun/' + i.scene + '.jpg') : null;
+    // Evan's Fun scenes are paintings of him; a phone somebody bought gets neon.
+    const sceneSrc = i.scene ? (this.isEvanProfile() ? ('assets/fun/' + i.scene + '.jpg') : this.iconUri('fun_' + i.scene)) : null;
     let options;
     if (mode === 'fun') {
       const q = i.q || ('Can I ' + base + '?');
@@ -4974,6 +4975,11 @@ class Component extends DCLogic {
   // The message is prefixed with "From Evan:" so, since texts currently go out
   // from a parent's phone number, the recipient knows it's from Evan.
   textPerson(p, message) {
+    if (this.isTemplateMode()) {
+      this.birthdayReceipt('This is a demonstration', '👀', 'On a real phone this sends the message as a text. Nothing was sent.', '#6366F1');
+      this.setState({ chooser: null });
+      return;
+    }
     // Cloud send first (the same path as the Emergency button): Evan's phone
     // is locked to this app, so the old Messages hand-off silently went
     // nowhere under Guided Access. Falls back to the hand-off only when the
@@ -5653,6 +5659,7 @@ class Component extends DCLogic {
   }
 
   loadDirectory() {
+    if (!this.isEvanProfile()) return;   // real numbers, never on a phone somebody bought
     try {
       fetch('/api/family', { headers: { Accept: 'application/json' } })
         .then((r) => r.json().catch(() => null))
