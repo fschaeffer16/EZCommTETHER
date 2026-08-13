@@ -2788,6 +2788,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:25px;font-weight:800;margin-top:20px;color:#C0392B;">Could not send the text</div>
           <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">The message did not go through. Use <b>Call 911</b> below, or reach someone directly.</div>
         </sc-if>
+        <sc-if value="{{ sosDemo }}" hint-placeholder-val="{{ false }}">
+          <div style="width:88px;height:88px;border-radius:50%;background:#6366F1;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:44px;line-height:1;">👀</span></div>
+          <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">This is a demonstration</div>
+          <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">On a real phone this sends a text and an email to everyone in the family, with a map link showing exactly where they are.<br/><b>Nothing was sent.</b></div>
+        </sc-if>
         <sc-if value="{{ sosPending }}" hint-placeholder-val="{{ false }}">
           <div style="width:88px;height:88px;border-radius:50%;background:#F2920E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(242,146,14,.32);"><span style="color:#fff;font-size:48px;line-height:1;">!</span></div>
           <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">Sent — not yet confirmed</div>
@@ -4574,7 +4579,7 @@ class Component extends DCLogic {
     return 'Family';
   }
 
-  ROLE_KEY() { return 'ezcomm.deviceRole'; }
+  ROLE_KEY() { return this.isTemplateMode() ? 'ezcomm.deviceRole.template' : 'ezcomm.deviceRole'; }
   deviceRole() {
     try { return localStorage.getItem(this.ROLE_KEY()) || 'evan'; } catch (e) { return 'evan'; }
   }
@@ -4655,6 +4660,7 @@ class Component extends DCLogic {
   // Evan's phone only: look for a clip he hasn't heard, play it once, and leave
   // the bubble up so he can replay it.
   async pollVoice() {
+    if (this.isTemplateMode()) return;
     if (this.deviceRole() !== 'evan' || this.state.note) return;
     let since = '';
     try { since = localStorage.getItem('ezcomm.lastNote') || ''; } catch (e) {}
@@ -4910,7 +4916,18 @@ class Component extends DCLogic {
   done() { clearTimeout(this._t); this.setState({ screen: 'board' }); }
 
   // ── Settings / data layer ───────────────────────────────────────────────
-  DATA_KEY = 'tether_settings_v1';
+  // Open the app with ?template on the end and it becomes the app a buyer gets:
+  // its own storage, so it never touches this phone's real board; the starter
+  // profile, so it shows the neon set and neutral content; no voice-note
+  // polling, so a demo can't play back a message from his mother; and the
+  // emergency bar walks through but never transmits.
+  isTemplateMode() {
+    if (this._tmpl == null) {
+      try { this._tmpl = /(^|[?&])template\b/.test(window.location.search); } catch (e) { this._tmpl = false; }
+    }
+    return this._tmpl;
+  }
+  get DATA_KEY() { return this.isTemplateMode() ? 'tether_settings_template' : 'tether_settings_v1'; }
 
   loadData() {
     try { const d = JSON.parse(localStorage.getItem(this.DATA_KEY)); if (d && d.family) return d; } catch (e) {}
@@ -6084,12 +6101,19 @@ class Component extends DCLogic {
       isSos: s.screen === 'sos',
       isSosSent: s.screen === 'sosSent',
       sosSending: (s.sosStatus || 'sending') === 'sending',
+      sosDemo: s.sosStatus === 'demo',
       sosOk: s.sosStatus === 'sent',
       sosFailed: s.sosStatus === 'failed',
       sosPending: s.sosStatus === 'pending',
       openSos: () => this.setState({ screen: 'sos' }),
       cancelSos: () => this.setState({ screen: 'board' }),
       sendSos: () => {
+        if (this.isTemplateMode()) {
+          this.setState({ screen: 'sosSent', sosStatus: 'demo' });
+          clearTimeout(this._t);
+          this._t = setTimeout(() => this.setState({ screen: 'board' }), 4200);
+          return;
+        }
         const msg = (this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I NEED HELP!";
         // Speak it aloud immediately and show the "sent" screen so Evan gets
         // instant feedback, then transmit the alert (with live location).
