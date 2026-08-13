@@ -3,7 +3,7 @@
 Running list. Kept here rather than in scratch space because the working
 container gets wiped. Updated as things land.
 
-Last updated: 13 August 2026.
+Last updated: 13 August 2026, after the Health symptoms landed.
 
 ---
 
@@ -24,15 +24,11 @@ icon, 1024x1024, black background, no labels baked in, zipped**.
 | # | Filename | Board | Note |
 |---|---|---|---|
 | B1 | `places.png` | Home tile | The last of the twenty home tiles |
-| B2 | `headache.png` | Health | Painted picture of Evan today |
-| B3 | `sore_throat.png` | Health | " |
-| B4 | `cold.png` | Health | " |
-| B5 | `cough.png` | Health | " |
-| B6 | `fever.png` | Health | " |
-| B7 | `stomachache.png` | Health | " |
-| B8 | `rest.png` | Health | " |
-| B9 | `sleep.png` | Night | " |
 | B10 | `emergency.png` | Emergency bar | Optional — the siren works fine |
+
+**Landed 13 Aug:** all seven Health symptoms — headache, sore throat, cold, cough,
+fever, stomachache, rest. The bed-and-moon also covers Night's Sleep button, so
+`sleep.png` is done too unless you want a separate one.
 
 *Stuffy Nose and Ice Pack need nothing — they are objects, no face.*
 
@@ -85,3 +81,4 @@ Held so they can go in one pass with the Watch decision.
 - Strips scroll by wheel and by drag on a desktop
 - Starter Family, School, Food content
 - Profile flag keeping Evan's board separate from the template
+- Health symptoms, neon, template only — Evan keeps his paintings
