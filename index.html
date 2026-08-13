@@ -5132,7 +5132,7 @@ class Component extends DCLogic {
       { id: 'watch', label: 'Watch', emoji: '📺', color: '#A855F7', img: this.iconUri('tile_watch'), onTap: () => this.setState({ screen: 'watch' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: '#6366F1', img: this.iconUri('tile_night'), onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#22B6F0', img: this.iconUri('tile_bathroom'), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
-      { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
+      { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('tile_hurt'), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#FB7185', img: this.iconUri('tile_feelings'), onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
