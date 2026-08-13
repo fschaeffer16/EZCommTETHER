@@ -2703,7 +2703,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               {{ t.faceEl }}
             </div>
             <div style="display:flex;align-items:center;justify-content:center;gap:7px;">
-              <span style="font-size:19px;">{{ t.emoji }}</span>
+              <sc-if value="{{ t.showEmoji }}" hint-placeholder-val="{{ true }}"><span style="font-size:19px;">{{ t.emoji }}</span></sc-if>
               <span style="font-size:17px;font-weight:800;color:var(--ink,#2A2622);text-align:center;">{{ t.label }}</span>
             </div>
           </div>
@@ -5124,30 +5124,30 @@ class Component extends DCLogic {
   homeBaseTiles() {
     return [
       // Order is Frank's: the boards Evan reaches for most, first.
-      { id: 'family', label: 'Family', emoji: '👪', color: '#F2920E', img: 'assets/family.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'family' }) },
-      { id: 'food', label: 'Food', emoji: '🍽️', color: '#F59E0B', img: 'assets/food_scene.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'food' }) },
-      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: 'assets/school.jpg', pos: 'center 30%', onTap: () => this.setState({ screen: 'school' }) },
-      { id: 'morning', label: 'Morning', emoji: '🌅', color: '#FB7185', img: 'assets/morning.jpg', pos: 'center 40%', onTap: () => this.setState({ screen: 'morning' }) },
-      { id: 'fun', label: 'Fun', emoji: '🤸', color: '#14B8A6', img: 'assets/fun.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'fun' }) },
-      { id: 'watch', label: 'Watch', emoji: '📺', color: '#3B82F6', img: 'assets/watch_scene.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'watch' }) },
-      { id: 'night', label: 'Night', emoji: '🌙', color: '#4F46E5', img: 'assets/night.jpg', pos: 'center 35%', onTap: () => this.setState({ screen: 'night' }) },
-      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#1F9E6E', img: 'assets/bathroom.jpg', pos: 'center 35%', onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
+      { id: 'family', label: 'Family', emoji: '👪', color: '#3B82F6', img: this.iconUri('tile_family'), onTap: () => this.setState({ screen: 'family' }) },
+      { id: 'food', label: 'Food', emoji: '🍽️', color: '#F59E0B', img: this.iconUri('tile_food'), onTap: () => this.setState({ screen: 'food' }) },
+      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: this.iconUri('tile_school'), onTap: () => this.setState({ screen: 'school' }) },
+      { id: 'morning', label: 'Morning', emoji: '🌅', color: '#F97316', img: this.iconUri('tile_morning'), onTap: () => this.setState({ screen: 'morning' }) },
+      { id: 'fun', label: 'Fun', emoji: '🤸', color: '#EC4899', img: this.iconUri('tile_fun'), onTap: () => this.setState({ screen: 'fun' }) },
+      { id: 'watch', label: 'Watch', emoji: '📺', color: '#A855F7', img: this.iconUri('tile_watch'), onTap: () => this.setState({ screen: 'watch' }) },
+      { id: 'night', label: 'Night', emoji: '🌙', color: '#6366F1', img: this.iconUri('tile_night'), onTap: () => this.setState({ screen: 'night' }) },
+      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#22B6F0', img: this.iconUri('tile_bathroom'), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
       { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
-      { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#DB2777', onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
+      { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#A855F7', img: this.iconUri('tile_talk'), onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
       { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#F59E0B', onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
-      { id: 'clock', label: 'Time', emoji: '🕒', color: '#0EA5E9', onTap: () => this.setState({ screen: 'clock' }) },
+      { id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) },
       { id: 'calendar', label: 'Calendar', emoji: '📅', color: '#4F46E5', onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'houses', label: 'Houses', emoji: '🏠', color: '#0D9488', onTap: () => this.setState({ screen: 'houses' }) },
+      { id: 'houses', label: 'Houses', emoji: '🏠', color: '#3B82F6', img: this.iconUri('tile_houses'), onTap: () => this.setState({ screen: 'houses' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
     ];
@@ -5242,7 +5242,7 @@ class Component extends DCLogic {
       all.forEach((t) => { if (order.indexOf(t.id) < 0) ordered.push(t); });
       all = ordered;
     }
-    return all.map((t) => ({ ...t, faceEl: this.homeFace(t) }));
+    return all.map((t) => ({ ...t, showEmoji: !this.ph(t.img), faceEl: this.homeFace(t) }));
   }
 
   // ── Custom buttons in non-home sections ─────────────────────────────────
