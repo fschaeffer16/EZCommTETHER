@@ -5139,7 +5139,7 @@ class Component extends DCLogic {
       { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#A855F7', img: this.iconUri('tile_talk'), onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
-      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#22D3EE', img: this.iconUri('tile_sentbuild'), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       { id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) },
       { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       { id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) },
@@ -5148,8 +5148,8 @@ class Component extends DCLogic {
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
       { id: 'houses', label: 'Houses', emoji: '🏠', color: '#3B82F6', img: this.iconUri('tile_houses'), onTap: () => this.setState({ screen: 'houses' }) },
-      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
-      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#6366F1', onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
+      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EC4899', img: this.iconUri('tile_choice'), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
     ];
   }
 
