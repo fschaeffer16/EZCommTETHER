@@ -5122,34 +5122,38 @@ class Component extends DCLogic {
   }
 
   homeBaseTiles() {
+    // Evan's board keeps the artwork he already knows. The neon set is the
+    // starter look for a phone somebody bought, and they can still drop their
+    // own photo on any tile.
+    const mine = this.isEvanProfile();
     return [
       // Order is Frank's: the boards Evan reaches for most, first.
-      { id: 'family', label: 'Family', emoji: '👪', color: '#3B82F6', img: this.iconUri('tile_family'), onTap: () => this.setState({ screen: 'family' }) },
-      { id: 'food', label: 'Food', emoji: '🍽️', color: '#F59E0B', img: this.iconUri('tile_food'), onTap: () => this.setState({ screen: 'food' }) },
-      { id: 'school', label: 'School', emoji: '🎒', color: '#0EA5E9', img: this.iconUri('tile_school'), onTap: () => this.setState({ screen: 'school' }) },
-      { id: 'morning', label: 'Morning', emoji: '🌅', color: '#F97316', img: this.iconUri('tile_morning'), onTap: () => this.setState({ screen: 'morning' }) },
-      { id: 'fun', label: 'Fun', emoji: '🤸', color: '#EC4899', img: this.iconUri('tile_fun'), onTap: () => this.setState({ screen: 'fun' }) },
-      { id: 'watch', label: 'Watch', emoji: '📺', color: '#A855F7', img: this.iconUri('tile_watch'), onTap: () => this.setState({ screen: 'watch' }) },
-      { id: 'night', label: 'Night', emoji: '🌙', color: '#6366F1', img: this.iconUri('tile_night'), onTap: () => this.setState({ screen: 'night' }) },
-      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#22B6F0', img: this.iconUri('tile_bathroom'), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
-      { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('tile_hurt'), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
-      { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#FB7185', img: this.iconUri('tile_feelings'), onTap: () => this.setState({ screen: 'feelings' }) },
+      { id: 'family', label: 'Family', emoji: '👪', color: mine ? '#F2920E' : '#3B82F6', ...(mine ? { img: 'assets/family.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_family') }), onTap: () => this.setState({ screen: 'family' }) },
+      { id: 'food', label: 'Food', emoji: '🍽️', color: mine ? '#F59E0B' : '#F59E0B', ...(mine ? { img: 'assets/food_scene.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_food') }), onTap: () => this.setState({ screen: 'food' }) },
+      { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
+      { id: 'morning', label: 'Morning', emoji: '🌅', color: mine ? '#FB7185' : '#F97316', ...(mine ? { img: 'assets/morning.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_morning') }), onTap: () => this.setState({ screen: 'morning' }) },
+      { id: 'fun', label: 'Fun', emoji: '🤸', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/fun.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_fun') }), onTap: () => this.setState({ screen: 'fun' }) },
+      { id: 'watch', label: 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
+      { id: 'night', label: 'Night', emoji: '🌙', color: mine ? '#4F46E5' : '#6366F1', ...(mine ? { img: 'assets/night.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_night') }), onTap: () => this.setState({ screen: 'night' }) },
+      { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: mine ? '#1F9E6E' : '#22B6F0', ...(mine ? { img: 'assets/bathroom.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_bathroom') }), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
+      { id: 'hurt', label: 'Health', emoji: '➕', color: mine ? '#E23B2E' : '#E23B2E', ...(mine ? { img: this.iconUri('headache'), contain: true } : { img: this.iconUri('tile_hurt') }), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
+      { id: 'feelings', label: 'Feelings', emoji: '😊', color: mine ? '#7A5CFF' : '#FB7185', ...(mine ? { img: 'assets/feelings.jpg', pos: 'center 38%' } : { img: this.iconUri('tile_feelings') }), onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
-      { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#A855F7', img: this.iconUri('tile_talk'), onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
+      { id: 'talk', label: 'Talk', emoji: '🗣️', color: mine ? '#DB2777' : '#A855F7', ...(mine ? { img: null } : { img: this.iconUri('tile_talk') }), onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
-      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#22D3EE', img: this.iconUri('tile_sentbuild'), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
-      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) },
-      { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
-      { id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) },
-      { id: 'calendar', label: 'Calendar', emoji: '📅', color: '#D946EF', img: this.iconUri('tile_calendar'), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: null } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: null } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
+      { id: 'numbers', label: 'Numbers', emoji: '🔢', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
+      { id: 'clock', label: 'Time', emoji: '🕒', color: mine ? '#0EA5E9' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_clock') }), onTap: () => this.setState({ screen: 'clock' }) },
+      { id: 'calendar', label: 'Calendar', emoji: '📅', color: mine ? '#4F46E5' : '#D946EF', ...(mine ? { img: null } : { img: this.iconUri('tile_calendar') }), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'houses', label: 'Houses', emoji: '🏠', color: '#3B82F6', img: this.iconUri('tile_houses'), onTap: () => this.setState({ screen: 'houses' }) },
-      { id: 'choice', label: 'My Choice', emoji: '✋', color: '#EC4899', img: this.iconUri('tile_choice'), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
-      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
+      { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
+      { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: mine ? '#6366F1' : '#8B5CF6', ...(mine ? { img: null } : { img: this.iconUri('tile_regulate') }), onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
     ];
   }
 
