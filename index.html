@@ -1969,6 +1969,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   html,body{margin:0;padding:0;}
   img{user-select:none;-webkit-user-drag:none;}
   ::-webkit-scrollbar{width:0;height:0;}
+  @media (hover:hover) and (pointer:fine){
+    /* On a laptop nothing tells you the strips slide. Give them a thin bar. */
+    div[style*="overflow-x:auto"]::-webkit-scrollbar{height:7px}
+    div[style*="overflow-x:auto"]::-webkit-scrollbar-track{background:transparent}
+    div[style*="overflow-x:auto"]::-webkit-scrollbar-thumb{background:rgba(140,133,122,.45);border-radius:4px}
+    div[style*="overflow-x:auto"]::-webkit-scrollbar-thumb:hover{background:rgba(140,133,122,.75)}
+  }
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
   @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
   /* Fill the home-indicator strip below the app instead of showing white. */
@@ -4680,6 +4687,33 @@ class Component extends DCLogic {
       el.scrollLeft += e.deltaY;
       if (el.scrollLeft !== before) e.preventDefault();
     }, { passive: false });
+
+    // Dragging is what people actually try with a mouse. Touch is left alone —
+    // it already slides, and hijacking it would fight the tap.
+    let drag = null;
+    document.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      const el = strip(e.target);
+      if (!el) return;
+      drag = { el, x: e.clientX, from: el.scrollLeft, moved: false };
+    });
+    document.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) < 6) return;
+      drag.moved = true;
+      drag.el.scrollLeft = drag.from - dx;
+      e.preventDefault();
+    });
+    document.addEventListener('pointerup', () => {
+      if (drag && drag.moved) {
+        // Don't let the release count as a tap on whatever ended up under it.
+        const eat = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+        document.addEventListener('click', eat, { capture: true, once: true });
+        setTimeout(() => document.removeEventListener('click', eat, true), 0);
+      }
+      drag = null;
+    });
   }
 
   async pollVoice() {
