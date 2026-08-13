@@ -3984,7 +3984,7 @@ class Component extends DCLogic {
   nightList() {
     return [
       { label: 'Good Night', emoji: '🌙', say: 'Good night.' },
-      { label: 'Sleep', emoji: '🛏️', icon: 'sleep', phrases: ["I'm tired, can I go to bed?", "I'm tired, I want to go to bed."] },
+      { label: 'Sleep', emoji: '🛏️', icon: this.isEvanProfile() ? 'sleep' : 'sym_sleep', phrases: ["I'm tired, can I go to bed?", "I'm tired, I want to go to bed."] },
       // Every routine button follows the same three-way pattern: ask to do it,
       // ask whether it's needed, report it's done.
       { label: 'Shower', emoji: '🚿', phrases: ['Can I take my shower?', 'Do I need a shower?', 'I took my shower.', 'Can I just wash my hands and face?'] },
@@ -4220,6 +4220,20 @@ class Component extends DCLogic {
   }
 
   hurts() {
+    // Seven of Evan's nine symptom pictures are paintings of him, so a phone
+    // somebody bought gets the neon set instead. Stuffy Nose and Ice Pack are
+    // a tissue box and an ice bag — no face, nothing to replace.
+    if (!this.isEvanProfile()) return [
+      { label: 'Headache', icon: 'sym_headache', s: 'My head hurts.' },
+      { label: 'Sore Throat', icon: 'sym_sore_throat', s: 'My throat hurts.' },
+      { label: 'Cold', icon: 'sym_cold', s: 'I have a cold.' },
+      { label: 'Cough', icon: 'sym_cough', s: 'I have a cough.' },
+      { label: 'Fever', icon: 'sym_fever', s: 'I feel hot. I might have a fever.' },
+      { label: 'Stomachache', icon: 'sym_stomachache', s: 'My stomach hurts.' },
+      { label: 'Stuffy Nose', icon: 'stuffy_nose', s: 'My nose is stuffy.' },
+      { label: 'Ice Pack', icon: 'ice_pack', s: 'I need an ice pack.' },
+      { label: 'Rest', icon: 'sym_rest', s: 'I need to lie down and rest.' },
+    ];
     return [
       { label: 'Headache', icon: 'headache', s: 'My head hurts.' },
       { label: 'Sore Throat', icon: 'sore_throat', s: 'My throat hurts.' },
