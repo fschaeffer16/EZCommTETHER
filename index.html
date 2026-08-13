@@ -5133,17 +5133,17 @@ class Component extends DCLogic {
       { id: 'night', label: 'Night', emoji: '🌙', color: '#6366F1', img: this.iconUri('tile_night'), onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: '#22B6F0', img: this.iconUri('tile_bathroom'), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
       { id: 'hurt', label: 'Health', emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
-      { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#7A5CFF', img: 'assets/feelings.jpg', pos: 'center 38%', onTap: () => this.setState({ screen: 'feelings' }) },
+      { id: 'feelings', label: 'Feelings', emoji: '😊', color: '#FB7185', img: this.iconUri('tile_feelings'), onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
       { id: 'talk', label: 'Talk', emoji: '🗣️', color: '#A855F7', img: this.iconUri('tile_talk'), onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) },
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: '#0EA5E9', onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
-      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#F2920E', onTap: () => this.setState({ screen: 'colors' }) },
-      { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#F59E0B', onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
+      { id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) },
+      { id: 'numbers', label: 'Numbers', emoji: '🔢', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       { id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) },
-      { id: 'calendar', label: 'Calendar', emoji: '📅', color: '#4F46E5', onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
+      { id: 'calendar', label: 'Calendar', emoji: '📅', color: '#D946EF', img: this.iconUri('tile_calendar'), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
