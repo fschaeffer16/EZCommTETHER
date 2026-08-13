@@ -3830,7 +3830,7 @@ class Component extends DCLogic {
     this._wasBirthday = this.isBirthday();
     // A phone locked before it went in a pocket should still be locked if the
     // app reloads in there.
-    try { this.installTapFilter(); } catch (e) {}
+    try { this.installWheelScroll(); } catch (e) {}
     // His first touch of the session buys the right to play a message to him
     // later without asking. Costs nothing and happens once.
     const unlock = () => {
@@ -4659,6 +4659,29 @@ class Component extends DCLogic {
 
   // Evan's phone only: look for a clip he hasn't heard, play it once, and leave
   // the bubble up so he can replay it.
+  // A mouse has no sideways scroll, so the strips across the top of the boards
+  // are stuck on a laptop even though they slide fine under a thumb. Turn a
+  // plain wheel into sideways movement whenever the pointer is over one.
+  installWheelScroll() {
+    const strip = (el) => {
+      for (let n = el; n && n !== document.body; n = n.parentElement) {
+        if (!n.style) continue;
+        const ox = getComputedStyle(n).overflowX;
+        if ((ox === 'auto' || ox === 'scroll') && n.scrollWidth > n.clientWidth + 4) return n;
+      }
+      return null;
+    };
+    document.addEventListener('wheel', (e) => {
+      // Leave trackpad sideways gestures alone — they already work.
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const el = strip(e.target);
+      if (!el) return;
+      const before = el.scrollLeft;
+      el.scrollLeft += e.deltaY;
+      if (el.scrollLeft !== before) e.preventDefault();
+    }, { passive: false });
+  }
+
   async pollVoice() {
     if (this.isTemplateMode()) return;
     if (this.deviceRole() !== 'evan' || this.state.note) return;
