@@ -6264,7 +6264,20 @@ class Component extends DCLogic {
           : 'school:' + (s.schoolCat || 'teachers');
         const d = this.nb();
         d.section = sec; d.label = ''; d.emoji = '⭐'; d.image = null; d.phrases = [''];
-        this.setState({ screen: 'settings', setOpen: 'buttons', pwUnlocked: true, nbErr: '' });
+        // Land on the form, not at the top of Settings. A teacher who has just
+        // typed the password should be looking at the name field, not hunting
+        // for it past the voice and sync controls.
+        this.setState({ screen: 'settings', setOpen: 'buttons', pwUnlocked: true, nbErr: '', nbAdded: '' }, () => {
+          const put = () => {
+            const root = document.getElementById('nb-form');
+            if (!root) return false;
+            const sc = root.closest('[style*="overflow"]');
+            if (sc) sc.scrollTop = Math.max(0, root.offsetTop - 12);
+            return true;
+          };
+          if (!put()) setTimeout(put, 60);
+          setTimeout(put, 240);
+        });
       },
       peopleTitle: s.screen === 'schoolpeople'
         ? (this.schoolCatLabel(s.schoolCat) || 'School')
