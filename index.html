@@ -3843,6 +3843,20 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <span style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ chooser.label }}</span>
           <sc-if value="{{ chooser.avatarHint }}" hint-placeholder-val=""><span style="font-size:12px;font-weight:700;color:var(--sub,#8C857A);text-align:center;">👆 {{ chooser.avatarHint }}</span></sc-if>
         </div>
+        <!-- Two-up cards: the picture is four times the size it was in the rows,
+             which is what a child who cannot read is actually navigating by.
+             Evan keeps the rows he knows until his own pass. -->
+        <sc-if value="{{ cardChooser }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;">
+            <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
+              <button onClick="{{ opt.onTap }}" style="background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:20px;padding:13px 9px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:126px;box-shadow:0 0 14px {{ opt.glow }}, inset 0 0 22px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
+                {{ opt.bigGlyphEl }}
+                <span style="font-size:17px;font-weight:800;line-height:1.2;text-align:center;color:var(--ink,#fff);">{{ opt.txt }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ rowChooser }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;">
           <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
             <div style="display:flex;gap:8px;align-items:stretch;">
@@ -3853,6 +3867,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </sc-for>
         </div>
+        </sc-if>
         <sc-if value="{{ chooser.editPerson }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ chooser.editPerson }}" style="width:100%;margin-top:14px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:18px;">⚙️</span>Edit this person</button>
         </sc-if>
@@ -4662,6 +4677,14 @@ class Component extends DCLogic {
   // A person added by a buyer has no colour of their own, so derive a stable one
   // from their name — the same name always gets the same circle, and a roomful
   // of aides doesn't come out all one colour.
+  // A translucent version of a card's colour, for the glow around it.
+  glowFrom(hex) {
+    const h = String(hex || '#6366F1').replace('#', '');
+    const n = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const r = parseInt(n.slice(0, 2), 16) || 99, g = parseInt(n.slice(2, 4), 16) || 102, b = parseInt(n.slice(4, 6), 16) || 241;
+    return 'rgba(' + r + ',' + g + ',' + b + ',.22)';
+  }
+
   ringFor(name) {
     const P = ['#E23B2E', '#1F9E6E', '#3B82F6', '#A855F7', '#F59E0B', '#DB2777', '#0EA5E9', '#14B8A6'];
     const t = String(name || '');
@@ -4713,7 +4736,7 @@ class Component extends DCLogic {
     // Tapping somebody in a School category gives that category's phrases: the
     // office is a place you pass through, a teacher is a lesson, an aide is
     // help, and Speech/OT is a session. Falls back to the classroom list.
-    const NURSE = { glyph: '🏥', txt: 'I need to go to the Nurse', say: 'I need to go to the Nurse.', color: '#E23B2E' };
+    const NURSE = { glyph: '🏥', txt: 'May I go see the nurse?', say: 'May I go see the nurse?', color: '#E23B2E' };
     const colour = (pal) => (x, i) => ({ glyph: x.glyph, txt: x.txt, say: x.txt, color: pal[i % pal.length] });
     if (kind === 'school:office') return this.frontOfficePhrases().map(colour(['#0EA5E9', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
     if (kind === 'school:aides') return this.staffPhrases().map(colour(['#3B82F6', '#14B8A6', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
@@ -6400,7 +6423,17 @@ class Component extends DCLogic {
       openBathroom: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()),
       hasChooser: !!s.chooser,
       chooser: s.chooser || {},
-      chooserOptions: (s.chooser && s.chooser.options) || [],
+      // The card layout is the template's. Texting a phrase still needs the row
+      // with its Text button beside it, so a chooser that can text stays rows.
+      cardChooser: !this.isEvanProfile() && !((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
+      rowChooser: this.isEvanProfile() || ((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
+      chooserOptions: (((s.chooser && s.chooser.options) || []).map((o) => ({
+        ...o,
+        glow: this.glowFrom(o.color),
+        bigGlyphEl: o.icon && this.iconUri(o.icon)
+          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: 54, height: 54, objectFit: 'contain', flex: 'none' } })
+          : React.createElement('span', { style: { fontSize: 44, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
+      }))),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },
       closeChooser: () => this.setState({ chooser: null }),
       sheetGuard: (e) => e.stopPropagation(),
