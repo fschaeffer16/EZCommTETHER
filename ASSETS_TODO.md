@@ -1,6 +1,6 @@
 # The template — every button still to draw
 
-Counted out of the code on 14 August 2026. **36 buttons need a picture drawn.** Each one
+Counted out of the code on 14 August 2026. **31 buttons need a picture drawn.** Each one
 below has the filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -22,8 +22,8 @@ Tapping Feelings opens six. Those are what still show an emoji, and those are th
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **95** |
-| Need a picture drawn | **36** |
+| Have their final artwork | **100** |
+| Need a picture drawn | **31** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning |
 
 ---
@@ -38,18 +38,13 @@ Everything else on this board is done.
 
 ---
 
-## 2. Feelings — 6
+## 2. Feelings — 1
 
-Faces. Keep them the same face throughout so the set reads as one person feeling six things.
+The other five are done. Keep this one the same face as those.
 
 | Filename | Button | Says | What to draw |
 |---|---|---|---|
-| `feel_happy.png` | Happy | I'm happy. | A wide open smile, eyes bright |
-| `feel_sad.png` | Sad | I'm sad. | A downturned mouth and one tear |
-| `feel_angry.png` | Angry | I'm angry. | Furrowed brows, a hard flat mouth |
-| `feel_frustrated.png` | Frustrated | I'm frustrated. | Gritted teeth with a scribble of tension above the head |
-| `feel_tired.png` | Tired | I'm tired. | Heavy half-closed eyes, a yawn, a few Zs |
-| `feel_unwell.png` | Don't Feel Good | I don't feel good. | A queasy face, cheeks puffed, a green cast |
+| `feel_happy.png` | Happy | I'm happy. | A wide open smile, eyes bright — the same round face as the other five |
 
 ---
 
