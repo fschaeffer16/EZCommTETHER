@@ -1,5 +1,6 @@
-# What is left — the accurate list
+# The template — what is left
 
+The app we sell. Evan's own board is a separate job and is not in here.
 Counted out of the code on 14 August 2026, not from memory. Every number below
 was produced by resolving each button's image key against what is actually
 stored in the build.
@@ -14,7 +15,6 @@ stored in the build.
 | Need new artwork — nothing there today | **69** |
 | Have artwork but the wrong artwork | **9** |
 | Must be deleted rather than redrawn | **41** |
-| Evan's own board, separate job | **9** |
 
 ---
 
@@ -75,16 +75,7 @@ Twenty-eight Netflix images, thirteen Disney images. Section 1.2.
 
 ---
 
-## 5. Evan's own board — 9
-
-Painted style, matching the eleven he has. Nothing to do with the template.
-
-`talk` · `sentbuild` · `colors` · `numbers` · `clock` · `calendar` · `houses` ·
-`choice` · `regulate`
-
----
-
-## 6. Done — 42
+## 5. Done — 42
 
 **Home tiles — 20.** All of them, including Places, which landed tonight.
 
@@ -99,7 +90,7 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 
 ---
 
-## 7. Fixed along the way
+## 6. Fixed along the way
 
 | What | Why it mattered |
 |---|---|
@@ -113,7 +104,7 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 
 ---
 
-## 8. Still waiting on a decision
+## 7. Still waiting on a decision
 
 | Question | My recommendation |
 |---|---|
@@ -125,7 +116,7 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 
 ---
 
-## 9. Word changes I still owe you
+## 8. Word changes I still owe you
 
 1. **Night · Goodnight Hugs** still says *"Good night Egypt and CJ"* and *"Good night Chad."*
 2. **Houses** still has *"The Office"* as a room.
@@ -135,7 +126,7 @@ These are code, not artwork. They go in the next pass.
 
 ---
 
-## 10. Format, every time
+## 9. Format, every time
 
 One file per icon · **1024 × 1024** · square · black background · no text baked in ·
 no brands · same prompt across a batch · named exactly as listed · zipped.
