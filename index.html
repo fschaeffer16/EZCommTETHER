@@ -2941,6 +2941,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <sc-for list="{{ watchTiles }}" as="w" hint-placeholder-count="4">
                 <div onClick="{{ w.onTap }}" style="position:relative;aspect-ratio:1;border:3px solid {{ w.color }};border-radius:20px;overflow:hidden;background:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-active="transform:scale(.96)">
                   {{ w.faceEl }}
+                  <sc-if value="{{ w.hasCaption }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:24px;font-weight:800;color:{{ w.color }};text-shadow:0 0 9px {{ w.color }};letter-spacing:.01em;">{{ w.label }}</span>
+                  </sc-if>
                 </div>
               </sc-for>
             </div>
@@ -5993,11 +5996,14 @@ class Component extends DCLogic {
       watchTiles: [
         { id: 'tv', label: 'TV', color: '#2F8BFF', icon: 'watch_tv' },
         { id: 'movies', label: 'Movies', color: '#EC4899', icon: 'watch_movies' },
-        { id: 'tablet', label: 'Tablet', color: '#22C55E', icon: 'watch_shows' },
+        { id: 'tablet', label: 'Tablet', color: '#22C55E', icon: 'watch_tablet', needsLabel: true },
         { id: 'internet', label: 'Internet', color: '#F59E0B', icon: 'watch_internet' },
       ].map((w) => ({
         ...w,
-        faceEl: React.createElement('img', { src: this.iconUri(w.icon), alt: w.label, style: { width: '100%', height: '100%', objectFit: 'contain' } }),
+        // Three of the four carry their word inside the drawing. The tablet does
+        // not, so it gives up a little height and the tile writes the word.
+        faceEl: React.createElement('img', { src: this.iconUri(w.icon), alt: w.label, style: { width: '100%', height: w.needsLabel ? '76%' : '100%', marginBottom: w.needsLabel ? '13%' : 0, objectFit: 'contain' } }),
+        hasCaption: !!w.needsLabel,
         onTap: () => this.setState({ screen: 'netflix' }),
       })),
       openNetflix: () => { this.speak('Netflix'); this.setState({ screen: 'netflix' }); },
