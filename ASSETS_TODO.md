@@ -1,6 +1,6 @@
 # The template — every button still to draw
 
-Counted out of the code on 14 August 2026. **31 buttons need a picture drawn.** Each one
+Counted out of the code on 14 August 2026. **30 buttons need a picture drawn.** Each one
 below has the filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -22,9 +22,9 @@ Tapping Feelings opens six. Those are what still show an emoji, and those are th
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **100** |
-| Need a picture drawn | **31** |
-| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning |
+| Have their final artwork | **101** |
+| Need a picture drawn | **30** |
+| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings |
 
 ---
 
@@ -38,17 +38,7 @@ Everything else on this board is done.
 
 ---
 
-## 2. Feelings — 1
-
-The other five are done. Keep this one the same face as those.
-
-| Filename | Button | Says | What to draw |
-|---|---|---|---|
-| `feel_happy.png` | Happy | I'm happy. | A wide open smile, eyes bright — the same round face as the other five |
-
----
-
-## 3. Houses — 6
+## 2. Houses — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -61,7 +51,7 @@ The other five are done. Keep this one the same face as those.
 
 ---
 
-## 4. Food — 6
+## 3. Food — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -74,7 +64,7 @@ The other five are done. Keep this one the same face as those.
 
 ---
 
-## 5. Drinks — 5
+## 4. Drinks — 5
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -86,7 +76,7 @@ The other five are done. Keep this one the same face as those.
 
 ---
 
-## 6. Snacks — 4
+## 5. Snacks — 4
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -100,7 +90,7 @@ Coca-Cola, Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
 
 ---
 
-## 7. Hunger strip — 4
+## 6. Hunger strip — 4
 
 The four buttons across the top of the Food board.
 
@@ -113,7 +103,7 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 8. School — 4
+## 7. School — 4
 
 ABC, 123 and Calculator are done.
 
@@ -126,7 +116,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 9. Finished — nothing needed
+## 8. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -137,6 +127,7 @@ ABC, 123 and Calculator are done.
 | **Health** | all 9 symptoms |
 | **Fun** | all 6 |
 | **Morning** | all 6 |
+| **Feelings** | all 6 |
 | **Hurt screen** | the segmented body — twelve regions, each on a drawn segment |
 | **Family** | initials circles — a buyer adds photos |
 | **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app from live data |
@@ -144,7 +135,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 10. Format
+## 9. Format
 
 One file per icon · **1024 × 1024** · square · black background · **no words drawn into the
 picture** · **no brands** · same prompt across a batch · named exactly as above · zipped.
@@ -154,7 +145,7 @@ have the app print the label underneath.
 
 ---
 
-## 11. Not artwork — still on me
+## 10. Not artwork — still on me
 
 2. **Houses** still has *"The Office"* as a room.
 3. **Settings** still offers Light / Dark although we committed to dark only.
