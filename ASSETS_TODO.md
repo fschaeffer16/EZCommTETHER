@@ -1,6 +1,6 @@
 # The template — every button still to draw
 
-Counted out of the code on 14 August 2026. **38 buttons need a picture drawn.** Each one
+Counted out of the code on 14 August 2026. **36 buttons need a picture drawn.** Each one
 below has the filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -22,22 +22,19 @@ Tapping Feelings opens six. Those are what still show an emoji, and those are th
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **93** |
-| Need a picture drawn | **38** |
+| Have their final artwork | **95** |
+| Need a picture drawn | **36** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning |
 
 ---
 
-## 1. Night — 3
+## 1. Night — 1
 
-Sleep, Shower, Brush Teeth and Help are done — Shower, Brush Teeth and Help came from
-Morning and are used in both boards.
+Everything else on this board is done.
 
 | Filename | Button | Says | What to draw |
 |---|---|---|---|
 | `night_goodnight.png` | Good Night | Good night. | A crescent moon and stars over a rooftop |
-| `night_pajamas.png` | Pajamas | Can I put my pajamas on? | A folded pyjama top and bottoms, stars on the fabric |
-| `night_hugs.png` | Goodnight Hugs | Good night Mom / Dad | Two simple figures hugging, a heart above them |
 
 ---
 
