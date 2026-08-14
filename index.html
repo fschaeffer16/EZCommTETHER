@@ -2750,7 +2750,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
     <!-- SOS bar -->
     <div onClick="{{ openSos }}" style="position:absolute;left:16px;right:16px;bottom:14px;background:#E23B2E;border-radius:16px;padding:9px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 8px 20px rgba(226,59,46,.32);" style-active="transform:scale(.98)">
-      <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;">🆘</div>
+      <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;overflow:hidden;">{{ sosBadgeEl }}</div>
       <div style="flex:1;min-width:0;">
         <div style="font-size:16px;font-weight:800;color:#fff;line-height:1.15;">Emergency</div>
         <div style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.15;">Tap to send an SOS to everyone</div>
@@ -5294,7 +5294,7 @@ class Component extends DCLogic {
       { id: 'numbers', label: 'Numbers', emoji: '🔢', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       { id: 'clock', label: 'Time', emoji: '🕒', color: mine ? '#0EA5E9' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_clock') }), onTap: () => this.setState({ screen: 'clock' }) },
       { id: 'calendar', label: 'Calendar', emoji: '📅', color: mine ? '#4F46E5' : '#D946EF', ...(mine ? { img: null } : { img: this.iconUri('tile_calendar') }), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
-      { id: 'places', label: 'Places', emoji: '📍', color: '#14B8A6', img: 'assets/places/beach.jpg', pos: 'center 45%', onTap: () => this.setState({ screen: 'places' }) },
+      { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
       { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
@@ -6250,6 +6250,8 @@ class Component extends DCLogic {
       famNames: 'Dad, Mom, Chris & Matt',
       sosText: (this.props && this.props.sosMessage) || "HELP! It's Evan. I can't wake up Dad. I NEED HELP!",
       isSos: s.screen === 'sos',
+      // The template's siren is drawn; Evan's stays the plain symbol he knows.
+      sosBadgeEl: this.isEvanProfile() ? '🆘' : React.createElement('img', { src: this.iconUri('emergency_icon'), style: { width: '100%', height: '100%', objectFit: 'cover' } }),
       isSosSent: s.screen === 'sosSent',
       sosSending: (s.sosStatus || 'sending') === 'sending',
       sosDemo: s.sosStatus === 'demo',
