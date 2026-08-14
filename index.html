@@ -3987,8 +3987,21 @@ class Component extends DCLogic {
         const a = new Audio('/api/speak?text=' + encodeURIComponent(text) + '&v=' + encodeURIComponent(this._cloudVoiceV || ''));
         this._cloudAudio = a;
         a.onerror = () => this.speakLocal(text);
-        const p = a.play();
-        if (p && p.catch) p.catch(() => this.speakLocal(text));
+        // A two-letter phrase like "Hi!" is a very short clip: starting it
+        // before it has buffered loses the front of it, which is the whole
+        // word. Wait for enough audio, with a short fallback so a slow network
+        // never leaves a tap silent.
+        let started = false;
+        const go = () => {
+          if (started) return;
+          started = true;
+          const pr = a.play();
+          if (pr && pr.catch) pr.catch(() => this.speakLocal(text));
+        };
+        a.preload = 'auto';
+        a.addEventListener('canplaythrough', go, { once: true });
+        setTimeout(go, 400);
+        try { a.load(); } catch (e) {}
         return;
       } catch (e) { /* fall through to the device voice */ }
     }
@@ -4001,7 +4014,10 @@ class Component extends DCLogic {
       const text = String(t).trim();
       if (!text) return;
       const makeUtter = () => {
-        const u = new SpeechSynthesisUtterance(text);
+        // "Hi!" and "Bye!" came out clipped: the speech engine is still ramping
+        // up when a two-letter phrase has already finished. A trailing pause
+        // gives it runway. Nothing extra is heard — it is silence.
+        const u = new SpeechSynthesisUtterance(text.length <= 12 ? text + '\u00A0\u00A0' : text);
         u.rate = 0.96;
         u.lang = 'en-US';
         const voices = sy.getVoices() || [];
@@ -4694,7 +4710,15 @@ class Component extends DCLogic {
 
   // Phrases shown when a person is tapped, by board type.
   personPhrases(kind, nm) {
-    if (kind === 'school') return [
+    // Tapping somebody in a School category gives that category's phrases: the
+    // office is a place you pass through, a teacher is a lesson, an aide is
+    // help, and Speech/OT is a session. Falls back to the classroom list.
+    const NURSE = { glyph: '🏥', txt: 'I need to go to the Nurse', say: 'I need to go to the Nurse.', color: '#E23B2E' };
+    const colour = (pal) => (x, i) => ({ glyph: x.glyph, txt: x.txt, say: x.txt, color: pal[i % pal.length] });
+    if (kind === 'school:office') return this.frontOfficePhrases().map(colour(['#0EA5E9', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
+    if (kind === 'school:aides') return this.staffPhrases().map(colour(['#3B82F6', '#14B8A6', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
+    if (kind === 'school:speech') return this.speechOtPhrases().map(colour(['#A855F7', '#0EA5E9', '#F59E0B', '#1F9E6E', '#E5533D', '#DB2777'])).concat([NURSE]);
+    if (kind === 'school' || kind === 'school:teachers') return [
       { glyph: '🙋', txt: 'Can you help me?', say: 'Can you help me?', color: '#0EA5E9' },
       { glyph: '❓', txt: "I don't understand.", say: "I don't understand.", color: '#7A5CFF' },
       { glyph: '⏸️', txt: 'Can I have a break?', say: 'Can I have a break?', color: '#6366F1' },
@@ -4702,6 +4726,7 @@ class Component extends DCLogic {
       { glyph: '🔁', txt: 'Can you say that again?', say: 'Can you say that again?', color: '#F59E0B' },
       { glyph: '🚻', txt: 'Can I go to the bathroom?', say: 'Can I go to the bathroom?', color: '#14B8A6' },
       { glyph: '🙏', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
+      NURSE,
     ];
     if (kind === 'friends') return [
       { glyph: '👋', txt: 'Hey!', say: 'Hey!', color: '#0EA5E9' },
@@ -5091,7 +5116,7 @@ class Component extends DCLogic {
       const want = this.state.schoolCat || 'teachers';
       return this.data().school
         .filter((p) => (p.cat || 'teachers') === want)
-        .map((p) => this.mapPerson(p, 'school'))
+        .map((p) => this.mapPerson(p, 'school:' + want))
         .concat(this.customsFor('school:' + want));
     }
     if (s === 'friends') return this.data().friends.map((p) => this.mapPerson(p, 'friends')).concat(this.customsFor('friends'));
@@ -5389,17 +5414,16 @@ class Component extends DCLogic {
     ];
   }
 
+  // Frank's list. The office is a place you pass through, not somewhere you
+  // hold a conversation — greeting, signing in or out, and asking for help.
   frontOfficePhrases() {
     return [
-      { txt: 'Can I call home?', glyph: '📞' },
-      { txt: "I don't feel good.", glyph: '🤒' },
-      { txt: 'I need to go to the nurse.', glyph: '🏥' },
-      { txt: 'I need to sign in.', glyph: '📝' },
-      { txt: 'I need to sign out.', glyph: '🚪' },
-      { txt: "I'm late.", glyph: '⏰' },
-      { txt: 'Someone is picking me up early.', glyph: '🚗' },
-      { txt: 'I forgot my lunch.', glyph: '🍎' },
-      { txt: 'Thank you.', glyph: '🙏' },
+      { txt: 'Good morning', glyph: '☀️' },
+      { txt: 'Good afternoon', glyph: '🌤️' },
+      { txt: 'I am signing in late', glyph: '⏰' },
+      { txt: 'I need to sign out early', glyph: '🚪' },
+      { txt: 'Can you help me?', glyph: '🙋' },
+      { txt: 'Bye', glyph: '👋' },
     ];
   }
   friendPhrases() {
