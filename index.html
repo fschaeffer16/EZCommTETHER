@@ -5194,7 +5194,7 @@ class Component extends DCLogic {
   // The message is prefixed with "From Evan:" so, since texts currently go out
   // from a parent's phone number, the recipient knows it's from Evan.
   textPerson(p, message) {
-    if (this.isTemplateMode()) {
+    if (this.isTemplateMode() || !this.isEvanProfile()) {
       this.birthdayReceipt('This is a demonstration', '👀', 'On a real phone this sends the message as a text. Nothing was sent.', '#6366F1');
       this.setState({ chooser: null });
       return;
@@ -6741,7 +6741,12 @@ class Component extends DCLogic {
       openSos: () => this.setState({ screen: 'sos' }),
       cancelSos: () => this.setState({ screen: 'board' }),
       sendSos: () => {
-        if (this.isTemplateMode()) {
+        // Gated on the phone, not on the address. The demo link is public, and
+        // anyone who trims the ?template off it would otherwise be holding a
+        // live alarm that rings Frank's and Raniyah's phones with a location.
+        // Only a phone stamped as one of theirs can raise a real alert.
+        // (When licensing exists this becomes "licensed", not "is Evan's".)
+        if (this.isTemplateMode() || !this.isEvanProfile()) {
           this.setState({ screen: 'sosSent', sosStatus: 'demo' });
           clearTimeout(this._t);
           this._t = setTimeout(() => this.setState({ screen: 'board' }), 4200);
