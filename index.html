@@ -4387,7 +4387,7 @@ class Component extends DCLogic {
   iconUri(key) {
     if (!key) return null;
     const m = (typeof window !== 'undefined') && window.TETHER_ICONS;
-    return (m && m[key]) || ('assets/icons/' + key + '.png');
+    return (m && m[key]) || null;
   }
 
   imgEl(src, size, radius) {
@@ -4449,6 +4449,20 @@ class Component extends DCLogic {
   }
 
   places() {
+    if (!this.isEvanProfile()) return [
+      { key: 'haircut', label: 'Haircut', q: 'Can I get a haircut?', s: 'I want to get a haircut.' },
+      { key: 'store', label: 'Store', q: 'Can we go to the store?', s: 'I want to go to the store.' },
+      { key: 'doctor', label: "Doctor's Office", q: 'Do I have to go to the doctor?', s: 'I need to go to the doctor.' },
+      { key: 'hospital', label: 'Hospital', q: 'Do I have to go to the hospital?', s: 'I need to go to the hospital.' },
+      { key: 'movie_theater', label: 'Movie Theater', q: 'Can we go to the movies?', s: 'I want to go to the movies.' },
+      { key: 'playground', label: 'Playground', q: 'Can we go to the playground?', s: 'I want to go to the playground.' },
+      { key: 'beach', label: 'Beach', q: 'Can we go to the beach?', s: 'I want to go to the beach.' },
+      { key: 'pool', label: 'Pool', q: 'Can we go to the pool?', s: 'I want to go to the pool.' },
+      { key: 'soccer_field', label: 'Soccer Field', q: 'Can we go to the soccer field?', s: 'I want to go to the soccer field.' },
+      { key: 'trampoline_park', label: 'Trampoline Park', q: 'Can we go to the trampoline park?', s: 'I want to go to the trampoline park.' },
+      { key: 'home', label: 'Home', q: 'Can we go home?', s: 'I want to go home.' },
+      { key: 'car', label: 'Car', q: 'Can we go in the car?', s: 'I want to go in the car.' },
+    ];
     return [
       { key: 'haircut', label: 'Haircut', q: 'Can I get a haircut?', s: 'I want to get a haircut.' },
       { key: 'store', label: 'Store', q: 'Can we go to the store?', s: 'I want to go to the store.' },
@@ -4481,7 +4495,7 @@ class Component extends DCLogic {
   }
 
   mapPlace(p) {
-    const src = 'assets/places/' + p.key + '.jpg';
+    const src = this.isEvanProfile() ? ('assets/places/' + p.key + '.jpg') : this.iconUri('place_' + p.key);
     const key = this.ovKey('places', p.label);
     const label = this.effLabel(key, p.label);
     const ovCover = this.ovCoverEl(key);
@@ -4493,7 +4507,7 @@ class Component extends DCLogic {
     return {
       ...p,
       label,
-      imgEl: ovCover || this.sceneEl(src),
+      imgEl: ovCover || (this.ph(src) ? this.sceneEl(src) : React.createElement('div', { style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, background: 'var(--slot,#F0EDE7)' } }, '📍')),
       editable: !!this.state.editMode,
       onTap: this.btnTap(key, 'places', { label: p.label, say: '', sayPlaceholder: 'Leave blank to keep the two options' }, normalTap),
     };
