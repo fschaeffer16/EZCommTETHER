@@ -3601,7 +3601,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isPeopleBoard }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ peopleBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">{{ peopleTitle }}</div>
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
@@ -3642,7 +3642,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Pick one.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <sc-for list="{{ schoolCats }}" as="cat" hint-placeholder-count="0">
-              <div onClick="{{ cat.onTap }}" style="background:var(--card,#fff);border:3px solid {{ cat.color }};border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">{{ cat.glyph }}</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ cat.label }}</span></div>
+              <div onClick="{{ cat.onTap }}" style="background:var(--card,#fff);border:3px solid {{ cat.color }};border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><sc-if value="{{ cat.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:44px;line-height:1;">{{ cat.glyph }}</span></sc-if>{{ cat.iconEl }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ cat.label }}</span></div>
             </sc-for>
             <div onClick="{{ openABC }}" style="background:{{ schoolTileBg }};border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)">{{ schoolABCFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="background:{{ schoolTileBg }};border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)">{{ schoolNumbersFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
@@ -4623,11 +4623,17 @@ class Component extends DCLogic {
   // fillable with real people/photos/numbers just like Family.
   baseSchool() {
     return [
-      { id: 'teacher', name: 'Teacher', ring: '#0EA5E9', tint: '#D5EEFB' },
-      { id: 'aide', name: 'Support Staff', ring: '#1F9E6E', tint: '#D8F0E5' },
-      { id: 'office', name: 'Front Office', ring: '#7A5CFF', tint: '#E6DEFB' },
-      { id: 'nurse', name: 'Nurse', ring: '#E23B2E', tint: '#FBD9D5' },
-      { id: 'classmate', name: 'Classmate', ring: '#F59E0B', tint: '#FCEBCB' },
+      // `cat` puts each person under one of the four School categories. Without
+      // it the School people board has no way in — which is how it shipped, and
+      // why nobody could ever open this list.
+      { id: 'teacher', name: 'Teacher', cat: 'teachers', ring: '#E23B2E', tint: '#FBD9D5' },
+      { id: 'teacher2', name: 'Other Teacher', cat: 'teachers', ring: '#F59E0B', tint: '#FCEBCB' },
+      { id: 'office', name: 'Front Office', cat: 'office', ring: '#1F9E6E', tint: '#D8F0E5' },
+      { id: 'nurse', name: 'Nurse', cat: 'office', ring: '#14B8A6', tint: '#D2F1ED' },
+      { id: 'aide', name: 'My Aide', cat: 'aides', ring: '#3B82F6', tint: '#DDE7FF' },
+      { id: 'aide2', name: 'Bus Driver', cat: 'aides', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { id: 'speech', name: 'Speech', cat: 'speech', ring: '#A855F7', tint: '#E6DEFB' },
+      { id: 'ot', name: 'OT', cat: 'speech', ring: '#DB2777', tint: '#FBD5EA' },
     ];
   }
   baseFriends() {
@@ -5029,6 +5035,15 @@ class Component extends DCLogic {
   activePeopleList() {
     const s = this.state.screen;
     if (s === 'school') return this.data().school.map((p) => this.mapPerson(p, 'school')).concat(this.customsFor('school'));
+    // One School category at a time. Anyone saved before categories existed has
+    // no `cat`, so they show under Teachers rather than vanishing.
+    if (s === 'schoolpeople') {
+      const want = this.state.schoolCat || 'teachers';
+      return this.data().school
+        .filter((p) => (p.cat || 'teachers') === want)
+        .map((p) => this.mapPerson(p, 'school'))
+        .concat(this.customsFor('school:' + want));
+    }
     if (s === 'friends') return this.data().friends.map((p) => this.mapPerson(p, 'friends')).concat(this.customsFor('friends'));
     return this.data().family.map((p) => this.mapPerson(p, 'family')).concat(this.customsFor('family'));
   }
@@ -5266,6 +5281,21 @@ class Component extends DCLogic {
   // the adult they see most after their parents, and until now there was no
   // button for them. Written for what actually happens in a session: being
   // asked to repeat something, being tired of trying, and wanting to stop.
+  // The four School categories. One list, used by the tiles and by the header
+  // of the people board underneath them.
+  schoolCatList() {
+    return [
+      { id: 'teachers', label: 'Teachers', glyph: '\u{1F469}\u200D\u{1F3EB}', icon: 'school_teachers', color: '#E23B2E' },
+      { id: 'office', label: 'Office Staff', glyph: '\u{1F3A7}', icon: 'school_office', color: '#1F9E6E' },
+      { id: 'aides', label: 'Aides', glyph: '\u{1F9D1}\u200D\u{1F527}', icon: 'school_staff', color: '#3B82F6' },
+      { id: 'speech', label: 'Speech/OT', glyph: '\u{1F5E3}\uFE0F', icon: 'school_speech', color: '#A855F7' },
+    ];
+  }
+  schoolCatLabel(id) {
+    const c = this.schoolCatList().find((x) => x.id === id);
+    return c ? c.label : null;
+  }
+
   speechOtPhrases() {
     return [
       { txt: 'Can we start?', glyph: '▶️' },
@@ -6052,8 +6082,14 @@ class Component extends DCLogic {
       isFamily: s.screen === 'family',
       // Friends uses the same people board as Family — same cards, same add
       // flow, different list. Without this the Friends tile opens nothing.
-      isPeopleBoard: s.screen === 'family' || s.screen === 'friends',
-      peopleTitle: s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family'),
+      isPeopleBoard: s.screen === 'family' || s.screen === 'friends' || s.screen === 'schoolpeople',
+      // Back out of a School category to School, not to the home screen.
+      peopleBack: () => (s.screen === 'schoolpeople'
+        ? this.setState({ screen: 'school', editMode: false })
+        : this.setState({ screen: 'board', editMode: false })),
+      peopleTitle: s.screen === 'schoolpeople'
+        ? (this.schoolCatLabel(s.schoolCat) || 'School')
+        : (s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family')),
       isSchool: s.screen === 'school',
       isABC: s.screen === 'abc',
       isNumbers: s.screen === 'numbers',
@@ -6088,12 +6124,19 @@ class Component extends DCLogic {
         { label: 'Support Staff', glyph: '🧑‍🔧', color: '#0EA5E9', open: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()) },
         { label: 'Front Office', glyph: '🗄️', color: '#0EA5E9', open: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()) },
         { label: 'Friends', glyph: '👫', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
-      ] : [
-        { label: 'Teachers', glyph: '👩‍🏫', color: '#E23B2E', open: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()) },
-        { label: 'Office Staff', glyph: '🗄️', color: '#1F9E6E', open: () => this.openPhraseChooser('Office Staff', '🗄️', this.frontOfficePhrases()) },
-        { label: 'Aides', glyph: '🧑‍🔧', color: '#3B82F6', open: () => this.openPhraseChooser('Aides', '🧑‍🔧', this.staffPhrases()) },
-        { label: 'Speech/OT', glyph: '🗣️', color: '#A855F7', open: () => this.openPhraseChooser('Speech/OT', '🗣️', this.speechOtPhrases()) },
-      ]).map((c) => ({ ...c, onTap: c.open })),
+      ] : this.schoolCatList().map((c) => ({
+        label: c.label, glyph: c.glyph, color: c.color, icon: c.icon,
+        // A category holds the actual people now. Tapping one of them is what
+        // reaches the phrases, so nothing is lost by the extra tap.
+        open: () => this.setState({ screen: 'schoolpeople', schoolCat: c.id, editMode: false }),
+      }))).map((c) => ({
+        ...c,
+        onTap: c.open,
+        iconEl: c.icon && this.iconUri(c.icon)
+          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: 46, height: 46, objectFit: 'contain' } })
+          : null,
+        noIcon: !(c.icon && this.iconUri(c.icon)),
+      })),
       openABC: () => this.setState({ screen: 'abc', spellText: '' }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',

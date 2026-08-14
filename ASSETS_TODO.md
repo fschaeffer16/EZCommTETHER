@@ -1,6 +1,6 @@
-# The template — the last 15 buttons
+# The template — the last 19 buttons
 
-Checked against the code on 14 August 2026. **15 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **19 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -12,7 +12,7 @@ Evan's own board is a separate job and is not in here.
 | | Buttons |
 |---|---|
 | Have their final artwork | **111** |
-| Need a picture drawn | **15** |
+| Need a picture drawn | **19** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
@@ -69,7 +69,25 @@ Soda is done — cut from the preview sheet. It is line art, so it survived the 
 
 ---
 
-## 5. Snacks — 1
+## 5. School — 4
+
+**Back on the list, and that was my mistake.** I took the earlier mockup as text-only pills and
+said School needed no artwork. Your second mockup has icons, and they work because they are
+simple silhouettes rather than attempts to draw an abstraction. Until they arrive the tiles show
+emoji.
+
+| Filename | Button | What to draw |
+|---|---|---|
+| `school_teachers.png` | Teachers | A single person, head and shoulders, facing forward |
+| `school_office.png` | Office Staff | A headset — the person who answers the school phone |
+| `school_staff.png` | Aides | Two people side by side, one slightly behind the other |
+| `school_speech.png` | Speech/OT | A speech bubble with a puzzle piece beside it |
+
+Square, one colour each, same neon look as the rest.
+
+---
+
+## 6. Snacks — 1
 
 Chips, Popcorn and Pretzels are done, and the board is reachable now — Snacks is a third section
 on the Food board rather than a screen with no way in.
@@ -80,7 +98,7 @@ on the Food board rather than a screen with no way in.
 
 ---
 
-## 6. Hunger strip — 4
+## 7. Hunger strip — 4
 
 The four buttons across the top of the Food board. **These four also need a small code change** —
 that row is built with emoji only and has no way to take a picture yet. That part is on me.
@@ -94,16 +112,17 @@ that row is built with emoji only and has no way to take a picture yet. That par
 
 ---
 
-## 7. All fifteen filenames, in one list
+## 8. All nineteen filenames, in one list
 
 `tile_friends` · `food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
 `drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` ·
+`school_teachers` · `school_office` · `school_staff` · `school_speech` ·
 `snack_crackers` ·
 `hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
 
 ---
 
-## 8. Format
+## 9. Format
 
 One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
 nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
@@ -114,7 +133,7 @@ in. That is the format that works.
 
 ---
 
-## 9. Finished — nothing needed
+## 10. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -126,7 +145,7 @@ in. That is the format that works.
 | **Fun** | all 6 |
 | **Morning** | all 6 |
 | **Feelings** | all 6 |
-| **School** | four colour-coded pills — no artwork needed |
+
 | **Night** | all 7 |
 | **Hurt screen** | the segmented body — twelve regions on drawn segments |
 | **Family** | initials circles — a buyer adds photos |
@@ -135,7 +154,7 @@ in. That is the format that works.
 
 ---
 
-## 10. Not artwork — still on me
+## 11. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
 2. **Evan's own pass.** The template now differs from his phone in three places on purpose —
