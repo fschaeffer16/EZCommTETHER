@@ -3849,7 +3849,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <sc-if value="{{ cardChooser }}" hint-placeholder-val="{{ false }}">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;">
             <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
-              <button onClick="{{ opt.onTap }}" style="background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:20px;padding:13px 9px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:126px;box-shadow:0 0 14px {{ opt.glow }}, inset 0 0 22px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
+              <button onClick="{{ opt.onTap }}" style="{{ opt.span }}background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:20px;padding:13px 9px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:126px;box-shadow:0 0 14px {{ opt.glow }}, inset 0 0 22px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
                 {{ opt.bigGlyphEl }}
                 <span style="font-size:17px;font-weight:800;line-height:1.2;text-align:center;color:var(--ink,#fff);">{{ opt.txt }}</span>
               </button>
@@ -4736,7 +4736,7 @@ class Component extends DCLogic {
     // Tapping somebody in a School category gives that category's phrases: the
     // office is a place you pass through, a teacher is a lesson, an aide is
     // help, and Speech/OT is a session. Falls back to the classroom list.
-    const NURSE = { glyph: '🏥', txt: 'May I go see the nurse?', say: 'May I go see the nurse?', color: '#E23B2E' };
+    const NURSE = { glyph: '🏥', txt: 'I need to go to the Nurse', say: 'I need to go to the Nurse.', color: '#E23B2E' };
     const colour = (pal) => (x, i) => ({ glyph: x.glyph, txt: x.txt, say: x.txt, color: pal[i % pal.length] });
     if (kind === 'school:office') return this.frontOfficePhrases().map(colour(['#0EA5E9', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
     if (kind === 'school:aides') return this.staffPhrases().map(colour(['#3B82F6', '#14B8A6', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
@@ -6427,8 +6427,11 @@ class Component extends DCLogic {
       // with its Text button beside it, so a chooser that can text stays rows.
       cardChooser: !this.isEvanProfile() && !((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
       rowChooser: this.isEvanProfile() || ((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
-      chooserOptions: (((s.chooser && s.chooser.options) || []).map((o) => ({
+      chooserOptions: (((s.chooser && s.chooser.options) || []).map((o, i, arr) => ({
         ...o,
+        // an odd number of phrases: the last one fills the row instead of
+        // leaving a gap beside it
+        span: (arr.length % 2 === 1 && i === arr.length - 1) ? 'grid-column:span 2;' : '',
         glow: this.glowFrom(o.color),
         bigGlyphEl: o.icon && this.iconUri(o.icon)
           ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: 54, height: 54, objectFit: 'contain', flex: 'none' } })
