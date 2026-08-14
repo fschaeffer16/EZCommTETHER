@@ -5136,7 +5136,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 5) return false;
+    if (rev >= 6) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5166,7 +5166,17 @@ class Component extends DCLogic {
     // (stamped rev 5 at creation, below) ever sees the starter food.
     if (rev < 5 && !d.profile) d.profile = 'evan';
 
-    d.layoutRev = 5;
+    // Rev 6: Friends became its own home tile on a bought phone. A template
+    // phone that's already been opened has a saved homeOrder without it, which
+    // would hide the tile entirely, so slot it in after School. Guarded on the
+    // profile: Evan's home screen doesn't gain a tile and must not be touched.
+    if (d.profile !== 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length && d.homeOrder.indexOf('friends') < 0) {
+      const at = d.homeOrder.indexOf('school');
+      if (at < 0) d.homeOrder.push('friends');
+      else d.homeOrder.splice(at + 1, 0, 'friends');
+    }
+
+    d.layoutRev = 6;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5175,7 +5185,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 5 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 6 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5341,6 +5351,10 @@ class Component extends DCLogic {
       { id: 'family', label: 'Family', emoji: '👪', color: mine ? '#F2920E' : '#3B82F6', ...(mine ? { img: 'assets/family.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_family') }), onTap: () => this.setState({ screen: 'family' }) },
       { id: 'food', label: 'Food', emoji: '🍽️', color: mine ? '#F59E0B' : '#F59E0B', ...(mine ? { img: 'assets/food_scene.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_food') }), onTap: () => this.setState({ screen: 'food' }) },
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
+      // Friends stands on its own rather than sitting inside School: the people
+      // a kid actually wants to talk to aren't a school subject. Template only —
+      // Evan's home screen is the one he already knows and doesn't gain a tile.
+      ...(mine ? [] : [{ id: 'friends', label: 'Friends', emoji: '👫', color: '#14B8A6', img: this.iconUri('tile_friends'), onTap: () => this.setState({ screen: 'friends' }) }]),
       { id: 'morning', label: 'Morning', emoji: '🌅', color: mine ? '#FB7185' : '#F97316', ...(mine ? { img: 'assets/morning.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_morning') }), onTap: () => this.setState({ screen: 'morning' }) },
       { id: 'fun', label: 'Fun', emoji: '🤸', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/fun.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_fun') }), onTap: () => this.setState({ screen: 'fun' }) },
       { id: 'watch', label: 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
@@ -5999,7 +6013,9 @@ class Component extends DCLogic {
       openPlaces: () => this.setState({ screen: 'places' }),
       peopleList: this.activePeopleList(),
       isFamily: s.screen === 'family',
-      isPeopleBoard: s.screen === 'family',
+      // Friends uses the same people board as Family — same cards, same add
+      // flow, different list. Without this the Friends tile opens nothing.
+      isPeopleBoard: s.screen === 'family' || s.screen === 'friends',
       peopleTitle: s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family'),
       isSchool: s.screen === 'school',
       isABC: s.screen === 'abc',
