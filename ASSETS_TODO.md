@@ -1,20 +1,9 @@
-# The template — every button still to draw
+# The template — the last 30 buttons
 
-Counted out of the code on 14 August 2026. **30 buttons need a picture drawn.** Each one
-below has the filename to send and what it should show.
+Checked against the code on 14 August 2026. **30 buttons still need a picture.** Every one is
+named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
-
----
-
-## Read this first — boards vs buttons
-
-An earlier sheet had one icon per **board** — Bathroom, Places, School, Food, Morning, Night,
-Feelings, Houses, Drinks, Snacks, Watch, Family. Those are the tiles on the home screen and
-**they are all finished.** All twenty.
-
-What is missing is the **buttons inside** those boards. Tapping Morning opens six buttons.
-Tapping Feelings opens six. Those are what still show an emoji, and those are this list.
 
 ---
 
@@ -38,20 +27,7 @@ Everything else on this board is done.
 
 ---
 
-## 2. Houses — 6
-
-| Filename | Button | What to draw |
-|---|---|---|
-| `house_one.png` | Home One | A house with a warm lit window and a path to the door |
-| `house_two.png` | Home Two | A **clearly different** house — different roofline and colour, so a child can tell the two apart at a glance |
-| `room_bathroom.png` | Bathroom | A bathtub with a shower head above it |
-| `room_kitchen.png` | Kitchen | A stove with a pot on it and a fridge beside |
-| `room_living.png` | Living Room | A sofa with a lamp and a rug |
-| `room_outside.png` | Outside | A tree on grass with the sun above |
-
----
-
-## 3. Food — 6
+## 2. Food — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -61,6 +37,19 @@ Everything else on this board is done.
 | `food_eggs.png` | Eggs | Two fried eggs in a pan |
 | `food_apple.png` | Apple | A whole red apple with a leaf on the stem |
 | `food_cookie.png` | Cookie | A round cookie with chocolate chips and a bite out of it |
+
+---
+
+## 3. Houses — 6
+
+| Filename | Button | What to draw |
+|---|---|---|
+| `house_one.png` | Home One | A house with a warm lit window and a path to the door |
+| `house_two.png` | Home Two | A **clearly different** house — different roofline and colour, so a child can tell the two apart at a glance |
+| `room_bathroom.png` | Bathroom | A bathtub with a shower head above it |
+| `room_kitchen.png` | Kitchen | A stove with a pot on it and a fridge beside |
+| `room_living.png` | Living Room | A sofa with a lamp and a rug |
+| `room_outside.png` | Outside | A tree on grass with the sun above |
 
 ---
 
@@ -76,34 +65,7 @@ Everything else on this board is done.
 
 ---
 
-## 5. Snacks — 4
-
-| Filename | Button | What to draw |
-|---|---|---|
-| `snack_chips.png` | Chips | A bowl of potato chips — **loose in a bowl, not in a packet** |
-| `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing |
-| `snack_pretzels.png` | Pretzels | A twisted pretzel with salt on it |
-| `snack_crackers.png` | Crackers | A small stack of square crackers with a slice of cheese |
-
-**No brands anywhere in this group.** The pictures being replaced were Fritos, Lay's,
-Coca-Cola, Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
-
----
-
-## 6. Hunger strip — 4
-
-The four buttons across the top of the Food board.
-
-| Filename | Button | Says | What to draw |
-|---|---|---|---|
-| `hunger_hungry.png` | Hungry | I'm hungry. | An empty plate with a knife and fork, a rumble mark beside it |
-| `hunger_thirsty.png` | Thirsty | I'm thirsty. | An empty glass with a single drop falling into it |
-| `hunger_full.png` | Full | I'm full. | An open palm held up over a plate, pushing it away |
-| `hunger_snack.png` | Snack | Can I have a snack? | A small bowl with a cookie and a piece of fruit |
-
----
-
-## 7. School — 4
+## 5. School — 4
 
 ABC, 123 and Calculator are done.
 
@@ -116,36 +78,78 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 8. Finished — nothing needed
+## 6. Snacks — 4
+
+| Filename | Button | What to draw |
+|---|---|---|
+| `snack_chips.png` | Chips | A bowl of potato chips — **loose in a bowl, not in a packet** |
+| `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing |
+| `snack_pretzels.png` | Pretzels | A twisted pretzel with salt on it |
+| `snack_crackers.png` | Crackers | A small stack of square crackers with a slice of cheese |
+
+**No brands in this group.** The pictures being replaced were Fritos, Lay's, Coca-Cola,
+Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
+
+---
+
+## 7. Hunger strip — 4
+
+The four buttons across the top of the Food board.
+
+| Filename | Button | Says | What to draw |
+|---|---|---|---|
+| `hunger_hungry.png` | Hungry | I'm hungry. | An empty plate with a knife and fork, a rumble mark beside it |
+| `hunger_thirsty.png` | Thirsty | I'm thirsty. | An empty glass with a single drop falling into it |
+| `hunger_full.png` | Full | I'm full. | An open palm held up over a plate, pushing it away |
+| `hunger_snack.png` | Snack | Can I have a snack? | A small bowl with a cookie and a piece of fruit |
+
+---
+
+## 8. All thirty filenames, in one list
+
+`night_goodnight` · `food_sandwich` · `food_soup` · `food_cereal` · `food_eggs` ·
+`food_apple` · `food_cookie` · `house_one` · `house_two` · `room_bathroom` ·
+`room_kitchen` · `room_living` · `room_outside` · `drink_water` · `drink_milk` ·
+`drink_orange` · `drink_lemonade` · `drink_soda` · `school_teachers` · `school_staff` ·
+`school_office` · `school_friends` · `snack_chips` · `snack_popcorn` · `snack_pretzels` ·
+`snack_crackers` · `hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
+
+---
+
+## 9. Format
+
+One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
+nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
+prompt across a batch · named exactly as above · zipped.
+
+The Morning six and the Feelings six came over exactly like this and every one went straight
+in. That is the format that works.
+
+---
+
+## 10. Finished — nothing needed
 
 | Board | |
 |---|---|
 | **Home** | all 20 tiles |
-| **Bathroom** | all 9 buttons |
+| **Bathroom** | all 9 |
 | **Places** | all 12 |
 | **Watch** | TV · Movies · Tablet · Internet |
 | **Health** | all 9 symptoms |
 | **Fun** | all 6 |
 | **Morning** | all 6 |
 | **Feelings** | all 6 |
-| **Hurt screen** | the segmented body — twelve regions, each on a drawn segment |
+| **Hurt screen** | the segmented body — twelve regions on drawn segments |
 | **Family** | initials circles — a buyer adds photos |
 | **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app from live data |
 | **Talk · My Choice · Overstimmed** | 36 sentence buttons — glyphs are right for these |
 
 ---
 
-## 9. Format
+## 11. Not artwork — still on me
 
-One file per icon · **1024 × 1024** · square · black background · **no words drawn into the
-picture** · **no brands** · same prompt across a batch · named exactly as above · zipped.
+1. **Settings** still offers Light / Dark although we committed to dark only.
 
-Where a word is part of the design — as with TV, Movies and Internet — say so and I will not
-have the app print the label underneath.
-
----
-
-## 10. Not artwork — still on me
-
-2. **Houses** still has *"The Office"* as a room.
-3. **Settings** still offers Light / Dark although we committed to dark only.
+*The other two word changes are done: Night's goodnights no longer name real children, and
+the Houses board is Home One and Home Two rather than Dad's House, Mom's House and The
+Office.*
