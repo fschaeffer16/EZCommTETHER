@@ -3373,7 +3373,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a button — it will say it out loud.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat({{ routineCols }},1fr);gap:12px;">
             <sc-for list="{{ morningList }}" as="item" hint-placeholder-count="0">
               <div onClick="{{ item.onTap }}" style="background:var(--card,#fff);border:3px solid #F2920E;border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:132px;justify-content:center;" style-active="transform:scale(.95)">
                 <sc-if value="{{ item.hasSlot }}" hint-placeholder-val="{{ false }}">
@@ -3403,7 +3403,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a button — it will say it out loud.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat({{ routineCols }},1fr);gap:12px;">
             <sc-for list="{{ nightList }}" as="item" hint-placeholder-count="0">
               <div onClick="{{ item.onTap }}" style="background:var(--card,#fff);border:3px solid #4F46E5;border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:132px;justify-content:center;" style-active="transform:scale(.95)">
                 <sc-if value="{{ item.hasSlot }}" hint-placeholder-val="{{ false }}">
@@ -3433,7 +3433,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap how you feel — it will say it out loud.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat({{ routineCols }},1fr);gap:12px;">
             <sc-for list="{{ feelingsList }}" as="item" hint-placeholder-count="0">
               <div onClick="{{ item.onTap }}" style="background:var(--card,#fff);border:3px solid #7A5CFF;border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:132px;justify-content:center;" style-active="transform:scale(.95)">
                 <sc-if value="{{ item.hasImg }}" hint-placeholder-val="{{ false }}">{{ item.imgEl }}</sc-if>
@@ -3752,9 +3752,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="padding:0 14px;flex:none;">
           <div style="min-height:56px;background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:16px;padding:12px 14px;font-size:22px;font-weight:800;color:var(--ink,#1A1714);word-break:break-word;">{{ wordStrip }}<sc-if value="{{ wordEmpty }}" hint-placeholder-val="{{ true }}"><span style="color:var(--hint,#C9C2B8);font-size:15px;font-weight:600;">Tap words to build a sentence…</span></sc-if></div>
           <div style="display:flex;gap:8px;margin:10px 0;">
-            <div onClick="{{ wordSay }}" style="flex:2;background:#1F8A5B;color:#fff;border-radius:14px;padding:13px;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">🔊 Say it</div>
-            <div onClick="{{ wordBack }}" style="flex:none;width:52px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border-radius:14px;padding:13px 0;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">⌫</div>
-            <div onClick="{{ wordClear }}" style="flex:none;width:62px;background:#FCE4E2;color:#E23B2E;border-radius:14px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">Clear</div>
+            <div onClick="{{ wordSay }}" style="flex:2;{{ sayCss }}border-radius:14px;padding:13px;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">🔊 Say it</div>
+            <div onClick="{{ wordBack }}" style="flex:none;width:52px;{{ backCss }}border-radius:14px;padding:13px 0;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">⌫</div>
+            <div onClick="{{ wordClear }}" style="flex:none;width:62px;{{ clearCss }}border-radius:14px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">Clear</div>
           </div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:2px 14px 24px;">
@@ -3762,7 +3762,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div style="font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ g.color }};margin:12px 2px 7px;">{{ g.label }}</div>
             <div style="display:grid;grid-template-columns:repeat({{ g.cols }},1fr);gap:7px;">
               <sc-for list="{{ g.words }}" as="w" hint-placeholder-count="0">
-                <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ g.color }};border-radius:12px;padding:9px 2px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;" style-active="transform:scale(.93)"><span style="font-size:21px;line-height:1;">{{ w.e }}</span><span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ w.t }}</span></div>
+                <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ g.color }};border-radius:12px;padding:9px 2px;{{ g.cardCss }}display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;" style-active="transform:scale(.93)"><span style="line-height:1;{{ g.emojiCss }}">{{ w.e }}</span><span style="font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;{{ g.wordCss }}">{{ w.t }}</span></div>
               </sc-for>
             </div>
           </sc-for>
@@ -4200,8 +4200,10 @@ class Component extends DCLogic {
     const colors = ['#3B82F6', '#1F9E6E', '#F59E0B', '#7A5CFF', '#E5533D', '#0EA5E9'];
     const options = items.map((it, idx) => ({
       glyph: it.glyph || '💬',
+      // carried through so the card layout can draw it big
+      icon: it.icon || null,
       glyphEl: it.icon && this.iconUri(it.icon)
-        ? React.createElement('img', { src: this.iconUri(it.icon), alt: '', style: { width: 34, height: 34, objectFit: 'contain', borderRadius: 7, flex: 'none' } })
+        ? React.createElement('img', { src: this.iconUri(it.icon), alt: '', style: { width: 34, height: 34, objectFit: 'contain', borderRadius: 7, flex: 'none', mixBlendMode: 'screen' } })
         : React.createElement('span', { style: { fontSize: 26, flex: 'none' } }, it.glyph || '💬'),
       txt: it.txt,
       say: it.txt,
@@ -4528,7 +4530,15 @@ class Component extends DCLogic {
   imgEl(src, size, radius) {
     if (!src) return null;
     src = this.ph(src);
-    return React.createElement('img', { src, style: { width: size, height: size, borderRadius: radius, objectFit: 'cover', boxShadow: '0 2px 6px rgba(20,16,12,.12)', display: 'block' } });
+    // The neon art is drawn bright on black, so on a card the black shows as a
+    // box around it. Screen blending drops the black out with no change to the
+    // files. Evan's icons are photographs, not line art, so his keep the plain
+    // treatment.
+    const neon = !this.isEvanProfile();
+    const style = { width: size, height: size, borderRadius: radius, objectFit: 'cover', display: 'block' };
+    if (neon) style.mixBlendMode = 'screen';
+    else style.boxShadow = '0 2px 6px rgba(20,16,12,.12)';
+    return React.createElement('img', { src, style });
   }
 
   mapItem(i, mode) {
@@ -6309,6 +6319,9 @@ class Component extends DCLogic {
       // Words — core-word sentence builder. Tapping a word speaks it and adds
       // it to the strip; Say it speaks the whole sentence.
       isWords: s.screen === 'words',
+      sayCss: this.isEvanProfile() ? 'background:#1F8A5B;color:#fff;' : 'background:#12301F;color:#4ADE80;border:2px solid #22C55E;box-shadow:0 0 12px rgba(34,197,94,.35);',
+      backCss: this.isEvanProfile() ? 'background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);' : 'background:transparent;color:#93C5FD;border:2px solid #3B82F6;box-shadow:0 0 10px rgba(59,130,246,.3);',
+      clearCss: this.isEvanProfile() ? 'background:#FCE4E2;color:#E23B2E;' : 'background:transparent;color:#FB7185;border:2px solid #EC4899;box-shadow:0 0 10px rgba(236,72,153,.3);',
       openWords: () => this.setState({ screen: 'words' }),
       wordStrip: (s.wordSent || []).join(' '),
       wordEmpty: !((s.wordSent || []).length),
@@ -6321,6 +6334,11 @@ class Component extends DCLogic {
       wordGroups: this.coreWords().map((g) => ({
         ...g,
         cols: g.cols || 4,
+        // Neon cards on a bought phone: a glow in the group's own colour, a
+        // bigger picture and more room to tap. Evan keeps the flatter tiles.
+        cardCss: this.isEvanProfile() ? '' : ('box-shadow:0 0 10px ' + this.glowFrom(g.color) + ', inset 0 0 16px ' + this.glowFrom(g.color) + ';border-radius:14px;padding:12px 3px;'),
+        emojiCss: this.isEvanProfile() ? 'font-size:21px;' : 'font-size:27px;',
+        wordCss: this.isEvanProfile() ? 'font-size:13px;' : 'font-size:14px;',
         words: g.words.map((w) => ({
           ...w,
           onTap: () => { const out = w.say || w.t; this.speak(out); this.setState({ wordSent: [...(this.state.wordSent || []), out] }); },
@@ -6444,8 +6462,10 @@ class Component extends DCLogic {
         // leaving a gap beside it
         span: (arr.length % 2 === 1 && i === arr.length - 1) ? 'grid-column:span 2;' : '',
         glow: this.glowFrom(o.color),
+        // screen blending so an icon drawn on black shows no box on the card;
+        // the transparent glyphs are unaffected by it
         bigGlyphEl: o.icon && this.iconUri(o.icon)
-          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: 54, height: 54, objectFit: 'contain', flex: 'none' } })
+          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: 54, height: 54, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
           : React.createElement('span', { style: { fontSize: 44, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
       }))),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },
@@ -6455,6 +6475,9 @@ class Component extends DCLogic {
       toggleTheme: () => this.setState({ theme: s.theme === 'light' ? 'dark' : 'light' }),
       tiles: this.tiles(),
       isNight: s.screen === 'night',
+      // Three across on a bought phone: the pictures carry the meaning, so the
+      // buttons do not need to be half the screen wide.
+      routineCols: this.isEvanProfile() ? 2 : 3,
       // Hungry and Thirsty moved off the home strip; they live here now, where
       // he's already heading when either one is true.
       hungerRow: [
