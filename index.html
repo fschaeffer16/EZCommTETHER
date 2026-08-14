@@ -12,6 +12,28 @@
 <meta name="theme-color" content="#4F46E5">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon180.png">
+<script>
+// Adding the demo to a home screen must not install "Evan's Talker" with his
+// face as the icon. Swapped before the manifest is fetched.
+(function () {
+  try {
+    // Anyone who is not Evan gets the EZvoxa mark: the demo link, and every
+    // phone somebody buys. Only his three phones carry profile 'evan', stamped
+    // by the layout migration, so only they keep his icon and his app name.
+    var mine = false;
+    if (!/(^|[?&])template\b/.test(location.search)) {
+      var raw = localStorage.getItem('tether_settings_v1');
+      if (raw) { try { mine = JSON.parse(raw).profile === 'evan'; } catch (e) { mine = false; } }
+    }
+    if (mine) return;
+    var m = document.querySelector('link[rel=manifest]');
+    if (m) m.href = 'manifest-template.webmanifest';
+    var t = document.querySelector('link[rel=apple-touch-icon]');
+    if (t) t.href = 'icon-ezvoxa-180.png';
+    document.title = 'EZvoxa';
+  } catch (e) {}
+})();
+</script>
 <link rel="icon" type="image/png" href="icon192.png">
 <script>
   // Register the offline service worker (ignored gracefully on old browsers).
@@ -2676,7 +2698,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
        because it has to work from anywhere. -->
   <sc-if value="{{ notStarted }}" hint-placeholder-val="{{ true }}">
     <div style="position:absolute;inset:0;z-index:70;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;">
-      <img src="icon512.png" alt="" style="width:min(62vw,260px);height:min(62vw,260px);border-radius:28%;box-shadow:0 14px 40px rgba(20,16,12,.28);" />
+      <img src="{{ startIcon }}" alt="" style="width:min(62vw,260px);height:min(62vw,260px);border-radius:28%;box-shadow:0 14px 40px rgba(20,16,12,.28);" />
       <div onClick="{{ startApp }}" style="width:min(78vw,320px);background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);color:#fff;border-radius:22px;padding:22px;text-align:center;font-size:28px;font-weight:800;cursor:pointer;letter-spacing:-.01em;box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 8px 22px rgba(61,143,29,.4);text-shadow:0 1px 2px rgba(0,0,0,.25);" style-active="transform:scale(.96)">Open</div>
     </div>
   </sc-if>
@@ -6103,6 +6125,10 @@ class Component extends DCLogic {
       showSnacks: !this.isEvanProfile(),
       openFood: () => this.setState({ screen: 'food' }),
       openSnacks: () => this.setState({ screen: 'snacks' }),
+      // The app icon is a painting of Evan. On a phone somebody bought — and on
+      // the demo link — that is his face on a stranger's home screen, so the
+      // template gets the EZvoxa mark instead.
+      startIcon: this.isEvanProfile() ? 'icon512.png' : 'icon-ezvoxa-512.png',
       goBoard: () => this.setState({ screen: 'board', editMode: false }),
       foods: this.foods().map((i) => this.mapItem(i, 'food')).concat(this.customsFor('food')),
       drinks: this.drinks().map((i) => this.mapItem(i, 'food')),
