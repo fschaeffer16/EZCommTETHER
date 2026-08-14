@@ -11,10 +11,10 @@ stored in the build.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **42** |
-| Need new artwork — nothing there today | **69** |
+| Have their final artwork | **45** |
+| Need new artwork — nothing there today | **66** |
 | Have artwork but the wrong artwork | **9** |
-| Must be deleted rather than redrawn | **41** |
+| Must be deleted rather than redrawn | **0** — done |
 
 ---
 
@@ -25,18 +25,16 @@ The `Hamburger` button uses `hamburger`, which is a painting of him standing und
 golden arches. It is on a buyer's phone today. This is the single most urgent image on
 the list.
 
-**1.2 — The Watch board serves Disney and Netflix artwork, and speaks the titles.**
-Twenty-eight Netflix images and thirteen Disney images are hardcoded, not stored per
-phone, so the template shows them. Tapping one speaks *"Moana"*, *"Zootopia 2"*,
-*"The Lion King"* — the titles are trademarks too.
+**1.2 — Fixed.** The Watch board no longer shows Netflix or Disney anything on the
+template. It is four neutral categories — TV, Movies, Tablet, Internet — and the parent
+adds their own shows behind them. Evan's board keeps Netflix, Disney+ and all of his.
 
-**Recommendation, unchanged:** ship the template's Watch board with eight empty slots and
-a line telling the parent to add their own. Removes all 41 images and all 41 titles, costs
-nothing, and it is the better feature. Evan's board keeps his.
+**One still open:** the Tablet button uses the plain screen icon, because the drawn one
+said **iPad**, which is Apple's trademark. A tablet drawn without the name would finish it.
 
 ---
 
-## 2. Need new artwork — 69
+## 2. Need new artwork — 66
 
 Nothing exists for these today. They render as an emoji.
 
@@ -53,7 +51,6 @@ Nothing exists for these today. They render as an emoji.
 | **Drinks** | 5 | Water · Milk · Orange Juice · Lemonade · Soda |
 | **Snacks** | 4 | Chips · Popcorn · Pretzels · Crackers |
 | **Hunger strip** | 4 | Hungry · Thirsty · Full · Snack |
-| **Watch** | 3 | Shows · Movies · Sports |
 
 ---
 
@@ -69,13 +66,13 @@ Grapes · Strawberries
 
 ---
 
-## 4. Delete rather than redraw — 41
+## 4. Delete rather than redraw — none left
 
-Twenty-eight Netflix images, thirteen Disney images. Section 1.2.
+The 28 Netflix and 13 Disney images are no longer reachable on the template. Section 1.2.
 
 ---
 
-## 5. Done — 42
+## 5. Done — 45
 
 **Home tiles — 20.** All of them, including Places, which landed tonight.
 
@@ -87,6 +84,8 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 **Places — 5.** Haircut · Store · Doctor's Office · Hospital · Movie Theater.
 
 **Night — 1.** Sleep.  **Emergency bar — 1.**
+
+**Watch — 3.** TV · Movies · Internet.
 
 ---
 
@@ -108,7 +107,6 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 
 | Question | My recommendation |
 |---|---|
-| **Watch board** — 41 branded images and 41 spoken titles | Ship the slots empty |
 | **Hurt screen** — rebuild as the segmented neon body you mocked up? | Yes. The current tap zones are 43 × 38 points and invisible |
 | **The 128 sentence buttons** — Talk, My Choice, Overstimmed, Time, the word bank | Leave as glyphs. They are sentences, not objects |
 | **Pocket-press filter** — deleted months ago, the call site still does nothing | Say if you want it back |
