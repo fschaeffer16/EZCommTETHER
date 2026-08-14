@@ -4048,9 +4048,8 @@ class Component extends DCLogic {
   }
 
   feelingsList() {
-    // Happy is still on its emoji — its picture has not arrived yet.
     if (!this.isEvanProfile()) return [
-      { label: "I'm happy", emoji: '😊', say: "I'm happy." },
+      { label: "I'm happy", emoji: '😊', icon: 'feel_happy', say: "I'm happy." },
       { label: "I'm sad", emoji: '😢', icon: 'feel_sad', say: "I'm sad." },
       { label: "I'm angry", emoji: '😠', icon: 'feel_angry', say: "I'm angry." },
       { label: "I'm frustrated", emoji: '😤', icon: 'feel_frustrated', say: "I'm frustrated." },
