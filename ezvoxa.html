@@ -140,6 +140,25 @@
     box-shadow:0 6px 20px rgba(0,0,0,.4)}
   @media (max-width:520px){ .phone{border-radius:0;border-width:0;height:100vh;width:100vw} .scrim{padding:0}
     .phone-x{top:10px;right:10px;width:42px;height:42px;background:rgba(255,255,255,.94)} }
+  /* guided walkthrough */
+  .d-cap{position:absolute;left:0;right:0;bottom:0;z-index:4;background:linear-gradient(180deg,rgba(10,12,18,0),rgba(10,12,18,.94) 34%);
+    padding:44px 20px 22px;color:#fff;font-size:17px;font-weight:700;line-height:1.35;text-align:center;
+    opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none}
+  .d-cap.on{opacity:1;transform:none}
+  /* while the walkthrough runs, keep the words clear of the Skip / Try bar */
+  .d-cap.tour{padding-bottom:92px}
+  .d-cap .step{display:block;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(255,255,255,.5);margin-bottom:7px}
+  .d-hl{position:relative;z-index:3;animation:dhl 1.15s ease-in-out infinite}
+  @keyframes dhl{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.9),0 0 0 0 rgba(47,107,255,.55)}
+    50%{box-shadow:0 0 0 4px rgba(255,255,255,.95),0 0 22px 7px rgba(47,107,255,.5)}}
+  .d-tourbar{position:absolute;left:0;right:0;bottom:0;z-index:6;display:none;gap:10px;padding:16px 18px;
+    background:rgba(10,12,18,.94);justify-content:center}
+  .d-tourbar.on{display:flex}
+  .d-tourbar button{border:0;border-radius:14px;padding:14px 20px;font:inherit;font-size:16px;font-weight:800;cursor:pointer}
+  .d-skip{background:transparent;color:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.24)}
+  .d-try{background:#2F6BFF;color:#fff}
+  @media (prefers-reduced-motion:reduce){ .d-hl{animation:none;box-shadow:0 0 0 4px rgba(255,255,255,.95)} }
   .d-head{display:flex;align-items:center;gap:10px;padding:16px 16px 10px;flex:none}
   .d-back{width:38px;height:38px;border-radius:50%;background:#fff;border:0;font-size:22px;font-weight:700;
     cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);color:#1A1714;line-height:1}
@@ -178,7 +197,8 @@
     <a class="hide-sm" href="#avatars">Pictures</a>
     <a class="hide-sm" href="#price">Price</a>
     <a class="hide-sm" href="#schools">Schools</a>
-    <button class="btn sm" data-open-demo>Try the demo</button>
+    <button class="btn sm" data-watch-demo>Watch how it works</button>
+    <button class="btn sm ghost" data-open-demo>Try it myself</button>
   </nav>
 </div></div>
 
@@ -187,7 +207,8 @@
     <h1>A voice for people who don't have one.</h1>
     <p class="sub">A communication app for nonverbal teenagers and adults — on the phone they already carry, for a fraction of what a dedicated device costs.</p>
     <div class="cta-row">
-      <button class="btn" data-open-demo>Try the demo</button>
+      <button class="btn" data-watch-demo>Watch how it works</button>
+      <button class="btn ghost" data-open-demo>Try it myself</button>
       <a class="btn ghost" href="#list">Tell me when it's ready</a>
     </div>
     <p class="under">$79.99 once. The emergency button works whether you subscribe or not.</p>
@@ -395,6 +416,11 @@
       <div class="d-title" id="title">Sam</div>
     </div>
     <div class="d-body" id="body"></div>
+    <div class="d-cap" id="cap"></div>
+    <div class="d-tourbar" id="tourbar">
+      <button class="d-skip" id="tourSkip">Skip</button>
+      <button class="d-try" id="tourTry">Try it yourself</button>
+    </div>
     <button class="d-sos" id="sos"><span style="font-size:19px">🆘</span><span class="t">Emergency<span class="s">Tap to send an SOS to everyone</span></span></button>
   </div>
 </div>
@@ -654,7 +680,94 @@
 
   var scrim = document.getElementById('scrim');
   function openDemo() { scrim.classList.add('on'); document.body.style.overflow = 'hidden'; home(); }
-  function closeDemo() { scrim.classList.remove('on'); document.body.style.overflow = ''; if (audio) { try { audio.pause(); } catch (e) {} } }
+
+  /* ---------- guided walkthrough ----------
+     Captions, not a voiceover. The only voice heard is the app's own, saying
+     the phrases a child would tap — which is the point of the demo. */
+  var cap = document.getElementById('cap'), tourbar = document.getElementById('tourbar');
+  var tourOn = false, tourStop = false, hlNode = null;
+
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function caption(n, total, text) {
+    cap.innerHTML = '<span class="step">Step ' + n + ' of ' + total + '</span>' + text;
+    cap.classList.add('on');
+  }
+  function clearHl() { if (hlNode) { hlNode.classList.remove('d-hl'); hlNode = null; } }
+  function findBtn(label) {
+    // Button text starts with an emoji, so an exact or leading match never
+    // fires — take an exact hit if there is one, otherwise any button whose
+    // text contains the label.
+    var all = document.querySelectorAll('#body button'), loose = null;
+    for (var i = 0; i < all.length; i++) {
+      var t = all[i].textContent.replace(/\s+/g, ' ').trim();
+      if (t === label) return all[i];
+      if (!loose && t.indexOf(label) >= 0) loose = all[i];
+    }
+    return loose;
+  }
+  // Point at a button, pause so the eye can follow, then press it.
+  async function press(label, hold) {
+    clearHl();
+    var b = findBtn(label);
+    if (!b) return false;
+    b.scrollIntoView({ block: 'center' });
+    hlNode = b; b.classList.add('d-hl');
+    await sleep(hold || 900);
+    if (tourStop) return false;
+    b.click();
+    return true;
+  }
+
+  var STEPS = [
+    { t: 'This is the whole app. Every button is a picture, and every picture speaks.', run: async function () { home(); await sleep(1100); } },
+    { t: 'He taps. It talks. Nothing is typed, and nothing has to be spelled.', run: async function () { await press('Hello', 950); await sleep(1200); } },
+    { t: 'The people he wants to reach are on the first screen, not buried in a menu.', run: async function () { await press('Family', 850); await sleep(900); } },
+    { t: 'Every person has their own things to say, already written.', run: async function () { await press('Mom', 850); await sleep(900); } },
+    { t: 'Four words most parents of a nonspeaking child have never heard out loud.', run: async function () { await press('I love you Mom', 1000); await sleep(2000); } },
+    { t: 'This is the board I would have wanted first.', run: async function () { home(); await sleep(700); await press('Health', 850); await sleep(800); } },
+    { t: 'He can say where it hurts. Without this, somebody has to guess — and guessing is how things get missed.', run: async function () { await press('My head hurts.', 1000); await sleep(2300); } },
+    { t: 'Food works the same way. Ask for it, ask for more of it, say when you are done.', run: async function () { home(); await sleep(700); await press('Food', 800); await sleep(700); await press('Pizza', 800); await sleep(700); await press('Can I have pizza?', 900); await sleep(1700); } },
+    { t: 'And for everything nobody wrote down in advance, he builds the sentence himself.', run: async function () { home(); await sleep(700); await press('Sentence Build', 850); await sleep(1400); } },
+    { t: 'It was built for one boy by his father. It works for anyone who cannot speak.', run: async function () { home(); await sleep(900); } },
+  ];
+
+  async function runTour() {
+    tourOn = true; tourStop = false;
+    scrim.classList.add('on'); document.body.style.overflow = 'hidden';
+    tourbar.classList.add('on');
+    cap.classList.add('tour');
+    home();
+    await sleep(700);
+    for (var i = 0; i < STEPS.length; i++) {
+      if (tourStop) break;
+      caption(i + 1, STEPS.length, STEPS[i].t);
+      await sleep(900);
+      if (tourStop) break;
+      try { await STEPS[i].run(); } catch (e) {}
+      cap.classList.remove('on');
+      await sleep(260);
+    }
+    endTour(!tourStop);
+  }
+  function endTour(finished) {
+    tourStop = true; tourOn = false;
+    clearHl();
+    tourbar.classList.remove('on');
+    cap.classList.remove('tour');
+    if (finished) {
+      caption('', '', '');
+      cap.innerHTML = '<span class="step">Your turn</span>Tap anything you like — it all works.';
+      cap.classList.add('on');
+      setTimeout(function () { cap.classList.remove('on'); }, 3400);
+      home();
+    } else {
+      cap.classList.remove('on');
+    }
+  }
+  document.getElementById('tourSkip').onclick = function () { endTour(false); };
+  document.getElementById('tourTry').onclick = function () { endTour(true); };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-watch-demo]'), function (b) { b.onclick = runTour; });
+  function closeDemo() { tourStop = true; if (typeof endTour === 'function') { try { endTour(false); } catch (e) {} } scrim.classList.remove('on'); document.body.style.overflow = ''; if (audio) { try { audio.pause(); } catch (e) {} } }
   Array.prototype.forEach.call(document.querySelectorAll('[data-open-demo]'), function (b) { b.onclick = openDemo; });
   document.getElementById('closeDemo').onclick = closeDemo;
   scrim.addEventListener('click', function (e) { if (e.target === scrim) closeDemo(); });
