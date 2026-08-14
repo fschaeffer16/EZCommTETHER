@@ -1,6 +1,6 @@
-# The template — the last 29 buttons
+# The template — the last 26 buttons
 
-Checked against the code on 14 August 2026. **29 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **26 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -11,22 +11,21 @@ Evan's own board is a separate job and is not in here.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **102** |
-| Need a picture drawn | **29** |
+| Have their final artwork | **105** |
+| Need a picture drawn | **26** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
 
-## 1. Food — 6
+## 1. Food — 3
+
+Apple, Eggs and Cookie are done.
 
 | Filename | Button | What to draw |
 |---|---|---|
-| `food_sandwich.png` | Sandwich | A stacked sandwich cut on the diagonal, filling visible |
+| `food_sandwich.png` | Sandwich | A stacked sandwich cut on the diagonal, filling visible — **neon outline**, not a photograph. The version sent on 14 Aug was photorealistic and could not be used. |
 | `food_soup.png` | Soup | A bowl of soup with steam rising and a spoon |
 | `food_cereal.png` | Cereal | A bowl of cereal with milk pouring in |
-| `food_eggs.png` | Eggs | Two fried eggs in a pan |
-| `food_apple.png` | Apple | A whole red apple with a leaf on the stem |
-| `food_cookie.png` | Cookie | A round cookie with chocolate chips and a bite out of it |
 
 ---
 
@@ -70,9 +69,12 @@ ABC, 123 and Calculator are done.
 
 ## 5. Snacks — 4
 
+**`snack_chips` was drawn but not used** — it came back as a photorealistic bowl of crisps, and
+every other icon in the app is neon outline. It needs redrawing in the outline style.
+
 | Filename | Button | What to draw |
 |---|---|---|
-| `snack_chips.png` | Chips | A bowl of potato chips — **loose in a bowl, not in a packet** |
+| `snack_chips.png` | Chips | A bowl of potato chips — **loose in a bowl, not in a packet**, drawn as a **neon outline**, not a photograph |
 | `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing |
 | `snack_pretzels.png` | Pretzels | A twisted pretzel with salt on it |
 | `snack_crackers.png` | Crackers | A small stack of square crackers with a slice of cheese |
@@ -95,10 +97,9 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 7. All twenty-nine filenames, in one list
+## 7. All twenty-six filenames, in one list
 
-`food_sandwich` · `food_soup` · `food_cereal` · `food_eggs` ·
-`food_apple` · `food_cookie` · `house_one` · `house_two` · `room_bathroom` ·
+`food_sandwich` · `food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bathroom` ·
 `room_kitchen` · `room_living` · `room_outside` · `drink_water` · `drink_milk` ·
 `drink_orange` · `drink_lemonade` · `drink_soda` · `school_teachers` · `school_staff` ·
 `school_office` · `school_friends` · `snack_chips` · `snack_popcorn` · `snack_pretzels` ·
