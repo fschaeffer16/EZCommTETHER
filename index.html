@@ -4032,7 +4032,11 @@ class Component extends DCLogic {
         // "Hi!" and "Bye!" came out clipped: the speech engine is still ramping
         // up when a two-letter phrase has already finished. A trailing pause
         // gives it runway. Nothing extra is heard — it is silence.
-        const u = new SpeechSynthesisUtterance(text.length <= 12 ? text + ' . ' : text);
+        // A very short phrase can be over before the engine has finished starting.
+        // Give it a sentence ending to breathe on — but only when it hasn't got
+        // one, and attached, so no voice reads a stray full stop out loud.
+        const pad = (text.length <= 12 && !/[.!?]$/.test(text)) ? text + '.' : text;
+        const u = new SpeechSynthesisUtterance(pad);
         u.rate = 0.96;
         u.lang = 'en-US';
         const voices = sy.getVoices() || [];
