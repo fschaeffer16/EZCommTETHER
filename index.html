@@ -3181,7 +3181,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="background:#EEF3FF;border:1.5px solid #C9DBFF;border-radius:14px;padding:12px 14px;font-size:12.5px;font-weight:600;color:#3253A8;line-height:1.45;">Enter the family password below and tap <b>Save</b> to save your changes on this phone <b>and</b> share them with the family. On another family phone, tap <b>Sync</b> to pull in the latest.</div>
 
           <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
-          <button onClick="{{ toggleTheme }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">{{ themeIcon }}</span>Light / Dark</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
 
                     <div onClick="{{ setTog_phone }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
@@ -3883,7 +3882,8 @@ class Component extends DCLogic {
     super(props);
     this.rootRef = React.createRef();
     this.boardScrollRef = React.createRef();
-    this.state = { screen: 'board', theme: (props && props.theme) || 'light' };
+    // Dark only — the app is drawn for it and the neon artwork needs it.
+    this.state = { screen: 'board', theme: 'dark' };
   }
 
   colors(theme) {
@@ -6489,8 +6489,6 @@ class Component extends DCLogic {
       cancelCss: this.isEvanProfile() ? 'border:none;' : 'border:1.5px solid rgba(255,255,255,.18);border-radius:16px;',
       closeChooser: () => this.setState({ chooser: null }),
       sheetGuard: (e) => e.stopPropagation(),
-      themeIcon: s.theme === 'light' ? '🌙' : '☀️',
-      toggleTheme: () => this.setState({ theme: s.theme === 'light' ? 'dark' : 'light' }),
       tiles: this.tiles(),
       isNight: s.screen === 'night',
       // Three across on a bought phone: the pictures carry the meaning, so the
