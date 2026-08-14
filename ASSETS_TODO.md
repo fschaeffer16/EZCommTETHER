@@ -1,6 +1,6 @@
-# The template — the last 20 buttons
+# The template — the last 19 buttons
 
-Checked against the code on 14 August 2026. **20 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **19 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -11,8 +11,8 @@ Evan's own board is a separate job and is not in here.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **108** |
-| Need a picture drawn | **20** |
+| Have their final artwork | **109** |
+| Need a picture drawn | **19** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
@@ -46,15 +46,16 @@ outside — say so and I'll add them to the app first. Then the pictures are wor
 
 ---
 
-## 3. Drinks — 5
+## 3. Drinks — 4
+
+Soda is done — cut from the preview sheet. It is line art, so it survived the upscale.
 
 | Filename | Button | What to draw |
 |---|---|---|
 | `drink_water.png` | Water | A clear glass of water |
-| `drink_milk.png` | Milk | A glass of milk beside a plain carton — **no brand on the carton** |
+| `drink_milk.png` | Milk | A glass of milk beside a plain carton — **no brand on the carton**. A version came in the preview sheet but the carton reads as a house and it is the only white icon in a colour set, so it needs redrawing regardless of size. |
 | `drink_orange.png` | Orange Juice | A glass of orange juice with a slice of orange on the rim |
 | `drink_lemonade.png` | Lemonade | A tall glass with lemon slices and ice |
-| `drink_soda.png` | Soda | A cup with a straw and bubbles rising — **no logo, no brand** |
 
 ---
 
@@ -82,7 +83,7 @@ note at the end.
 
 | Filename | Button | What to draw |
 |---|---|---|
-| `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing |
+| `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing. **A usable version already exists in the preview sheet** — it is being held only because it is neon outline and the Chips and Pretzels beside it are photorealistic. Settle that and it goes straight in. |
 | `snack_crackers.png` | Crackers | A small stack of square crackers with a slice of cheese |
 
 **No brands in this group.** The pictures being replaced were Fritos, Lay's, Coca-Cola,
@@ -104,10 +105,10 @@ that row is built with emoji only and has no way to take a picture yet. That par
 
 ---
 
-## 7. All twenty filenames, in one list
+## 7. All nineteen filenames, in one list
 
 `food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
-`drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` · `drink_soda` ·
+`drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` · 
 `school_teachers` · `school_staff` · `school_office` · `school_friends` ·
 `snack_popcorn` · `snack_crackers` ·
 `hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
