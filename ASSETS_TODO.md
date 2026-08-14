@@ -1,6 +1,6 @@
-# The template — the last 19 buttons
+# The template — the last 20 buttons
 
-Checked against the code on 14 August 2026. **19 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **20 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -12,12 +12,22 @@ Evan's own board is a separate job and is not in here.
 | | Buttons |
 |---|---|
 | Have their final artwork | **109** |
-| Need a picture drawn | **19** |
+| Need a picture drawn | **20** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
 
-## 1. Food — 2
+## 1. Home screen — 1
+
+Friends became its own home tile. It shows the 👫 emoji on teal until this arrives.
+
+| Filename | Button | What to draw |
+|---|---|---|
+| `tile_friends.png` | Friends | Two kids side by side — **4:3 landscape, not square**, like the other home tiles |
+
+---
+
+## 2. Food — 2
 
 Apple, Eggs, Cookie and Sandwich are done.
 
@@ -28,7 +38,7 @@ Apple, Eggs, Cookie and Sandwich are done.
 
 ---
 
-## 2. Houses — 3
+## 3. Houses — 3
 
 **Corrected 14 Aug.** An earlier version of this list asked for six house pictures including a
 kitchen, a living room and an outside. The template's two houses only contain **one room each,
@@ -46,7 +56,7 @@ outside — say so and I'll add them to the app first. Then the pictures are wor
 
 ---
 
-## 3. Drinks — 4
+## 4. Drinks — 4
 
 Soda is done — cut from the preview sheet. It is line art, so it survived the upscale.
 
@@ -59,7 +69,7 @@ Soda is done — cut from the preview sheet. It is line art, so it survived the 
 
 ---
 
-## 4. School — 4
+## 5. School — 4
 
 ABC, 123 and Calculator are done.
 
@@ -72,7 +82,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 5. Snacks — 2
+## 6. Snacks — 2
 
 Chips and Pretzels are done.
 
@@ -91,7 +101,7 @@ Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
 
 ---
 
-## 6. Hunger strip — 4
+## 7. Hunger strip — 4
 
 The four buttons across the top of the Food board. **These four also need a small code change** —
 that row is built with emoji only and has no way to take a picture yet. That part is on me.
@@ -105,9 +115,9 @@ that row is built with emoji only and has no way to take a picture yet. That par
 
 ---
 
-## 7. All nineteen filenames, in one list
+## 8. All twenty filenames, in one list
 
-`food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
+`tile_friends` · `food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
 `drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` · 
 `school_teachers` · `school_staff` · `school_office` · `school_friends` ·
 `snack_popcorn` · `snack_crackers` ·
@@ -115,7 +125,7 @@ that row is built with emoji only and has no way to take a picture yet. That par
 
 ---
 
-## 8. Format
+## 9. Format
 
 One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
 nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
@@ -126,7 +136,7 @@ in. That is the format that works.
 
 ---
 
-## 9. Finished — nothing needed
+## 10. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -146,7 +156,7 @@ in. That is the format that works.
 
 ---
 
-## 10. Not artwork — still on me
+## 11. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
 2. **The Snacks board cannot be reached.** `openSnacks` exists in the code but is not attached to
