@@ -4901,6 +4901,16 @@ class Component extends DCLogic {
     ];
   }
   houses() {
+    // Two homes, named neutrally. A buyer renames them and adds whatever rooms
+    // their child has — the four common rooms already cover both.
+    if (!this.isEvanProfile()) return [
+      { id: 'dad', section: 'housedad', label: 'Home One', emoji: '🏠', color: '#2F6BFF', rooms: [
+        { label: 'My Room', emoji: '🛏️', say: 'My room at home one.' },
+      ]},
+      { id: 'mom', section: 'housemom', label: 'Home Two', emoji: '🏡', color: '#E5533D', rooms: [
+        { label: 'My Room', emoji: '🛏️', say: 'My room at home two.' },
+      ]},
+    ];
     return [
       { id: 'dad', section: 'housedad', label: "Dad's House", emoji: '🏠', color: '#2F6BFF', rooms: [
         { label: 'My Room', emoji: '🛏️', say: 'My room at Dad\'s house.' },
