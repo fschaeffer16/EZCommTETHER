@@ -2834,7 +2834,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 10px;flex:none;-webkit-overflow-scrolling:touch;">
           <sc-for list="{{ hungerRow }}" as="q" hint-placeholder-count="4">
             <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
-              <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
+              <sc-if value="{{ q.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:20px;line-height:1;">{{ q.emoji }}</span></sc-if>{{ q.iconEl }}
               <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
             </div>
           </sc-for>
@@ -3474,7 +3474,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 12px;flex:none;-webkit-overflow-scrolling:touch;">
           <sc-for list="{{ houseCommon }}" as="r" hint-placeholder-count="4">
             <div onClick="{{ r.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid #14B8A6;border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
-              <span style="font-size:20px;line-height:1;">{{ r.emoji }}</span>
+              <sc-if value="{{ r.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:20px;line-height:1;">{{ r.emoji }}</span></sc-if>{{ r.iconEl }}
               <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ r.label }}</span>
             </div>
           </sc-for>
@@ -3484,7 +3484,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:grid;grid-template-columns:1fr;gap:12px;">
             <sc-for list="{{ housesList }}" as="h" hint-placeholder-count="2">
               <div onClick="{{ h.onTap }}" style="background:var(--card,#fff);border:3px solid {{ h.color }};border-radius:20px;padding:20px 18px;display:flex;align-items:center;gap:15px;cursor:pointer;box-shadow:0 3px 10px rgba(20,16,12,.08);" style-active="transform:scale(.97)">
-                <span style="font-size:44px;line-height:1;flex:none;">{{ h.emoji }}</span>
+                <sc-if value="{{ h.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:44px;line-height:1;flex:none;">{{ h.emoji }}</span></sc-if>{{ h.iconEl }}
                 <div style="flex:1;min-width:0;">
                   <div style="font-size:21px;font-weight:800;color:var(--ink,#1A1714);line-height:1.15;">{{ h.label }}</div>
                   <div style="font-size:13px;font-weight:600;color:var(--sub,#8C857A);margin-top:2px;">{{ h.count }}</div>
@@ -4212,8 +4212,8 @@ class Component extends DCLogic {
       { label: 'Hot Dogs', icon: 'food_hotdogs' },
       { label: 'Spaghetti', icon: 'food_spaghetti' },
       { label: 'Sandwich', emoji: '🥪', icon: 'food_sandwich' },
-      { label: 'Soup', emoji: '🍲' },
-      { label: 'Cereal', emoji: '🥣' },
+      { label: 'Soup', emoji: '🍲', icon: 'food_soup' },
+      { label: 'Cereal', emoji: '🥣', icon: 'food_cereal' },
       { label: 'Eggs', emoji: '🍳', icon: 'food_eggs' },
       { label: 'Apple', emoji: '🍎', icon: 'food_apple' },
       { label: 'Bananas', icon: 'food_bananas' },
@@ -4224,11 +4224,11 @@ class Component extends DCLogic {
   }
   starterDrinks() {
     return [
-      { label: 'Water', emoji: '💧' },
-      { label: 'Milk', emoji: '🥛' },
+      { label: 'Water', emoji: '💧', icon: 'drink_water' },
+      { label: 'Milk', emoji: '🥛', icon: 'drink_milk' },
       { label: 'Apple Juice', icon: 'drink_applejuice' },
-      { label: 'Orange Juice', emoji: '🍊' },
-      { label: 'Lemonade', emoji: '🍋' },
+      { label: 'Orange Juice', emoji: '🍊', icon: 'drink_orange' },
+      { label: 'Lemonade', emoji: '🍋', icon: 'drink_lemonade' },
       { label: 'Soda', emoji: '🥤', icon: 'drink_soda' },
     ];
   }
@@ -4237,7 +4237,7 @@ class Component extends DCLogic {
       { label: 'Chips', emoji: '🥔', icon: 'snack_chips' },
       { label: 'Popcorn', emoji: '🍿', icon: 'snack_popcorn' },
       { label: 'Pretzels', emoji: '🥨', icon: 'snack_pretzels' },
-      { label: 'Crackers', emoji: '🧀' },
+      { label: 'Crackers', emoji: '🧀', icon: 'snack_crackers' },
     ];
   }
 
@@ -4911,23 +4911,25 @@ class Component extends DCLogic {
   // exist in both houses sit across the top and need no choice; the rest belong
   // to a house. Each parent fills in their own house — these are ordinary custom
   // buttons underneath, so they add, edit and sync like everything else.
+  // The strip above both houses — the rooms every home has, so a buyer doesn't
+  // have to add them twice.
   houseCommonRooms() {
     return [
-      { label: 'Bathroom', emoji: '🚻', say: 'Bathroom.' },
-      { label: 'Kitchen', emoji: '🍳', say: 'Kitchen.' },
-      { label: 'Living Room', emoji: '🛋️', say: 'Living room.' },
-      { label: 'Outside', emoji: '🌳', say: 'Outside.' },
+      { label: 'Bathroom', emoji: '🚻', icon: 'room_bathroom', say: 'Bathroom.' },
+      { label: 'Kitchen', emoji: '🍳', icon: 'room_kitchen', say: 'Kitchen.' },
+      { label: 'Living Room', emoji: '🛋️', icon: 'room_living', say: 'Living room.' },
+      { label: 'Outside', emoji: '🌳', icon: 'room_outside', say: 'Outside.' },
     ];
   }
   houses() {
     // Two homes, named neutrally. A buyer renames them and adds whatever rooms
     // their child has — the four common rooms already cover both.
     if (!this.isEvanProfile()) return [
-      { id: 'dad', section: 'housedad', label: 'Home One', emoji: '🏠', color: '#2F6BFF', rooms: [
-        { label: 'My Room', emoji: '🛏️', say: 'My room at home one.' },
+      { id: 'dad', section: 'housedad', label: 'Home One', emoji: '🏠', icon: 'house_one', color: '#2F6BFF', rooms: [
+        { label: 'My Room', emoji: '🛏️', icon: 'room_bedroom', say: 'My room at home one.' },
       ]},
-      { id: 'mom', section: 'housemom', label: 'Home Two', emoji: '🏡', color: '#E5533D', rooms: [
-        { label: 'My Room', emoji: '🛏️', say: 'My room at home two.' },
+      { id: 'mom', section: 'housemom', label: 'Home Two', emoji: '🏡', icon: 'house_two', color: '#E5533D', rooms: [
+        { label: 'My Room', emoji: '🛏️', icon: 'room_bedroom', say: 'My room at home two.' },
       ]},
     ];
     return [
@@ -6280,11 +6282,17 @@ class Component extends DCLogic {
       // Hungry and Thirsty moved off the home strip; they live here now, where
       // he's already heading when either one is true.
       hungerRow: [
-        { label: 'Hungry', emoji: '🍽️', color: '#F2920E', say: "I'm hungry." },
-        { label: 'Thirsty', emoji: '🥤', color: '#3B82F6', say: "I'm thirsty." },
-        { label: 'Full', emoji: '🤚', color: '#1F9E6E', say: "I'm full." },
-        { label: 'Snack', emoji: '🍪', color: '#DB2777', say: 'Can I have a snack?' },
-      ].map((q) => ({ ...q, onTap: () => this.speak(q.say) })),
+        { label: 'Hungry', emoji: '🍽️', icon: 'hunger_hungry', color: '#F2920E', say: "I'm hungry." },
+        { label: 'Thirsty', emoji: '🥤', icon: 'hunger_thirsty', color: '#3B82F6', say: "I'm thirsty." },
+        { label: 'Full', emoji: '🤚', icon: 'hunger_full', color: '#1F9E6E', say: "I'm full." },
+        { label: 'Snack', emoji: '🍪', icon: 'hunger_snack', color: '#DB2777', say: 'Can I have a snack?' },
+      ].map((q) => {
+        // Evan's strip stays as the emoji he knows; a bought phone gets the art.
+        const src = this.isEvanProfile() ? null : this.iconUri(q.icon);
+        return { ...q, hasIcon: !!src, noIcon: !src,
+          iconEl: src ? React.createElement('img', { src, alt: '', style: { width: 30, height: 30, objectFit: 'contain', flex: 'none' } }) : null,
+          onTap: () => this.speak(q.say) };
+      }),
 
       // Whose phone this is, and the recorder that follows from it.
       roleOptions: [['evan', "Evan's"]].concat(this.voiceSenders().map((p) => [p.id, p.name])).map(([v, label]) => {
@@ -6350,11 +6358,20 @@ class Component extends DCLogic {
       noteDone: () => { if (this._noteAudio) { try { this._noteAudio.pause(); } catch (e) {} } this.setState({ note: null, noteState: '' }); },
 
       isHouses: s.screen === 'houses',
-      houseCommon: this.houseCommonRooms().map((r) => ({ label: r.label, emoji: r.emoji, onTap: () => this.speak(r.say) }))
+      houseCommon: this.houseCommonRooms().map((r) => {
+        const src = this.isEvanProfile() ? null : this.iconUri(r.icon);
+        return { label: r.label, emoji: r.emoji, hasIcon: !!src, noIcon: !src,
+          iconEl: src ? React.createElement('img', { src, alt: '', style: { width: 30, height: 30, objectFit: 'contain', flex: 'none' } }) : null,
+          onTap: () => this.speak(r.say) };
+      })
         .concat(this.customsFor('housecommon').map((b) => ({ label: b.label, emoji: b.emoji, onTap: b.onTap }))),
       housesList: this.houses().map((h) => {
         const n = h.rooms.length + this.data().buttons.filter((b) => b.section === h.section).length;
-        return { label: h.label, emoji: h.emoji, color: h.color, count: n + (n === 1 ? ' room' : ' rooms'), onTap: () => this.setState({ screen: 'houserooms', houseId: h.id }) };
+        const src = h.icon ? this.iconUri(h.icon) : null;
+        return { label: h.label, emoji: h.emoji, color: h.color, count: n + (n === 1 ? ' room' : ' rooms'),
+          hasIcon: !!src, noIcon: !src,
+          iconEl: src ? React.createElement('img', { src, alt: '', style: { width: 54, height: 54, objectFit: 'contain', flex: 'none' } }) : null,
+          onTap: () => this.setState({ screen: 'houserooms', houseId: h.id }) };
       }),
       isHouseRooms: s.screen === 'houserooms',
       backToHouses: () => this.setState({ screen: 'houses' }),
@@ -6362,7 +6379,12 @@ class Component extends DCLogic {
       houseColor: this.houseById(s.houseId).color,
       houseRooms: (() => {
         const h = this.houseById(s.houseId);
-        const base = h.rooms.map((r) => ({ label: r.label, emoji: r.emoji, hasIcon: false, noIcon: true, iconEl: null, onTap: () => this.speak(r.say) }));
+        const base = h.rooms.map((r) => {
+          const src = r.icon ? this.iconUri(r.icon) : null;
+          return { label: r.label, emoji: r.emoji, hasIcon: !!src, noIcon: !src,
+            iconEl: src ? React.createElement('img', { src, alt: '', style: { width: 60, height: 60, objectFit: 'contain' } }) : null,
+            onTap: () => this.speak(r.say) };
+        });
         return base.concat(this.customsFor(h.section));
       })(),
 
