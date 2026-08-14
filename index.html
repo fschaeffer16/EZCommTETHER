@@ -2862,6 +2862,20 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </div>
             </sc-for>
           </div>
+          <!-- Snacks, as a third section rather than a screen of its own. The
+               separate Snacks screen has never been reachable — nothing opens
+               it — and a section here costs the child one fewer tap. -->
+          <sc-if value="{{ showSnacks }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#DB2777;margin:22px 2px 9px;">Snacks</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+              <sc-for list="{{ snacks }}" as="item" hint-placeholder-count="0">
+                <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.93)">
+                  {{ item.iconEl }}<sc-if value="{{ item.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:46px;line-height:1;">{{ item.emoji }}</span></sc-if>
+                  <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ item.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
         </div>
       </div>
     </sc-if>
@@ -3627,10 +3641,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Pick one.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div onClick="{{ openTeachers }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👩‍🏫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Teachers</span></div>
-            <div onClick="{{ openStaff }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🧑‍🔧</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Support Staff</span></div>
-            <div onClick="{{ openFrontOffice }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">🗄️</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Front Office</span></div>
-            <div onClick="{{ openFriendsBoard }}" style="background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">👫</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Friends</span></div>
+            <sc-for list="{{ schoolCats }}" as="cat" hint-placeholder-count="0">
+              <div onClick="{{ cat.onTap }}" style="background:var(--card,#fff);border:3px solid {{ cat.color }};border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)"><span style="font-size:44px;line-height:1;">{{ cat.glyph }}</span><span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ cat.label }}</span></div>
+            </sc-for>
             <div onClick="{{ openABC }}" style="background:{{ schoolTileBg }};border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)">{{ schoolABCFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="background:{{ schoolTileBg }};border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)">{{ schoolNumbersFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
             <div onClick="{{ openCalc }}" style="background:{{ schoolTileBg }};border:3px solid #0EA5E9;border-radius:18px;padding:18px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;min-height:118px;justify-content:center;" style-active="transform:scale(.95)">{{ schoolCalcFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
@@ -4222,7 +4235,7 @@ class Component extends DCLogic {
   starterSnacks() {
     return [
       { label: 'Chips', emoji: '🥔', icon: 'snack_chips' },
-      { label: 'Popcorn', emoji: '🍿' },
+      { label: 'Popcorn', emoji: '🍿', icon: 'snack_popcorn' },
       { label: 'Pretzels', emoji: '🥨', icon: 'snack_pretzels' },
       { label: 'Crackers', emoji: '🧀' },
     ];
@@ -5249,6 +5262,27 @@ class Component extends DCLogic {
     ];
   }
   // Front office — signing in and out, calling home, the nurse, going home early.
+  // Speech and occupational therapy. For a lot of these kids the therapist is
+  // the adult they see most after their parents, and until now there was no
+  // button for them. Written for what actually happens in a session: being
+  // asked to repeat something, being tired of trying, and wanting to stop.
+  speechOtPhrases() {
+    return [
+      { txt: 'Can we start?', glyph: '▶️' },
+      { txt: 'Can you say that again?', glyph: '🔁' },
+      { txt: 'I need more time.', glyph: '⏳' },
+      { txt: "I'm trying.", glyph: '💪' },
+      { txt: "That one's hard.", glyph: '😕' },
+      { txt: 'Can we do a different one?', glyph: '🔀' },
+      { txt: 'Can I have a break?', glyph: '⏸️' },
+      { txt: "I'm tired.", glyph: '😴' },
+      { txt: 'I want to be done.', glyph: '🛑' },
+      { txt: 'I did it!', glyph: '🎉' },
+      { txt: 'Can you help me?', glyph: '🙋' },
+      { txt: 'Thank you.', glyph: '🙏' },
+    ];
+  }
+
   frontOfficePhrases() {
     return [
       { txt: 'Can I call home?', glyph: '📞' },
@@ -5978,6 +6012,9 @@ class Component extends DCLogic {
       goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       isFood: s.screen === 'food',
       isSnacks: s.screen === 'snacks',
+      // Evan's snack list stays where it is until his own pass; this is the
+      // starter list on a bought phone, which had no way in at all before.
+      showSnacks: !this.isEvanProfile(),
       openFood: () => this.setState({ screen: 'food' }),
       openSnacks: () => this.setState({ screen: 'snacks' }),
       goBoard: () => this.setState({ screen: 'board', editMode: false }),
@@ -6040,6 +6077,23 @@ class Component extends DCLogic {
       openStaff: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()),
       openFrontOffice: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()),
       openFriendsBoard: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()),
+
+      // The four people-categories on the School board. Evan's are the ones he
+      // already knows, in the blue he already knows. A bought phone gets the
+      // set a school actually has — Friends moved out to its own home tile, and
+      // Speech/OT took the empty slot. The colours are the cue for a child who
+      // can't read the words, so they are fixed per category and never shuffle.
+      schoolCats: (this.isEvanProfile() ? [
+        { label: 'Teachers', glyph: '👩‍🏫', color: '#0EA5E9', open: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()) },
+        { label: 'Support Staff', glyph: '🧑‍🔧', color: '#0EA5E9', open: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()) },
+        { label: 'Front Office', glyph: '🗄️', color: '#0EA5E9', open: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()) },
+        { label: 'Friends', glyph: '👫', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
+      ] : [
+        { label: 'Teachers', glyph: '👩‍🏫', color: '#E23B2E', open: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()) },
+        { label: 'Office Staff', glyph: '🗄️', color: '#1F9E6E', open: () => this.openPhraseChooser('Office Staff', '🗄️', this.frontOfficePhrases()) },
+        { label: 'Aides', glyph: '🧑‍🔧', color: '#3B82F6', open: () => this.openPhraseChooser('Aides', '🧑‍🔧', this.staffPhrases()) },
+        { label: 'Speech/OT', glyph: '🗣️', color: '#A855F7', open: () => this.openPhraseChooser('Speech/OT', '🗣️', this.speechOtPhrases()) },
+      ]).map((c) => ({ ...c, onTap: c.open })),
       openABC: () => this.setState({ screen: 'abc', spellText: '' }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',

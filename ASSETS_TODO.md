@@ -1,6 +1,6 @@
-# The template — the last 20 buttons
+# The template — the last 15 buttons
 
-Checked against the code on 14 August 2026. **20 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **15 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -11,8 +11,8 @@ Evan's own board is a separate job and is not in here.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **109** |
-| Need a picture drawn | **20** |
+| Have their final artwork | **111** |
+| Need a picture drawn | **15** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
@@ -69,39 +69,18 @@ Soda is done — cut from the preview sheet. It is line art, so it survived the 
 
 ---
 
-## 5. School — 4
+## 5. Snacks — 1
 
-ABC, 123 and Calculator are done.
-
-| Filename | Button | What to draw |
-|---|---|---|
-| `school_teachers.png` | Teachers | A person standing at a chalkboard holding a book |
-| `school_staff.png` | Support Staff | A person with a lanyard badge holding a clipboard — the aide, the lunch staff, the bus driver |
-| `school_office.png` | Front Office | A reception desk with a bell and a telephone on it |
-| `school_friends.png` | Friends | Two children side by side, an arm across a shoulder |
-
----
-
-## 6. Snacks — 2
-
-Chips and Pretzels are done.
-
-**Warning — nobody can open this board.** The Snacks screen exists in the code but no button
-anywhere opens it, on the template or on Evan's phone. These two pictures are in and the other
-two are worth drawing, but the board needs a way in before any of them are visible. See the
-note at the end.
+Chips, Popcorn and Pretzels are done, and the board is reachable now — Snacks is a third section
+on the Food board rather than a screen with no way in.
 
 | Filename | Button | What to draw |
 |---|---|---|
-| `snack_popcorn.png` | Popcorn | A striped tub of popcorn overflowing. **A usable version already exists in the preview sheet** — it is being held only because it is neon outline and the Chips and Pretzels beside it are photorealistic. Settle that and it goes straight in. |
 | `snack_crackers.png` | Crackers | A small stack of square crackers with a slice of cheese |
 
-**No brands in this group.** The pictures being replaced were Fritos, Lay's, Coca-Cola,
-Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
-
 ---
 
-## 7. Hunger strip — 4
+## 6. Hunger strip — 4
 
 The four buttons across the top of the Food board. **These four also need a small code change** —
 that row is built with emoji only and has no way to take a picture yet. That part is on me.
@@ -115,17 +94,16 @@ that row is built with emoji only and has no way to take a picture yet. That par
 
 ---
 
-## 8. All twenty filenames, in one list
+## 7. All fifteen filenames, in one list
 
 `tile_friends` · `food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
-`drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` · 
-`school_teachers` · `school_staff` · `school_office` · `school_friends` ·
-`snack_popcorn` · `snack_crackers` ·
+`drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` ·
+`snack_crackers` ·
 `hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
 
 ---
 
-## 9. Format
+## 8. Format
 
 One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
 nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
@@ -136,7 +114,7 @@ in. That is the format that works.
 
 ---
 
-## 10. Finished — nothing needed
+## 9. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -148,6 +126,7 @@ in. That is the format that works.
 | **Fun** | all 6 |
 | **Morning** | all 6 |
 | **Feelings** | all 6 |
+| **School** | four colour-coded pills — no artwork needed |
 | **Night** | all 7 |
 | **Hurt screen** | the segmented body — twelve regions on drawn segments |
 | **Family** | initials circles — a buyer adds photos |
@@ -156,15 +135,12 @@ in. That is the format that works.
 
 ---
 
-## 11. Not artwork — still on me
+## 10. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
-2. **The Snacks board cannot be reached.** `openSnacks` exists in the code but is not attached to
-   any button, and there is no Snacks tile on the home screen. Four snack buttons are therefore
-   invisible on every phone, Evan's included. My recommendation is a Snacks button on the Food
-   board rather than a new home tile — Food already has Drinks and Food sections, it needs no new
-   artwork, and it does not disturb the home screen or need a migration. Waiting on your say-so
-   because it changes Evan's app as well as the template.
+2. **Evan's own pass.** The template now differs from his phone in three places on purpose —
+   the Friends home tile, the School categories, and the Snacks section on Food. His board keeps
+   what he knows until we go through it together.
 
 *The other two word changes are done: Night's goodnights no longer name real children, and
 the Houses board is Home One and Home Two rather than Dad's House, Mom's House and The
