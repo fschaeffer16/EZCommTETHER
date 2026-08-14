@@ -110,6 +110,21 @@
   .msg.bad{color:var(--red)} .msg.ok{color:var(--green)}
   .fine{color:var(--faint);font-size:13.5px;margin-top:12px}
 
+  /* How they want to be reached. Two big targets, not a dropdown. */
+  .pick{display:flex;gap:10px;margin-top:6px}
+  .pick label{flex:1;margin:0;display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 10px;border:1.5px solid var(--line);border-radius:13px;cursor:pointer;
+    font-size:15.5px;font-weight:700;background:var(--bg);text-align:center}
+  .pick input{position:absolute;opacity:0;width:1px;height:1px}
+  .pick label:has(input:checked){border-color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
+  .pick label:has(input:focus-visible){outline:3px solid rgba(47,107,255,.32);outline-offset:1px}
+  /* The consent box is a legal record, so it can never start ticked. */
+  .consent{display:flex;gap:11px;align-items:flex-start;margin-top:16px;
+    padding:14px;border:1.5px solid var(--line);border-radius:13px}
+  .consent input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--blue)}
+  .consent span{font-size:13.5px;line-height:1.5;color:var(--mute);font-weight:500}
+  [hidden]{display:none !important}
+
   footer{padding:44px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
   footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
 
@@ -328,11 +343,36 @@
   <p class="eyebrow">Not for sale yet</p>
   <h2>Leave your name and I'll tell you the day it is.</h2>
   <p class="lede">No cost, no card, and your details go nowhere else.</p>
-  <form id="f">
+  <!-- novalidate on purpose: the browser refuses to submit when a field it can't
+       even see is invalid, which killed the form silently when someone mistyped an
+       email and then switched to text. All checking happens in the script below. -->
+  <form id="f" novalidate>
     <label for="name">Your name</label>
     <input id="name" autocomplete="name" placeholder="Your name">
-    <label for="email">Email</label>
-    <input id="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+    <label>How should I reach you?</label>
+    <div class="pick" role="radiogroup" aria-label="How should I reach you?">
+      <label><input type="radio" name="how" value="email" checked>Email</label>
+      <label><input type="radio" name="how" value="sms">Text message</label>
+    </div>
+
+    <div id="wrapEmail">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+    </div>
+
+    <div id="wrapSms" hidden>
+      <label for="phone">Mobile number</label>
+      <input id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555">
+      <!-- Prior express written consent. Unticked by default, and the exact wording
+           shown is stored with the signup so there is a record of what was agreed to. -->
+      <label class="consent" for="smsok">
+        <input id="smsok" type="checkbox">
+        <span id="consentText">I agree to receive text messages from EZvoxa about when it goes on
+        sale. Message frequency varies and will be rare. Message and data rates may apply. Consent
+        is not a condition of any purchase. Reply STOP to stop, or HELP for help.</span>
+      </label>
+    </div>
+
     <label for="about">Who is it for? <span style="color:var(--faint);font-weight:600">(optional)</span></label>
     <textarea id="about" placeholder="Their age, what they use now, or whether you're asking for a school."></textarea>
     <button class="btn" id="go" type="submit">Add me to the list</button>
@@ -363,18 +403,53 @@
 (function () {
   /* ---------- waitlist ---------- */
   var f = document.getElementById('f'), msg = document.getElementById('msg'), go = document.getElementById('go');
+  var wrapEmail = document.getElementById('wrapEmail'), wrapSms = document.getElementById('wrapSms');
+  var howEls = f.querySelectorAll('input[name=how]');
+  var how = function () { return f.querySelector('input[name=how]:checked').value; };
+
+  // Only one contact field is on screen at a time, so nobody fills in both and
+  // wonders which one gets used.
+  Array.prototype.forEach.call(howEls, function (el) {
+    el.addEventListener('change', function () {
+      var sms = how() === 'sms';
+      wrapSms.hidden = !sms; wrapEmail.hidden = sms;
+      msg.textContent = '';
+    });
+  });
+
+  var ERRORS = {
+    bad_email: 'That email address doesn’t look right.',
+    bad_phone: 'That doesn’t look like a US mobile number.',
+    no_consent: 'Please tick the box so I’m allowed to text you.',
+  };
+
   f.addEventListener('submit', function (e) {
     e.preventDefault();
+    var sms = how() === 'sms';
     var email = document.getElementById('email').value.trim();
-    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { msg.className='msg bad'; msg.textContent='That email address doesn’t look right.'; return; }
+    var phone = document.getElementById('phone').value.trim();
+    var digits = phone.replace(/\D/g, '');
+    var ok = document.getElementById('smsok').checked;
+
+    if (!sms && !/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { msg.className='msg bad'; msg.textContent=ERRORS.bad_email; return; }
+    if (sms && !(digits.length === 10 || (digits.length === 11 && digits[0] === '1'))) { msg.className='msg bad'; msg.textContent=ERRORS.bad_phone; return; }
+    if (sms && !ok) { msg.className='msg bad'; msg.textContent=ERRORS.no_consent; return; }
+
     go.disabled = true; go.textContent = 'Adding…'; msg.textContent = '';
     fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ name:document.getElementById('name').value, email:email,
+      body: JSON.stringify({ name:document.getElementById('name').value,
+        how: sms ? 'sms' : 'email',
+        email: sms ? '' : email, phone: sms ? phone : '',
+        // Stored verbatim: what someone actually agreed to is the whole record.
+        consentText: sms ? document.getElementById('consentText').textContent.replace(/\s+/g,' ').trim() : '',
         about:document.getElementById('about').value, source: location.pathname }) })
       .then(function(r){return r.json()}).then(function(j){
-        if (j && j.ok) { f.innerHTML = '<h3>You’re on the list.</h3><p style="color:var(--mute)">I’ll email you the day it’s ready. Thank you — genuinely.</p>'; }
+        if (j && j.ok) {
+          f.innerHTML = '<h3>You’re on the list.</h3><p style="color:var(--mute)">I’ll ' +
+            (sms ? 'text' : 'email') + ' you the day it’s ready. Thank you — genuinely.</p>';
+        }
         else { go.disabled=false; go.textContent='Add me to the list'; msg.className='msg bad';
-               msg.textContent = (j&&j.error==='bad_email') ? 'That email address doesn’t look right.' : 'Something went wrong. Please try again.'; }
+               msg.textContent = (j && ERRORS[j.error]) || 'Something went wrong. Please try again.'; }
       }).catch(function(){ go.disabled=false; go.textContent='Add me to the list';
         msg.className='msg bad'; msg.textContent='No connection. Please try again in a moment.'; });
   });

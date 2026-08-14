@@ -42,6 +42,14 @@ async function readList() {
 const clean = (v) => String(v == null ? '' : v).trim().slice(0, MAX_FIELD);
 const looksLikeEmail = (v) => /^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(v);
 
+// US mobile numbers, stored E.164 so they can be handed to Twilio unchanged.
+function toE164(raw) {
+  const d = String(raw || '').replace(/\D/g, '');
+  if (d.length === 10) return '+1' + d;
+  if (d.length === 11 && d[0] === '1') return '+' + d;
+  return null;
+}
+
 module.exports = async (req, res) => {
   const { url, token } = kvEnv();
 
@@ -70,18 +78,43 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true, count: list.length, entries: list });
     }
 
-    const email = clean(body.email);
     const name = clean(body.name);
-    if (!looksLikeEmail(email)) return res.status(200).json({ ok: false, error: 'bad_email' });
+    const wantsSms = clean(body.how) === 'sms';
+    const email = wantsSms ? '' : clean(body.email);
+    const phone = wantsSms ? toE164(body.phone) : null;
+    const consentText = clean(body.consentText);
+
+    if (wantsSms) {
+      if (!phone) return res.status(200).json({ ok: false, error: 'bad_phone' });
+      // No consent wording means no proof of consent, and without proof this
+      // number is not textable. Refuse it rather than store a number we can't use.
+      if (consentText.length < 40) return res.status(200).json({ ok: false, error: 'no_consent' });
+    } else if (!looksLikeEmail(email)) {
+      return res.status(200).json({ ok: false, error: 'bad_email' });
+    }
 
     const list = await readList();
     // Someone signing up twice shouldn't create two of them.
-    if (list.some((e) => e && e.email && e.email.toLowerCase() === email.toLowerCase())) {
-      return res.status(200).json({ ok: true, already: true });
-    }
+    const dupe = list.some((e) => e && (
+      (email && e.email && e.email.toLowerCase() === email.toLowerCase()) ||
+      (phone && e.phone && e.phone === phone)
+    ));
+    if (dupe) return res.status(200).json({ ok: true, already: true });
     if (list.length >= MAX_ENTRIES) return res.status(200).json({ ok: false, error: 'list_full' });
 
-    list.push({ name, email, about: clean(body.about), source: clean(body.source), at: Date.now() });
+    const entry = { name, email, about: clean(body.about), source: clean(body.source), at: Date.now() };
+    if (wantsSms) {
+      entry.phone = phone;
+      // The consent record. If a number ever has to be defended, this is the
+      // evidence: what was agreed to, when, and from where.
+      entry.consent = {
+        text: consentText,
+        at: Date.now(),
+        ip: clean((req.headers['x-forwarded-for'] || '').split(',')[0]) || null,
+        ua: clean(req.headers['user-agent']).slice(0, 180) || null,
+      };
+    }
+    list.push(entry);
     await kvCommand(['SET', KEY, JSON.stringify(list)]);
     return res.status(200).json({ ok: true, count: list.length });
   } catch (e) {
