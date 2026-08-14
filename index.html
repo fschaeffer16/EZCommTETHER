@@ -3626,6 +3626,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 {{ person.phoneEl }}
               </div>
             </sc-for>
+            <sc-if value="{{ canAddPerson }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ addPersonHere }}" style="background:transparent;border:2px dashed var(--hint,#C9C2B8);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;min-height:118px;" style-active="transform:scale(.94)">
+                <div style="width:64px;height:64px;border-radius:50%;border:2px dashed var(--hint,#C9C2B8);display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--sub,#8C857A);line-height:1;">+</div>
+                <span style="font-size:13.5px;font-weight:800;color:var(--sub,#8C857A);text-align:center;line-height:1.1;">Add someone</span>
+              </div>
+            </sc-if>
           </div>
         </div>
       </div>
@@ -5177,7 +5183,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 6) return false;
+    if (rev >= 7) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5217,7 +5223,33 @@ class Component extends DCLogic {
       else d.homeOrder.splice(at + 1, 0, 'friends');
     }
 
-    d.layoutRev = 6;
+    // Rev 7: the School categories arrived after these people were saved, so a
+    // phone that already had the app has everyone sitting under Teachers and
+    // three empty boards behind it. Sort them by who they are. If the list is
+    // still the untouched original default, replace it outright so the buyer gets
+    // the fuller roster (two teachers, office and nurse, aide and bus driver,
+    // speech and OT). Guarded on the profile — Evan's School is left alone.
+    if (rev < 7 && d.profile !== 'evan' && Array.isArray(d.school)) {
+      const OLD = ['teacher', 'aide', 'office', 'nurse', 'classmate'];
+      const ids = d.school.map((x) => x && x.id).join(',');
+      const untouched = ids === OLD.join(',') && d.school.every((x) => x && !x.photo && !x.phone);
+      if (untouched) {
+        d.school = this.baseSchool();
+      } else {
+        const CAT = { teacher: 'teachers', teacher2: 'teachers', classmate: 'teachers',
+                      office: 'office', nurse: 'office',
+                      aide: 'aides', aide2: 'aides',
+                      speech: 'speech', ot: 'speech' };
+        d.school.forEach((x) => { if (x && !x.cat) x.cat = CAT[x.id] || 'teachers'; });
+        // Any category with nobody in it gets its starter person back, so a
+        // buyer never opens a board with nothing on it.
+        const have = {};
+        d.school.forEach((x) => { if (x && x.cat) have[x.cat] = true; });
+        this.baseSchool().forEach((x) => { if (!have[x.cat]) { d.school.push(x); have[x.cat] = true; } });
+      }
+    }
+
+    d.layoutRev = 7;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5226,7 +5258,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 6 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 7 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6111,6 +6143,17 @@ class Component extends DCLogic {
       peopleBack: () => (s.screen === 'schoolpeople'
         ? this.setState({ screen: 'school', editMode: false })
         : this.setState({ screen: 'board', editMode: false })),
+      // Adding somebody is a parent's job, so the tile only appears once edit
+      // mode is unlocked — same rule as every other editing control.
+      canAddPerson: !!s.editMode && (s.screen === 'schoolpeople' || s.screen === 'friends' || s.screen === 'family'),
+      addPersonHere: () => {
+        const sec = s.screen === 'friends' ? 'friends'
+          : s.screen === 'family' ? 'family'
+          : 'school:' + (s.schoolCat || 'teachers');
+        const d = this.nb();
+        d.section = sec; d.label = ''; d.emoji = '⭐'; d.image = null; d.phrases = [''];
+        this.setState({ screen: 'settings', setOpen: 'buttons', pwUnlocked: true, nbErr: '' });
+      },
       peopleTitle: s.screen === 'schoolpeople'
         ? (this.schoolCatLabel(s.schoolCat) || 'School')
         : (s.screen === 'school' ? 'School' : (s.screen === 'friends' ? 'Friends' : 'Family')),
