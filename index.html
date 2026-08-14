@@ -4606,6 +4606,17 @@ class Component extends DCLogic {
     const out = parts.length > 1 ? pick(parts[0]) + pick(parts[parts.length - 1]) : pick(parts[0]);
     return out.toUpperCase() || '?';
   }
+  // A person added by a buyer has no colour of their own, so derive a stable one
+  // from their name — the same name always gets the same circle, and a roomful
+  // of aides doesn't come out all one colour.
+  ringFor(name) {
+    const P = ['#E23B2E', '#1F9E6E', '#3B82F6', '#A855F7', '#F59E0B', '#DB2777', '#0EA5E9', '#14B8A6'];
+    const t = String(name || '');
+    let h = 0;
+    for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) >>> 0;
+    return P[h % P.length];
+  }
+
   initialEl(person, size) {
     const txt = this.initials(person.name);
     return React.createElement('div', { style: { width: size, height: size, borderRadius: '50%', background: person.ring, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: Math.round(size * (txt.length > 1 ? 0.36 : 0.44)), fontWeight: 700, color: '#fff', letterSpacing: txt.length > 1 ? '.01em' : '0', lineHeight: 1 } }, txt);
@@ -5579,6 +5590,16 @@ class Component extends DCLogic {
     const img = b.image || null;
     const emoji = b.emoji || '⭐';
     if (section === 'family') return { ...b, name: b.label || 'Button', onTap, avatarEl: img ? React.createElement('img', { src: img, style: { width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '3px solid #7A5CFF' } }) : this.emojiCircle(emoji, 64, '#7A5CFF', '#E6DEFB') };
+    // School and Friends are people, not buttons: a photo if one was added,
+    // otherwise a coloured circle with their initials and the name underneath.
+    if (this.isPeopleSection(section)) {
+      const nm = b.label || 'Person';
+      const ring = this.ringFor(nm);
+      return { ...b, name: nm, onTap,
+        avatarEl: img
+          ? React.createElement('img', { src: img, style: { width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '3px solid ' + ring } })
+          : this.initialEl({ name: nm, ring }, 64) };
+    }
     if (section === 'fun') return { ...b, label: b.label || 'Button', onTap, sceneEl: img ? this.sceneEl(img) : this.emojiScene(emoji) };
     if (section === 'places') return { ...b, label: b.label || 'Button', onTap, imgEl: img ? this.sceneEl(img) : this.emojiScene(emoji) };
     if (section === 'hurt') return { ...b, label: b.label || 'Button', onTap, iconEl: img ? this.imgEl(img, 68, 14) : React.createElement('span', { style: { fontSize: 46, lineHeight: 1 } }, emoji) };
@@ -5965,7 +5986,8 @@ class Component extends DCLogic {
       .catch(() => this.setState({ syncing: false, syncErr: 'Could not reach family Sync. Check the internet.' }));
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house" }; return m[sec] || sec; }
+  isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT' }; return m[sec] || sec; }
 
   // Core-word board for building sentences, colored with the Modified
   // Fitzgerald key used across AAC (pronouns yellow, verbs green, describers
@@ -6470,7 +6492,9 @@ class Component extends DCLogic {
       nbOnEmoji: (e) => { this.nb().emoji = e.target.value; },
       nbOnImage: (e) => this.nbSetImage(e.target.files && e.target.files[0]),
       nbAddPhrase: () => this.nbAddPhrase(),
-      nbSections: ['home', 'family', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      // School and Friends were missing entirely, so a buyer had no way to add
+      // their child's actual teacher, aide, therapist or friend.
+      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',
