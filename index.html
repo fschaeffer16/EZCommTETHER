@@ -4017,7 +4017,7 @@ class Component extends DCLogic {
         // "Hi!" and "Bye!" came out clipped: the speech engine is still ramping
         // up when a two-letter phrase has already finished. A trailing pause
         // gives it runway. Nothing extra is heard — it is silence.
-        const u = new SpeechSynthesisUtterance(text.length <= 12 ? text + '\u00A0\u00A0' : text);
+        const u = new SpeechSynthesisUtterance(text.length <= 12 ? text + ' . ' : text);
         u.rate = 0.96;
         u.lang = 'en-US';
         const voices = sy.getVoices() || [];
@@ -5556,8 +5556,11 @@ class Component extends DCLogic {
   // trap a stranger falls into on a laptop. Evan's phone keeps his own row.
   starterQuick() {
     return [
-      { label: 'Hi', emoji: '👋', color: '#22C55E', say: 'Hi!' },
-      { label: 'Bye', emoji: '✌️', color: '#A855F7', say: 'Bye!' },
+      // Hello and Goodbye, not Hi and Bye: a two-letter word is gone before the
+      // speech engine has finished starting, and it came out clipped. Evan's
+      // board has always said the longer words and has never had the problem.
+      { label: 'Hello', emoji: '👋', color: '#22C55E', say: 'Hello!' },
+      { label: 'Goodbye', emoji: '✌️', color: '#A855F7', say: 'Goodbye!' },
       { label: 'Good', emoji: '🙂', color: '#F59E0B', say: 'Good.' },
       { label: 'Bad', emoji: '😠', color: '#E23B2E', say: 'Bad.' },
       { label: 'Please', emoji: '🙏', color: '#3B82F6', say: 'Please.' },
