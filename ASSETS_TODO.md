@@ -22,18 +22,10 @@ The four shared rooms — Bathroom, Kitchen, Living Room and Outside — went in
 
 ---
 
-## 1. One thing to decide — Drinks is two styles
+## 1. Nothing outstanding on artwork
 
-Water, Milk, Orange Juice and Lemonade came in photorealistic. **Soda and Apple Juice are neon
-outline** — they went in earlier, before that batch. On the board they sit side by side and the
-difference shows.
-
-Two ways to settle it, your call:
-
-1. **Redraw `drink_soda` and `drink_applejuice` photorealistic** so Drinks is uniform. Two files.
-2. **Leave it.** Both read clearly; only the finish differs.
-
-I would do the two files. It is the last visible inconsistency on the board.
+All six drinks are photorealistic and matching — soda and apple juice were replaced on
+14 August, so the finish is uniform. There is no decision left here.
 
 ---
 
@@ -70,14 +62,14 @@ in. That is the format that works.
 
 ## 4. Not artwork — still on me
 
-1. **Settings** still offers Light / Dark although we committed to dark only.
-2. **The phrase-card redesign** you sent this morning — the two-up grid of big cards with a
-   large picture on top, in place of the coloured rows. That chooser is used by nearly every
-   board, Evan's included, so it is queued behind the artwork rather than done on the fly.
-3. **Evan's own pass.** The template now differs from his phone in three places on purpose —
-   the Friends home tile, the School categories, and the Snacks section on Food. His board keeps
-   what he knows until we go through it together.
+1. **Evan's own pass.** The template now differs from his phone in several places on purpose —
+   the Friends home tile, the five School categories, the Snacks section on Food, the phrase
+   cards, three-across routine boards, and the neon Sentence Build. His board keeps what he
+   knows until we go through it together.
 
-*The other two word changes are done: Night's goodnights no longer name real children, and
-the Houses board is Home One and Home Two rather than Dad's House, Mom's House and The
-Office.*
+2. **Evan's story for the website.** Frank is writing it; it drops into the story section when
+   it arrives.
+
+*Done since: Light / Dark is gone and the app is dark only; the phrase cards shipped with the
+drawn glyphs; Night's goodnights no longer name real children; the Houses board is Home One and
+Home Two; and the website has a captioned walkthrough that needs no voiceover.*
