@@ -11,8 +11,8 @@ stored in the build.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **46** |
-| Need new artwork — nothing there today | **66** |
+| Have their final artwork | **55** |
+| Need new artwork — nothing there today | **57** |
 | Have artwork but the wrong artwork | **9** |
 | Must be deleted rather than redrawn | **0** — done |
 
@@ -35,13 +35,12 @@ hand does not make it ours.
 
 ---
 
-## 2. Need new artwork — 66
+## 2. Need new artwork — 57
 
 Nothing exists for these today. They render as an emoji.
 
 | Board | Count | Buttons |
 |---|---|---|
-| **Bathroom** | 9 | I need to pee · I need to poop · Can I take my shower · Do I need a shower · I took my shower · Can I brush my teeth · I brushed my teeth · I need to wash my hands · All done |
 | **Places** | 7 | Playground · Beach · Pool · Soccer Field · Trampoline Park · Home · Car |
 | **School** | 7 | Teachers · Support Staff · Front Office · Friends · ABC · 123 · Calculator |
 | **Food** | 6 | Sandwich · Soup · Cereal · Eggs · Apple · Cookie |
@@ -73,7 +72,7 @@ The 28 Netflix and 13 Disney images are no longer reachable on the template. Sec
 
 ---
 
-## 5. Done — 46
+## 5. Done — 55
 
 **Home tiles — 20.** All of them, including Places, which landed tonight.
 
@@ -87,6 +86,8 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 **Night — 1.** Sleep.  **Emergency bar — 1.**
 
 **Watch — 4.** TV · Movies · Tablet · Internet.
+
+**Bathroom — 9.** All of them.
 
 ---
 
