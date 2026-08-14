@@ -1,6 +1,6 @@
 # The template — every button still to draw
 
-Counted out of the code on 14 August 2026. **48 buttons need a picture drawn.** Each one
+Counted out of the code on 14 August 2026. **38 buttons need a picture drawn.** Each one
 below has the filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -22,44 +22,26 @@ Tapping Feelings opens six. Those are what still show an emoji, and those are th
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **84** |
-| Need a picture drawn | **48** |
-| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt |
+| Have their final artwork | **93** |
+| Need a picture drawn | **38** |
+| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning |
 
 ---
 
-## 1. Morning — 6
+## 1. Night — 3
 
-| Filename | Button | Says | What to draw |
-|---|---|---|---|
-| `morning_hello.png` | Good Morning | Good morning! | A sun rising over a bed with the covers thrown back |
-| `morning_shower.png` | Shower | Can I take my shower? | A shower head running, water falling, steam curling |
-| `morning_teeth.png` | Brush Teeth | Can I brush my teeth? | A toothbrush with a stripe of paste on the bristles |
-| `morning_dressed.png` | Get Dressed | Can I get dressed? | A t-shirt and trousers laid out, shoes beside them |
-| `morning_breakfast.png` | Breakfast | Can I have breakfast? | A plate of eggs and toast with a glass of juice |
-| `morning_help.png` | Help | Can you check me? | A raised open hand asking for someone |
-
----
-
-## 2. Night — 6
-
-Sleep is already done.
+Sleep, Shower, Brush Teeth and Help are done — Shower, Brush Teeth and Help came from
+Morning and are used in both boards.
 
 | Filename | Button | Says | What to draw |
 |---|---|---|---|
 | `night_goodnight.png` | Good Night | Good night. | A crescent moon and stars over a rooftop |
-| `night_shower.png` | Shower | Can I take my shower? | Same shower as the morning one |
-| `night_teeth.png` | Brush Teeth | Can I brush my teeth? | Same toothbrush as the morning one |
 | `night_pajamas.png` | Pajamas | Can I put my pajamas on? | A folded pyjama top and bottoms, stars on the fabric |
 | `night_hugs.png` | Goodnight Hugs | Good night Mom / Dad | Two simple figures hugging, a heart above them |
-| `night_help.png` | Help | Can you check me? | Same raised hand as the morning one |
-
-*Shower, Brush Teeth and Help are the same picture in both boards. Send three files and I will
-use them twice, or six if you want them different — that would make it 45 rather than 48.*
 
 ---
 
-## 3. Feelings — 6
+## 2. Feelings — 6
 
 Faces. Keep them the same face throughout so the set reads as one person feeling six things.
 
@@ -74,7 +56,7 @@ Faces. Keep them the same face throughout so the set reads as one person feeling
 
 ---
 
-## 4. Houses — 6
+## 3. Houses — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -87,7 +69,7 @@ Faces. Keep them the same face throughout so the set reads as one person feeling
 
 ---
 
-## 5. Food — 6
+## 4. Food — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -100,7 +82,7 @@ Faces. Keep them the same face throughout so the set reads as one person feeling
 
 ---
 
-## 6. Drinks — 5
+## 5. Drinks — 5
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -112,7 +94,7 @@ Faces. Keep them the same face throughout so the set reads as one person feeling
 
 ---
 
-## 7. Snacks — 4
+## 6. Snacks — 4
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -126,7 +108,7 @@ Coca-Cola, Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
 
 ---
 
-## 8. Hunger strip — 4
+## 7. Hunger strip — 4
 
 The four buttons across the top of the Food board.
 
@@ -139,7 +121,7 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 9. School — 4
+## 8. School — 4
 
 ABC, 123 and Calculator are done.
 
@@ -152,7 +134,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 10. Finished — nothing needed
+## 9. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -162,6 +144,7 @@ ABC, 123 and Calculator are done.
 | **Watch** | TV · Movies · Tablet · Internet |
 | **Health** | all 9 symptoms |
 | **Fun** | all 6 |
+| **Morning** | all 6 |
 | **Hurt screen** | the segmented body — twelve regions, each on a drawn segment |
 | **Family** | initials circles — a buyer adds photos |
 | **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app from live data |
@@ -169,7 +152,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 11. Format
+## 10. Format
 
 One file per icon · **1024 × 1024** · square · black background · **no words drawn into the
 picture** · **no brands** · same prompt across a batch · named exactly as above · zipped.
@@ -179,8 +162,7 @@ have the app print the label underneath.
 
 ---
 
-## 12. Not artwork — still on me
+## 11. Not artwork — still on me
 
-1. **Night · Goodnight Hugs** still says *"Good night Egypt and CJ"* and *"Good night Chad."*
 2. **Houses** still has *"The Office"* as a room.
 3. **Settings** still offers Light / Dark although we committed to dark only.
