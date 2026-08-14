@@ -1,9 +1,21 @@
-# The template — what is left
+# The template — every button still to draw
 
-The app we sell. Evan's own board is a separate job and is not in here.
-Counted out of the code on 14 August 2026, not from memory. Every number below
-was produced by resolving each button's image key against what is actually
-stored in the build.
+Counted out of the code on 14 August 2026. **48 buttons need a picture drawn, and 9 need
+their picture replaced.** Every one is named below with the filename to send.
+
+Evan's own board is a separate job and is not in here.
+
+---
+
+## Read this first — boards vs buttons
+
+The last sheet had one icon per **board** — Bathroom, Places, School, Food, Morning, Night,
+Feelings, Houses, Drinks, Snacks, Watch, Family. Those are the tiles on the home screen, and
+**they are all finished.** All twenty of them.
+
+What is missing is the **buttons inside** those boards. Tapping Morning opens six buttons.
+Tapping Feelings opens six. Those are what still show an emoji, and those are what this list
+is.
 
 ---
 
@@ -11,122 +23,185 @@ stored in the build.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **55** |
-| Need new artwork — nothing there today | **57** |
-| Have artwork but the wrong artwork | **9** |
-| Must be deleted rather than redrawn | **0** — done |
+| Have their final artwork | **74** |
+| Need a picture drawn | **48** |
+| Have a picture, but the wrong one | **9** |
+| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun |
 
 ---
 
-## 1. Two things that are live right now and shouldn't be
+## 1. Morning — 6
 
-**1.1 — There is a picture of Evan inside a McDonald's on the template's Food board.**
-The `Hamburger` button uses `hamburger`, which is a painting of him standing under the
-golden arches. It is on a buyer's phone today. This is the single most urgent image on
-the list.
+Opens when you tap the Morning tile.
 
-**1.2 — Fixed.** The Watch board no longer shows Netflix or Disney anything on the
-template. It is four neutral categories — TV, Movies, Tablet, Internet — and the parent
-adds their own shows behind them. Evan's board keeps Netflix, Disney+ and all of his.
-
-The Tablet button now uses a tablet drawn without any name on it. The first version said
-**iPad** and could not be used — that is Apple's trademark, and redrawing a wordmark by
-hand does not make it ours.
-
----
-
-## 2. Need new artwork — 57
-
-Nothing exists for these today. They render as an emoji.
-
-| Board | Count | Buttons |
+| Button | Says | Filename |
 |---|---|---|
-| **Places** | 7 | Playground · Beach · Pool · Soccer Field · Trampoline Park · Home · Car |
-| **School** | 7 | Teachers · Support Staff · Front Office · Friends · ABC · 123 · Calculator |
-| **Food** | 6 | Sandwich · Soup · Cereal · Eggs · Apple · Cookie |
-| **Morning** | 6 | Good Morning · Shower · Brush Teeth · Get Dressed · Breakfast · Help |
-| **Night** | 6 | Good Night · Shower · Brush Teeth · Pajamas · Goodnight Hugs · Help |
-| **Feelings** | 6 | I'm happy · I'm sad · I'm angry · I'm frustrated · I'm tired · I don't feel good |
-| **Houses** | 6 | Home One · Home Two · Bathroom · Kitchen · Living Room · Outside |
-| **Drinks** | 5 | Water · Milk · Orange Juice · Lemonade · Soda |
-| **Snacks** | 4 | Chips · Popcorn · Pretzels · Crackers |
-| **Hunger strip** | 4 | Hungry · Thirsty · Full · Snack |
+| Good Morning | Good morning! | `morning_hello.png` |
+| Shower | Can I take my shower? | `morning_shower.png` |
+| Brush Teeth | Can I brush my teeth? | `morning_teeth.png` |
+| Get Dressed | Can I get dressed? | `morning_dressed.png` |
+| Breakfast | Can I have breakfast? | `morning_breakfast.png` |
+| Help | Can you check me? | `morning_help.png` |
 
 ---
 
-## 3. Have artwork, but the wrong artwork — 9
+## 2. Night — 6
 
-These already show a picture. It is a painted photograph, which clashes with the neon set,
-and one of them is the McDonald's problem above.
+Sleep is already done. These six are not.
 
-**Food — 8:** Pizza · Chicken Fingers · **Hamburger** · Hot Dogs · Spaghetti · Bananas ·
-Grapes · Strawberries
+| Button | Says | Filename |
+|---|---|---|
+| Good Night | Good night. | `night_goodnight.png` |
+| Shower | Can I take my shower? | `night_shower.png` |
+| Brush Teeth | Can I brush my teeth? | `night_teeth.png` |
+| Pajamas | Can I put my pajamas on? | `night_pajamas.png` |
+| Goodnight Hugs | Good night Mom / Dad | `night_hugs.png` |
+| Help | Can you check me? | `night_help.png` |
 
-**Drinks — 1:** Apple Juice
-
----
-
-## 4. Delete rather than redraw — none left
-
-The 28 Netflix and 13 Disney images are no longer reachable on the template. Section 1.2.
-
----
-
-## 5. Done — 55
-
-**Home tiles — 20.** All of them, including Places, which landed tonight.
-
-**Health symptoms — 9.** Headache · Sore Throat · Cold · Cough · Fever · Stomachache ·
-Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
-
-**Fun — 6.** Pool · Beach · Trampoline · Bicycle · Dogs · Soccer.
-
-**Places — 5.** Haircut · Store · Doctor's Office · Hospital · Movie Theater.
-
-**Night — 1.** Sleep.  **Emergency bar — 1.**
-
-**Watch — 4.** TV · Movies · Tablet · Internet.
-
-**Bathroom — 9.** All of them.
+*Morning and Night share Shower, Brush Teeth and Help. One drawing each is fine — send three
+files and I will use them in both places, or send six if you want them different.*
 
 ---
 
-## 6. Fixed along the way
+## 3. Feelings — 6
 
-| What | Why it mattered |
+| Button | Says | Filename |
+|---|---|---|
+| Happy | I'm happy. | `feel_happy.png` |
+| Sad | I'm sad. | `feel_sad.png` |
+| Angry | I'm angry. | `feel_angry.png` |
+| Frustrated | I'm frustrated. | `feel_frustrated.png` |
+| Tired | I'm tired. | `feel_tired.png` |
+| Don't Feel Good | I don't feel good. | `feel_unwell.png` |
+
+---
+
+## 4. Houses — 6
+
+| Button | Filename |
 |---|---|
-| The template pulled the family's **real phone numbers** from the server onto its Family board, matching on the ids `mom` and `dad` | A stranger's demo phone displayed Frank's and Raniyah's actual numbers |
-| Tapping **Text** in the demo sent a real message to a real person | `/api/text` resolves the number server-side from the person id, so it worked even though the client never saw a number |
-| **Emergency** in the demo transmitted a real alert | Now walks through the whole flow and sends nothing |
-| **Voice-note polling** ran in the demo | A demonstration could have played back a real message from Evan's mother |
-| `iconUri()` fell back to a path that does not exist | Every not-yet-drawn icon rendered as a **broken image** rather than a blank |
-| Sky Zone | A trademarked business. Now Trampoline Park |
-| Mom's Car / Dad's Truck, Mom's House / Dad's House | Collapsed to one Car and one Home — a buyer may have one of each |
+| Home One *(the first house)* | `house_one.png` |
+| Home Two *(the second house)* | `house_two.png` |
+| Bathroom | `room_bathroom.png` |
+| Kitchen | `room_kitchen.png` |
+| Living Room | `room_living.png` |
+| Outside | `room_outside.png` |
 
 ---
 
-## 7. Still waiting on a decision
+## 5. Food — 6 to draw
 
-| Question | My recommendation |
+| Button | Filename |
 |---|---|
-| **Hurt screen** — rebuild as the segmented neon body you mocked up? | Yes. The current tap zones are 43 × 38 points and invisible |
-| **The 128 sentence buttons** — Talk, My Choice, Overstimmed, Time, the word bank | Leave as glyphs. They are sentences, not objects |
-| **Pocket-press filter** — deleted months ago, the call site still does nothing | Say if you want it back |
-| **"More"** — I made it speak the word | Leave it |
+| Sandwich | `food_sandwich.png` |
+| Soup | `food_soup.png` |
+| Cereal | `food_cereal.png` |
+| Eggs | `food_eggs.png` |
+| Apple | `food_apple.png` |
+| Cookie | `food_cookie.png` |
 
 ---
 
-## 8. Word changes I still owe you
+## 6. Drinks — 5
+
+| Button | Filename |
+|---|---|
+| Water | `drink_water.png` |
+| Milk | `drink_milk.png` |
+| Orange Juice | `drink_orange.png` |
+| Lemonade | `drink_lemonade.png` |
+| Soda | `drink_soda.png` |
+
+---
+
+## 7. Snacks — 4
+
+| Button | Filename |
+|---|---|
+| Chips | `snack_chips.png` |
+| Popcorn | `snack_popcorn.png` |
+| Pretzels | `snack_pretzels.png` |
+| Crackers | `snack_crackers.png` |
+
+**No brands.** The old ones were Fritos, Lay's, Coca-Cola, Canada Dry, Gatorade and Naked.
+Plain food, no packets with logos on them.
+
+---
+
+## 8. Hunger strip — 4
+
+The four buttons across the top of the Food board.
+
+| Button | Says | Filename |
+|---|---|---|
+| Hungry | I'm hungry. | `hunger_hungry.png` |
+| Thirsty | I'm thirsty. | `hunger_thirsty.png` |
+| Full | I'm full. | `hunger_full.png` |
+| Snack | Can I have a snack? | `hunger_snack.png` |
+
+---
+
+## 9. School — 4
+
+ABC, 123 and Calculator are done. These four are not.
+
+| Button | Filename |
+|---|---|
+| Teachers | `school_teachers.png` |
+| Support Staff | `school_staff.png` |
+| Front Office | `school_office.png` |
+| Friends | `school_friends.png` |
+
+---
+
+## 10. Replace — 9
+
+These already have a picture. It is a painted photograph, which sits badly among the neon,
+and one of them is a real problem.
+
+| Button | Filename | Note |
+|---|---|---|
+| **Hamburger** | `food_hamburger.png` | **A painting of Evan standing inside a McDonald's.** Live on the template right now. The most urgent image on this list |
+| Pizza | `food_pizza.png` | |
+| Chicken Fingers | `food_chicken.png` | |
+| Hot Dogs | `food_hotdogs.png` | |
+| Spaghetti | `food_spaghetti.png` | |
+| Bananas | `food_bananas.png` | |
+| Grapes | `food_grapes.png` | |
+| Strawberries | `food_strawberries.png` | |
+| Apple Juice | `drink_applejuice.png` | |
+
+---
+
+## 11. Finished — nothing needed
+
+| Board | |
+|---|---|
+| **Home** | all 20 tiles |
+| **Bathroom** | all 9 buttons |
+| **Places** | all 12 |
+| **Watch** | TV · Movies · Tablet · Internet |
+| **Health** | all 9 symptoms |
+| **Fun** | all 6 |
+| **Family** | initials circles — a buyer adds photos |
+| **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app, live data |
+| **Talk · My Choice · Overstimmed** | 36 sentence buttons — glyphs are right for these |
+
+---
+
+## 12. Format
+
+One file per icon · **1024 × 1024** · square · black background · **no words drawn into the
+picture** · **no brands** · same prompt across a batch · named exactly as above · zipped.
+
+Where a word is part of the design — as with TV, Movies and Internet — say so and I will not
+have the app print the label underneath.
+
+---
+
+## 13. Not artwork — still on me
 
 1. **Night · Goodnight Hugs** still says *"Good night Egypt and CJ"* and *"Good night Chad."*
 2. **Houses** still has *"The Office"* as a room.
 3. **Settings** still offers Light / Dark although we committed to dark only.
-
-These are code, not artwork. They go in the next pass.
-
----
-
-## 9. Format, every time
-
-One file per icon · **1024 × 1024** · square · black background · no text baked in ·
-no brands · same prompt across a batch · named exactly as listed · zipped.
+4. **Hurt screen** — waiting on your decision to rebuild it as the segmented neon body.
