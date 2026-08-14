@@ -4048,6 +4048,15 @@ class Component extends DCLogic {
   }
 
   feelingsList() {
+    // Happy is still on its emoji — its picture has not arrived yet.
+    if (!this.isEvanProfile()) return [
+      { label: "I'm happy", emoji: '😊', say: "I'm happy." },
+      { label: "I'm sad", emoji: '😢', icon: 'feel_sad', say: "I'm sad." },
+      { label: "I'm angry", emoji: '😠', icon: 'feel_angry', say: "I'm angry." },
+      { label: "I'm frustrated", emoji: '😤', icon: 'feel_frustrated', say: "I'm frustrated." },
+      { label: "I'm tired", emoji: '😴', icon: 'feel_tired', phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
+      { label: "I don't feel good", emoji: '🤢', icon: 'feel_unwell', say: "I don't feel good." },
+    ].map((b) => this.mapRoutine(b, 'feelings'));
     return [
       { label: "I'm happy", emoji: '😊', say: "I'm happy." },
       { label: "I'm sad", emoji: '😢', say: "I'm sad." },
