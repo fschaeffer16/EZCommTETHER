@@ -1,6 +1,6 @@
-# The template — the last 30 buttons
+# The template — the last 29 buttons
 
-Checked against the code on 14 August 2026. **30 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **29 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -11,23 +11,13 @@ Evan's own board is a separate job and is not in here.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **101** |
-| Need a picture drawn | **30** |
-| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings |
+| Have their final artwork | **102** |
+| Need a picture drawn | **29** |
+| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
 
-## 1. Night — 1
-
-Everything else on this board is done.
-
-| Filename | Button | Says | What to draw |
-|---|---|---|---|
-| `night_goodnight.png` | Good Night | Good night. | A crescent moon and stars over a rooftop |
-
----
-
-## 2. Food — 6
+## 1. Food — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -40,7 +30,7 @@ Everything else on this board is done.
 
 ---
 
-## 3. Houses — 6
+## 2. Houses — 6
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -53,7 +43,7 @@ Everything else on this board is done.
 
 ---
 
-## 4. Drinks — 5
+## 3. Drinks — 5
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -65,7 +55,7 @@ Everything else on this board is done.
 
 ---
 
-## 5. School — 4
+## 4. School — 4
 
 ABC, 123 and Calculator are done.
 
@@ -78,7 +68,7 @@ ABC, 123 and Calculator are done.
 
 ---
 
-## 6. Snacks — 4
+## 5. Snacks — 4
 
 | Filename | Button | What to draw |
 |---|---|---|
@@ -92,7 +82,7 @@ Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
 
 ---
 
-## 7. Hunger strip — 4
+## 6. Hunger strip — 4
 
 The four buttons across the top of the Food board.
 
@@ -105,9 +95,9 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 8. All thirty filenames, in one list
+## 7. All twenty-nine filenames, in one list
 
-`night_goodnight` · `food_sandwich` · `food_soup` · `food_cereal` · `food_eggs` ·
+`food_sandwich` · `food_soup` · `food_cereal` · `food_eggs` ·
 `food_apple` · `food_cookie` · `house_one` · `house_two` · `room_bathroom` ·
 `room_kitchen` · `room_living` · `room_outside` · `drink_water` · `drink_milk` ·
 `drink_orange` · `drink_lemonade` · `drink_soda` · `school_teachers` · `school_staff` ·
@@ -116,7 +106,7 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 9. Format
+## 8. Format
 
 One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
 nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
@@ -127,7 +117,7 @@ in. That is the format that works.
 
 ---
 
-## 10. Finished — nothing needed
+## 9. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -139,6 +129,7 @@ in. That is the format that works.
 | **Fun** | all 6 |
 | **Morning** | all 6 |
 | **Feelings** | all 6 |
+| **Night** | all 7 |
 | **Hurt screen** | the segmented body — twelve regions on drawn segments |
 | **Family** | initials circles — a buyer adds photos |
 | **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app from live data |
@@ -146,7 +137,7 @@ in. That is the format that works.
 
 ---
 
-## 11. Not artwork — still on me
+## 10. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
 
