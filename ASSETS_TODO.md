@@ -1,6 +1,6 @@
-# The template — the last 23 buttons
+# The template — the last 20 buttons
 
-Checked against the code on 14 August 2026. **23 buttons still need a picture.** Every one is
+Checked against the code on 14 August 2026. **20 buttons still need a picture.** Every one is
 named below with the exact filename to send and what it should show.
 
 Evan's own board is a separate job and is not in here.
@@ -12,7 +12,7 @@ Evan's own board is a separate job and is not in here.
 | | Buttons |
 |---|---|
 | Have their final artwork | **108** |
-| Need a picture drawn | **23** |
+| Need a picture drawn | **20** |
 | Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night |
 
 ---
@@ -28,16 +28,21 @@ Apple, Eggs, Cookie and Sandwich are done.
 
 ---
 
-## 2. Houses — 6
+## 2. Houses — 3
+
+**Corrected 14 Aug.** An earlier version of this list asked for six house pictures including a
+kitchen, a living room and an outside. The template's two houses only contain **one room each,
+called "My Room"** — those other rooms do not exist in the app, so drawing them would produce
+pictures with nothing to hang them on. Three is the real number.
 
 | Filename | Button | What to draw |
 |---|---|---|
 | `house_one.png` | Home One | A house with a warm lit window and a path to the door |
 | `house_two.png` | Home Two | A **clearly different** house — different roofline and colour, so a child can tell the two apart at a glance |
-| `room_bathroom.png` | Bathroom | A bathtub with a shower head above it |
-| `room_kitchen.png` | Kitchen | A stove with a pot on it and a fridge beside |
-| `room_living.png` | Living Room | A sofa with a lamp and a rug |
-| `room_outside.png` | Outside | A tree on grass with the sun above |
+| `room_bedroom.png` | My Room | A bed with a lamp beside it and a window above |
+
+*If you want a buyer's houses to have more rooms than one — bathroom, kitchen, living room,
+outside — say so and I'll add them to the app first. Then the pictures are worth drawing.*
 
 ---
 
@@ -87,7 +92,8 @@ Canada Dry, Gatorade and Naked. Plain food, no packets with logos.
 
 ## 6. Hunger strip — 4
 
-The four buttons across the top of the Food board.
+The four buttons across the top of the Food board. **These four also need a small code change** —
+that row is built with emoji only and has no way to take a picture yet. That part is on me.
 
 | Filename | Button | Says | What to draw |
 |---|---|---|---|
@@ -98,13 +104,13 @@ The four buttons across the top of the Food board.
 
 ---
 
-## 7. All twenty-three filenames, in one list
+## 7. All twenty filenames, in one list
 
-`food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bathroom` ·
-`room_kitchen` · `room_living` · `room_outside` · `drink_water` · `drink_milk` ·
-`drink_orange` · `drink_lemonade` · `drink_soda` · `school_teachers` · `school_staff` ·
-`school_office` · `school_friends` · `snack_popcorn` · 
-`snack_crackers` · `hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
+`food_soup` · `food_cereal` · `house_one` · `house_two` · `room_bedroom` ·
+`drink_water` · `drink_milk` · `drink_orange` · `drink_lemonade` · `drink_soda` ·
+`school_teachers` · `school_staff` · `school_office` · `school_friends` ·
+`snack_popcorn` · `snack_crackers` ·
+`hunger_hungry` · `hunger_thirsty` · `hunger_full` · `hunger_snack`
 
 ---
 
