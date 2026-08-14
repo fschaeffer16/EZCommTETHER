@@ -1,6 +1,6 @@
-# The template — the last 4 buttons
+# The template — the artwork is finished
 
-Checked against the code on 14 August 2026. **4 buttons still need a picture.**
+Checked against the code on 14 August 2026. **Nothing is left to draw.**
 
 Evan's own board is a separate job and is not in here.
 
@@ -10,40 +10,19 @@ Evan's own board is a separate job and is not in here.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **130** |
-| Need a picture drawn | **4** |
-| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt · Morning · Feelings · Night · Food · Drinks · Snacks · School · Friends |
+| Have their final artwork | **134** |
+| Need a picture drawn | **0** |
+
+Every board is finished end to end: Home · Family · Friends · Food · Drinks · Snacks ·
+School · Morning · Night · Bathroom · Places · Watch · Health · Fun · Hurt · Feelings ·
+Houses · Colors · Numbers · Calendar · Time · Sentence Build · Talk · My Choice · Overstimmed.
+
+The four shared rooms — Bathroom, Kitchen, Living Room and Outside — went in last, on the
+"In every house" strip above both houses.
 
 ---
 
-## 1. The four shared rooms — 4
-
-**These were on the list, I removed them by mistake, and they are back.** I checked the rooms
-inside each house, found only "My Room", and said the other four had nothing to hang on. I had
-missed the **"In every house"** strip above both houses, which holds exactly these four. The
-code is now ready for them — they show emoji until the pictures arrive.
-
-They sit in a small chip row, like the Hungry/Thirsty strip, so they render small. Keep them
-simple and readable at a glance.
-
-| Filename | Button | What to draw |
-|---|---|---|
-| `room_bathroom.png` | Bathroom | A bathtub with a shower head above it |
-| `room_kitchen.png` | Kitchen | A stove with a pot on it |
-| `room_living.png` | Living Room | A sofa with a lamp beside it |
-| `room_outside.png` | Outside | A tree on grass with the sun above |
-
-Neon outline, one colour each, to match the houses and the bedroom.
-
----
-
-## 2. All four filenames
-
-`room_bathroom` · `room_kitchen` · `room_living` · `room_outside`
-
----
-
-## 3. One thing to decide — Drinks is two styles
+## 1. One thing to decide — Drinks is two styles
 
 Water, Milk, Orange Juice and Lemonade came in photorealistic. **Soda and Apple Juice are neon
 outline** — they went in earlier, before that batch. On the board they sit side by side and the
@@ -58,7 +37,7 @@ I would do the two files. It is the last visible inconsistency on the board.
 
 ---
 
-## 4. Format
+## 2. Format
 
 One file per icon · **1024 × 1024** · square · black background · **one icon only, centred,
 nothing else in the frame** · **no words drawn into the picture** · **no brands** · same
@@ -69,7 +48,7 @@ in. That is the format that works.
 
 ---
 
-## 5. Finished — nothing needed
+## 3. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -89,7 +68,7 @@ in. That is the format that works.
 
 ---
 
-## 6. Not artwork — still on me
+## 4. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
 2. **The phrase-card redesign** you sent this morning — the two-up grid of big cards with a
