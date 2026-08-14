@@ -145,7 +145,6 @@ in. That is the format that works.
 | **Fun** | all 6 |
 | **Morning** | all 6 |
 | **Feelings** | all 6 |
-
 | **Night** | all 7 |
 | **Hurt screen** | the segmented body — twelve regions on drawn segments |
 | **Family** | initials circles — a buyer adds photos |
@@ -157,7 +156,10 @@ in. That is the format that works.
 ## 11. Not artwork — still on me
 
 1. **Settings** still offers Light / Dark although we committed to dark only.
-2. **Evan's own pass.** The template now differs from his phone in three places on purpose —
+2. **The phrase-card redesign** you sent this morning — the two-up grid of big cards with a
+   large picture on top, in place of the coloured rows. That chooser is used by nearly every
+   board, Evan's included, so it is queued behind the artwork rather than done on the fly.
+3. **Evan's own pass.** The template now differs from his phone in three places on purpose —
    the Friends home tile, the School categories, and the Snacks section on Food. His board keeps
    what he knows until we go through it together.
 
