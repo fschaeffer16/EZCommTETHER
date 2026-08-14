@@ -11,7 +11,7 @@ stored in the build.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **45** |
+| Have their final artwork | **46** |
 | Need new artwork — nothing there today | **66** |
 | Have artwork but the wrong artwork | **9** |
 | Must be deleted rather than redrawn | **0** — done |
@@ -29,8 +29,9 @@ the list.
 template. It is four neutral categories — TV, Movies, Tablet, Internet — and the parent
 adds their own shows behind them. Evan's board keeps Netflix, Disney+ and all of his.
 
-**One still open:** the Tablet button uses the plain screen icon, because the drawn one
-said **iPad**, which is Apple's trademark. A tablet drawn without the name would finish it.
+The Tablet button now uses a tablet drawn without any name on it. The first version said
+**iPad** and could not be used — that is Apple's trademark, and redrawing a wordmark by
+hand does not make it ours.
 
 ---
 
@@ -72,7 +73,7 @@ The 28 Netflix and 13 Disney images are no longer reachable on the template. Sec
 
 ---
 
-## 5. Done — 45
+## 5. Done — 46
 
 **Home tiles — 20.** All of them, including Places, which landed tonight.
 
@@ -85,7 +86,7 @@ Rest, plus Stuffy Nose and Ice Pack, which were already objects with no face.
 
 **Night — 1.** Sleep.  **Emergency bar — 1.**
 
-**Watch — 3.** TV · Movies · Internet.
+**Watch — 4.** TV · Movies · Tablet · Internet.
 
 ---
 
