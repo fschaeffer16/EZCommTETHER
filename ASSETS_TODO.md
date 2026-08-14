@@ -1,7 +1,6 @@
 # The template — every button still to draw
 
-Counted out of the code on 14 August 2026. **48 buttons need a picture drawn, and 9 need
-their picture replaced.** Every one is named below with the filename to send.
+Counted out of the code on 14 August 2026. **48 buttons need a picture drawn.** Every one is named below with the filename to send.
 
 Evan's own board is a separate job and is not in here.
 
@@ -23,10 +22,9 @@ is.
 
 | | Buttons |
 |---|---|
-| Have their final artwork | **74** |
+| Have their final artwork | **84** |
 | Need a picture drawn | **48** |
-| Have a picture, but the wrong one | **9** |
-| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun |
+| Boards finished end to end | Home · Bathroom · Places · Watch · Health · Fun · Hurt |
 
 ---
 
@@ -154,26 +152,7 @@ ABC, 123 and Calculator are done. These four are not.
 
 ---
 
-## 10. Replace — 9
-
-These already have a picture. It is a painted photograph, which sits badly among the neon,
-and one of them is a real problem.
-
-| Button | Filename | Note |
-|---|---|---|
-| **Hamburger** | `food_hamburger.png` | **A painting of Evan standing inside a McDonald's.** Live on the template right now. The most urgent image on this list |
-| Pizza | `food_pizza.png` | |
-| Chicken Fingers | `food_chicken.png` | |
-| Hot Dogs | `food_hotdogs.png` | |
-| Spaghetti | `food_spaghetti.png` | |
-| Bananas | `food_bananas.png` | |
-| Grapes | `food_grapes.png` | |
-| Strawberries | `food_strawberries.png` | |
-| Apple Juice | `drink_applejuice.png` | |
-
----
-
-## 11. Finished — nothing needed
+## 10. Finished — nothing needed
 
 | Board | |
 |---|---|
@@ -183,13 +162,14 @@ and one of them is a real problem.
 | **Watch** | TV · Movies · Tablet · Internet |
 | **Health** | all 9 symptoms |
 | **Fun** | all 6 |
+| **Hurt screen** | the segmented body — twelve regions, each on a drawn segment |
 | **Family** | initials circles — a buyer adds photos |
 | **Colors · Numbers · Calendar · Time · Sentence Build** | drawn by the app, live data |
 | **Talk · My Choice · Overstimmed** | 36 sentence buttons — glyphs are right for these |
 
 ---
 
-## 12. Format
+## 11. Format
 
 One file per icon · **1024 × 1024** · square · black background · **no words drawn into the
 picture** · **no brands** · same prompt across a batch · named exactly as above · zipped.
@@ -199,9 +179,8 @@ have the app print the label underneath.
 
 ---
 
-## 13. Not artwork — still on me
+## 12. Not artwork — still on me
 
 1. **Night · Goodnight Hugs** still says *"Good night Egypt and CJ"* and *"Good night Chad."*
 2. **Houses** still has *"The Office"* as a room.
 3. **Settings** still offers Light / Dark although we committed to dark only.
-4. **Hurt screen** — waiting on your decision to rebuild it as the segmented neon body.
