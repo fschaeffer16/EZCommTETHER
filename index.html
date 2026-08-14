@@ -4718,7 +4718,7 @@ class Component extends DCLogic {
       { id: 'office', name: 'Front Office', cat: 'office', ring: '#1F9E6E', tint: '#D8F0E5' },
       { id: 'nurse', name: 'Nurse', cat: 'office', ring: '#14B8A6', tint: '#D2F1ED' },
       { id: 'aide', name: 'My Aide', cat: 'aides', ring: '#3B82F6', tint: '#DDE7FF' },
-      { id: 'aide2', name: 'Bus Driver', cat: 'aides', ring: '#0EA5E9', tint: '#D5EEFB' },
+      { id: 'aide2', name: 'Bus Driver', cat: 'bus', ring: '#F59E0B', tint: '#FCEBCB' },
       { id: 'speech', name: 'Speech', cat: 'speech', ring: '#A855F7', tint: '#E6DEFB' },
       { id: 'ot', name: 'OT', cat: 'speech', ring: '#DB2777', tint: '#FBD5EA' },
     ];
@@ -4736,19 +4736,20 @@ class Component extends DCLogic {
     // Tapping somebody in a School category gives that category's phrases: the
     // office is a place you pass through, a teacher is a lesson, an aide is
     // help, and Speech/OT is a session. Falls back to the classroom list.
-    const NURSE = { glyph: '🏥', txt: 'I need to go to the Nurse', say: 'I need to go to the Nurse.', color: '#E23B2E' };
-    const colour = (pal) => (x, i) => ({ glyph: x.glyph, txt: x.txt, say: x.txt, color: pal[i % pal.length] });
+    const NURSE = { glyph: '🏥', icon: 'ph_nurse', txt: 'May I go see the nurse?', say: 'May I go see the nurse?', color: '#E23B2E' };
+    const colour = (pal) => (x, i) => ({ glyph: x.glyph, icon: x.icon, txt: x.txt, say: x.txt, color: pal[i % pal.length] });
     if (kind === 'school:office') return this.frontOfficePhrases().map(colour(['#0EA5E9', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
     if (kind === 'school:aides') return this.staffPhrases().map(colour(['#3B82F6', '#14B8A6', '#F59E0B', '#7A5CFF', '#E5533D', '#1F9E6E', '#DB2777'])).concat([NURSE]);
     if (kind === 'school:speech') return this.speechOtPhrases().map(colour(['#A855F7', '#0EA5E9', '#F59E0B', '#1F9E6E', '#E5533D', '#DB2777'])).concat([NURSE]);
+    if (kind === 'school:bus') return this.busDriverPhrases().map(colour(['#14B8A6', '#3B82F6', '#1F9E6E', '#F59E0B', '#EC4899', '#A855F7']));
     if (kind === 'school' || kind === 'school:teachers') return [
-      { glyph: '🙋', txt: 'Can you help me?', say: 'Can you help me?', color: '#0EA5E9' },
-      { glyph: '❓', txt: "I don't understand.", say: "I don't understand.", color: '#7A5CFF' },
-      { glyph: '⏸️', txt: 'Can I have a break?', say: 'Can I have a break?', color: '#6366F1' },
-      { glyph: '✅', txt: 'I finished my work.', say: 'I finished my work.', color: '#1F9E6E' },
-      { glyph: '🔁', txt: 'Can you say that again?', say: 'Can you say that again?', color: '#F59E0B' },
-      { glyph: '🚻', txt: 'Can I go to the bathroom?', say: 'Can I go to the bathroom?', color: '#14B8A6' },
-      { glyph: '🙏', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
+      { glyph: '🙋', icon: 'ph_help', txt: 'Can you help me?', say: 'Can you help me?', color: '#0EA5E9' },
+      { glyph: '❓', icon: 'ph_dontunderstand', txt: "I don't understand.", say: "I don't understand.", color: '#7A5CFF' },
+      { glyph: '⏸️', icon: 'ph_break', txt: 'Can I have a break?', say: 'Can I have a break?', color: '#6366F1' },
+      { glyph: '✅', icon: 'ph_finished', txt: 'I finished my work.', say: 'I finished my work.', color: '#1F9E6E' },
+      { glyph: '🔁', icon: 'ph_sayagain', txt: 'Can you say that again?', say: 'Can you say that again?', color: '#F59E0B' },
+      { glyph: '🚻', icon: 'ph_bathroom', txt: 'Can I go to the bathroom?', say: 'Can I go to the bathroom?', color: '#14B8A6' },
+      { glyph: '🙏', icon: 'ph_thankyou', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
       NURSE,
     ];
     if (kind === 'friends') return [
@@ -5317,7 +5318,7 @@ class Component extends DCLogic {
       } else {
         const CAT = { teacher: 'teachers', teacher2: 'teachers', classmate: 'teachers',
                       office: 'office', nurse: 'office',
-                      aide: 'aides', aide2: 'aides',
+                      aide: 'aides', aide2: 'bus',
                       speech: 'speech', ot: 'speech' };
         d.school.forEach((x) => { if (x && !x.cat) x.cat = CAT[x.id] || 'teachers'; });
         // Any category with nobody in it gets its starter person back, so a
@@ -5387,17 +5388,26 @@ class Component extends DCLogic {
   }
   // Support staff — aides, lunch, custodians, bus. The people you ask for help
   // getting somewhere or getting something done.
+  // The bus driver: the ride, the bag, and the device he cannot afford to lose.
+  busDriverPhrases() {
+    return [
+      { txt: 'Can you help me?', glyph: '🤲', icon: 'ph_helpme' },
+      { txt: 'I need help.', glyph: '❗', icon: 'ph_needhelp' },
+      { txt: 'Can you help me carry this?', glyph: '🎒', icon: 'ph_carry' },
+      { txt: 'I forgot my backpack.', glyph: '🎒', icon: 'ph_backpack' },
+      { txt: 'Where is my device?', glyph: '📱', icon: 'ph_device' },
+      { txt: 'I need to use the bathroom.', glyph: '🚻', icon: 'ph_usebathroom' },
+    ];
+  }
+
+  // Frank's list from the My Aide sheet.
   staffPhrases() {
     return [
-      { txt: 'I need help.', glyph: '🙋' },
-      { txt: 'Can you help me find my class?', glyph: '🧭' },
-      { txt: 'Where do I go?', glyph: '🚪' },
-      { txt: "I'm here for lunch.", glyph: '🍽️' },
-      { txt: "I'm waiting for my bus.", glyph: '🚌' },
-      { txt: 'Can you help me carry this?', glyph: '🎒' },
-      { txt: 'I need help in the bathroom.', glyph: '🚻' },
-      { txt: 'I spilled something.', glyph: '🧽' },
-      { txt: 'Thank you.', glyph: '🙏' },
+      { txt: 'Can you help me find my class?', glyph: '🧭', icon: 'ph_findclass' },
+      { txt: 'Where do I go?', glyph: '🚪', icon: 'ph_wheredoigo' },
+      { txt: "I'm waiting for my bus.", glyph: '🚌', icon: 'ph_bus' },
+      { txt: 'I need help in the bathroom.', glyph: '🚻', icon: 'ph_bathroomhelp' },
+      { txt: 'I spilled something.', glyph: '🧽', icon: 'ph_spilled' },
     ];
   }
   // Front office — signing in and out, calling home, the nurse, going home early.
@@ -5413,6 +5423,7 @@ class Component extends DCLogic {
       { id: 'office', label: 'Office Staff', glyph: '\u{1F3A7}', icon: 'school_office', color: '#1F9E6E' },
       { id: 'aides', label: 'Aides', glyph: '\u{1F9D1}\u200D\u{1F527}', icon: 'school_staff', color: '#3B82F6' },
       { id: 'speech', label: 'Speech/OT', glyph: '\u{1F5E3}\uFE0F', icon: 'school_speech', color: '#A855F7' },
+      { id: 'bus', label: 'Bus Driver', glyph: '\u{1F68C}', icon: 'ph_bus', color: '#F59E0B' },
     ];
   }
   schoolCatLabel(id) {
@@ -5441,12 +5452,12 @@ class Component extends DCLogic {
   // hold a conversation — greeting, signing in or out, and asking for help.
   frontOfficePhrases() {
     return [
-      { txt: 'Good morning', glyph: '☀️' },
-      { txt: 'Good afternoon', glyph: '🌤️' },
-      { txt: 'I am signing in late', glyph: '⏰' },
-      { txt: 'I need to sign out early', glyph: '🚪' },
-      { txt: 'Can you help me?', glyph: '🙋' },
-      { txt: 'Bye', glyph: '👋' },
+      { txt: 'Good morning', glyph: '☀️', icon: 'ph_goodmorning' },
+      { txt: 'Good afternoon', glyph: '🌤️', icon: 'ph_goodafternoon' },
+      { txt: 'I am signing in late', glyph: '⏰', icon: 'ph_signin' },
+      { txt: 'I need to sign out early', glyph: '🚪', icon: 'ph_signout' },
+      { txt: 'Can you help me?', glyph: '🙋', icon: 'ph_help' },
+      { txt: 'Bye', glyph: '👋', icon: 'ph_bye' },
     ];
   }
   friendPhrases() {
@@ -6102,7 +6113,7 @@ class Component extends DCLogic {
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
   isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT' }; return m[sec] || sec; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
   // Core-word board for building sentences, colored with the Modified
   // Fitzgerald key used across AAC (pronouns yellow, verbs green, describers
@@ -6639,7 +6650,7 @@ class Component extends DCLogic {
       nbAddPhrase: () => this.nbAddPhrase(),
       // School and Friends were missing entirely, so a buyer had no way to add
       // their child's actual teacher, aide, therapist or friend.
-      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',
