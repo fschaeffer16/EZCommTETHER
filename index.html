@@ -5648,6 +5648,32 @@ class Component extends DCLogic {
     d.layoutRev = 14;
     return true;
   }
+  // One-time setup for a phone that belongs to this family. A fresh install
+  // has no profile, so it opens on the buyer's board — no Evan's food, no
+  // family photos, and voice messages and SOS stay off, because those are
+  // gated on the profile rather than on the address. Opening the app once with
+  // ?setup=<key>&role=<who> stamps the phone, then strips the key out of the
+  // address bar so it isn't left sitting in history. Not a password — treat
+  // the link as private.
+  SETUP_KEY() { return 'schaeffer-family-8241'; }
+  applySetupLink(d) {
+    if (this._setupDone) return false;
+    this._setupDone = true;
+    let q;
+    try { q = new URLSearchParams(location.search); } catch (e) { return false; }
+    if (q.get('setup') !== this.SETUP_KEY()) return false;
+    d.profile = 'evan';
+    const role = (q.get('role') || '').toLowerCase();
+    if (role === 'mom' || role === 'dad' || role === 'evan') {
+      try { localStorage.setItem('ezcomm.deviceRole', role); } catch (e) {}
+    }
+    try {
+      q.delete('setup'); q.delete('role');
+      const rest = q.toString();
+      history.replaceState(null, '', location.pathname + (rest ? '?' + rest : ''));
+    } catch (e) {}
+    return true;
+  }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
   data() {
     if (this._data) return this._data;
@@ -5659,7 +5685,8 @@ class Component extends DCLogic {
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
     if (!d.friends) d.friends = this.baseFriends();
-    const moved = this.applyLayoutRev(d);
+    const stamped = this.applySetupLink(d);
+    const moved = this.applyLayoutRev(d) || stamped;
     this._data = d;
     if (moved) this.saveStore();
     return d;
