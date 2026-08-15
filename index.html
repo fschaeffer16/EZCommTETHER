@@ -5518,7 +5518,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 10) return false;
+    if (rev >= 11) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5612,7 +5612,13 @@ class Component extends DCLogic {
       if (t >= 0) d.homeOrder.splice(t, 1);
     }
 
-    d.layoutRev = 10;
+    // Rev 11: Overstimmed moved inside Feelings.
+    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const r = d.homeOrder.indexOf('regulate');
+      if (r >= 0) d.homeOrder.splice(r, 1);
+    }
+
+    d.layoutRev = 11;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5621,7 +5627,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 10 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 11 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5871,7 +5877,9 @@ class Component extends DCLogic {
       // the right room. Sits next to Places because both answer "where".
       { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
-      { id: 'regulate', label: 'Overstimmed', emoji: '😵‍💫', color: mine ? '#6366F1' : '#8B5CF6', ...(mine ? { img: null } : { img: this.iconUri('tile_regulate') }), onTap: () => this.openPhraseChooser('Overstimmed', '😵‍💫', this.regulationItems()) },
+      // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
+      // the rest of them rather than taking a tile of its own.
+      ...(mine ? [] : [{ id: 'regulate', label: 'Overstimmed', emoji: '😵\u200D\uD83D\uDCAB', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()) }]),
     ];
   }
 
@@ -6963,7 +6971,11 @@ class Component extends DCLogic {
       isFeelings: s.screen === 'feelings',
       isMorning: s.screen === 'morning',
       nightList: this.nightList().concat(this.customsFor('night')),
-      feelingsList: this.feelingsList().concat(this.customsFor('feelings')),
+      feelingsList: this.feelingsList().concat(this.customsFor('feelings')).concat(this.isEvanProfile() ? [{
+        label: "I'm overstimmed", emoji: '😵\u200D\uD83D\uDCAB',
+        hasSlot: false, hasImg: false, imgEl: null, noSlot: true, showEmoji: true,
+        onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()),
+      }] : []),
       morningList: this.morningList().concat(this.customsFor('morning')),
       // Medicine is Evan's — a bought phone doesn't start with a medicine button.
       // Evan's board: no Medicine button (he asked for it gone), and Hurt is a
