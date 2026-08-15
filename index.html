@@ -5887,7 +5887,7 @@ class Component extends DCLogic {
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
-      { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: null } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
+      { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: this.iconUri('colors_tile') } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
       // Calculator comes to the home screen and Numbers lives inside it.
       ...(mine ? [{ id: 'calc', label: 'Calculator', emoji: '\u{1F9EE}', color: '#0EA5E9', img: this.iconUri('calc_tile'), onTap: () => this.setState({ screen: 'calc', calcFrom: 'board' }) }]
                : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
