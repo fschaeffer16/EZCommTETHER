@@ -3183,6 +3183,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
 
+<sc-if value="{{ showPhoneRole }}" hint-placeholder-val="{{ false }}">
                     <div onClick="{{ setTog_phone }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
             <span style="font-size:20px;flex:none;">📱</span>
             <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">This phone</span>
@@ -3201,6 +3202,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
 
                     </sc-if>
+</sc-if>
 
           <div onClick="{{ setTog_sync }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
             <span style="font-size:20px;flex:none;">🔄</span>
@@ -4871,6 +4873,12 @@ class Component extends DCLogic {
 
   async recSend() {
     if (!this._recData) return;
+    // The other direction of the same hole: without this, somebody on the demo
+    // could push audio that plays out loud on Evan's phone.
+    if (this.isTemplateMode() || !this.isEvanProfile()) {
+      this.setState({ recPhase: 'idle', recMsg: 'This is a demonstration — nothing was sent.', recBad: false });
+      return;
+    }
     const who = this.voiceSenderName();
     this.setState({ recPhase: 'sending', recMsg: '' });
     try {
@@ -4968,7 +4976,9 @@ class Component extends DCLogic {
   }
 
   async pollVoice() {
-    if (this.isTemplateMode()) return;
+    // Gated on the phone, not the address. These are real recordings of Evan's
+    // mother and father; on the demo link they were playing to strangers.
+    if (this.isTemplateMode() || !this.isEvanProfile()) return;
     if (this.deviceRole() !== 'evan' || this.state.note) return;
     let since = '';
     try { since = localStorage.getItem('ezcomm.lastNote') || ''; } catch (e) {}
@@ -6534,9 +6544,10 @@ class Component extends DCLogic {
 
       closeApp: () => this.setState({ started: false, screen: 'board', chooser: null }),
 
-      canRecord: this.deviceRole() !== 'evan',
+      showPhoneRole: this.isEvanProfile(),
+      canRecord: this.isEvanProfile() && this.deviceRole() !== 'evan',
       // The entrance sits on Family, where you already go to reach a person.
-      canVoiceHere: this.deviceRole() !== 'evan' && s.screen === 'family',
+      canVoiceHere: this.isEvanProfile() && this.deviceRole() !== 'evan' && s.screen === 'family',
       isVoiceNote: s.screen === 'voicenote',
       openVoiceNote: () => this.recReset('', false) || this.setState({ screen: 'voicenote' }),
       recHint: this.deviceRole() === 'mom'
