@@ -66,3 +66,40 @@ program for low-income/disability families.
 - Parent/editor UI (hints, edit controls) should be hidden unless edit mode is unlocked.
 - Emergency features must work independently of sync, cache, or customization state.
 - Red is reserved for the emergency/SOS bar.
+
+## THE PICTURE IS THE BUTTON — the rule I keep breaking
+
+Frank has told me this **at least three times** (the Night board, then twice on 15 Aug 2026,
+the last time in capitals). Read this before touching any board layout.
+
+**Evan does not read.** The picture is not decoration next to a label — the picture *is* the
+button, and the label is the caption. Every pixel taken from the picture takes away the thing
+he actually uses to choose.
+
+**The rule:**
+
+1. **No box.** No border, no card, no panel around a button. The box is what eats the space.
+2. **Picture as large as the column allows** — at 430px wide that is about **124px at three
+   across**. Never below **96px**, which is what the Food board (the one he has never
+   complained about) uses.
+3. **Label goes UNDER the picture, never beside it.** A label beside the picture is a text-first
+   layout, and it forces the picture small.
+4. **Three across** for lists of items. Two across only when the picture is a full scene at
+   180px+ (Home, Fun, Places).
+5. **Removing a box must make the picture bigger.** If a "space saving" change made a picture
+   smaller, it is wrong — the space came out of the wrong thing.
+
+**The model to copy is the Food board and the McDonald's board:** no box, three across, picture
+96px+, caption underneath. Copy that, don't invent a new arrangement.
+
+**When he says a layout wastes space, he means the chrome, not the picture.** Delete the border
+and the padding; grow the artwork into the space that frees up.
+
+**Audit before changing any board layout.** Render it at 430×900, measure the actual picture
+width with `document.elementFromPoint` hit-testing (the home grid stays in the DOM behind
+overlays and will contaminate the numbers), and report the measurements. Do not change layout
+on a hunch.
+
+*Measured 15 Aug 2026 — eleven of eighteen boards had pictures under 100px while Food had 96px
+at three across. Small pictures are the default failure of this codebase; assume a board is
+wrong until measured.*
