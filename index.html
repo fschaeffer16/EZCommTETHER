@@ -4327,15 +4327,16 @@ class Component extends DCLogic {
     return React.createElement('img', { src, alt: '', style: { width: 64, height: 96, objectFit: 'cover', borderRadius: 12, display: 'block' } });
   }
   sportsPicks() {
-    // Soccer and WWE keep their emoji: the pictures for those two came over
-    // with a stock-library watermark printed across them, and a watermark is
-    // not something to put on his board or ship to anybody.
+    // Soccer keeps its emoji: the 2026 picture came over with a stock-library
+    // watermark printed across it, and a watermark is not something to put on
+    // his board. The WWE mark is cut from the clean copy inside the Raw
+    // artwork rather than the watermarked one.
     return [
       { label: 'Baseball', emoji: '⚾️', word: 'baseball', color: '#3B82F6', icon: 'sp_mlb' },
       { label: 'Soccer', emoji: '⚽️', word: 'soccer', color: '#1F9E6E' },
       { label: 'Basketball', emoji: '\u{1F3C0}', word: 'basketball', color: '#F59E0B', icon: 'sp_nba' },
       { label: 'Football', emoji: '\u{1F3C8}', word: 'football', color: '#7A5CFF', icon: 'sp_nfl' },
-      { label: 'WWE Wrestling', emoji: '\u{1F93C}', word: 'wrestling', color: '#E5533D' },
+      { label: 'WWE Wrestling', emoji: '\u{1F93C}', word: 'wrestling', color: '#E5533D', icon: 'sp_wwe' },
       { label: 'Raw', emoji: '\u{1F3DF}️', word: 'Raw', color: '#DC2626', icon: 'sp_raw' },
       { label: 'SmackDown', emoji: '\u{1F4A5}', word: 'SmackDown', color: '#2563EB', icon: 'sp_smackdown' },
       { label: 'ESPN', emoji: '\u{1F4FA}', word: 'ESPN', color: '#B91C1C', icon: 'sp_espn' },
