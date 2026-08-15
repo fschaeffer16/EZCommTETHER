@@ -3853,12 +3853,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <div onClick="{{ k.onTap }}" style="background:{{ k.bg }};color:{{ k.ink }};border-radius:12px;padding:17px 0;text-align:center;font-size:20px;font-weight:800;cursor:pointer;{{ k.span }}" style-active="transform:scale(.92)">{{ k.k }}</div>
             </sc-for>
           </div>
-          <sc-if value="{{ calcShowNumbers }}" hint-placeholder-val="{{ false }}">
-            <div onClick="{{ openNumbersFromCalc }}" style="margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.96)">
-              <span style="width:124px;aspect-ratio:1;border-radius:20px;background:#F59E0B;font-size:60px;line-height:1;display:flex;align-items:center;justify-content:center;">🔢</span>
-              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);">Numbers</span>
-            </div>
-          </sc-if>
         </div>
       </div>
     </sc-if>
@@ -5530,7 +5524,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 13) return false;
+    if (rev >= 14) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5624,6 +5618,14 @@ class Component extends DCLogic {
       if (t >= 0) d.homeOrder.splice(t, 1);
     }
 
+    // Rev 14: the calculator went back inside School and Numbers returned to
+    // the home screen, in the slot the calculator had.
+    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const c = d.homeOrder.indexOf('calc');
+      if (c >= 0) d.homeOrder.splice(c, 1, 'numbers');
+      else if (d.homeOrder.indexOf('numbers') < 0) d.homeOrder.splice(4, 0, 'numbers');
+    }
+
     // Rev 13: Time moved inside Calendar.
     if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
       const c = d.homeOrder.indexOf('clock');
@@ -5649,7 +5651,7 @@ class Component extends DCLogic {
       if (r >= 0) d.homeOrder.splice(r, 1);
     }
 
-    d.layoutRev = 13;
+    d.layoutRev = 14;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5658,7 +5660,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 13 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 14 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5900,9 +5902,8 @@ class Component extends DCLogic {
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: this.iconUri('colors_tile') } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
-      // Calculator comes to the home screen and Numbers lives inside it.
-      ...(mine ? [{ id: 'calc', label: 'Calculator', emoji: '\u{1F9EE}', color: '#0EA5E9', img: this.iconUri('calc_tile'), onTap: () => this.setState({ screen: 'calc', calcFrom: 'board' }) }]
-               : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
+      // Numbers is its own home tile; the calculator stays inside School.
+      { id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       // Time lives inside Calendar on Evan's board — they are the same
       // question asked two ways.
       ...(mine ? [] : [{ id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) }]),
@@ -6022,7 +6023,7 @@ class Component extends DCLogic {
   // Frank's layout, in the pairs he wrote them. Used both by the rev 12
   // migration and by a phone that has no saved order yet.
   evanHomeOrder() {
-    return ['family','food','school','sentbuild','calc','colors','fun','watch','hurtbody','hurt','houses','places','clock','calendar'];
+    return ['family','food','school','sentbuild','numbers','colors','fun','watch','hurtbody','hurt','houses','places','clock','calendar'];
   }
   homeTiles() {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));
@@ -6702,10 +6703,8 @@ class Component extends DCLogic {
       openABC: () => this.setState({ screen: 'abc', spellText: '' }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
-      openCalc: () => this.setState({ screen: 'calc', calcFrom: 'school' }),
-      calcBack: () => this.setState({ screen: s.calcFrom === 'board' ? 'board' : 'school' }),
-      calcShowNumbers: this.isEvanProfile(),
-      openNumbersFromCalc: () => this.setState({ screen: 'numbers', numbersFrom: 'calc' }),
+      openCalc: () => this.setState({ screen: 'calc' }),
+      calcBack: () => this.setState({ screen: 'school' }),
       // Words — core-word sentence builder. Tapping a word speaks it and adds
       // it to the strip; Say it speaks the whole sentence.
       isWords: s.screen === 'words',
