@@ -3660,6 +3660,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#4F46E5;flex:1;min-width:0;">Calendar</div>
         </div>
+        <sc-if value="{{ calShowTime }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ openClockFromCal }}" style="margin:0 18px 12px;flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.96)">
+            <span style="width:124px;aspect-ratio:1;border-radius:20px;background:#0EA5E9;font-size:60px;line-height:1;display:flex;align-items:center;justify-content:center;">🕒</span>
+            <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);">Time</span>
+          </div>
+        </sc-if>
         <div onClick="{{ sayToday }}" style="margin:0 18px 10px;flex:none;background:linear-gradient(135deg,#4F46E5,#7A5CFF);border-radius:16px;padding:13px 16px;cursor:pointer;box-shadow:0 5px 15px rgba(79,70,229,.3);" style-active="transform:scale(.98)">
           <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.07em;text-transform:uppercase;">Today</div>
           <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.2;">{{ todayLong }}</div>
@@ -3689,7 +3695,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isClock }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ clockBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Time</div>
         </div>
         <div onClick="{{ sayTime }}" style="margin:0 18px 14px;flex:none;background:linear-gradient(135deg,#0EA5E9,#2F6BFF);border-radius:20px;padding:22px 18px;text-align:center;cursor:pointer;box-shadow:0 8px 22px rgba(14,165,233,.32);" style-active="transform:scale(.98)">
@@ -5524,7 +5530,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 12) return false;
+    if (rev >= 13) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5618,6 +5624,12 @@ class Component extends DCLogic {
       if (t >= 0) d.homeOrder.splice(t, 1);
     }
 
+    // Rev 13: Time moved inside Calendar.
+    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const c = d.homeOrder.indexOf('clock');
+      if (c >= 0) d.homeOrder.splice(c, 1);
+    }
+
     // Rev 12: Frank's home layout, in the pairs he wrote them:
     //   Family/Food, School/Sentence Builder, Calculator/Colors, Fun/TV,
     //   Hurt/Sick, Houses/Places, Time/Calendar. Numbers is gone from the home
@@ -5637,7 +5649,7 @@ class Component extends DCLogic {
       if (r >= 0) d.homeOrder.splice(r, 1);
     }
 
-    d.layoutRev = 12;
+    d.layoutRev = 13;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5646,7 +5658,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 12 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 13 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5891,7 +5903,9 @@ class Component extends DCLogic {
       // Calculator comes to the home screen and Numbers lives inside it.
       ...(mine ? [{ id: 'calc', label: 'Calculator', emoji: '\u{1F9EE}', color: '#0EA5E9', img: this.iconUri('calc_tile'), onTap: () => this.setState({ screen: 'calc', calcFrom: 'board' }) }]
                : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
-      { id: 'clock', label: 'Time', emoji: '🕒', color: mine ? '#0EA5E9' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_clock') }), onTap: () => this.setState({ screen: 'clock' }) },
+      // Time lives inside Calendar on Evan's board — they are the same
+      // question asked two ways.
+      ...(mine ? [] : [{ id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) }]),
       { id: 'calendar', label: 'Calendar', emoji: '📅', color: mine ? '#4F46E5' : '#D946EF', ...(mine ? { img: null } : { img: this.iconUri('tile_calendar') }), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
@@ -6984,6 +6998,9 @@ class Component extends DCLogic {
       calNext: () => this.setState({ calOffset: (this.state.calOffset || 0) + 1 }),
       calToday: () => this.setState({ calOffset: 0 }),
 
+      calShowTime: this.isEvanProfile(),
+      openClockFromCal: () => this.setState({ screen: 'clock', clockFrom: 'calendar' }),
+      clockBack: () => this.setState({ screen: s.clockFrom === 'calendar' ? 'calendar' : 'board' }),
       isClock: s.screen === 'clock',
       clockFace: this.clockNow().face,
       sayTime: () => this.speak(this.clockNow().spoken),
