@@ -5291,12 +5291,12 @@ class Component extends DCLogic {
       ]},
     ];
     return [
-      { id: 'dad', section: 'housedad', label: "Dad's House", emoji: '🏠', color: '#2F6BFF', rooms: [
+      { id: 'dad', section: 'housedad', label: "Dad's House", emoji: '🏠', icon: 'house_dad', color: '#2F6BFF', rooms: [
         { label: 'My Room', emoji: '🛏️', say: 'My room at Dad\'s house.' },
         { label: "Dad's Room", emoji: '🚪', say: "Dad's room." },
         { label: 'The Office', emoji: '💼', say: 'The office.' },
       ]},
-      { id: 'mom', section: 'housemom', label: "Mom's House", emoji: '🏡', color: '#E5533D', rooms: [
+      { id: 'mom', section: 'housemom', label: "Mom's House", emoji: '🏡', icon: 'house_mom', color: '#E5533D', rooms: [
         { label: 'My Room', emoji: '🛏️', say: 'My room at Mom\'s house.' },
         { label: "Mom's Room", emoji: '🚪', say: "Mom's room." },
       ]},
@@ -5903,7 +5903,7 @@ class Component extends DCLogic {
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: this.iconUri('colors_tile') } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
       // Numbers is its own home tile; the calculator stays inside School.
-      { id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
+      { id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: this.iconUri('numbers_tile') } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
       // Time lives inside Calendar on Evan's board — they are the same
       // question asked two ways.
       ...(mine ? [] : [{ id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) }]),
