@@ -3132,7 +3132,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
             <sc-for list="{{ sportsPicks }}" as="p" hint-placeholder-count="5">
               <div onClick="{{ p.onTap }}" style="aspect-ratio:1/1;border:3px solid {{ p.color }};border-radius:16px;background:var(--card,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.1);" style-active="transform:scale(.96)">
-                <span style="font-size:56px;line-height:1;">{{ p.emoji }}</span>
+                <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ false }}">{{ p.iconEl }}</sc-if>
+                <sc-if value="{{ p.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:56px;line-height:1;">{{ p.emoji }}</span></sc-if>
                 <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;padding:0 6px;">{{ p.label }}</span>
               </div>
             </sc-for>
@@ -4326,13 +4327,30 @@ class Component extends DCLogic {
     return React.createElement('img', { src, alt: '', style: { width: 64, height: 96, objectFit: 'cover', borderRadius: 12, display: 'block' } });
   }
   sportsPicks() {
+    // Soccer and WWE keep their emoji: the pictures for those two came over
+    // with a stock-library watermark printed across them, and a watermark is
+    // not something to put on his board or ship to anybody.
     return [
-      { label: 'Baseball', emoji: '⚾️', word: 'baseball', color: '#3B82F6' },
+      { label: 'Baseball', emoji: '⚾️', word: 'baseball', color: '#3B82F6', icon: 'sp_mlb' },
       { label: 'Soccer', emoji: '⚽️', word: 'soccer', color: '#1F9E6E' },
-      { label: 'Basketball', emoji: '\u{1F3C0}', word: 'basketball', color: '#F59E0B' },
-      { label: 'Football', emoji: '\u{1F3C8}', word: 'football', color: '#7A5CFF' },
+      { label: 'Basketball', emoji: '\u{1F3C0}', word: 'basketball', color: '#F59E0B', icon: 'sp_nba' },
+      { label: 'Football', emoji: '\u{1F3C8}', word: 'football', color: '#7A5CFF', icon: 'sp_nfl' },
       { label: 'WWE Wrestling', emoji: '\u{1F93C}', word: 'wrestling', color: '#E5533D' },
-    ].map((p) => ({ ...p, onTap: () => this.watchChooser(p.label, p.word, p.emoji, null) }));
+      { label: 'Raw', emoji: '\u{1F3DF}️', word: 'Raw', color: '#DC2626', icon: 'sp_raw' },
+      { label: 'SmackDown', emoji: '\u{1F4A5}', word: 'SmackDown', color: '#2563EB', icon: 'sp_smackdown' },
+      { label: 'ESPN', emoji: '\u{1F4FA}', word: 'ESPN', color: '#B91C1C', icon: 'sp_espn' },
+    ].map((p) => {
+      const src = p.icon ? this.iconUri(p.icon) : null;
+      return {
+        ...p,
+        hasIcon: !!src,
+        noIcon: !src,
+        // Built here rather than through imgEl: these are logos on their own
+        // backgrounds, and the screen blending imgEl applies would wash them out.
+        iconEl: src ? React.createElement('img', { src, alt: '', style: { width: 96, height: 96, objectFit: 'cover', borderRadius: 14, display: 'block' } }) : null,
+        onTap: () => this.watchChooser(p.label, p.word, p.emoji, src ? React.createElement('img', { src, alt: '', style: { width: 84, height: 84, objectFit: 'cover', borderRadius: 14, display: 'block' } }) : null),
+      };
+    });
   }
 
   // ── Universal button override + edit ───────────────────────────────────
