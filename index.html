@@ -5825,7 +5825,7 @@ class Component extends DCLogic {
       { id: 'food', label: 'Food', emoji: '🍽️', color: mine ? '#F59E0B' : '#F59E0B', ...(mine ? { img: 'assets/food_scene.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_food') }), onTap: () => this.setState({ screen: 'food' }) },
       // Hurt is its own home tile — pointing at where it hurts should never be
       // two taps deep behind anything.
-      ...(mine ? [{ id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', img: this.iconUri('hurt_body'), contain: true, onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) }] : []),
+      ...(mine ? [{ id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', img: this.iconUri('hurt_tile'), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) }] : []),
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
       // Friends stands on its own rather than sitting inside School: the people
       // a kid actually wants to talk to aren't a school subject. Template only —
