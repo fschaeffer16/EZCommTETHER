@@ -2954,7 +2954,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
           <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);">Watch</div>
+          <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);">{{ watchTitle }}</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:10px 18px 24px;display:flex;flex-direction:column;gap:14px;">
           <sc-if value="{{ watchBranded }}" hint-placeholder-val="{{ true }}">
@@ -3048,6 +3048,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type a name under each picture. Evan hears it when he taps. Tap <b>+</b> to add one.</div></sc-if>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <sc-for list="{{ sportsPicks }}" as="p" hint-placeholder-count="5">
+              <div onClick="{{ p.onTap }}" style="aspect-ratio:1/1;border:3px solid {{ p.color }};border-radius:16px;background:var(--card,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.1);" style-active="transform:scale(.96)">
+                <span style="font-size:56px;line-height:1;">{{ p.emoji }}</span>
+                <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;padding:0 6px;">{{ p.label }}</span>
+              </div>
+            </sc-for>
+          </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <sc-for list="{{ sportsSlots }}" as="w" hint-placeholder-count="8">
               <div style="display:flex;flex-direction:column;gap:5px;">
@@ -4219,6 +4227,33 @@ class Component extends DCLogic {
     this.setState({ chooser: { label, emoji, noIcon: true, hasIcon: false, iconEl: null, options } });
   }
 
+  // A show is a question or an answer depending on who spoke first — he might
+  // be asking to watch it, or telling somebody what he wants on. Both, always.
+  watchChooser(label, word, emoji, iconEl) {
+    const q = 'Can I watch ' + word + '?';
+    const s = 'I wanna watch ' + word + '.';
+    const options = [
+      { glyph: '🙋', txt: q, say: q, color: '#3B82F6' },
+      { glyph: '💬', txt: s, say: s, color: '#1F9E6E' },
+    ];
+    this.setState({ chooser: {
+      label, emoji, iconEl: iconEl || null, hasIcon: !!iconEl, noIcon: !iconEl,
+      options: options.map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })),
+    } });
+  }
+  posterEl(src) {
+    return React.createElement('img', { src, alt: '', style: { width: 64, height: 96, objectFit: 'cover', borderRadius: 12, display: 'block' } });
+  }
+  sportsPicks() {
+    return [
+      { label: 'Baseball', emoji: '⚾️', word: 'baseball', color: '#3B82F6' },
+      { label: 'Soccer', emoji: '⚽️', word: 'soccer', color: '#1F9E6E' },
+      { label: 'Basketball', emoji: '\u{1F3C0}', word: 'basketball', color: '#F59E0B' },
+      { label: 'Football', emoji: '\u{1F3C8}', word: 'football', color: '#7A5CFF' },
+      { label: 'WWE Wrestling', emoji: '\u{1F93C}', word: 'wrestling', color: '#E5533D' },
+    ].map((p) => ({ ...p, onTap: () => this.watchChooser(p.label, p.word, p.emoji, null) }));
+  }
+
   // ── Universal button override + edit ───────────────────────────────────
   slug(s) { return (s || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, ''); }
   ovKey(section, label) { return section + ':' + this.slug(label); }
@@ -4471,10 +4506,10 @@ class Component extends DCLogic {
       const id = 'tether_watch_' + n;
       const custom = this.slotTitle(id);
       const title = custom || defTitle;
+      const img = this.ph('assets/netflix/' + n + '.jpg');
       return {
-        id, title, hasTitle: true, showViewTitle: true, titleLabel: title,
-        img: this.ph('assets/netflix/' + n + '.jpg'),
-        onTap: () => this.speak(title),
+        id, title, hasTitle: true, showViewTitle: true, titleLabel: title, img,
+        onTap: () => this.watchChooser(title, title, '📺', this.posterEl(img)),
         onTitle: (e) => this.setSlotTitle(id, e.target.value),
       };
     });
@@ -4492,10 +4527,10 @@ class Component extends DCLogic {
       const id = 'tether_disney_' + n;
       const custom = this.slotTitle(id);
       const title = custom || defTitle;
+      const img = this.ph('assets/disney/' + n + '.jpg');
       return {
-        id, title, hasTitle: true, showViewTitle: true, titleLabel: title,
-        img: this.ph('assets/disney/' + n + '.jpg'),
-        onTap: () => this.speak(title),
+        id, title, hasTitle: true, showViewTitle: true, titleLabel: title, img,
+        onTap: () => this.watchChooser(title, title, '📺', this.posterEl(img)),
         onTitle: (e) => this.setSlotTitle(id, e.target.value),
       };
     });
@@ -5582,7 +5617,9 @@ class Component extends DCLogic {
       ...(mine ? [] : [{ id: 'friends', label: 'Friends', emoji: '👫', color: '#14B8A6', img: this.iconUri('tile_friends'), onTap: () => this.setState({ screen: 'friends' }) }]),
       { id: 'morning', label: 'Morning', emoji: '🌅', color: mine ? '#FB7185' : '#F97316', ...(mine ? { img: 'assets/morning.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_morning') }), onTap: () => this.setState({ screen: 'morning' }) },
       { id: 'fun', label: 'Fun', emoji: '🤸', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/fun.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_fun') }), onTap: () => this.setState({ screen: 'fun' }) },
-      { id: 'watch', label: 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
+      // Evan's board calls it TV — his word. The template keeps "Watch",
+      // because its version holds a TV category inside it.
+      { id: 'watch', label: mine ? 'TV' : 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: mine ? '#4F46E5' : '#6366F1', ...(mine ? { img: 'assets/night.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_night') }), onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: mine ? '#1F9E6E' : '#22B6F0', ...(mine ? { img: 'assets/bathroom.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_bathroom') }), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
       { id: 'hurt', label: 'Health', emoji: '➕', color: mine ? '#E23B2E' : '#E23B2E', ...(mine ? { img: this.iconUri('headache'), contain: true } : { img: this.iconUri('tile_hurt') }), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
@@ -6397,6 +6434,7 @@ class Component extends DCLogic {
       watchSlots: this.watchSlots(),
       netflixSlots: this.netflixSlots(),
       disneySlots: this.disneySlots(),
+      sportsPicks: this.sportsPicks(),
       sportsSlots: this.sportsSlots(),
       isFun: s.screen === 'fun',
       isWatch: s.screen === 'watch',
@@ -6408,6 +6446,7 @@ class Component extends DCLogic {
       // Evan's Watch board keeps Netflix, Disney+ and his shows. The template
       // gets neutral categories — the branded names are trademarks as much as
       // the artwork is, and the show titles get spoken out loud.
+      watchTitle: this.isEvanProfile() ? 'TV' : 'Watch',
       watchBranded: this.isEvanProfile(),
       watchCategories: !this.isEvanProfile(),
       watchTiles: [
