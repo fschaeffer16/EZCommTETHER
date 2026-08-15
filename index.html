@@ -2862,6 +2862,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </sc-for>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <sc-if value="{{ showRestaurants }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ openRestaurants }}" style="background:#B45309;border-radius:18px;padding:18px;display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:0 6px 18px rgba(180,83,9,.3);margin-bottom:18px;" style-active="transform:scale(.98)">
+              <span style="font-size:34px;line-height:1;">🍴</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:21px;font-weight:800;line-height:1.1;color:#fff;">Restaurants</div>
+                <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85);">Order what you want</div>
+              </div>
+              <div style="font-size:26px;color:rgba(255,255,255,.9);line-height:1;">›</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showDrinksSection }}" hint-placeholder-val="{{ true }}">
           <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#3B82F6;margin:2px 2px 9px;">Drinks</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
             <sc-for list="{{ drinks }}" as="item" hint-placeholder-count="0">
@@ -2874,6 +2885,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </div>
             </sc-for>
           </div>
+          </sc-if>
           <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#F2920E;margin:2px 2px 9px;">Food</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
             <sc-for list="{{ foods }}" as="item" hint-placeholder-count="0">
@@ -2903,7 +2915,76 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
     <!-- DRINKS -->
-    
+    <sc-if value="{{ isDrinks }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#3B82F6;flex:1;min-width:0;">Drinks</div>
+          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
+        </div>
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 10px;flex:none;-webkit-overflow-scrolling:touch;">
+          <sc-for list="{{ hungerRow }}" as="q" hint-placeholder-count="4">
+            <div onClick="{{ q.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ q.color }};border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
+              <span style="font-size:20px;line-height:1;">{{ q.emoji }}</span>
+              <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ q.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+            <sc-for list="{{ drinks }}" as="item" hint-placeholder-count="0">
+              <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.95)">
+                <div style="width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:3px solid #3B82F6;background:var(--slot,#F0EDE7);display:flex;align-items:center;justify-content:center;">
+                  <sc-if value="{{ item.hasIcon }}" hint-placeholder-val="{{ false }}">{{ item.iconEl }}</sc-if>
+                  <sc-if value="{{ item.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:38px;line-height:1;">{{ item.emoji }}</span></sc-if>
+                </div>
+                <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ item.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- RESTAURANTS -->
+    <sc-if value="{{ isRestaurants }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ openFood }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#B45309;flex:1;min-width:0;">Restaurants</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:10px 18px 24px;display:flex;flex-direction:column;gap:14px;">
+          <sc-for list="{{ restaurantList }}" as="r" hint-placeholder-count="4">
+            <div onClick="{{ r.onTap }}" style="background:{{ r.color }};border-radius:20px;padding:26px 22px;display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:0 4px 14px rgba(20,16,12,.28);" style-active="transform:scale(.98)">
+              <span style="font-size:34px;line-height:1;">{{ r.emoji }}</span>
+              <span style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.01em;">{{ r.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ONE RESTAURANT -->
+    <sc-if value="{{ isRestaurant }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ openRestaurants }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:{{ restaurantColor }};flex:1;min-width:0;">{{ restaurantName }}</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+            <sc-for list="{{ restaurantMenu }}" as="item" hint-placeholder-count="0">
+              <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.93)">
+                {{ item.iconEl }}<sc-if value="{{ item.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:46px;line-height:1;">{{ item.emoji }}</span></sc-if>
+                <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ item.label }}</span>
+                <sc-if value="{{ item.hasSub }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px;color:var(--sub,#8C857A);font-weight:700;line-height:1.1;text-align:center;">{{ item.sub }}</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
 
     <!-- SNACKS -->
     <sc-if value="{{ isSnacks }}" hint-placeholder-val="{{ false }}">
@@ -4362,6 +4443,7 @@ class Component extends DCLogic {
       { label: 'Spaghetti', icon: 'spaghetti' },
       { label: 'Steak', icon: 'steak' },
       { label: 'Bloomin Onion', icon: 'bloomin_onion' },
+      { label: 'Plantain', emoji: '🍌', say: 'plantains' },
       { label: 'Baked Ham', icon: 'baked_ham' },
       { label: 'Corn Dogs', icon: 'corn_dogs' },
       { label: 'Pork Fried Rice', icon: 'pork_fried_rice' },
@@ -4385,6 +4467,47 @@ class Component extends DCLogic {
       { label: 'Doritos', emoji: '🧀' },
       { label: 'Pretzels', emoji: '🥨' },
     ];
+  }
+
+  // The places he actually eats, and what he actually orders at each one.
+  // Every item is its own button — he orders one thing at a time, the way
+  // anybody does.
+  restaurants() {
+    return [
+      { id: 'mcdonalds', label: "McDonald's", say: "McDonald's", emoji: '🍟', color: '#DA291C' },
+      { id: 'outback', label: 'Outback', say: 'Outback', emoji: '🥩', color: '#7A1E12' },
+      { id: 'chinese', label: 'Chinese Food', say: 'Chinese food', emoji: '🥡', color: '#C8102E' },
+      { id: 'popeyes', label: 'Popeyes', say: "Popeyes", emoji: '🍗', color: '#F58220' },
+    ];
+  }
+  restaurantItems(id) {
+    const M = {
+      mcdonalds: [
+        { label: 'Double Hamburger', sub: 'extra pickles', icon: 'hamburger_only', say: 'a double hamburger with extra pickles' },
+        { label: 'Chicken Nuggets', icon: 'chicken_fingers', say: 'chicken nuggets' },
+        { label: 'Large French Fries', icon: 'french_fries', say: 'large french fries' },
+        { label: 'Frozen Hawaiian Punch', emoji: '🥤', say: 'a frozen Hawaiian Punch' },
+      ],
+      outback: [
+        { label: 'Outback Sirloin', sub: '8 oz, medium rare', icon: 'steak', say: 'the eight ounce Outback sirloin, medium rare' },
+        { label: 'Bloomin Onion', icon: 'bloomin_onion', say: 'a Bloomin Onion' },
+        { label: 'French Fries', icon: 'french_fries', say: 'french fries' },
+        { label: 'Fried Onions', emoji: '🧅', say: 'fried onions' },
+        { label: 'Strawberry Lemonade', icon: 'strawberry_lemonade', say: 'a strawberry lemonade' },
+        { label: 'Coke', icon: 'coke', say: 'a Coke' },
+      ],
+      chinese: [
+        { label: 'Pork Fried Rice', icon: 'pork_fried_rice', say: 'pork fried rice' },
+        { label: 'Bourbon Chicken', emoji: '🍗', say: 'bourbon chicken' },
+        { label: 'Plantain', emoji: '🍌', say: 'plantains' },
+      ],
+      popeyes: [
+        { label: 'Chicken Tenders', icon: 'chicken_fingers', say: 'chicken tenders' },
+        { label: 'French Fries', icon: 'french_fries', say: 'french fries' },
+        { label: 'Coke', icon: 'coke', say: 'a Coke' },
+      ],
+    };
+    return M[id] || [];
   }
 
   evanDrinks() {
@@ -4600,6 +4723,16 @@ class Component extends DCLogic {
       ];
       // Some places have their own things to ask for once he's there.
       if (i.extra) options = options.concat(i.extra);
+    } else if (mode === 'menu') {
+      // Ordering off a menu. "Can I have more the eight ounce sirloin" is what
+      // the generic wording produces here, so the middle option stays generic
+      // and reads right after any dish on the board.
+      options = [
+        { glyph: '🙋', txt: 'Can I have ' + base + '?', say: 'Can I have ' + base + '?', color: '#3B82F6' },
+        { glyph: '💬', txt: 'I want ' + base + '.', say: 'I want ' + base + '.', color: '#7A5CFF' },
+        { glyph: '➕', txt: 'Can I have more, please?', say: 'Can I have more, please?', color: '#F59E0B' },
+        { glyph: '✋', txt: "I'm finished", say: "I'm finished.", color: '#1F9E6E' },
+      ];
     } else {
       options = [
         { glyph: '🙋', txt: 'Can I have ' + base + '?', say: 'Can I have ' + base + '?', color: '#3B82F6' },
@@ -5325,7 +5458,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 7) return false;
+    if (rev >= 8) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5391,7 +5524,16 @@ class Component extends DCLogic {
       }
     }
 
-    d.layoutRev = 7;
+    // Rev 8: Drinks left the Food board and became a home tile of its own on
+    // Evan's phone. His saved homeOrder has no 'drinks' in it, which would hide
+    // the tile completely, so slot it in right after Food.
+    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length && d.homeOrder.indexOf('drinks') < 0) {
+      const at = d.homeOrder.indexOf('food');
+      if (at < 0) d.homeOrder.push('drinks');
+      else d.homeOrder.splice(at + 1, 0, 'drinks');
+    }
+
+    d.layoutRev = 8;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5400,7 +5542,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 7 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 8 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5524,6 +5666,10 @@ class Component extends DCLogic {
   }
   friendPhrases() {
     return [
+      // Please and Thank You left the quick strip to make room for six words
+      // he uses more. They live here, where things get said to people.
+      { txt: 'Please.', glyph: '🙏' },
+      { txt: 'Thank you.', glyph: '💛' },
       { txt: "Hey, what's up?", glyph: '👋' },
       { txt: 'Do you wanna hang out?', glyph: '🤝' },
       { txt: 'Can I sit here?', glyph: '🪑' },
@@ -5610,6 +5756,9 @@ class Component extends DCLogic {
       // Order is Frank's: the boards Evan reaches for most, first.
       { id: 'family', label: 'Family', emoji: '👪', color: mine ? '#F2920E' : '#3B82F6', ...(mine ? { img: 'assets/family.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_family') }), onTap: () => this.setState({ screen: 'family' }) },
       { id: 'food', label: 'Food', emoji: '🍽️', color: mine ? '#F59E0B' : '#F59E0B', ...(mine ? { img: 'assets/food_scene.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_food') }), onTap: () => this.setState({ screen: 'food' }) },
+      // Drinks stands on its own on Evan's board — it was a section inside Food
+      // and he was scrolling past the whole grid to reach a glass of water.
+      ...(mine ? [{ id: 'drinks', label: 'Drinks', emoji: '🥤', color: '#3B82F6', img: this.iconUri('apple_juice'), onTap: () => this.setState({ screen: 'drinks' }) }] : []),
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
       // Friends stands on its own rather than sitting inside School: the people
       // a kid actually wants to talk to aren't a school subject. Template only —
@@ -5671,14 +5820,16 @@ class Component extends DCLogic {
   quickNeeds() {
     if (!this.isEvanProfile()) return this.starterQuick();
     return [
-      // Ordered by how often he reaches for them, not by category.
-      { label: 'Hello', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
-      { label: 'Goodbye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
-      { label: 'Please', emoji: '🙏', color: '#14B8A6', say: 'Please.' },
-      { label: 'Thank You', emoji: '💛', color: '#DB2777', say: 'Thank you.' },
+      // Six words, in the order he reaches for them. The labels are short so
+      // the strip stays readable; the spoken words are the long ones, because
+      // a two-letter word is gone before the speech engine finishes starting
+      // and comes out clipped.
+      { label: 'Hi', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
+      { label: 'Bye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
       { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
       { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
+      { label: 'More', emoji: '➕', color: '#F59E0B', say: 'More.' },
     ].map((q) => ({
       label: q.label,
       emoji: q.emoji,
@@ -6255,6 +6406,21 @@ class Component extends DCLogic {
       sayFamily: () => this.speak('Family'),
       goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       isFood: s.screen === 'food',
+      isDrinks: s.screen === 'drinks',
+      isRestaurants: s.screen === 'restaurants',
+      isRestaurant: s.screen === 'restaurant',
+      // Evan's Drinks moved to its own home tile, so the Food board stops
+      // repeating it. A bought phone keeps one board with both on it.
+      showDrinksSection: !this.isEvanProfile(),
+      showRestaurants: this.isEvanProfile(),
+      openRestaurants: () => this.setState({ screen: 'restaurants' }),
+      restaurantList: this.restaurants().map((r) => ({
+        ...r,
+        onTap: () => { this.speak(r.say); this.setState({ screen: 'restaurant', restaurant: r.id }); },
+      })),
+      restaurantName: (this.restaurants().find((r) => r.id === s.restaurant) || {}).label || 'Restaurant',
+      restaurantColor: (this.restaurants().find((r) => r.id === s.restaurant) || {}).color || '#B45309',
+      restaurantMenu: this.restaurantItems(s.restaurant).map((i) => this.mapItem(i, 'menu')),
       isSnacks: s.screen === 'snacks',
       // Evan's snack list stays where it is until his own pass; this is the
       // starter list on a bought phone, which had no way in at all before.
