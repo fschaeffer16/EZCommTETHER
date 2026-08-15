@@ -5896,7 +5896,7 @@ class Component extends DCLogic {
       { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: null } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
+      { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: this.iconUri('houses_tile') } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
       // the rest of them rather than taking a tile of its own.
