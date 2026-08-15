@@ -6649,8 +6649,10 @@ class Component extends DCLogic {
       openMedicine: () => this.openPhraseChooser('Medicine', '💊', this.medicineItems()),
       homeTiles: this.homeTiles(),
       quickNeeds: this.quickNeeds(),
-      quickScrolls: this.isEvanProfile(),
-      quickGrid: !this.isEvanProfile(),
+      // One line that scrolls, on every board. The two-row grid was my idea and
+      // not what was asked for.
+      quickScrolls: true,
+      quickGrid: false,
       isSettings: s.screen === 'settings',
       openSettings: () => this.openSettings(),
       openVoiceChooser: () => this.openVoiceChooser(),
