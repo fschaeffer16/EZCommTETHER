@@ -5000,6 +5000,10 @@ class Component extends DCLogic {
       { glyph: '😎', txt: "That's cool.", say: "That's cool.", color: '#7A5CFF' },
       { glyph: '🍿', txt: 'Do you wanna hang out?', say: 'Do you wanna hang out?', color: '#E5533D' },
       { glyph: '👍', txt: 'I like that.', say: 'I like that.', color: '#1F9E6E' },
+      { glyph: '🪑', txt: 'Can I sit here?', say: 'Can I sit here?', color: '#0EA5E9' },
+      { glyph: '😂', txt: "That's funny.", say: "That's funny.", color: '#F59E0B' },
+      { glyph: '🙏', txt: 'Please.', say: 'Please.', color: '#14B8A6' },
+      { glyph: '💛', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
       { glyph: '👋', txt: 'See ya later.', say: 'See ya later.', color: '#6366F1' },
     ];
     return [
@@ -5008,6 +5012,8 @@ class Component extends DCLogic {
       { glyph: '☀️', txt: 'Good morning ' + nm, say: 'Good morning ' + nm, color: '#F59E0B' },
       { glyph: '🌙', txt: 'Goodnight ' + nm, say: 'Goodnight ' + nm, color: '#4F46E5' },
       { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
+      { glyph: '🙏', txt: 'Please.', say: 'Please.', color: '#14B8A6' },
+      { glyph: '💛', txt: 'Thank you.', say: 'Thank you.', color: '#1F9E6E' },
     ];
   }
 
@@ -5512,7 +5518,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 9) return false;
+    if (rev >= 10) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5600,7 +5606,13 @@ class Component extends DCLogic {
       }
     }
 
-    d.layoutRev = 9;
+    // Rev 10: Talk left the home screen.
+    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const t = d.homeOrder.indexOf('talk');
+      if (t >= 0) d.homeOrder.splice(t, 1);
+    }
+
+    d.layoutRev = 10;
     return true;
   }
   saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
@@ -5609,7 +5621,7 @@ class Component extends DCLogic {
     let d = this.loadData();
     // A fresh install is a buyer's phone: no profile, and already at the
     // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 9 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 10 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5844,7 +5856,9 @@ class Component extends DCLogic {
       // needing anyone saved — they're for talking to a kid, not a contact.
       // Talk was the friend phrases without needing anyone saved. Friends is its
       // own tile now, so on a bought phone it was the same thing twice.
-      ...(mine ? [{ id: 'talk', label: 'Talk', emoji: '🗣️', color: '#DB2777', img: null, onTap: () => this.openPhraseChooser('Talk', '🗣️', this.personPhrases('friends')) }] : []),
+      // Talk left the home screen: its phrases are the defaults he gets when
+      // he picks a person to talk to, and they are in Sentence Build's quick
+      // phrases as well, so a whole tile for them was a tap he didn't need.
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
@@ -6416,6 +6430,9 @@ class Component extends DCLogic {
         { t: 'I wanna go with you', e: '🤝', say: 'I wanna go with you.' },
         { t: 'look at this', e: '👉', say: 'Look at this.' },
         { t: 'thank you', e: '💛', say: 'Thank you.' },
+        { t: 'please', e: '🙏', say: 'Please.' },
+        { t: 'can I sit here', e: '🪑', say: 'Can I sit here?' },
+        { t: "that's funny", e: '😂', say: "That's funny." },
         { t: 'I found it', e: '🙌', say: 'I found it.' },
         { t: 'bye', e: '✌️', say: 'Bye!' },
       ]},
