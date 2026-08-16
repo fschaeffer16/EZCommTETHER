@@ -5247,6 +5247,11 @@ class Component extends DCLogic {
       }
       try { localStorage.setItem('ezcomm.lastNote', j.note.id); } catch (e) {}
       if (!primed) return;
+      // A voice note is live conversation. One that has sat on the server for
+      // more than a few minutes is history — a stale marker or a wiped phone
+      // walking the backlog — and playing it as if it just arrived is exactly
+      // how old recordings "randomly" replay. Store the id, skip the sound.
+      if (j.note.at && (Date.now() - j.note.at) > 15 * 60 * 1000) return;
       this.setState({ note: j.note, noteState: 'Playing…' });
       this.playNote();
     } catch (e) {}
