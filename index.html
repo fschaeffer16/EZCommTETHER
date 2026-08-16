@@ -5041,8 +5041,11 @@ class Component extends DCLogic {
   // people trusted to speak to him. On this phone that's Dad, Mom, Chris and
   // Matthew; on a new phone it's whoever the family marks.
   voiceSenders() {
+    // Anyone on the Family board can send Evan a voice message and have it
+    // signed with their own name — his brothers included. The alert flag stays
+    // what it is: who the SOS reaches, nothing more.
     const fam = this.data().family || [];
-    return fam.filter((p) => p && p.alert && p.id && p.name).map((p) => ({ id: p.id, name: String(p.name).slice(0, 24) }));
+    return fam.filter((p) => p && p.id && p.name).map((p) => ({ id: p.id, name: String(p.name).slice(0, 24) }));
   }
   // The name a clip is signed with. Falls back to the stored role id, then to
   // "Family", so a note is never delivered unattributed.
