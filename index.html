@@ -3729,7 +3729,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isColors }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ colorsBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#F2920E;flex:1;min-width:0;">Colors</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
@@ -3802,6 +3802,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div onClick="{{ openABC }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolABCFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolNumbersFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
             <div onClick="{{ openCalc }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolCalcFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
+            <div onClick="{{ openColorsSchool }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolColorsFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Colors</span></div>
                       </div>
         </div>
       </div>
@@ -5542,7 +5543,7 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 14) return false;
+    if (rev >= 15) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5638,14 +5639,14 @@ class Component extends DCLogic {
 
     // Rev 14: the calculator went back inside School and Numbers returned to
     // the home screen, in the slot the calculator had.
-    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+    if (rev < 14 && d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
       const c = d.homeOrder.indexOf('calc');
       if (c >= 0) d.homeOrder.splice(c, 1, 'numbers');
       else if (d.homeOrder.indexOf('numbers') < 0) d.homeOrder.splice(4, 0, 'numbers');
     }
 
     // Rev 13: Time moved inside Calendar.
-    if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+    if (rev < 13 && d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
       const c = d.homeOrder.indexOf('clock');
       if (c >= 0) d.homeOrder.splice(c, 1);
     }
@@ -5669,7 +5670,16 @@ class Component extends DCLogic {
       if (r >= 0) d.homeOrder.splice(r, 1);
     }
 
-    d.layoutRev = 14;
+    // Rev 15: Frank's order of 16 Aug — daily boards in the top rows, and
+    // Colors and Numbers off the home screen (both live inside School).
+    if (rev < 15 && d.profile === 'evan') {
+      const want = this.evanHomeOrder();
+      const rest = (Array.isArray(d.homeOrder) ? d.homeOrder : [])
+        .filter((id) => want.indexOf(id) < 0 && ['numbers','colors','clock','calc','talk','regulate','drinks'].indexOf(id) < 0);
+      d.homeOrder = want.concat(rest);
+    }
+
+    d.layoutRev = 15;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -5706,7 +5716,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 14 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 15 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -5948,9 +5958,9 @@ class Component extends DCLogic {
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
       { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
-      { id: 'colors', label: 'Colors', emoji: '🎨', color: mine ? '#F2920E' : '#A855F7', ...(mine ? { img: this.iconUri('colors_tile') } : { img: this.iconUri('tile_colors') }), onTap: () => this.setState({ screen: 'colors' }) },
+      ...(mine ? [] : [{ id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) }]),
       // Numbers is its own home tile; the calculator stays inside School.
-      { id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: mine ? '#F59E0B' : '#3B82F6', ...(mine ? { img: this.iconUri('numbers_tile') } : { img: this.iconUri('tile_numbers') }), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) },
+      ...(mine ? [] : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
       // Time lives inside Calendar on Evan's board — they are the same
       // question asked two ways.
       ...(mine ? [] : [{ id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) }]),
@@ -6070,7 +6080,7 @@ class Component extends DCLogic {
   // Frank's layout, in the pairs he wrote them. Used both by the rev 12
   // migration and by a phone that has no saved order yet.
   evanHomeOrder() {
-    return ['family','food','school','sentbuild','numbers','colors','fun','watch','hurtbody','hurt','houses','places','clock','calendar'];
+    return ['family','food','school','sentbuild','feelings','bathroom','fun','watch','morning','night','houses','places','hurtbody','hurt','calendar','choice'];
   }
   homeTiles() {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));
@@ -6714,6 +6724,9 @@ class Component extends DCLogic {
         };
         return {
           schoolTileBg: this.isEvanProfile() ? 'var(--card,#fff)' : '#000',
+          schoolColorsFace: this.isEvanProfile()
+            ? React.createElement('img', { src: this.iconUri('colors_tile'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
+            : face('tile_colors', '🎨'),
           schoolABCFace: face('school_abc', '🔤'),
           schoolNumbersFace: face('school_123', '🔢'),
           schoolCalcFace: face('school_calc', '🧮'),
@@ -6751,6 +6764,8 @@ class Component extends DCLogic {
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
       openCalc: () => this.setState({ screen: 'calc' }),
+      openColorsSchool: () => this.setState({ screen: 'colors', colorsFrom: 'school' }),
+      colorsBack: () => this.setState({ screen: s.colorsFrom === 'school' ? 'school' : 'board' }),
       calcBack: () => this.setState({ screen: 'school' }),
       // Words — core-word sentence builder. Tapping a word speaks it and adds
       // it to the strip; Say it speaks the whole sentence.
