@@ -5223,7 +5223,17 @@ class Component extends DCLogic {
     if (this.isTemplateMode() || !this.isEvanProfile()) return;
     if (this.deviceRole() !== 'evan' || this.state.note) return;
     let since = '';
-    try { since = localStorage.getItem('ezcomm.lastNote') || ''; } catch (e) {}
+    let primed = true;
+    try {
+      since = localStorage.getItem('ezcomm.lastNote') || '';
+      // A phone that has never seen a message — set up fresh, or storage
+      // cleared — has no marker, so the server hands back the whole history and
+      // every old recording plays as if it had just arrived. Catch up quietly
+      // first: walk the backlog storing ids without playing any of it, and only
+      // start playing once there is nothing left to catch up on. A phone that
+      // already has a marker is up to date and is left alone.
+      if (!since) primed = localStorage.getItem('ezcomm.notesPrimed') === '1';
+    } catch (e) {}
     try {
       const r = await fetch('/api/voice', {
         method: 'POST',
@@ -5231,8 +5241,12 @@ class Component extends DCLogic {
         body: JSON.stringify({ action: 'poll', password: this.data().password, since }),
       });
       const j = await r.json().catch(() => null);
-      if (!j || !j.ok || !j.note) return;
+      if (!j || !j.ok || !j.note) {
+        if (!primed) { try { localStorage.setItem('ezcomm.notesPrimed', '1'); } catch (e) {} }
+        return;
+      }
       try { localStorage.setItem('ezcomm.lastNote', j.note.id); } catch (e) {}
+      if (!primed) return;
       this.setState({ note: j.note, noteState: 'Playing…' });
       this.playNote();
     } catch (e) {}
