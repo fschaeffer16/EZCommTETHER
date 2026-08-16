@@ -20,11 +20,10 @@
     // Anyone who is not Evan gets the EZvoxa mark: the demo link, and every
     // phone somebody buys. Only his three phones carry profile 'evan', stamped
     // by the layout migration, so only they keep his icon and his app name.
-    var mine = false;
-    if (!/(^|[?&])template\b/.test(location.search)) {
-      var raw = localStorage.getItem('tether_settings_v1');
-      if (raw) { try { mine = JSON.parse(raw).profile === 'evan'; } catch (e) { mine = false; } }
-    }
+    // Our address is ours. The demo has its own address, its own storage and
+    // its own icon; nothing loaded from here should ever come up as the demo,
+    // including on a phone that has just been wiped.
+    var mine = !/(^|[?&])template\b/.test(location.search);
     if (mine) return;
     var m = document.querySelector('link[rel=manifest]');
     if (m) m.href = 'manifest-template.webmanifest';
@@ -5703,9 +5702,11 @@ class Component extends DCLogic {
   data() {
     if (this._data) return this._data;
     let d = this.loadData();
-    // A fresh install is a buyer's phone: no profile, and already at the
-    // current layout, so none of the migrations above should touch it.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: null, layoutRev: 14 };
+    // A fresh install on our address is one of our phones — a wiped phone, a
+    // new phone, a re-install. Only the demo address starts without a profile.
+    // What actually protects the SOS, the texting and the voice messages is the
+    // family password on the server, not which board the app decides to draw.
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 14 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
