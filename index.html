@@ -16,15 +16,24 @@
 // Adding the demo to a home screen must not install "Evan's Talker" with his
 // face as the icon. Swapped before the manifest is fetched.
 (function () {
+  // Whose copy is this? Asked once, here, before anything else runs, because
+  // both the icon and the storage key hang off the answer.
+  //
+  // Two ways to be somebody else's copy: the ?template link, or simply being
+  // served from a customer address. #171 established that our address is ours.
+  // This is the other half of that rule — their address is theirs. Without it a
+  // stranger who installs from ezvoxa.com comes up as Evan: his photograph, his
+  // family, his food, his mother one tap away. The address decides, always.
+  try {
+    var buyerHost = /(^|\.)(ezvoxa\.com|myezvoice\.com)$/.test(location.hostname || '');
+    var buyerLink = /(^|[?&])template\b/.test(location.search);
+    window.__EZ_BUYER = buyerHost || buyerLink;
+  } catch (e) { window.__EZ_BUYER = false; }
   try {
     // Anyone who is not Evan gets the EZvoxa mark: the demo link, and every
     // phone somebody buys. Only his three phones carry profile 'evan', stamped
     // by the layout migration, so only they keep his icon and his app name.
-    // Our address is ours. The demo has its own address, its own storage and
-    // its own icon; nothing loaded from here should ever come up as the demo,
-    // including on a phone that has just been wiped.
-    var mine = !/(^|[?&])template\b/.test(location.search);
-    if (mine) return;
+    if (!window.__EZ_BUYER) return;
     var m = document.querySelector('link[rel=manifest]');
     if (m) m.href = 'manifest-template.webmanifest';
     var t = document.querySelector('link[rel=apple-touch-icon]');
@@ -3467,6 +3476,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <button onClick="{{ changePassword }}" style="margin-top:12px;width:100%;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.98)">Change Password</button>
           </div>          </sc-if>
 
+          <!-- The one line to read back over email when something is wrong on a
+               phone we cannot hold. Deliberately quiet and last. -->
+          <div style="margin-top:28px;text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--sub,#8C857A);opacity:.75;">{{ buildLine }}</div>
+
 
 
         </div>
@@ -5524,14 +5537,17 @@ class Component extends DCLogic {
   done() { clearTimeout(this._t); this.setState({ screen: 'board' }); }
 
   // ── Settings / data layer ───────────────────────────────────────────────
-  // Open the app with ?template on the end and it becomes the app a buyer gets:
-  // its own storage, so it never touches this phone's real board; the starter
-  // profile, so it shows the neon set and neutral content; no voice-note
-  // polling, so a demo can't play back a message from his mother; and the
-  // emergency bar walks through but never transmits.
+  // The app a buyer gets — reached either with ?template on the end or from a
+  // customer address. It has its own storage, so it never touches this phone's
+  // real board; the starter profile, so it shows the neon set and neutral
+  // content; no voice-note polling, so it can't play back a message from his
+  // mother; and the emergency bar walks through but never transmits.
+  // Decided in the boot script at the top of the file, before the manifest is
+  // fetched, so the icon on the home screen and the board behind it can never
+  // disagree. A customer address counts exactly the same as the ?template link.
   isTemplateMode() {
     if (this._tmpl == null) {
-      try { this._tmpl = /(^|[?&])template\b/.test(window.location.search); } catch (e) { this._tmpl = false; }
+      try { this._tmpl = !!window.__EZ_BUYER; } catch (e) { this._tmpl = false; }
     }
     return this._tmpl;
   }
@@ -5698,6 +5714,23 @@ class Component extends DCLogic {
   // address bar so it isn't left sitting in history. Not a password — treat
   // the link as private.
   SETUP_KEY() { return 'schaeffer-family-8241'; }
+
+  // ── Which copy of the app is this phone running? ────────────────────────
+  //
+  // Two lanes now. Our three phones follow the fast lane and update the moment
+  // I merge; families who buy it follow the release lane, which only moves when
+  // a release is cut deliberately. Same code, two addresses, separate storage.
+  //
+  // Bump APP_BUILD when cutting a release — it is the only way to answer "did
+  // that phone actually pick up the fix?" without guessing, and the only thing
+  // to ask a customer for over email.
+  APP_BUILD() { return '2026.08.17'; }
+  buildLine() {
+    let host = '';
+    try { host = location.hostname || ''; } catch (e) {}
+    const lane = /(^|\.)(ezvoxa\.com|myezvoice\.com)$/.test(host) ? 'Release' : 'Family';
+    return lane + ' \u00b7 build ' + this.APP_BUILD() + (host ? ' \u00b7 ' + host : '');
+  }
   applySetupLink(d) {
     if (this._setupDone) return false;
     this._setupDone = true;
@@ -7111,6 +7144,7 @@ class Component extends DCLogic {
       quickScrolls: true,
       quickGrid: false,
       isSettings: s.screen === 'settings',
+      buildLine: this.buildLine(),
       // Only offered on a phone that isn't already one of ours.
       showFamilySetup: !this.isEvanProfile() && !this.isTemplateMode(),
       familyKeyErr: !!s.familyKeyErr,
