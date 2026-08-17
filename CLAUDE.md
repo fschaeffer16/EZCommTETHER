@@ -29,6 +29,10 @@ program for low-income/disability families.
 
 ## Deploys
 
+- **Two lanes — see `RELEASE.md`.** `main` is the family lane and reaches our three phones
+  within minutes. `release` is the customer lane at `app.ezvoxa.com` and only moves when a
+  release is cut deliberately, fast-forward only, so paying families can never run code our
+  own phones haven't already been running. Merging to `main` does **not** reach a customer.
 - **Vercel deploys `main`.** Merging to `main` puts code on **all three phones** — Evan's,
   Frank's, and Raniyah's — within minutes. All three are production; there is no "staging" phone.
 - **Ship to `main` by default.** Frank's standing instruction: anything I build for him should
