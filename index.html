@@ -6043,10 +6043,16 @@ class Component extends DCLogic {
   quickNeeds() {
     if (!this.isEvanProfile()) return this.starterQuick();
     return [
-      // Six words, in the order he reaches for them. The labels are short so
-      // the strip stays readable; the spoken words are the long ones, because
-      // a two-letter word is gone before the speech engine finishes starting
+      // In the order he reaches for them. The labels are short so the strip
+      // stays readable; the spoken words are the long ones, because a
+      // two-letter word is gone before the speech engine finishes starting
       // and comes out clipped.
+      //
+      // Good morning leads, because it is the first thing he says all day and
+      // the strip starts scrolled to the left. Same sun and same wording as
+      // the Morning board and the family greetings, so it is one phrase to
+      // him wherever he finds it.
+      { label: 'Good morning', emoji: '☀️', color: '#FB923C', say: 'Good morning!' },
       { label: 'Hi', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
       { label: 'Bye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
       { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
