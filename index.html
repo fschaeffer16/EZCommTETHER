@@ -4978,8 +4978,14 @@ class Component extends DCLogic {
       // `cat` puts each person under one of the four School categories. Without
       // it the School people board has no way in — which is how it shipped, and
       // why nobody could ever open this list.
-      { id: 'teacher', name: 'Teacher', cat: 'teachers', ring: '#E23B2E', tint: '#FBD9D5' },
-      { id: 'teacher2', name: 'Other Teacher', cat: 'teachers', ring: '#F59E0B', tint: '#FCEBCB' },
+      // Four empty seats, not two named ones. "Name Here" reads as a form to
+      // fill in; "Teacher" reads as a person who is already there, and nobody
+      // ever edited it. A fresh phone and the rev 16 migration have to agree,
+      // or a wiped phone comes back looking different from the one beside it.
+      { id: 'teacher_1', name: 'Name Here', cat: 'teachers', ring: '#E23B2E', tint: '#FBD9D5' },
+      { id: 'teacher_2', name: 'Name Here', cat: 'teachers', ring: '#F59E0B', tint: '#FCEBCB' },
+      { id: 'teacher_3', name: 'Name Here', cat: 'teachers', ring: '#3B82F6', tint: '#DDE7FF' },
+      { id: 'teacher_4', name: 'Name Here', cat: 'teachers', ring: '#A855F7', tint: '#E6DEFB' },
       { id: 'office', name: 'Front Office', cat: 'office', ring: '#1F9E6E', tint: '#D8F0E5' },
       { id: 'nurse', name: 'Nurse', cat: 'office', ring: '#14B8A6', tint: '#D2F1ED' },
       { id: 'aide', name: 'My Aide', cat: 'aides', ring: '#3B82F6', tint: '#DDE7FF' },
@@ -5015,6 +5021,16 @@ class Component extends DCLogic {
       { glyph: '🔁', icon: 'ph_sayagain', txt: 'Can you say that again?', say: 'Can you say that again?', color: '#F59E0B' },
       { glyph: '🚻', icon: 'ph_bathroom', txt: 'Can I go to the bathroom?', say: 'Can I go to the bathroom?', color: '#14B8A6' },
       { glyph: '🙏', icon: 'ph_thankyou', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
+      // Everything below used to live in teacherPhrases(), which was what the
+      // Teachers tile opened before it opened the people board. There is no
+      // artwork for these five yet, so they carry a glyph — but losing them
+      // would have been a quiet regression on Evan's board, and he has had
+      // them all year.
+      { glyph: '⏳', txt: 'I need more time.', say: 'I need more time.', color: '#F97316' },
+      { glyph: '📝', txt: 'What is the homework?', say: 'What is the homework?', color: '#8B5CF6' },
+      { glyph: '✏️', txt: 'Can I borrow a pencil?', say: 'Can I borrow a pencil?', color: '#0EA5E9' },
+      { glyph: '🖊️', txt: 'Can I borrow a pen?', say: 'Can I borrow a pen?', color: '#1F9E6E' },
+      { glyph: '🖍️', txt: 'Can I borrow a marker?', say: 'Can I borrow a marker?', color: '#EC4899' },
       NURSE,
     ];
     if (kind === 'friends') return [
@@ -5567,7 +5583,9 @@ class Component extends DCLogic {
   // The family reorder below is idempotent, so re-running it on a later rev is safe.
   applyLayoutRev(d) {
     const rev = d.layoutRev || 0;
-    if (rev >= 15) return false;
+    // Raise this with every new step below, or the step never runs on the very
+    // phones it was written for — they are all sitting on the previous rev.
+    if (rev >= 16) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5655,6 +5673,33 @@ class Component extends DCLogic {
       }
     }
 
+    // Rev 16: Teachers now opens the people board, so somebody has to be
+    // standing there or it opens onto an empty screen. Four seats, named
+    // "Name Here", so it reads as a form to fill in rather than a mistake.
+    //
+    // Only ever adds. A teacher with a photograph, a number, or a name that
+    // was actually typed is left exactly where they are — this tops the row
+    // up to four and clears out the generic leftovers nobody filled in.
+    if (rev < 16 && d.profile === 'evan') {
+      if (!Array.isArray(d.school)) d.school = this.baseSchool();
+      // The rev 7 pass that gave everybody a category deliberately skipped
+      // Evan, so his people can still be sitting here without one — and
+      // anyone without a category shows up under Teachers.
+      const CAT = { teacher: 'teachers', teacher2: 'teachers', classmate: 'teachers',
+        office: 'office', nurse: 'office', aide: 'aides', aide2: 'bus', speech: 'speech', ot: 'speech' };
+      d.school.forEach((x) => { if (x && !x.cat) x.cat = CAT[x.id] || 'teachers'; });
+      const GENERIC = ['teacher', 'other teacher', 'classmate', 'name here', 'my teacher', ''];
+      const real = (x) => !!(x.photo || x.photoAsset || x.phone
+        || GENERIC.indexOf(String(x.name || '').trim().toLowerCase()) < 0);
+      const kept = d.school.filter((x) => x && x.cat === 'teachers' && real(x)).length;
+      d.school = d.school.filter((x) => x && (x.cat !== 'teachers' || real(x)));
+      const RING = ['#E23B2E', '#F59E0B', '#3B82F6', '#A855F7'];
+      const TINT = ['#FBD9D5', '#FCEBCB', '#DDE7FF', '#E6DEFB'];
+      for (let i = kept; i < 4; i++) {
+        d.school.push({ id: 'teacher_' + (i + 1), name: 'Name Here', cat: 'teachers', ring: RING[i % 4], tint: TINT[i % 4] });
+      }
+    }
+
     // Rev 10: Talk left the home screen.
     if (d.profile === 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
       const t = d.homeOrder.indexOf('talk');
@@ -5703,7 +5748,7 @@ class Component extends DCLogic {
       d.homeOrder = want.concat(rest);
     }
 
-    d.layoutRev = 15;
+    d.layoutRev = 16;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -5757,7 +5802,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 15 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 16 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6790,7 +6835,12 @@ class Component extends DCLogic {
       // Speech/OT took the empty slot. The colours are the cue for a child who
       // can't read the words, so they are fixed per category and never shuffle.
       schoolCats: (this.isEvanProfile() ? [
-        { label: 'Teachers', glyph: '👩‍🏫', color: '#0EA5E9', open: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()) },
+        // Teachers opened a list of phrases, which meant Evan's board had
+        // nowhere to put an actual teacher — no faces, no Edit, no way in.
+        // It opens the people board now, the same one Family uses: tap a
+        // face to get that teacher's phrases, tap Edit to give them a name
+        // and a photograph.
+        { label: 'Teachers', glyph: '👩‍🏫', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
         { label: 'Support Staff', glyph: '🧑‍🔧', color: '#0EA5E9', open: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()) },
         { label: 'Front Office', glyph: '🗄️', color: '#0EA5E9', open: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()) },
         { label: 'Friends', glyph: '👫', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
