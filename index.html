@@ -6661,6 +6661,11 @@ class Component extends DCLogic {
         { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
       ]},
       { label: 'Verbs', color: '#1F9E6E', words: [
+        // The "to be" verbs lead — they are the backbone of a sentence and of
+        // both a simile ("the moon IS like a balloon") and a metaphor ("the
+        // moon IS a balloon"). "is" was missing entirely; "am" also lives in
+        // Starters as "I am".
+        { t: 'is', e: '🟰' }, { t: 'am', e: '🙋' }, { t: 'are', e: '👥' }, { t: 'was', e: '⏪' },
         { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
         { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
         { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
@@ -6671,6 +6676,11 @@ class Component extends DCLogic {
         { t: 'happy', e: '😊' }, { t: 'sad', e: '😢' }, { t: 'funny', e: '😂' }, { t: 'cool', e: '😎' },
         { t: 'hot', e: '🥵' }, { t: 'cold', e: '🥶' }, { t: 'hard', e: '🧱' }, { t: 'easy', e: '🍰' },
         { t: 'tired', e: '😴' }, { t: 'hungry', e: '🤤' }, { t: 'done', e: '🏁' },
+      ]},
+      { label: 'Articles', color: '#64748B', words: [
+        // The little words that introduce a noun. "a" is what makes a metaphor
+        // a metaphor — "the moon is A balloon" — so it sits right before Nouns.
+        { t: 'a', e: '🔹' }, { t: 'an', e: '🔸' }, { t: 'the', e: '⭐' },
       ]},
       { label: 'Nouns', color: '#F97316', words: [
         // The five Frank asked for, first, then the school and around-town set.
@@ -6689,8 +6699,10 @@ class Component extends DCLogic {
         { t: 'up', e: '⬆️' }, { t: 'down', e: '⬇️' }, { t: 'out', e: '📤' }, { t: 'at', e: '📌' },
       ]},
       { label: 'Little words', color: '#E23B2E', words: [
-        { t: 'and', e: '🔗' }, { t: 'but', e: '↔️' }, { t: 'or', e: '🔀' }, { t: 'not', e: '🚫' },
-        { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
+        // "as" is the other half of a simile — "as big as a house". It rides
+        // here with the connectors.
+        { t: 'as', e: '⚖️' }, { t: 'and', e: '🔗' }, { t: 'but', e: '↔️' }, { t: 'or', e: '🔀' },
+        { t: 'not', e: '🚫' }, { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
       ]},
       { label: 'Question words', color: '#7A5CFF', words: [
         { t: 'what', e: '❓' }, { t: 'where', e: '🧭' }, { t: 'when', e: '⏰' },
