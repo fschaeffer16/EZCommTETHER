@@ -5943,7 +5943,22 @@ class Component extends DCLogic {
     ];
   }
   // ── ABC spelling board ──────────────────────────────────────────────────
-  spellAdd(ch) { this.setState({ spellText: (this.state.spellText || '') + ch }); this.speak(ch); }
+  // Evan is in high school. Tapping A says the letter's NAME — "ay" — not the
+  // phonic sound a kindergarten board makes. A bare letter sent to the voice
+  // (ElevenLabs or the phone's own) comes out however the engine guesses, so
+  // we hand it the spelled-out name and leave nothing to chance. The letter
+  // itself is still what lands in the box; only the spoken feedback changes.
+  LETTER_NAMES() {
+    return { A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'eff', G: 'gee',
+      H: 'aitch', I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en',
+      O: 'oh', P: 'pee', Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you',
+      V: 'vee', W: 'double-u', X: 'ex', Y: 'why', Z: 'zee' };
+  }
+  spellAdd(ch) {
+    this.setState({ spellText: (this.state.spellText || '') + ch });
+    const name = this.LETTER_NAMES()[String(ch).toUpperCase()];
+    this.speak(name || ch);
+  }
   spellSpace() { this.setState({ spellText: (this.state.spellText || '') + ' ' }); }
   spellBack() { const t = this.state.spellText || ''; this.setState({ spellText: t.slice(0, -1) }); }
   spellClear() { this.setState({ spellText: '' }); }
