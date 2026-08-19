@@ -6629,10 +6629,12 @@ class Component extends DCLogic {
   sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
   // Core-word board for building sentences, colored with the Modified
-  // Fitzgerald key used across AAC (pronouns yellow, verbs green, describers
-  // blue, questions purple, negation red, social pink, nouns orange). Core
-  // words carry ~80% of everyday speech; the school/social nouns are Evan's
-  // fringe set for class and friends.
+  // Fitzgerald key used across AAC: pronouns yellow, verbs green, nouns orange,
+  // describers blue, questions purple, negation red, social/starters pink and
+  // teal. The grammar labels are the ones Evan's teachers use — Pronouns,
+  // Verbs, Nouns — and those three sit together in sentence order so building
+  // subject-verb-object reads left to right. Core words carry ~80% of everyday
+  // speech; the nouns are his school and around-town set.
   coreWords() {
     return [
       // Whole thoughts in one tap — the conversation phrases that used to live on
@@ -6653,19 +6655,37 @@ class Component extends DCLogic {
         { t: 'I found it', e: '🙌', say: 'I found it.' },
         { t: 'bye', e: '✌️', say: 'Bye!' },
       ]},
+      // Sentence starters — the beginning of most of what a teenager says.
+      // Two across so "I don't want" stays on one line. Tap a starter, then a
+      // noun, and the sentence is built in two taps: "I want" + "TV".
+      { label: 'Starters', color: '#0D9488', cols: 2, words: [
+        { t: 'I want', e: '🤲' }, { t: 'I need', e: '❗' }, { t: 'I am', e: '🙋' },
+        { t: 'I feel', e: '💗' }, { t: 'I like', e: '👍' }, { t: 'I have', e: '✊' },
+        { t: 'I see', e: '👀' }, { t: "I don't want", e: '🙅' },
+      ]},
       { label: 'Social', color: '#DB2777', words: [
         { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
         { t: 'please', e: '🙏' }, { t: 'thank you', e: '😊' }, { t: 'sorry', e: '😔' }, { t: "what's up", e: '🤙' },
       ]},
-      { label: 'People', color: '#EAB308', words: [
-        { t: 'I', e: '🙋' }, { t: 'you', e: '👉' }, { t: 'we', e: '👥' },
-        { t: 'my', e: '💙' }, { t: 'it', e: '🔷' }, { t: 'that', e: '👆' },
+      // Pronouns / Verbs / Nouns sit next to each other, in sentence order, so
+      // building subject-verb-object is a left-to-right walk down the board.
+      { label: 'Pronouns', color: '#EAB308', words: [
+        { t: 'I', e: '🙋' }, { t: 'me', e: '🙋‍♂️' }, { t: 'you', e: '👉' }, { t: 'he', e: '👦' },
+        { t: 'she', e: '👧' }, { t: 'we', e: '👥' }, { t: 'they', e: '👬' }, { t: 'it', e: '🔷' },
+        { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
       ]},
-      { label: 'Actions', color: '#1F9E6E', words: [
+      { label: 'Verbs', color: '#1F9E6E', words: [
         { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
         { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
         { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
         { t: 'eat', e: '🍕' }, { t: 'stop', e: '✋' }, { t: 'think', e: '💭' }, { t: 'feel', e: '💗' },
+      ]},
+      { label: 'Nouns', color: '#F97316', words: [
+        // The five Frank asked for, first, then the school and around-town set.
+        { t: 'beach', e: '🏖️' }, { t: 'school', e: '🏫' }, { t: 'home', e: '🏠' }, { t: 'TV', e: '📺' }, { t: 'work', e: '💼' },
+        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
+        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
+        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
       ]},
       { label: 'Describe', color: '#2F6BFF', words: [
         { t: 'good', e: '😄' }, { t: 'bad', e: '😖' }, { t: 'more', e: '➕' }, { t: 'done', e: '🏁' },
@@ -6679,11 +6699,6 @@ class Component extends DCLogic {
       { label: 'Little words', color: '#E23B2E', words: [
         { t: 'not', e: '🚫' }, { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
         { t: 'to', e: '➡️' }, { t: 'with', e: '👫' }, { t: 'and', e: '🔗' },
-      ]},
-      { label: 'School & friends', color: '#F97316', words: [
-        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🏫' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
-        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
-        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'home', e: '🏠' }, { t: 'bathroom', e: '🚻' },
       ]},
       { label: 'When', color: '#A16207', words: [
         { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
