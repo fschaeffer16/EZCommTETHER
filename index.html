@@ -6628,17 +6628,79 @@ class Component extends DCLogic {
   isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
   sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
-  // Core-word board for building sentences, colored with the Modified
-  // Fitzgerald key used across AAC: pronouns yellow, verbs green, nouns orange,
-  // describers blue, questions purple, negation red, social/starters pink and
-  // teal. The grammar labels are the ones Evan's teachers use — Pronouns,
-  // Verbs, Nouns — and those three sit together in sentence order so building
-  // subject-verb-object reads left to right. Core words carry ~80% of everyday
-  // speech; the nouns are his school and around-town set.
+  // Core-word board for building sentences. Organised by part of speech —
+  // the whole premise of an AAC board — with the Modified Fitzgerald colour
+  // key AAC has used for decades: pronouns yellow, verbs green, adjectives
+  // blue, nouns orange, adverbs brown, prepositions cyan, question words
+  // purple, negation/connectors red, social pink, starters teal. Each part of
+  // speech keeps its colour and its place so the reach becomes muscle memory,
+  // and the groups run in sentence order so building a sentence walks down the
+  // board. Core words carry ~80% of everyday speech; the nouns are Evan's
+  // school and around-town set.
   coreWords() {
     return [
-      // Whole thoughts in one tap — the conversation phrases that used to live on
-      // the Chat tile. Two across so the full sentence stays readable.
+      // The board's backbone is the parts of speech, each its own group in its
+      // own fixed colour — the Modified Fitzgerald key AAC has used for decades.
+      // The point is consistency: a word's colour and place stay put, so the
+      // reach for it becomes muscle memory. The groups run in sentence order —
+      // Pronoun, Verb, Adjective, Noun — so building a sentence is a walk down
+      // the board. Starters lead (the launchpad for most of what a teen says);
+      // Social and Quick phrases trail as ready-made extras.
+
+      // Sentence starters — pronoun + verb, the beginning of most sentences.
+      // Two across so "I don't want" stays on one line. Tap a starter, then a
+      // noun, and the sentence is built in two taps: "I want" + "TV".
+      { label: 'Starters', color: '#0D9488', cols: 2, words: [
+        { t: 'I want', e: '🤲' }, { t: 'I need', e: '❗' }, { t: 'I am', e: '🙋' },
+        { t: 'I feel', e: '💗' }, { t: 'I like', e: '👍' }, { t: 'I have', e: '✊' },
+        { t: 'I see', e: '👀' }, { t: "I don't want", e: '🙅' },
+      ]},
+      { label: 'Pronouns', color: '#EAB308', words: [
+        { t: 'I', e: '🙋' }, { t: 'me', e: '🙋‍♂️' }, { t: 'you', e: '👉' }, { t: 'he', e: '👦' },
+        { t: 'she', e: '👧' }, { t: 'we', e: '👥' }, { t: 'they', e: '👬' }, { t: 'it', e: '🔷' },
+        { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
+      ]},
+      { label: 'Verbs', color: '#1F9E6E', words: [
+        { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
+        { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
+        { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
+        { t: 'eat', e: '🍕' }, { t: 'stop', e: '✋' }, { t: 'think', e: '💭' }, { t: 'feel', e: '💗' },
+      ]},
+      { label: 'Adjectives', color: '#2F6BFF', words: [
+        { t: 'good', e: '😄' }, { t: 'bad', e: '😖' }, { t: 'big', e: '🐘' }, { t: 'little', e: '🐭' },
+        { t: 'happy', e: '😊' }, { t: 'sad', e: '😢' }, { t: 'funny', e: '😂' }, { t: 'cool', e: '😎' },
+        { t: 'hot', e: '🥵' }, { t: 'cold', e: '🥶' }, { t: 'hard', e: '🧱' }, { t: 'easy', e: '🍰' },
+        { t: 'tired', e: '😴' }, { t: 'hungry', e: '🤤' }, { t: 'done', e: '🏁' },
+      ]},
+      { label: 'Nouns', color: '#F97316', words: [
+        // The five Frank asked for, first, then the school and around-town set.
+        { t: 'beach', e: '🏖️' }, { t: 'school', e: '🏫' }, { t: 'home', e: '🏠' }, { t: 'TV', e: '📺' }, { t: 'work', e: '💼' },
+        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
+        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
+        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
+      ]},
+      { label: 'Adverbs', color: '#A16207', words: [
+        { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
+        { t: 'here', e: '📍' }, { t: 'there', e: '🫵' }, { t: 'again', e: '🔁' }, { t: 'more', e: '➕' },
+        { t: 'fast', e: '💨' }, { t: 'slow', e: '🐢' },
+      ]},
+      { label: 'Prepositions', color: '#0891B2', words: [
+        { t: 'to', e: '➡️' }, { t: 'with', e: '👫' }, { t: 'in', e: '📥' }, { t: 'on', e: '🔛' },
+        { t: 'up', e: '⬆️' }, { t: 'down', e: '⬇️' }, { t: 'out', e: '📤' }, { t: 'at', e: '📌' },
+      ]},
+      { label: 'Little words', color: '#E23B2E', words: [
+        { t: 'and', e: '🔗' }, { t: 'but', e: '↔️' }, { t: 'or', e: '🔀' }, { t: 'not', e: '🚫' },
+        { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
+      ]},
+      { label: 'Question words', color: '#7A5CFF', words: [
+        { t: 'what', e: '❓' }, { t: 'where', e: '🧭' }, { t: 'when', e: '⏰' },
+        { t: 'who', e: '👤' }, { t: 'why', e: '🤔' }, { t: 'how', e: '🤷' },
+      ]},
+      // Ready-made language, below the grammar spine.
+      { label: 'Social', color: '#DB2777', words: [
+        { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
+        { t: 'please', e: '🙏' }, { t: 'thank you', e: '😊' }, { t: 'sorry', e: '😔' }, { t: "what's up", e: '🤙' },
+      ]},
       { label: 'Quick phrases', color: '#DB2777', cols: 2, words: [
         { t: "that's cool", e: '😎', say: "That's cool." },
         { t: 'I like that', e: '👍', say: 'I like that.' },
@@ -6654,54 +6716,6 @@ class Component extends DCLogic {
         { t: "that's funny", e: '😂', say: "That's funny." },
         { t: 'I found it', e: '🙌', say: 'I found it.' },
         { t: 'bye', e: '✌️', say: 'Bye!' },
-      ]},
-      // Sentence starters — the beginning of most of what a teenager says.
-      // Two across so "I don't want" stays on one line. Tap a starter, then a
-      // noun, and the sentence is built in two taps: "I want" + "TV".
-      { label: 'Starters', color: '#0D9488', cols: 2, words: [
-        { t: 'I want', e: '🤲' }, { t: 'I need', e: '❗' }, { t: 'I am', e: '🙋' },
-        { t: 'I feel', e: '💗' }, { t: 'I like', e: '👍' }, { t: 'I have', e: '✊' },
-        { t: 'I see', e: '👀' }, { t: "I don't want", e: '🙅' },
-      ]},
-      { label: 'Social', color: '#DB2777', words: [
-        { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
-        { t: 'please', e: '🙏' }, { t: 'thank you', e: '😊' }, { t: 'sorry', e: '😔' }, { t: "what's up", e: '🤙' },
-      ]},
-      // Pronouns / Verbs / Nouns sit next to each other, in sentence order, so
-      // building subject-verb-object is a left-to-right walk down the board.
-      { label: 'Pronouns', color: '#EAB308', words: [
-        { t: 'I', e: '🙋' }, { t: 'me', e: '🙋‍♂️' }, { t: 'you', e: '👉' }, { t: 'he', e: '👦' },
-        { t: 'she', e: '👧' }, { t: 'we', e: '👥' }, { t: 'they', e: '👬' }, { t: 'it', e: '🔷' },
-        { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
-      ]},
-      { label: 'Verbs', color: '#1F9E6E', words: [
-        { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
-        { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
-        { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
-        { t: 'eat', e: '🍕' }, { t: 'stop', e: '✋' }, { t: 'think', e: '💭' }, { t: 'feel', e: '💗' },
-      ]},
-      { label: 'Nouns', color: '#F97316', words: [
-        // The five Frank asked for, first, then the school and around-town set.
-        { t: 'beach', e: '🏖️' }, { t: 'school', e: '🏫' }, { t: 'home', e: '🏠' }, { t: 'TV', e: '📺' }, { t: 'work', e: '💼' },
-        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
-        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
-        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
-      ]},
-      { label: 'Describe', color: '#2F6BFF', words: [
-        { t: 'good', e: '😄' }, { t: 'bad', e: '😖' }, { t: 'more', e: '➕' }, { t: 'done', e: '🏁' },
-        { t: 'funny', e: '😂' }, { t: 'cool', e: '😎' }, { t: 'big', e: '🐘' }, { t: 'little', e: '🐭' },
-        { t: 'hard', e: '🧱' }, { t: 'easy', e: '🍰' }, { t: 'tired', e: '😴' }, { t: 'hungry', e: '🤤' },
-      ]},
-      { label: 'Questions', color: '#7A5CFF', words: [
-        { t: 'what', e: '❓' }, { t: 'where', e: '📍' }, { t: 'when', e: '⏰' },
-        { t: 'who', e: '👤' }, { t: 'why', e: '🤔' }, { t: 'how', e: '🤷' },
-      ]},
-      { label: 'Little words', color: '#E23B2E', words: [
-        { t: 'not', e: '🚫' }, { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
-        { t: 'to', e: '➡️' }, { t: 'with', e: '👫' }, { t: 'and', e: '🔗' },
-      ]},
-      { label: 'When', color: '#A16207', words: [
-        { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
       ]},
     ];
   }
