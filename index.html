@@ -3906,8 +3906,23 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div onClick="{{ wordBack }}" style="flex:none;width:52px;{{ backCss }}border-radius:14px;padding:13px 0;text-align:center;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">⌫</div>
             <div onClick="{{ wordClear }}" style="flex:none;width:62px;{{ clearCss }}border-radius:14px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">Clear</div>
           </div>
+          <!-- Word finder: type any word, tap it, it's added and spoken — so
+               nobody is ever hunting for a word that isn't on a board. -->
+          <div style="position:relative;margin:0 0 4px;">
+            <input id="wordfind" defaultValue="" onInput="{{ onWordSearch }}" placeholder="🔍 Find any word…" autocomplete="off" autocapitalize="none" style="box-sizing:border-box;width:100%;padding:12px 42px 12px 14px;border:2px solid var(--slot,#E6E1D8);border-radius:14px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            <sc-if value="{{ wordSearchActive }}" hint-placeholder-val="{{ false }}"><div onClick="{{ clearWordSearch }}" style="position:absolute;right:7px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--slot,#F0EDE7);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--sub,#8C857A);cursor:pointer;">✕</div></sc-if>
+          </div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:2px 14px 24px;">
+          <sc-if value="{{ wordSearchActive }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#0EA5E9;margin:12px 2px 7px;">Tap to add</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;">
+              <sc-for list="{{ wordSearchResults }}" as="w" hint-placeholder-count="0">
+                <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ w.color }};border-radius:12px;padding:9px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;" style-active="transform:scale(.93)"><span style="line-height:1;font-size:21px;">{{ w.e }}</span><span style="font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;font-size:13px;">{{ w.t }}</span></div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ wordSearchIdle }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ wordGroups }}" as="g" hint-placeholder-count="0">
             <div style="font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ g.color }};margin:12px 2px 7px;">{{ g.label }}</div>
             <div style="display:grid;grid-template-columns:repeat({{ g.cols }},1fr);gap:7px;">
@@ -3916,6 +3931,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </sc-for>
             </div>
           </sc-for>
+          </sc-if>
         </div>
       </div>
     </sc-if>
@@ -6648,6 +6664,87 @@ class Component extends DCLogic {
   // and the groups run in sentence order so building a sentence walks down the
   // board. Core words carry ~80% of everyday speech; the nouns are Evan's
   // school and around-town set.
+
+  // ── Word finder ──────────────────────────────────────────────────────────
+  // Type any word and it can be added to the sentence — so nobody is ever
+  // hunting for a word that isn't on a board. Results come from the board
+  // itself first (with its colour and picture), then a bank of common words,
+  // and finally an "add exactly what you typed" fallback so the answer is never
+  // "not found". Tapping a result speaks it and drops it into the strip.
+  //
+  // A broad, plain list of everyday words a kid or teen reaches for that the
+  // core board doesn't already carry — mostly nouns, since those are the ones
+  // you run out of. No emoji: search results for these show a neutral glyph.
+  extraWords() {
+    return ('dog cat bird fish horse cow pig duck chicken lion tiger bear elephant '
+      + 'monkey rabbit frog snake spider bug ant bee shark whale dolphin turtle mouse '
+      + 'moon sun star sky cloud rain snow wind storm tree flower grass water fire rock '
+      + 'mountain river lake ocean beach sand leaf world earth '
+      + 'park store shop mall library church hospital doctor dentist gym pool zoo park '
+      + 'movies restaurant airport city town road street farm garden playground '
+      + 'apple banana orange grapes strawberry candy chocolate cookie cake donut '
+      + 'ice cream milk juice soda water cereal bread cheese egg rice pasta soup salad '
+      + 'sandwich taco hotdog popcorn chips pretzel yogurt '
+      + 'mom dad brother sister baby grandma grandpa aunt uncle cousin family boy girl '
+      + 'man woman people kid teacher nurse driver '
+      + 'head hair face eye ear nose mouth teeth tongue neck arm hand finger leg foot '
+      + 'knee tummy belly back chest heart '
+      + 'house room bed door window wall floor table chair couch kitchen bedroom '
+      + 'phone tablet computer light lamp toy ball game blocks puzzle car truck train '
+      + 'plane boat bike scooter clothes shirt pants shoes socks hat coat jacket '
+      + 'pencil pen paper crayon marker desk backpack folder ruler scissors glue '
+      + 'recess art music math reading science library gym lunch '
+      + 'happy sad mad angry scared afraid excited bored nervous calm proud silly '
+      + 'shy sleepy grumpy sick hurt love hate '
+      + 'run walk jump hop sit stand sleep wake look watch listen hear talk say sing '
+      + 'dance draw paint color read write count open close push pull throw catch kick '
+      + 'ride drive fly swim cook clean wash brush buy pay give take bring find lose '
+      + 'win wait start finish put hold drop turn move fix build break cut wear ask tell '
+      + 'small large tall long short wide narrow fast slow loud quiet clean dirty new old '
+      + 'wet dry soft rough smooth sharp heavy light warm cool nice mean pretty ugly '
+      + 'scary bright dark right wrong same different empty full high low first last '
+      + 'red orange yellow green blue purple pink brown black white gray gold '
+      + 'one two three four five six seven eight nine ten hundred '
+      + 'today tomorrow yesterday morning afternoon evening night week weekend '
+      + 'always never sometimes soon almost really very just too also').split(/\s+/);
+  }
+
+  wordFinderResults() {
+    const q = (this.state.wordSearch || '').trim().toLowerCase();
+    if (!q) return [];
+    const seen = {};
+    const board = [];
+    this.coreWords().forEach((g) => g.words.forEach((w) => {
+      const key = String(w.t).toLowerCase();
+      if (key.indexOf(q) >= 0 && !seen[key]) { seen[key] = 1; board.push({ t: w.t, e: w.e, say: w.say || w.t, color: g.color }); }
+    }));
+    const extra = [];
+    this.extraWords().forEach((t) => {
+      const key = String(t).toLowerCase();
+      if (key.indexOf(q) >= 0 && !seen[key]) { seen[key] = 1; extra.push({ t, e: '🔤', say: t, color: '#94A3B8' }); }
+    });
+    // Words that start with what was typed come first — a search for "ca" shows
+    // "cat" and "can" before "because".
+    const rank = (a, b) => (a.t.toLowerCase().indexOf(q) === 0 ? 0 : 1) - (b.t.toLowerCase().indexOf(q) === 0 ? 0 : 1);
+    board.sort(rank); extra.sort(rank);
+    const out = board.concat(extra).slice(0, 30);
+    // The promise: never "not found". Whatever was typed can always be added
+    // and spoken, even if it is on no list at all.
+    if (!seen[q]) {
+      const typed = (this.state.wordSearch || '').trim();
+      out.unshift({ t: typed, e: '➕', say: typed, color: '#1F9E6E', addRaw: true });
+    }
+    return out;
+  }
+
+  addFoundWord(w) {
+    const say = w.say || w.t;
+    this.speak(say);
+    const el = document.getElementById('wordfind');
+    if (el) el.value = '';
+    this.setState({ wordSent: [...(this.state.wordSent || []), say], wordSearch: '' });
+  }
+
   coreWords() {
     return [
       // The board's backbone is the parts of speech, each its own group in its
@@ -6943,6 +7040,17 @@ class Component extends DCLogic {
       wordSay: () => { const t = (this.state.wordSent || []).join(' '); if (t) this.speak(t); },
       wordBack: () => this.setState({ wordSent: (this.state.wordSent || []).slice(0, -1) }),
       wordClear: () => this.setState({ wordSent: [] }),
+      // Word finder. The input is uncontrolled (defaultValue) so re-rendering the
+      // results below it never steals focus mid-type; state drives only the
+      // results. Clearing resets the DOM value directly.
+      onWordSearch: (e) => this.setState({ wordSearch: e.target.value }),
+      clearWordSearch: () => { const el = document.getElementById('wordfind'); if (el) el.value = ''; this.setState({ wordSearch: '' }); },
+      wordSearchActive: !!(s.wordSearch || '').trim(),
+      wordSearchIdle: !(s.wordSearch || '').trim(),
+      wordSearchResults: this.wordFinderResults().map((w) => ({
+        t: w.t, e: w.e, color: w.color,
+        onTap: () => this.addFoundWord(w),
+      })),
       // A tile normally speaks and appends its own label. Whole-phrase tiles
       // carry a short label plus the full sentence in `say`, so the button stays
       // readable while Evan gets the complete thought.
