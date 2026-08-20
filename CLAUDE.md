@@ -53,6 +53,12 @@ program for low-income/disability families.
 
 - `index.html` — the whole app: a `class Component extends DCLogic` inside a moustache-style
   template (`{{ }}`, `<sc-if>`, `<sc-for>`). Large file; edit surgically, don't rewrite.
+- **`demo.html` is generated from `index.html` — never hand-edit it.** It's a byte-for-byte
+  copy with four `<head>` tags swapped to EZvoxa and `__EZ_FORCE_TEMPLATE` set, because iOS
+  "Add to Home Screen" reads the icon and app name from the *static* head, ignoring the JS
+  swap — so the demo needs its own file or it saves as Evan's app. **After any change to
+  `index.html`, run `node make-demo.js`** or the demo drifts. The demo link is
+  `…/demo.html` (the old `?template` link now redirects there).
 - `tether-icons.js` / `tether-photos.js` — `window.TETHER_ICONS` / `window.TETHER_PHOTOS`
   data-URI maps, loaded via `<script src>`. `iconUri(key)` resolves against these.
 - `api/sos.js` — emergency: Twilio SMS + SendGrid email + live location.

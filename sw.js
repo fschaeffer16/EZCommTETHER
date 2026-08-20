@@ -39,7 +39,9 @@ async function trimVoiceCache(cache) {
 const CORE = [
   './',
   'index.html',
+  'demo.html',
   'manifest.webmanifest',
+  'manifest-template.webmanifest',
   'icon180.png',
   'icon192.png',
   'icon512.png',

@@ -2,7 +2,7 @@
   "name": "EZvoxa",
   "short_name": "EZvoxa",
   "description": "A talker for someone who cannot speak.",
-  "start_url": "./?template",
+  "start_url": "./demo.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
