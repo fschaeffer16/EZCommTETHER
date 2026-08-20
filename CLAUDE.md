@@ -53,12 +53,18 @@ program for low-income/disability families.
 
 - `index.html` — the whole app: a `class Component extends DCLogic` inside a moustache-style
   template (`{{ }}`, `<sc-if>`, `<sc-for>`). Large file; edit surgically, don't rewrite.
-- **`demo.html` is generated from `index.html` — never hand-edit it.** It's a byte-for-byte
-  copy with four `<head>` tags swapped to EZvoxa and `__EZ_FORCE_TEMPLATE` set, because iOS
-  "Add to Home Screen" reads the icon and app name from the *static* head, ignoring the JS
-  swap — so the demo needs its own file or it saves as Evan's app. **After any change to
-  `index.html`, run `node make-demo.js`** or the demo drifts. The demo link is
-  `…/demo.html` (the old `?template` link now redirects there).
+- **`index.html` and `demo.html` are two INDEPENDENT apps — separate files, separate pushes.**
+  `index.html` is Evan's personal app (the family lane, `main` → the three phones). `demo.html`
+  is the standalone **EZvoxa** template — the product we sell and demo. They began as copies but
+  are meant to diverge: a change to one does **not** flow to the other, so edit and push each on
+  its own. This is deliberate — a sellable product needs a stable identity that doesn't shift
+  every time Evan's board is tweaked. `demo.html` carries EZvoxa's static `<head>` tags and sets
+  `__EZ_FORCE_TEMPLATE`, so iOS "Add to Home Screen" saves it as EZvoxa, never Evan (see #182);
+  the demo link is `…/demo.html` and the old `?template` link redirects there.
+  - The **safety-critical backend is shared** — emergency SOS, texting, and voice live in
+    `api/*.js` and both apps call the same endpoints, so separating the front ends does not fork
+    that code. But **client-side** fixes are now applied per file: if one matters to both
+    (an emergency-UI or voice-playback fix, a security fix), apply it to both on purpose.
 - `tether-icons.js` / `tether-photos.js` — `window.TETHER_ICONS` / `window.TETHER_PHOTOS`
   data-URI maps, loaded via `<script src>`. `iconUri(key)` resolves against these.
 - `api/sos.js` — emergency: Twilio SMS + SendGrid email + live location.

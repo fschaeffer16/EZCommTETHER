@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<!-- GENERATED FROM index.html BY make-demo.js — DO NOT EDIT. Run: node make-demo.js -->
+<!--
+  EZvoxa — the standalone template app we sell and demo.
+
+  This is its OWN file, independent of Evan's personal app (index.html). They
+  began as copies but are meant to diverge: a change to Evan's board does NOT
+  reach this one, and a change here does NOT reach his. Push each on its own.
+
+  The static <head> below is EZvoxa's (title, app name, icon, manifest) and
+  __EZ_FORCE_TEMPLATE runs it as the template, so iOS "Add to Home Screen"
+  saves it as EZvoxa, never Evan. The safety-critical backend (emergency SOS,
+  texting, voice) lives in api/*.js and is shared with Evan's app.
+-->
 <html>
 <head>
 <meta charset="utf-8">
