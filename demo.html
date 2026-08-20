@@ -5609,7 +5609,18 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 16) return false;
+    if (rev >= 17) return false;
+
+    // Rev 17 (template only): Sentence Build moves up beside School. A fresh
+    // demo already gets this from the tile order; this catches a demo phone
+    // that was opened before and saved its own order. Guarded so it runs once.
+    if (rev < 17 && d.profile !== 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const s = d.homeOrder.indexOf('sentbuild');
+      if (s >= 0) d.homeOrder.splice(s, 1);
+      const at = d.homeOrder.indexOf('school');
+      if (at < 0) d.homeOrder.unshift('sentbuild');
+      else d.homeOrder.splice(at + 1, 0, 'sentbuild');
+    }
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5772,7 +5783,7 @@ class Component extends DCLogic {
       d.homeOrder = want.concat(rest);
     }
 
-    d.layoutRev = 16;
+    d.layoutRev = 17;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -5826,7 +5837,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 16 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 17 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6060,6 +6071,10 @@ class Component extends DCLogic {
       // two taps deep behind anything.
       ...(mine ? [{ id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', img: this.iconUri('hurt_tile'), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) }] : []),
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
+      // Sentence Build sits right beside School on the template — building a
+      // sentence is close kin to schoolwork, and the pairing reads naturally
+      // for a family trying the demo.
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
       // Friends stands on its own rather than sitting inside School: the people
       // a kid actually wants to talk to aren't a school subject. Template only —
       // Evan's home screen is the one he already knows and doesn't gain a tile.
@@ -6080,9 +6095,7 @@ class Component extends DCLogic {
       // Talk left the home screen: its phrases are the defaults he gets when
       // he picks a person to talk to, and they are in Sentence Build's quick
       // phrases as well, so a whole tile for them was a tap he didn't need.
-      // Sentence Build (was "Words", was inside School) — building his own
-      // sentences is core communication, not a school subject.
-      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      // (Sentence Build moved up to sit beside School — see above.)
       ...(mine ? [] : [{ id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) }]),
       // Numbers is its own home tile; the calculator stays inside School.
       ...(mine ? [] : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
