@@ -6231,6 +6231,8 @@ class Component extends DCLogic {
       { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
       { label: 'More', emoji: '➕', color: '#F59E0B', say: 'More.' },
+      { label: 'Please', emoji: '🙏', color: '#3B82F6', say: 'Please.' },
+      { label: 'Thank you', emoji: '💗', color: '#EC4899', say: 'Thank you.' },
     ].map((q) => ({
       label: q.label,
       emoji: q.emoji,
@@ -6635,7 +6637,7 @@ class Component extends DCLogic {
     const stripImg = (o) => { const c = { ...o }; ['photo', 'image', 'avatar'].forEach((k) => { if (this.isDataUrl(c[k])) delete c[k]; }); return c; };
     const overrides = {};
     if (d.overrides) for (const k in d.overrides) overrides[k] = stripImg(d.overrides[k]);
-    return { v: 1, family: (d.family || []).map(stripImg), buttons: (d.buttons || []).map(stripImg), overrides, homeOrder: d.homeOrder || null };
+    return { v: 1, family: (d.family || []).map(stripImg), school: (d.school || []).map(stripImg), buttons: (d.buttons || []).map(stripImg), overrides, homeOrder: d.homeOrder || null };
   }
   // Apply settings pulled from the cloud, keeping this phone's own photos.
   applySync(remote) {
@@ -6645,6 +6647,13 @@ class Component extends DCLogic {
     if (Array.isArray(remote.family)) {
       const byId = {}; (d.family || []).forEach((p) => { byId[p.id] = p; });
       d.family = remote.family.map((rp) => keepImg({ ...rp }, byId[rp.id], ['photo', 'avatar']));
+    }
+    // Teachers, aides, office staff — added on one phone, shared to all three.
+    // Names and roles travel; a photo added on another phone doesn't (it's a
+    // data URL, stripped on the way out), so keep this phone's own photo.
+    if (Array.isArray(remote.school)) {
+      const byId = {}; (d.school || []).forEach((p) => { byId[p.id] = p; });
+      d.school = remote.school.map((rp) => keepImg({ ...rp }, byId[rp.id], ['photo', 'avatar']));
     }
     if (Array.isArray(remote.buttons)) {
       const byId = {}; (d.buttons || []).forEach((b) => { byId[b.id] = b; });
@@ -6881,6 +6890,14 @@ class Component extends DCLogic {
         { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
         { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
         { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
+      ]},
+      // Numbers 0–20, for putting a number in a sentence ("I am 16", "two
+      // cookies"). The word finder reaches bigger numbers by typing.
+      { label: 'Numbers', color: '#4F46E5', words: [
+        { t: '0', e: '0' }, { t: '1', e: '1' }, { t: '2', e: '2' }, { t: '3', e: '3' }, { t: '4', e: '4' },
+        { t: '5', e: '5' }, { t: '6', e: '6' }, { t: '7', e: '7' }, { t: '8', e: '8' }, { t: '9', e: '9' },
+        { t: '10', e: '10' }, { t: '11', e: '11' }, { t: '12', e: '12' }, { t: '13', e: '13' }, { t: '14', e: '14' },
+        { t: '15', e: '15' }, { t: '16', e: '16' }, { t: '17', e: '17' }, { t: '18', e: '18' }, { t: '19', e: '19' }, { t: '20', e: '20' },
       ]},
       { label: 'Adverbs', color: '#A16207', words: [
         { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
