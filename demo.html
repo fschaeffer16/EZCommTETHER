@@ -3849,7 +3849,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isABC }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ abcBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Spell it</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:4px 14px 18px;display:flex;flex-direction:column;">
@@ -3896,9 +3896,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <div style="flex:1;overflow-y:auto;padding:4px 16px 24px;">
           <div style="background:var(--card,#fff);border:2px solid #0EA5E9;border-radius:14px;padding:14px 16px;font-size:30px;font-weight:800;text-align:right;color:var(--ink,#1A1714);margin-bottom:10px;word-break:break-all;min-height:34px;">{{ calcDisplay }}</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;">
             <sc-for list="{{ calcKeys }}" as="k" hint-placeholder-count="0">
-              <div onClick="{{ k.onTap }}" style="background:{{ k.bg }};color:{{ k.ink }};border-radius:12px;padding:17px 0;text-align:center;font-size:20px;font-weight:800;cursor:pointer;{{ k.span }}" style-active="transform:scale(.92)">{{ k.k }}</div>
+              <div onClick="{{ k.onTap }}" style="background:{{ k.bg }};color:{{ k.ink }};border-radius:12px;padding:15px 0;text-align:center;font-size:17px;font-weight:800;cursor:pointer;{{ k.span }}" style-active="transform:scale(.92)">{{ k.k }}</div>
             </sc-for>
           </div>
         </div>
@@ -3906,10 +3906,34 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
     <!-- SCHOOL: WORDS — core-word sentence builder (Fitzgerald-key colors) -->
+    <!-- WORD TOOLS MENU — the Sentence Build tile opens here first: pick the
+         sentence builder or the ABC word speller. -->
+    <sc-if value="{{ isBuildMenu }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Sentence Build</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:12px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:0 2px 14px;">Pick one.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div onClick="{{ openBuilder }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
+              <div style="width:100%;background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(14,165,233,.18);">{{ builderFace }}</div>
+              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">Sentence Builder</span>
+            </div>
+            <div onClick="{{ openSpeller }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
+              <div style="width:100%;background:var(--card,#fff);border:3px solid #F97316;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(249,115,22,.18);">{{ spellerFace }}</div>
+              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">ABC Word Speller</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
     <sc-if value="{{ isWords }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
+          <div onClick="{{ wordsBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Sentence Build</div>
         </div>
         <div style="padding:0 14px;flex:none;">
@@ -6016,46 +6040,92 @@ class Component extends DCLogic {
   spellBack() { const t = this.state.spellText || ''; this.setState({ spellText: t.slice(0, -1) }); }
   spellClear() { this.setState({ spellText: '' }); }
   spellSpeak() { const t = (this.state.spellText || '').trim(); if (t) this.speak(t); }
-  // ── Calculator (safe evaluator, no eval() so it works under strict CSP) ──
+  // ── Scientific calculator ────────────────────────────────────────────────
+  // A high-school calculator: order of operations, parentheses, exponents,
+  // square root, x², percent, pi, and sin/cos/tan/log/ln (degrees). No eval()
+  // — a recursive-descent parser, so it is safe under the strict CSP. The
+  // display carries pretty symbols (× ÷ √ π); they're translated here.
+  calcTokenize(s) {
+    s = String(s).replace(/\s+/g, '');
+    const toks = [];
+    const pat = /^([0-9]*\.?[0-9]+|sin|cos|tan|log|ln|sqrt|pi|e|[()+\-*/^])/;
+    while (s.length) {
+      const m = s.match(pat);
+      if (!m) return null;
+      toks.push(m[1]);
+      s = s.slice(m[1].length);
+    }
+    return toks;
+  }
+  calcParse(toks) {
+    let i = 0;
+    const peek = () => toks[i];
+    const next = () => toks[i++];
+    const FUN = {
+      sin: (x) => Math.sin(x * Math.PI / 180),
+      cos: (x) => Math.cos(x * Math.PI / 180),
+      tan: (x) => Math.tan(x * Math.PI / 180),
+      log: (x) => (Math.log10 ? Math.log10(x) : Math.log(x) / Math.LN10),
+      ln: (x) => Math.log(x),
+      sqrt: (x) => Math.sqrt(x),
+    };
+    const expr = () => { let v = term(); while (peek() === '+' || peek() === '-') { const op = next(); const r = term(); v = op === '+' ? v + r : v - r; } return v; };
+    const term = () => { let v = factor(); while (peek() === '*' || peek() === '/') { const op = next(); const r = factor(); v = op === '*' ? v * r : v / r; } return v; };
+    const factor = () => {
+      if (peek() === '-') { next(); return -factor(); }
+      if (peek() === '+') { next(); return factor(); }
+      let v = primary();
+      if (peek() === '^') { next(); v = Math.pow(v, factor()); } // right-associative
+      return v;
+    };
+    const primary = () => {
+      const t = peek();
+      if (t === '(') { next(); const v = expr(); if (next() !== ')') throw 0; return v; }
+      if (t === 'pi') { next(); return Math.PI; }
+      if (t === 'e') { next(); return Math.E; }
+      if (FUN[t]) { next(); if (next() !== '(') throw 0; const v = expr(); if (next() !== ')') throw 0; return FUN[t](v); }
+      if (t != null && /^[0-9.]/.test(t)) { next(); return parseFloat(t); }
+      throw 0;
+    };
+    const v = expr();
+    if (i !== toks.length) throw 0;
+    return v;
+  }
   calcEval(s) {
-    const toks = String(s).match(/(\d+\.?\d*|\.\d+|[+\-*/])/g);
-    if (!toks) return null;
-    const a = [];
-    for (let i = 0; i < toks.length; i++) {
-      const t = toks[i];
-      if (t === '*' || t === '/') {
-        const prev = a.pop(); const next = parseFloat(toks[++i]);
-        if (typeof prev !== 'number' || isNaN(next)) return null;
-        a.push(t === '*' ? prev * next : prev / next);
-      } else if (t === '+' || t === '-') { a.push(t); }
-      else { a.push(parseFloat(t)); }
-    }
-    let res = a[0];
-    if (typeof res !== 'number') return null;
-    for (let i = 1; i < a.length; i += 2) {
-      const op = a[i], val = a[i + 1];
-      if (typeof val !== 'number') return null;
-      res = op === '+' ? res + val : res - val;
-    }
-    return res;
+    try {
+      let e = String(s).replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-').replace(/√/g, 'sqrt').replace(/π/g, 'pi');
+      e = e.replace(/([0-9]*\.?[0-9]+)%/g, '($1/100)'); // 50% -> (50/100)
+      const toks = this.calcTokenize(e);
+      if (!toks || !toks.length) return null;
+      const v = this.calcParse(toks);
+      if (typeof v !== 'number' || !isFinite(v)) return null;
+      return v;
+    } catch (err) { return null; }
   }
   calcPress(k) {
-    // The calculator is silent while typing and answers on "=" with the
-    // instant device voice — math results are arbitrary numbers the audio
-    // cache has never seen, so the AI voice would lag on every answer.
+    // Silent while typing; answers on "=" with the instant device voice, since
+    // an arbitrary result is never in the AI-voice audio cache.
     const cur = this.state.calc || '';
-    if (k === 'C') { this.setState({ calc: '' }); return; }
-    if (k === '⌫') { this.setState({ calc: cur.slice(0, -1) }); return; }
+    if (k === 'C') { this.setState({ calc: '', calcDone: false }); return; }
+    if (k === '⌫') { this.setState({ calc: cur === 'Error' ? '' : cur.slice(0, -1), calcDone: false }); return; }
     if (k === '=') {
-      const expr = cur.replace(/×/g, '*').replace(/÷/g, '/');
-      const val = this.calcEval(expr);
-      if (val === null || !isFinite(val)) return;
-      const r = Math.round(val * 1e6) / 1e6;
-      this.setState({ calc: String(r) });
+      const val = this.calcEval(cur);
+      if (val === null) { this.setState({ calc: 'Error', calcDone: false }); this.speakLocal('error'); return; }
+      const r = Math.round(val * 1e10) / 1e10;
+      this.setState({ calc: String(r), calcDone: true });
       this.speakLocal('equals ' + r);
       return;
     }
-    this.setState({ calc: cur + k });
+    // Multi-character insertions for the function keys.
+    const FN = { '√': '√(', 'x²': '^2', 'sin': 'sin(', 'cos': 'cos(', 'tan': 'tan(', 'log': 'log(', 'ln': 'ln(' };
+    const ins = FN[k] || k;
+    // After "=", an operator (or x²) continues from the result; anything else
+    // starts a fresh calculation — the way a real calculator behaves.
+    const continues = /^[+\-−×÷^%]$/.test(k) || k === 'x²';
+    let base = cur;
+    if (cur === 'Error') base = '';
+    else if (this.state.calcDone) base = continues ? cur : '';
+    this.setState({ calc: base + ins, calcDone: false });
   }
 
   readFileAsDataUrl(file, cb) {
@@ -6092,7 +6162,7 @@ class Component extends DCLogic {
       // Sentence Build sits right beside School on the template — building a
       // sentence is close kin to schoolwork, and the pairing reads naturally
       // for a family trying the demo.
-      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'buildmenu' }) },
       // Friends stands on its own rather than sitting inside School: the people
       // a kid actually wants to talk to aren't a school subject. Template only —
       // Evan's home screen is the one he already knows and doesn't gain a tile.
@@ -7064,7 +7134,17 @@ class Component extends DCLogic {
           : null,
         noIcon: !(c.icon && this.iconUri(c.icon)),
       })),
-      openABC: () => this.setState({ screen: 'abc', spellText: '' }),
+      openABC: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'school' }),
+      // Word-tools menu: the Sentence Build tile opens here, then pick the
+      // sentence builder or the ABC word speller. Each remembers it came from
+      // the menu so its back arrow returns here, not to the home screen.
+      isBuildMenu: s.screen === 'buildmenu',
+      openBuilder: () => this.setState({ screen: 'words', wordSent: [], navFrom: 'buildmenu' }),
+      openSpeller: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'buildmenu' }),
+      builderFace: React.createElement('img', { src: this.iconUri('tile_sentbuild'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
+      spellerFace: React.createElement('img', { src: this.iconUri('school_abc'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
+      wordsBack: () => this.setState({ screen: this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board', editMode: false }),
+      abcBack: () => this.setState({ screen: this.state.navFrom === 'school' ? 'school' : (this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board') }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
       openCalc: () => this.setState({ screen: 'calc' }),
@@ -7122,12 +7202,15 @@ class Component extends DCLogic {
       numKeys: Array.from({ length: 25 }, (_, i) => ({ n: i + 1, onTap: () => this.speak(String(i + 1)) })),
       numBack: () => this.setState({ screen: this.state.numFrom === 'school' ? 'school' : 'board' }),
       calcDisplay: s.calc || '0',
+      // High-school scientific pad, five across. Functions in slate, operators
+      // in blue, C in red, equals in green.
       calcKeys: [
-        ['C', '#FCE4E2', '#E23B2E'], ['⌫', 'var(--slot,#F0EDE7)', 'var(--ink,#1A1714)'], ['÷', '#0EA5E9', '#fff'], ['×', '#0EA5E9', '#fff'],
-        ['7'], ['8'], ['9'], ['-', '#0EA5E9', '#fff'],
-        ['4'], ['5'], ['6'], ['+', '#0EA5E9', '#fff'],
-        ['1'], ['2'], ['3'], ['=', '#1F8A5B', '#fff'],
-        ['0', '', '', 'grid-column:span 2;'], ['.'],
+        ['sin', '#E8EDF7', '#334155'], ['cos', '#E8EDF7', '#334155'], ['tan', '#E8EDF7', '#334155'], ['log', '#E8EDF7', '#334155'], ['ln', '#E8EDF7', '#334155'],
+        ['(', '#E8EDF7', '#334155'], [')', '#E8EDF7', '#334155'], ['√', '#E8EDF7', '#334155'], ['^', '#E8EDF7', '#334155'], ['x²', '#E8EDF7', '#334155'],
+        ['7'], ['8'], ['9'], ['÷', '#0EA5E9', '#fff'], ['%', '#E8EDF7', '#334155'],
+        ['4'], ['5'], ['6'], ['×', '#0EA5E9', '#fff'], ['π', '#E8EDF7', '#334155'],
+        ['1'], ['2'], ['3'], ['−', '#0EA5E9', '#fff'], ['⌫', 'var(--slot,#F0EDE7)', 'var(--ink,#1A1714)'],
+        ['C', '#FCE4E2', '#E23B2E'], ['0'], ['.'], ['+', '#0EA5E9', '#fff'], ['=', '#1F8A5B', '#fff'],
       ].map((r) => ({ k: r[0], bg: r[1] || 'var(--card,#fff)', ink: r[2] || 'var(--ink,#1A1714)', span: r[3] || '', onTap: () => this.calcPress(r[0]) })),
       openFamily: () => this.setState({ screen: 'family' }),
       watchSlots: this.watchSlots(),
