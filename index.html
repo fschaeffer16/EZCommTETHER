@@ -3836,7 +3836,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isABC }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ backToSchool }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ abcBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Spell it</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:4px 14px 18px;display:flex;flex-direction:column;">
@@ -3893,10 +3893,34 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
     <!-- SCHOOL: WORDS — core-word sentence builder (Fitzgerald-key colors) -->
+    <!-- WORD TOOLS MENU — the Sentence Build tile opens here first: pick the
+         sentence builder or the ABC word speller. -->
+    <sc-if value="{{ isBuildMenu }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Sentence Build</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:12px 18px 24px;">
+          <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:0 2px 14px;">Pick one.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div onClick="{{ openBuilder }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
+              <div style="width:100%;background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(14,165,233,.18);">{{ builderFace }}</div>
+              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">Sentence Builder</span>
+            </div>
+            <div onClick="{{ openSpeller }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
+              <div style="width:100%;background:var(--card,#fff);border:3px solid #F97316;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(249,115,22,.18);">{{ spellerFace }}</div>
+              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">ABC Word Speller</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
     <sc-if value="{{ isWords }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
+          <div onClick="{{ wordsBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.92)">‹</div>
           <div style="font-size:24px;font-weight:800;color:#0EA5E9;flex:1;min-width:0;">Sentence Build</div>
         </div>
         <div style="padding:0 14px;flex:none;">
@@ -6085,7 +6109,7 @@ class Component extends DCLogic {
       // phrases as well, so a whole tile for them was a tap he didn't need.
       // Sentence Build (was "Words", was inside School) — building his own
       // sentences is core communication, not a school subject.
-      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'words', wordSent: [] }) },
+      { id: 'sentbuild', label: 'Sentence Build', emoji: '💬', color: mine ? '#0EA5E9' : '#22D3EE', ...(mine ? { img: this.iconUri('sentbuild_tile') } : { img: this.iconUri('tile_sentbuild') }), onTap: () => this.setState({ screen: 'buildmenu' }) },
       ...(mine ? [] : [{ id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) }]),
       // Numbers is its own home tile; the calculator stays inside School.
       ...(mine ? [] : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
@@ -7021,7 +7045,17 @@ class Component extends DCLogic {
           : null,
         noIcon: !(c.icon && this.iconUri(c.icon)),
       })),
-      openABC: () => this.setState({ screen: 'abc', spellText: '' }),
+      openABC: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'school' }),
+      // Word-tools menu: the Sentence Build tile opens here, then Evan picks the
+      // sentence builder or the ABC word speller. Each remembers it came from the
+      // menu so its back arrow returns here, not to the home screen.
+      isBuildMenu: s.screen === 'buildmenu',
+      openBuilder: () => this.setState({ screen: 'words', wordSent: [], navFrom: 'buildmenu' }),
+      openSpeller: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'buildmenu' }),
+      builderFace: React.createElement('img', { src: this.iconUri('sentbuild_tile'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
+      spellerFace: React.createElement('img', { src: this.iconUri('school_abc'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
+      wordsBack: () => this.setState({ screen: this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board', editMode: false }),
+      abcBack: () => this.setState({ screen: this.state.navFrom === 'school' ? 'school' : (this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board') }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
       openCalc: () => this.setState({ screen: 'calc' }),
