@@ -3931,9 +3931,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div onClick="{{ wordClear }}" style="flex:none;width:62px;{{ clearCss }}border-radius:14px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;cursor:pointer;" style-active="transform:scale(.96)">Clear</div>
           </div>
           <!-- Word finder: type any word, tap it, it's added and spoken — so
-               nobody is ever hunting for a word that isn't on a board. -->
+               nobody is ever hunting for a word that isn't on a board. Its own
+               orange header and orange box, the way Sentence Build's is blue. -->
+          <div style="font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#F97316;margin:2px 2px 5px;">Word Search</div>
           <div style="position:relative;margin:0 0 4px;">
-            <input id="wordfind" defaultValue="" onInput="{{ onWordSearch }}" placeholder="🔍 Find any word…" autocomplete="off" autocapitalize="none" style="box-sizing:border-box;width:100%;padding:12px 42px 12px 14px;border:2px solid var(--slot,#E6E1D8);border-radius:14px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+            <input id="wordfind" defaultValue="" onInput="{{ onWordSearch }}" placeholder="🔍 Find any word…" autocomplete="off" autocapitalize="none" style="box-sizing:border-box;width:100%;padding:12px 42px 12px 14px;border:2px solid #F97316;border-radius:14px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
             <sc-if value="{{ wordSearchActive }}" hint-placeholder-val="{{ false }}"><div onClick="{{ clearWordSearch }}" style="position:absolute;right:7px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--slot,#F0EDE7);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--sub,#8C857A);cursor:pointer;">✕</div></sc-if>
           </div>
         </div>
