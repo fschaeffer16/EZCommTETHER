@@ -6227,12 +6227,13 @@ class Component extends DCLogic {
       { label: 'Good morning', emoji: '☀️', color: '#FB923C', say: 'Good morning!' },
       { label: 'Hi', emoji: '👋', color: '#0EA5E9', say: 'Hello!' },
       { label: 'Bye', emoji: '✌️', color: '#7A5CFF', say: 'Goodbye!' },
+      // Thank you sits up front with the greetings, not buried at the far right
+      // of the scroll where it can't be found.
+      { label: 'Thank you', emoji: '💗', color: '#EC4899', say: 'Thank you.' },
       { label: 'Good', emoji: '😄', color: '#1F9E6E', say: 'Good.' },
       { label: 'Bad', emoji: '😖', color: '#E23B2E', say: 'Bad.' },
       { label: 'Done', emoji: '✅', color: '#10B981', say: "I'm done." },
       { label: 'More', emoji: '➕', color: '#F59E0B', say: 'More.' },
-      { label: 'Please', emoji: '🙏', color: '#3B82F6', say: 'Please.' },
-      { label: 'Thank you', emoji: '💗', color: '#EC4899', say: 'Thank you.' },
     ].map((q) => ({
       label: q.label,
       emoji: q.emoji,
