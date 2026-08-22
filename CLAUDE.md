@@ -48,11 +48,71 @@ program for low-income/disability families.
 - **Saved state beats new defaults.** The store keeps `homeOrder`, family order, and overrides, so
   shipping a new default order changes nothing on a phone that already has the app. Bump the
   one-time `applyLayoutRev()` migration when a layout default changes, or the work is invisible.
+  The migration lives in `index.html` around line 5637; the current `layoutRev` is **16** (set
+  in `d.layoutRev = 16` and the default-data literal). Each rev block is idempotent and often
+  gated on `profile === 'evan'` so it only reshuffles Evan's board, not a buyer's.
+
+## Repository map
+
+No build step. It's a static site plus Vercel serverless functions — Vercel serves the files
+as-is and runs `api/*.js` on request.
+
+**The two apps (front ends):**
+
+- `index.html` — Evan's personal app. The family lane, `main` → the three phones. ~7,600 lines.
+- `demo.html` — the standalone **EZvoxa** template we sell and demo. A near-copy of `index.html`
+  that is *meant to diverge* — see below. Same size; edit and push it on its own.
+
+**Shared client assets (loaded by both apps via `<script src>`):**
+
+- `tether-icons.js` — `window.TETHER_ICONS`, a data-URI map of drawn artwork. ~4.8 MB.
+- `tether-photos.js` — `window.TETHER_PHOTOS`, a data-URI map of family photos. ~2.9 MB.
+- `iconUri(key)` resolves a button's key against these two maps.
+- `sw.js` — the offline service worker (see below).
+- `manifest.webmanifest` (Evan / "Evan's Talker") and `manifest-template.webmanifest`
+  (EZvoxa). The boot script picks the right one per install. Icons: `icon*.png` (Evan),
+  `icon-ezvoxa-*.png` (EZvoxa).
+
+**Backend — Vercel serverless functions in `api/` (shared by both apps):**
+
+- `api/sos.js` — emergency: Twilio SMS + SendGrid email + live location (Google Maps link).
+- `api/text.js` — cloud texting. Evan's phone is locked to the app, so he can't press Send in
+  Messages; he taps a phrase and this sends it via Twilio, reporting real delivery status.
+- `api/family.js` — server-side family directory (`FAMILY_DIRECTORY`): phones, emails,
+  addresses, birthdates. Phones fetch it on startup so numbers survive a storage wipe.
+- `api/settings.js` — Family Sync via Upstash KV (`save`/`load`). Everything but photos syncs.
+- `api/voice.js` — voice notes from Evan's parents. A parent records in the app; his phone
+  polls this KV store and plays the clip within ~30s, saying who it's from. (Off on the
+  release lane until licensing points it at the buyer's own family.)
+- `api/speak.js` — AI voice (ElevenLabs). Turns tapped phrases into a teenage-boy voice;
+  falls back to the device voice if unconfigured or offline, so Evan is never left silent.
+  Responses carry long-lived cache headers; repeated phrases replay from cache, free.
+- `api/demo-audio.js` — voice for the website demo. A *second* ElevenLabs voice (default
+  "Zach"), locked to a fixed phrase list so it can't be abused as a free TTS service. Never
+  Evan's voice.
+- `api/waitlist.js` — the EZvoxa waitlist. Anyone can add their name (no password); reading the
+  list back requires the family password. Uses the same KV store.
+
+**Marketing / planning (not part of the running app):**
+
+- `ezvoxa.html` — the EZvoxa marketing website (`ezvoxa.com`), with a captioned walkthrough.
+- `model-ezvoxa.html` — the interactive **EZvoxa revenue model**. Keep it in sync with the
+  business-plan `.docx` (see "How Frank wants me to work").
+
+**Supporting docs (all `.md` — Frank can't open these; deliver *new* docs to him as `.docx`):**
+
+- `RELEASE.md` — the two-lane deploy system in full. Read before anything touching deploys.
+- `SETUP.md` — the non-technical, step-by-step Vercel/Twilio/SendGrid/KV setup and every env var.
+- `DESIGN_MANIFEST.md` / `ASSETS_TODO.md` — the artwork production lists for the template.
 
 ## Architecture notes
 
-- `index.html` — the whole app: a `class Component extends DCLogic` inside a moustache-style
-  template (`{{ }}`, `<sc-if>`, `<sc-for>`). Large file; edit surgically, don't rewrite.
+- **`index.html` is one file, one class.** A `class Component extends DCLogic` drives a
+  moustache-style template (`{{ }}`, `<sc-if>`, `<sc-for>`). The class body is roughly lines
+  4073–7649; the template markup sits above it. It's a large file — **edit surgically, never
+  rewrite.** The templating engine is home-grown: `compileTemplate()` (around line 826) walks
+  the DOM and expands `sc-for`/`sc-if`. External `.dc.html` components can be loaded via
+  `loadExternal`, but the app itself is the single inline `data-dc-script` component.
 - **`index.html` and `demo.html` are two INDEPENDENT apps — separate files, separate pushes.**
   `index.html` is Evan's personal app (the family lane, `main` → the three phones). `demo.html`
   is the standalone **EZvoxa** template — the product we sell and demo. They began as copies but
@@ -65,14 +125,26 @@ program for low-income/disability families.
     `api/*.js` and both apps call the same endpoints, so separating the front ends does not fork
     that code. But **client-side** fixes are now applied per file: if one matters to both
     (an emergency-UI or voice-playback fix, a security fix), apply it to both on purpose.
+- **Whose copy is this? Decided in the boot script**, before the manifest is fetched (top of
+  `index.html`). Two ways to be a buyer's copy — the `?template` link, or being served from a
+  customer domain (`ezvoxa.com` / `myezvoice.com`, anchored at both ends so `notezvoxa.com`
+  doesn't match). A buyer gets the EZvoxa icon, name, neutral starter board, its own storage
+  key, and no path to the family directory. Only Evan's three phones carry `profile: 'evan'`.
+- **`profile` and the storage split.** `data().profile === 'evan'` is Evan's real board;
+  template/buyer copies have `profile: null` and use a separate `DATA_KEY`
+  (`tether_settings_template` vs `tether_settings_v1`). `isTemplateMode()` / `isEvanProfile()`
+  gate family-directory access, voice-note polling, and sync throughout.
 - `tether-icons.js` / `tether-photos.js` — `window.TETHER_ICONS` / `window.TETHER_PHOTOS`
   data-URI maps, loaded via `<script src>`. `iconUri(key)` resolves against these.
-- `api/sos.js` — emergency: Twilio SMS + SendGrid email + live location.
-- `api/text.js` — cloud texting (Evan's phone is locked, so he can't press Send in Messages).
-- `api/family.js` — server-side family directory (`FAMILY_DIRECTORY`): phones, birthdates.
-- `api/settings.js` — Family Sync via Upstash KV.
+- **Offline / updates (`sw.js`).** Network-first for the page and shell (latest deploy wins
+  with signal; cached copy when offline). `/api/*` is never cached — an SOS must hit the live
+  network — *except* `/api/speak`, which is cache-first in its own `evans-voice-v1` cache
+  (trimmed to 500 clips) so known phrases play with no signal. Evan's phone runs under Guided
+  Access and never closes, so `index.html` polls for a new version and reloads **only during a
+  quiet moment** — never within 45s of a screen touch, i.e. never mid-sentence.
 - **Secrets never ship in the app.** Phone numbers, keys, and the medical note live only in
-  Vercel environment variables. The client sends person *ids*, never numbers.
+  Vercel environment variables (see `SETUP.md` for the full list). The client sends person
+  *ids*, never numbers.
 - Prefer CSS over base64 images for UI chrome — sharper on every screen and the file is
   already large.
 
