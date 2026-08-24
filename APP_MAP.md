@@ -96,8 +96,12 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 - **morning**, **night**, **fun**, **feelings**, **places**, **colors**,
   **numbers**, **clock** — standalone boards.
 - **settings** — gear (⚙️) on the home header; family setup, phone role, Sync.
-- **sos** / **sosSent** — Emergency. Reached from the red SOS bar. Left untouched
-  by layout changes; excluded from the slim-bar behavior.
+- **sos** / **sosSent** — Emergency. Reached from the red SOS bar, which is
+  **anchored flush to the very bottom** of the content region (full-width,
+  top-rounded, `bottom:0`, safe-area-bottom padding) rather than floating as a
+  pill. The scroll region reserves ~64px + safe-area at the bottom so the bar
+  never hides content; anchoring it lets the home grid show six tile pictures
+  without scrolling. Excluded from the slim-bar behavior.
 - **voicenote** — parent voice-note recorder (poll/playback via `api/voice.js`).
 
 ## TOP-BAR BEHAVIOR
