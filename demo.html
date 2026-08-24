@@ -2701,7 +2701,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   <!-- NEON TOP PANEL: dark control band holding the header, Yes / Home / No,
        and the 10 neon quick tiles. Everything below (home tiles, boards) is
        untouched. -->
-  <div style="background:#0a0a0f;border-radius:0 0 26px 26px;padding-top:calc(env(safe-area-inset-top, 0px) + 6px);flex:none;position:relative;z-index:1;box-shadow:0 12px 28px rgba(0,0,0,.45);">
+  <!-- NOTE: no position:relative here — see index.html. The pocket-guard
+       start screen (notStarted) is an inset:0 overlay nested inside and must
+       resolve against #tether-root, not this panel. -->
+  <div style="background:#0a0a0f;border-radius:0 0 26px 26px;padding-top:calc(env(safe-area-inset-top, 0px) + 6px);flex:none;box-shadow:0 12px 28px rgba(0,0,0,.45);">
   <!-- header -->
   <div style="display:flex;align-items:center;gap:9px;padding:0 14px 6px;flex:none;">
     <label style="position:relative;flex:none;display:inline-block;cursor:pointer;line-height:0;"><sc-if value="{{ hasEvanPhoto }}" hint-placeholder-val="{{ false }}">{{ evanPhotoEl }}</sc-if><sc-if value="{{ noEvanPhoto }}" hint-placeholder-val="{{ true }}">{{ ownerFaceEl }}</sc-if><input type="file" accept="image/*" onChange="{{ onEvanPhoto }}" style="position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;" /><span style="position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#3B82F6;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg,#FBFAF7);pointer-events:none;">✎</span></label>
