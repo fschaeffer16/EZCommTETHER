@@ -109,10 +109,14 @@ The home-screen top stack (`showTopStack`) is a **dark neon control band**
 - **Yes · Home · No** in one row (was a 2×2 Yes/No/Help/Bathroom grid). Home is
   the blue circle tucked between Yes and No (`goHome`). Yes/No speak; Home →
   home + scroll top.
-- **10 neon quick tiles**, a 5-across × 2-row grid driven by the `neonTiles`
-  prop. Each tile is a **full image** (neon box + picture + caption baked in),
-  so the grid renders the image only — no separate text label. Order:
-  **Help · Restroom · Good · Bad · More / Good morning · Hi · Bye · Thank you ·
+- **10 neon quick tiles**, a **single horizontal row that scrolls, four
+  visible at a time** (`display:flex; overflow-x:auto`, each tile
+  `width:calc(25% - 6px)`, scroll-snap), driven by the `neonTiles` prop. Five
+  across was too small; four larger tiles on one scrolling line replaced it.
+  Each tile is a **full image** (neon box + picture + caption baked in), so the
+  row renders the image only — no separate text label. Order (left→right,
+  scrolls right):
+  **Help · Good · Bad · Restroom · Thank you · Good morning · Hi · Bye · More ·
   Done**. Icon keys are shared `qn_*` in `tether-icons.js` (`qn_help`,
   `qn_restroom`, `qn_good`, `qn_bad`, `qn_more`, `qn_goodmorning`, `qn_hi`,
   `qn_bye`, `qn_thankyou`, `qn_done`). Help/Restroom **moved here** from the old
