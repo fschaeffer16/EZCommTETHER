@@ -104,12 +104,11 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   Combined with a tightened home-grid **row-gap (14→6px)** and picture-to-caption
   gap (8→5px), this lets the home grid show **six full tiles (pictures +
   captions) without scrolling** on standard iPhones while keeping the pictures
-  large (column-gap stays 14px). Because `#tether-root` (100dvh) can leave the
-  iOS **home-indicator strip** uncovered, `applyTheme()` paints the page behind
-  the app: on any screen where the bottom SOS bar is showing (`started` and not
-  `sos`/`sosSent`) it paints that strip the **same red (#E23B2E)** so the bar
-  reaches the true bottom edge with no dark gap; on the start/SOS screens it
-  paints the app background instead. Excluded from the slim-bar behavior.
+  large (column-gap stays 14px). The bar itself is a **compact single line**
+  (SOS badge + "Emergency" + one-line subtitle + ›) with
+  `padding-bottom: calc(8px + safe-area)` so its red fills the home-indicator
+  zone; keeping it to one line is what lets a full third row of tiles clear it.
+  Excluded from the slim-bar behavior.
 - **voicenote** — parent voice-note recorder (poll/playback via `api/voice.js`).
 
 ## TOP-BAR BEHAVIOR
