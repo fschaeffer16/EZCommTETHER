@@ -7103,7 +7103,7 @@ class Component extends DCLogic {
       // emoji until their pictures arrive.
       ...(() => {
         const face = (key, fallback) => {
-          const src = this.isEvanProfile() ? null : this.iconUri(key);
+          const src = this.iconUri(key);
           return src
             ? React.createElement('img', { src, alt: '', style: { width: 58, height: 58, objectFit: 'contain' } })
             : React.createElement('span', { style: { fontSize: 44, lineHeight: 1 } }, fallback);
@@ -7145,7 +7145,7 @@ class Component extends DCLogic {
         ...c,
         onTap: c.open,
         iconEl: c.icon && this.iconUri(c.icon)
-          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: 46, height: 46, objectFit: 'contain' } })
+          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: 58, height: 58, objectFit: 'contain' } })
           : null,
         noIcon: !(c.icon && this.iconUri(c.icon)),
       })),
