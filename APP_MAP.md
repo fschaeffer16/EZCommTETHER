@@ -78,9 +78,13 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 - **family** — Family people board. (Home → Family; Friends tile → same board, friends set)
 - **food** — Food board. Sub-boards: **drinks**, **snacks**, **restaurants** →
   **restaurant** (mcdonalds / popeyes / chinese / outback).
-- **school** — School hub. Buttons: people categories → **schoolpeople**
-  (teachers / support staff / front office / speech / aides / friends);
-  **abc**; **123 → numbers**; **Calculator → calc**; **Colors → colors**.
+- **school** — School hub. Buttons: **abc**; **123 → numbers**;
+  **Calculator → calc**; **Colors → colors**; plus people categories →
+  **schoolpeople**. Evan's categories: **Teachers/Staff** (people board — add
+  people, name/photo via edit wheel) and **Friends**. Template's categories:
+  Teachers / Office Staff / Aides / Speech-OT / Bus Driver. School category
+  icons are shared keys: school_teachers, school_staff, school_office,
+  school_calc (neutral neon art; no faces).
 - **buildmenu** — Sentence Build chooser → **words** (Sentence Builder) and
   **abc** (ABC Word Speller).
 - **watch** — TV/Watch. Sub-boards: **netflix**, **disney**, **sports**
