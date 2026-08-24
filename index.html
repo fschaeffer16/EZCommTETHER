@@ -7113,8 +7113,8 @@ class Component extends DCLogic {
           schoolColorsFace: this.isEvanProfile()
             ? React.createElement('img', { src: this.iconUri('colors_tile'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
             : face('tile_colors', '🎨'),
-          schoolABCFace: face('school_abc', '🔤'),
-          schoolNumbersFace: face('school_123', '🔢'),
+          schoolABCFace: face(this.isEvanProfile() ? 'abc_evan' : 'school_abc', '🔤'),
+          schoolNumbersFace: face(this.isEvanProfile() ? 'numbers_evan' : 'school_123', '🔢'),
           schoolCalcFace: this.isEvanProfile() ? this.calcIconEl(46) : face('school_calc', '🧮'),
         };
       })(),

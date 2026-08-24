@@ -109,6 +109,13 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 ## GOTCHAS / LESSONS
 - **Numbers is a School button, not a home tile** (for Evan). Verify a "tile"
   actually exists before adding one.
+- **Evan-personalized School icons.** `schoolNumbersFace` / `schoolABCFace` use
+  `this.isEvanProfile() ? 'numbers_evan'/'abc_evan' : 'school_123'/'school_abc'`.
+  The `_evan` keys contain **Evan's photograph** and must NEVER be referenced by
+  the template — his face stays on his phones only. `tether-icons.js` is shared
+  by both apps, so any face-personalized art needs an Evan-only key + an
+  `isEvanProfile()` gate; putting a face on a shared key leaks it into the
+  sellable template (violates DESIGN_MANIFEST).
 - Mine tiles reference `assets/*.jpg` paths that are **not** in the repo; those
   default photos fall back — Evan's real photos come from saved state/overrides.
   Reliable art goes through `iconUri()` data-URIs in `tether-icons.js`.
