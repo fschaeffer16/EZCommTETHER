@@ -109,13 +109,19 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 ## GOTCHAS / LESSONS
 - **Numbers is a School button, not a home tile** (for Evan). Verify a "tile"
   actually exists before adding one.
-- **Evan-personalized School icons.** `schoolNumbersFace` / `schoolABCFace` use
-  `this.isEvanProfile() ? 'numbers_evan'/'abc_evan' : 'school_123'/'school_abc'`.
-  The `_evan` keys contain **Evan's photograph** and must NEVER be referenced by
-  the template — his face stays on his phones only. `tether-icons.js` is shared
-  by both apps, so any face-personalized art needs an Evan-only key + an
-  `isEvanProfile()` gate; putting a face on a shared key leaks it into the
-  sellable template (violates DESIGN_MANIFEST).
+- **Per-child personalization — the icons are NOT shared, only the structure is.**
+  The *layout and navigation* are common to both apps; the *artwork* is not. The
+  template ships neutral, personalizable art (e.g. neon `school_123` /
+  `school_abc`), and **every family personalizes it with their own child's
+  photo** — that's the product (selling to kids everywhere). Evan is simply the
+  first personalized instance: his School Numbers/ABC icons use profile-keyed art
+  `numbers_evan` / `abc_evan` selected via `isEvanProfile()`, so his photo shows
+  on his phones while the template stays neutral for the next family.
+  `tether-icons.js` holds every key in one file, but Evan's keys and the
+  template's are **different keys, not a shared one**.
+- **PRODUCT TODO:** customers need their own way to drop their child's photo onto
+  these personalizable icons (Numbers, ABC, and others) the way Evan's were set —
+  today Evan's are hardcoded keys; a buyer has no path to personalize them yet.
 - Mine tiles reference `assets/*.jpg` paths that are **not** in the repo; those
   default photos fall back — Evan's real photos come from saved state/overrides.
   Reliable art goes through `iconUri()` data-URIs in `tether-icons.js`.
