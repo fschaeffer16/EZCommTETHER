@@ -6,7 +6,7 @@
 // fallback so the app still opens with no internet. The emergency endpoint
 // (/api/) is never cached — sending an alert must always hit the live network.
 
-const CACHE = 'evans-talker-v6';
+const CACHE = 'evans-talker-v7';
 
 // Spoken audio is kept separately and never expires: the same words in the same
 // voice are the same sound forever, so a phrase Evan has already used plays back
