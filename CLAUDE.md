@@ -51,6 +51,10 @@ program for low-income/disability families.
 
 ## Architecture notes
 
+- **`APP_MAP.md` is the map of every board, tile, and route** in both apps — read it
+  before touching layout or navigation so I always know where a thing lives (e.g.
+  Numbers is a *School button*, not a home tile). Keep it current in the same commit
+  as any board/tile/route change.
 - `index.html` — the whole app: a `class Component extends DCLogic` inside a moustache-style
   template (`{{ }}`, `<sc-if>`, `<sc-for>`). Large file; edit surgically, don't rewrite.
 - **`index.html` and `demo.html` are two INDEPENDENT apps — separate files, separate pushes.**
