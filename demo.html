@@ -2031,7 +2031,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     div[style*="overflow-x:auto"]::-webkit-scrollbar-thumb:hover{background:rgba(140,133,122,.75)}
   }
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
-  @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
+  @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;height:100lvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
   /* Fill the home-indicator strip below the app instead of showing white. */
   html,body{background:var(--bg,#FBFAF7);min-height:100%;}
 </style>
@@ -2687,7 +2687,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1F9E6E"/><circle cx="50" cy="44" r="22" fill="#fff"/><rect x="44" y="62" width="12" height="9" rx="3" fill="#fff"/><text x="50" y="53" font-size="26" font-family="sans-serif" font-weight="800" fill="#1F9E6E" text-anchor="middle">T</text></svg>
 </template>
 
-<div ref="{{ rootRef }}" id="tether-root" style="width:100%;max-width:480px;height:100dvh;margin:0 auto;background:var(--bg,#FBFAF7);color:var(--ink,#1A1714);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(20,16,12,.22);">
+<div ref="{{ rootRef }}" id="tether-root" style="width:100%;max-width:480px;height:100vh;height:100dvh;height:100lvh;margin:0 auto;background:var(--bg,#FBFAF7);color:var(--ink,#1A1714);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(20,16,12,.22);">
 
   <!-- the real iPhone clock/battery draw over the app (black-translucent PWA);
        this spacer just keeps our content clear of them -->
