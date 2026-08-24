@@ -99,9 +99,12 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 - **sos** / **sosSent** — Emergency. Reached from the red SOS bar, which is
   **anchored flush to the very bottom** of the content region (full-width,
   top-rounded, `bottom:0`, safe-area-bottom padding) rather than floating as a
-  pill. The scroll region reserves ~64px + safe-area at the bottom so the bar
-  never hides content; anchoring it lets the home grid show six tile pictures
-  without scrolling. Excluded from the slim-bar behavior.
+  pill. The scroll region **stops at the top of the bar** (`bottom:calc(56px +
+  safe-area)`, not `inset:0`) so tiles sit **above** the bar, never behind it.
+  Combined with a tightened home-grid **row-gap (14→6px)** and picture-to-caption
+  gap (8→5px), this lets the home grid show **six full tiles (pictures +
+  captions) without scrolling** on standard iPhones while keeping the pictures
+  large (column-gap stays 14px). Excluded from the slim-bar behavior.
 - **voicenote** — parent voice-note recorder (poll/playback via `api/voice.js`).
 
 ## TOP-BAR BEHAVIOR
