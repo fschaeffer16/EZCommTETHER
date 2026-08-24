@@ -7115,7 +7115,7 @@ class Component extends DCLogic {
             : face('tile_colors', '🎨'),
           schoolABCFace: face(this.isEvanProfile() ? 'abc_evan' : 'school_abc', '🔤'),
           schoolNumbersFace: face(this.isEvanProfile() ? 'numbers_evan' : 'school_123', '🔢'),
-          schoolCalcFace: this.isEvanProfile() ? this.calcIconEl(46) : face('school_calc', '🧮'),
+          schoolCalcFace: face('school_calc', '🧮'),
         };
       })(),
       openTeachers: () => this.openPhraseChooser('Teachers', '👩‍🏫', this.teacherPhrases()),
@@ -7134,9 +7134,9 @@ class Component extends DCLogic {
         // It opens the people board now, the same one Family uses: tap a
         // face to get that teacher's phrases, tap Edit to give them a name
         // and a photograph.
-        { label: 'Teachers', glyph: '👩‍🏫', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
-        { label: 'Support Staff', glyph: '🧑‍🔧', color: '#0EA5E9', open: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()) },
-        { label: 'Front Office', glyph: '🗄️', color: '#0EA5E9', open: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()) },
+        { label: 'Teachers', glyph: '👩‍🏫', icon: 'school_teachers', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
+        { label: 'Support Staff', glyph: '🧑‍🔧', icon: 'school_staff', color: '#0EA5E9', open: () => this.openPhraseChooser('Support Staff', '🧑‍🔧', this.staffPhrases()) },
+        { label: 'Front Office', glyph: '🗄️', icon: 'school_office', color: '#0EA5E9', open: () => this.openPhraseChooser('Front Office', '🗄️', this.frontOfficePhrases()) },
         { label: 'Friends', glyph: '👫', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
       ] : this.schoolCatList().map((c) => ({
         label: c.label, glyph: c.glyph, color: c.color, icon: c.icon,
