@@ -100,14 +100,37 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   by layout changes; excluded from the slim-bar behavior.
 - **voicenote** — parent voice-note recorder (poll/playback via `api/voice.js`).
 
-## TOP-BAR BEHAVIOR (shipped 24 Aug 2026)
+## TOP-BAR BEHAVIOR
 
-- **Home & emergency screens** keep the full top stack (Evan header, Yes/No/
-  Help/Bathroom quick-needs, phrase strip). Flag: `showTopStack`.
-- **Every other board** collapses the top stack and shows a slim
-  **🏠 Home · 🙋 Help · ✓ Done** bar so the board fills the screen from the top.
-  Flag: `inBoard`. Home/Done → home; Help speaks "I need help"; back + the
+### The neon top panel (shipped 24 Aug 2026, both apps)
+The home-screen top stack (`showTopStack`) is a **dark neon control band**
+(`#0a0a0f`, rounded bottom) holding three parts:
+- **Header** — owner photo/name (white), `✕ Close`, dark gear (⚙️ → Settings).
+- **Yes · Home · No** in one row (was a 2×2 Yes/No/Help/Bathroom grid). Home is
+  the blue circle tucked between Yes and No (`goHome`). Yes/No speak; Home →
+  home + scroll top.
+- **10 neon quick tiles**, a 5-across × 2-row grid driven by the `neonTiles`
+  prop. Each tile is a **full image** (neon box + picture + caption baked in),
+  so the grid renders the image only — no separate text label. Order:
+  **Help · Restroom · Good · Bad · More / Good morning · Hi · Bye · Thank you ·
+  Done**. Icon keys are shared `qn_*` in `tether-icons.js` (`qn_help`,
+  `qn_restroom`, `qn_good`, `qn_bad`, `qn_more`, `qn_goodmorning`, `qn_hi`,
+  `qn_bye`, `qn_thankyou`, `qn_done`). Help/Restroom **moved here** from the old
+  big top buttons and keep the same spoken phrases ("I need help." / "I need to
+  use the bathroom."). "Bathroom" is captioned **Restroom** here.
+- The old `quickNeeds`/`starterQuick` emoji-pill strip and the `quickScrolls`/
+  `quickGrid` flags are no longer rendered on the home screen (props remain but
+  are unused by the DOM).
+- Both apps default to the **dark** theme (`bg #15120F`), so the panel blends
+  into the app; boards below are unchanged.
+
+### Slim bar inside boards
+- **Every non-home, non-emergency board** collapses the top stack and shows a
+  slim **🏠 Home · 🙋 Help · ✓ Done** bar so the board fills the screen from the
+  top. Flag: `inBoard`. Home/Done → home; Help speaks "I need help"; back + the
   board's name come from the board's own `‹` header.
+- Emergency screens (`sos`/`sosSent`) keep `showTopStack` but are covered by
+  their own overlay; left untouched by the neon-panel styling.
 - Applies to both apps.
 
 ## GOTCHAS / LESSONS
