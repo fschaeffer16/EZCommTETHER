@@ -4114,9 +4114,15 @@ class Component extends DCLogic {
     if (!el) return;
     const c = this.colors(this.state.theme);
     Object.keys(c).forEach((k) => el.style.setProperty('--' + k, c[k]));
-    // Paint the page behind the app to match, so no white strip shows where
-    // the viewport extends past the app (iOS home-indicator area).
-    try { document.body.style.background = c.bg || '#FBFAF7'; document.documentElement.style.background = c.bg || '#FBFAF7'; } catch (e) {}
+    // Paint the page behind the app (the iOS home-indicator strip below the app,
+    // which #tether-root's 100dvh can leave uncovered). On every screen where the
+    // red Emergency bar is pinned to the bottom, paint that strip the SAME red so
+    // the bar reaches the very bottom edge with no dark gap under it; on the start
+    // and SOS overlay screens (no bottom bar) keep it the app background.
+    const s = this.state;
+    const barAtBottom = s.started && s.screen !== 'sos' && s.screen !== 'sosSent';
+    const under = barAtBottom ? '#E23B2E' : (c.bg || '#FBFAF7');
+    try { document.body.style.background = under; document.documentElement.style.background = under; } catch (e) {}
   }
 
   componentDidMount() {
