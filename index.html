@@ -2736,7 +2736,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
        (box + picture + caption baked in), so there is no separate text label.
        Help and Restroom lead; the rest are the quick phrases. -->
   <div style="display:flex;gap:8px;overflow-x:auto;padding:0 14px 9px;flex:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;">
-    <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="10">
+    <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="12">
       <div onClick="{{ g.onTap }}" style="flex:none;width:calc(25% - 6px);aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:pointer;scroll-snap-align:start;" style-active="transform:scale(.93)"><img src="{{ g.img }}" alt="{{ g.label }}" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
     </sc-for>
   </div>
@@ -6988,6 +6988,8 @@ class Component extends DCLogic {
         { label: 'Hi', img: this.iconUri('qn_hi'), onTap: () => this.speak('Hello!') },
         { label: 'Bye', img: this.iconUri('qn_bye'), onTap: () => this.speak('Goodbye!') },
         { label: 'More', img: this.iconUri('qn_more'), onTap: () => this.speak('More.') },
+        { label: 'Now', img: this.iconUri('qn_now'), onTap: () => this.speak('Now.') },
+        { label: 'Later', img: this.iconUri('qn_later'), onTap: () => this.speak('Later.') },
         { label: 'Done', img: this.iconUri('qn_done'), onTap: () => this.speak("I'm done.") },
       ],
       sayFamily: () => this.speak('Family'),
