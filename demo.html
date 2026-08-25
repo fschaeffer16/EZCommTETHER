@@ -3814,7 +3814,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <span style="font-size:22px;color:rgba(255,255,255,.9);flex:none;">›</span>
             </div>
           </sc-if>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px;">
             <sc-for list="{{ peopleList }}" as="person" hint-placeholder-count="0">
               <div onClick="{{ person.onTap }}" style="background:var(--card,#fff);border:2px solid var(--slot,#EDEAE3);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(20,16,12,.06);cursor:pointer;" style-active="transform:scale(.94)">
                 {{ person.avatarEl }}
@@ -5560,7 +5560,7 @@ class Component extends DCLogic {
     }
     return {
       ...p,
-      avatarEl: this.personAvatar(p, 116),
+      avatarEl: this.personAvatar(p, 86),
       phoneEl,
       editable: !!this.state.editMode,
       onTap: () => { if (this.state.editMode) { this.openEditPerson(p); return; } normalTap(); },
