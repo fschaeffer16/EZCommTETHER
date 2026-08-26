@@ -7160,7 +7160,7 @@ class Component extends DCLogic {
         ...c,
         onTap: c.open,
         iconEl: c.icon && this.iconUri(c.icon)
-          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: 46, height: 46, objectFit: 'contain' } })
+          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
           : null,
         noIcon: !(c.icon && this.iconUri(c.icon)),
       })),
