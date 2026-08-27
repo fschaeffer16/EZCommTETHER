@@ -2095,11 +2095,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   // resurrect the sidecar's stale value.
   const tombstones = new Set();
   let loaded = false;
-  let loadP = null;
+  let loadp = null;
 
   function load() {
-    if (loadP) return loadP;
-    loadP = fetch(STATE_FILE)
+    if (loadp) return loadp;
+    loadp = fetch(STATE_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
         // Merge: sidecar loses to any in-memory change that raced ahead of
@@ -2121,7 +2121,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       })
       .catch(() => {})
       .then(() => { loaded = true; subs.forEach((fn) => fn()); });
-    return loadP;
+    return loadp;
   }
 
   // Serialize writes so two near-simultaneous drops on different slots
@@ -2129,19 +2129,19 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   // first. A save requested mid-flight just marks dirty and re-fires on
   // completion with the then-current slots.
   let saving = false;
-  let saveDirty = false;
+  let savedirty = false;
   function save() {
-    if (saving) { saveDirty = true; return; }
+    if (saving) { savedirty = true; return; }
     const w = window.omelette && window.omelette.writeFile;
     if (!w) return;
     saving = true;
     Promise.resolve(w(STATE_FILE, JSON.stringify(slots)))
       .catch(() => {})
-      .then(() => { saving = false; if (saveDirty) { saveDirty = false; save(); } });
+      .then(() => { saving = false; if (savedirty) { savedirty = false; save(); } });
   }
 
   const S_MAX = 5;
-  const clampS = (s) => Math.max(1, Math.min(S_MAX, s));
+  const clamps = (s) => Math.max(1, Math.min(S_MAX, s));
 
   // Normalize a stored slot value. Pre-reframe sidecars stored a bare
   // data-URL string; newer ones store {u, s, x, y}. Either shape is valid.
@@ -2349,7 +2349,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           move = (ev) => {
             const proj = (ev.clientX - rect.left - ox) * ux +
                          (ev.clientY - rect.top - oy) * uy;
-            const s = clampS(s0 * proj / diag0);
+            const s = clamps(s0 * proj / diag0);
             const d = diag0 * s / s0;
             this._view.s = s;
             this._view.x = (ox + ux * d / 2) / fw * 100 - 50;
@@ -2391,7 +2391,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         const cx = (e.clientX - r.left) / r.width * 100 - 50;
         const cy = (e.clientY - r.top) / r.height * 100 - 50;
         const prev = this._view.s;
-        const next = clampS(prev * Math.pow(1.0015, -e.deltaY));
+        const next = clamps(prev * Math.pow(1.0015, -e.deltaY));
         if (next === prev) return;
         const k = next / prev;
         this._view.s = next;
@@ -2479,7 +2479,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       } else if (e.type === 'dragleave') {
         // dragenter/leave fire for every descendant crossing — count depth
         // so hovering the icon inside the empty state doesn't flicker.
-        if (--this._depth <= 0) { this._depth = 0; this.removeAttribute('data-over'); }
+        this._depth -= 1; if (this._depth <= 0) { this._depth = 0; this.removeAttribute('data-over'); }
       } else if (e.type === 'drop') {
         e.preventDefault();
         e.stopPropagation();
@@ -2627,13 +2627,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       // (Claude wrote it into the HTML) so it passes through unchanged.
       let stored = this.id ? getSlot(this.id) : this._local;
       if (stored && stored.u && !/^data:image\//i.test(stored.u)) stored = null;
-      const srcAttr = this.getAttribute('src') || '';
+      const srcattr = this.getAttribute('src') || '';
       this._userUrl = (stored && stored.u) || null;
-      const url = this._userUrl || srcAttr;
+      const url = this._userUrl || srcattr;
       // Don't clobber an in-flight reframe with a store-triggered re-render.
       if (!this.hasAttribute('data-reframe')) {
         this._view = {
-          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : 1,
+          s: stored && Number.isFinite(stored.s) ? clamps(stored.s) : 1,
           x: stored && Number.isFinite(stored.x) ? stored.x : 0,
           y: stored && Number.isFinite(stored.y) ? stored.y : 0,
         };
@@ -5842,7 +5842,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.17'; }
+  APP_BUILD() { return '2026.08.27'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

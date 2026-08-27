@@ -45,6 +45,9 @@ program for low-income/disability families.
   emergency path, anything touching the store) — and say so plainly rather than silently sitting
   on the work.
 - After a deploy each phone should force-close and reopen the app — the service worker caches hard.
+- **Bump `APP_BUILD()` to today's date in any commit that changes `index.html` or `demo.html`**
+  (each file has its own). It is the Settings build line — the one answer to "did this phone
+  actually update?" (RELEASE.md) — and a stale stamp lies to whoever is debugging.
 - **Saved state beats new defaults.** The store keeps `homeOrder`, family order, and overrides, so
   shipping a new default order changes nothing on a phone that already has the app. Bump the
   one-time `applyLayoutRev()` migration when a layout default changes, or the work is invisible.
