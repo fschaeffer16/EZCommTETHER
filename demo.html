@@ -5531,10 +5531,13 @@ class Component extends DCLogic {
     // no `cat`, so they show under Teachers rather than vanishing.
     if (s === 'schoolpeople') {
       const want = this.state.schoolCat || 'teachers';
+      // The Aides category is gone; anyone saved under it belongs to Teachers.
+      const match = (c) => c === want || (want === 'teachers' && c === 'aides');
       return this.data().school
-        .filter((p) => (p.cat || 'teachers') === want)
+        .filter((p) => match(p.cat || 'teachers'))
         .map((p) => this.mapPerson(p, 'school:' + want))
-        .concat(this.customsFor('school:' + want));
+        .concat(this.customsFor('school:' + want))
+        .concat(want === 'teachers' ? this.customsFor('school:aides') : []);
     }
     if (s === 'friends') return this.data().friends.map((p) => this.mapPerson(p, 'friends')).concat(this.customsFor('friends'));
     return this.data().family.map((p) => this.mapPerson(p, 'family')).concat(this.customsFor('family'));
@@ -5973,7 +5976,10 @@ class Component extends DCLogic {
     return [
       { id: 'teachers', label: 'Teachers', glyph: '\u{1F469}\u200D\u{1F3EB}', icon: 'school_teachers', color: '#E23B2E' },
       { id: 'office', label: 'Office Staff', glyph: '\u{1F3A7}', icon: 'school_office', color: '#1F9E6E' },
-      { id: 'aides', label: 'Aides', glyph: '\u{1F9D1}\u200D\u{1F527}', icon: 'school_staff', color: '#3B82F6' },
+      // Aides is no longer its own category \u2014 the wrench icon read as a
+      // repairman, not a teacher's aide, and the pictures are the cues.
+      // Aides live on the Teachers board now (activePeopleList folds any
+      // previously saved 'aides' people into 'teachers' so nobody vanishes).
       { id: 'speech', label: 'Speech/OT', glyph: '\u{1F5E3}\uFE0F', icon: 'school_speech', color: '#A855F7' },
       { id: 'bus', label: 'Bus Driver', glyph: '\u{1F68C}', icon: 'ph_bus', color: '#F59E0B' },
     ];
@@ -7581,7 +7587,7 @@ class Component extends DCLogic {
       nbAddPhrase: () => this.nbAddPhrase(),
       // School and Friends were missing entirely, so a buyer had no way to add
       // their child's actual teacher, aide, therapist or friend.
-      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',
