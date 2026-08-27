@@ -1,0 +1,14 @@
+{
+  "appId": "com.ezvoxa.app",
+  "appName": "EZvoxa",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#15120F"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
