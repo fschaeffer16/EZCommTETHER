@@ -1,0 +1,65 @@
+# Codemagic cloud build for the EZvoxa iOS app — the Mac we don't own.
+# See APPSTORE.md for the whole pipeline; this file is the "Mac with Xcode"
+# step, run on Codemagic's macOS machines instead.
+#
+# One-time setup (after Apple Developer enrollment):
+#   1. codemagic.io → sign up with the GitHub account → add this repository.
+#   2. In App Store Connect: Users and Access → Integrations → App Store
+#      Connect API → generate a key (role: App Manager). Note the Issuer ID
+#      and Key ID, download the .p8 file once.
+#   3. In Codemagic: Teams → Personal → Integrations → Developer Portal →
+#      connect with that key, named "ezvoxa" (referenced below).
+#   4. Create the app in App Store Connect (bundle id com.ezvoxa.app) —
+#      Codemagic can then sign automatically and push builds to TestFlight.
+#
+# Until step 3 is done, this workflow will fail at "Fetch signing files" —
+# that is expected; everything before it (packaging, sync) can still be
+# tested by commenting the signing/build steps out.
+
+workflows:
+  ios-template:
+    name: EZvoxa iOS (template app)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      xcode: latest
+      node: 22
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.ezvoxa.app
+      groups:
+        - appstore   # created automatically by the Developer Portal integration
+      vars:
+        # TestFlight builds talk to the family lane until app.ezvoxa.com is
+        # live (RELEASE.md); flip this to https://app.ezvoxa.com for release.
+        EZ_API_BASE: https://ez-comm-tether.vercel.app
+    scripts:
+      - name: Package the template into the native shell
+        script: |
+          cd native
+          npm ci
+          EZ_API_BASE=$EZ_API_BASE node build.js
+          npx cap sync ios
+      - name: Bump build number
+        script: |
+          cd native/ios/App
+          agvtool new-version -all $BUILD_NUMBER
+      - name: Build the signed IPA
+        script: |
+          xcode-project use-profiles
+          xcode-project build-ipa \
+            --project native/ios/App/App.xcodeproj \
+            --scheme App
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+      email:
+        recipients:
+          - fschaeffer16@yahoo.com
+        notify:
+          success: true
+          failure: true

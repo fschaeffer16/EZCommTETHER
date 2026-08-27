@@ -40,17 +40,26 @@ changes.**
 - The template SOS screen now carries "EZvoxa alerts your family. It is not a
   substitute for calling 911." (in `demo.html`, so web and native match).
 
-## Building (needs a Mac with Xcode, or a cloud build service)
+## Building — Codemagic (decided 27 Aug 2026: no Mac in the house)
+
+`codemagic.yaml` at the repo root is the build: it packages the template
+(`native/build.js`), syncs Capacitor, signs, builds the IPA on Codemagic's
+macOS machines, and pushes to TestFlight. Personal accounts get 500 free
+macOS build minutes/month (a build is well under 20), then $0.095/min.
+
+The yaml's header comment is the one-time setup checklist (Codemagic signup →
+App Store Connect API key → Developer Portal integration named "ezvoxa" →
+create the app record). It cannot run until Apple Developer enrollment is
+done; everything before signing can be smoke-tested earlier.
+
+For reference, the local-Mac equivalent (if one ever appears):
 
 ```
 cd native
 node build.js            # or EZ_API_BASE=https://ez-comm-tether.vercel.app node build.js
 npx cap sync ios
-npx cap open ios         # Mac only: opens Xcode; set the signing team, build
+npx cap open ios         # opens Xcode; set the signing team, build
 ```
-
-No Mac in the house → Codemagic (or similar) builds and uploads to TestFlight
-from this repo; the steps above become its build script.
 
 ## Still to do — code
 
