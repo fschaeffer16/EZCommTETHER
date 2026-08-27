@@ -5528,9 +5528,10 @@ class Component extends DCLogic {
     if (s === 'schoolpeople') {
       const want = this.state.schoolCat || 'teachers';
       return this.data().school
-        .filter((p) => (p.cat || 'teachers') === want)
+        .filter((p) => { const c = p.cat || 'teachers'; return c === want || (want === 'teachers' && c === 'aides'); })
         .map((p) => this.mapPerson(p, 'school:' + want))
-        .concat(this.customsFor('school:' + want));
+        .concat(this.customsFor('school:' + want))
+        .concat(want === 'teachers' ? this.customsFor('school:aides') : []);
     }
     if (s === 'friends') return this.data().friends.map((p) => this.mapPerson(p, 'friends')).concat(this.customsFor('friends'));
     return this.data().family.map((p) => this.mapPerson(p, 'family')).concat(this.customsFor('family'));
@@ -7149,6 +7150,10 @@ class Component extends DCLogic {
         // and a photograph.
         { label: 'Teachers/Staff', glyph: '👩‍🏫', icon: 'school_teachers_staff', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
         { label: 'Friends', glyph: '👫', icon: 'school_friends', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
+        // Speech/OT and the bus driver are people boards like Teachers/Staff:
+        // tap the person for their phrases, Edit to add a name and photo.
+        { label: 'Speech/OT', glyph: '\u{1F5E3}️', icon: 'school_speech', color: '#A855F7', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'speech', editMode: false }) },
+        { label: 'Bus Driver', glyph: '\u{1F68C}', icon: 'ph_bus', color: '#F59E0B', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'bus', editMode: false }) },
       ] : this.schoolCatList().map((c) => ({
         label: c.label, glyph: c.glyph, color: c.color, icon: c.icon,
         // A category holds the actual people now. Tapping one of them is what
@@ -7579,7 +7584,7 @@ class Component extends DCLogic {
       nbAddPhrase: () => this.nbAddPhrase(),
       // School and Friends were missing entirely, so a buyer had no way to add
       // their child's actual teacher, aide, therapist or friend.
-      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',

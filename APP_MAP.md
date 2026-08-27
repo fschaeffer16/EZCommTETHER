@@ -80,11 +80,17 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   **restaurant** (mcdonalds / popeyes / chinese / outback).
 - **school** — School hub. Buttons: **abc**; **123 → numbers**;
   **Calculator → calc**; **Colors → colors**; plus people categories →
-  **schoolpeople**. Evan's categories: **Teachers/Staff** (people board — add
-  people, name/photo via edit wheel) and **Friends**. Template's categories:
-  Teachers / Office Staff / Aides / Speech-OT / Bus Driver. School category
-  icons are shared keys: school_teachers, school_staff, school_office,
-  school_calc (neutral neon art; no faces).
+  **schoolpeople**. Evan's categories: **Teachers/Staff**, **Speech/OT** and
+  **Bus Driver** (people boards — add people, name/photo via edit wheel) and
+  **Friends** (phrase chooser). Template's categories: Teachers / Office Staff /
+  Speech-OT / Bus Driver. **Aides is gone in both apps** (the wrench icon read
+  as a repairman, not an aide): aides belong on the Teachers board, and anyone
+  previously saved under Aides (person `cat` or `school:aides` customs) is
+  folded into Teachers by `activePeopleList` so nobody vanishes; the
+  add-person section picker no longer offers School — Aides. School category
+  icons are shared keys: school_teachers / school_teachers_staff,
+  school_office, school_speech, ph_bus, school_calc (neutral neon art; no
+  faces), all rendered full-cell (~125px at 430w) like the Food board.
 - **buildmenu** — Sentence Build chooser → **words** (Sentence Builder) and
   **abc** (ABC Word Speller).
 - **watch** — TV/Watch. Sub-boards: **netflix**, **disney**, **sports**
