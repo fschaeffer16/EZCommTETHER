@@ -3945,8 +3945,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <div onClick="{{ cat.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)"><sc-if value="{{ cat.noIcon }}" hint-placeholder-val="{{ true }}"><span style="width:100%;aspect-ratio:1;font-size:76px;line-height:1;display:flex;align-items:center;justify-content:center;">{{ cat.glyph }}</span></sc-if>{{ cat.iconEl }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ cat.label }}</span></div>
             </sc-for>
             <div onClick="{{ openABC }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolABCFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
-            <div onClick="{{ openNumbers }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolNumbersFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
-            <div onClick="{{ openCalc }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolCalcFace }}<span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
+            <div onClick="{{ openNumbers }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolNumbersFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
+            <div onClick="{{ openCalc }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolCalcFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
             <div onClick="{{ openColorsSchool }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolColorsFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Colors</span></div>
                       </div>
         </div>
@@ -5997,7 +5997,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.3'; }
+  APP_BUILD() { return '2026.08.28.4'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
