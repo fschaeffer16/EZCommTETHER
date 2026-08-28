@@ -5583,7 +5583,12 @@ class Component extends DCLogic {
 
   mapPerson(p, kind) {
     const nm = p.name;
-    const options = this.personPhrases(kind || 'family', nm);
+    // Their name is the first thing he can say. Calling somebody by name is a
+    // sentence on its own, and it means the name a teacher types when she adds
+    // herself is already a phrase, without anybody entering it twice.
+    const named = String(nm || '').trim();
+    const options = (named ? [{ glyph: '\uD83D\uDC4B', txt: named, say: named, color: this.ringFor(named) }] : [])
+      .concat(this.personPhrases(kind || 'family', nm));
     const canText = !!(p.phone && String(p.phone).trim());
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
     // Opening someone doesn't announce their name — tapping their face inside
@@ -5886,7 +5891,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.29'; }
+  APP_BUILD() { return '2026.08.30'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6441,8 +6446,9 @@ class Component extends DCLogic {
       // first, the category's built-ins follow, so adding a new teacher
       // never means re-entering the whole list.
       const own = (b.phrases || []).map((p) => (p || '').trim()).filter(Boolean);
-      const options = own.map((t) => ({ glyph: '\u2B50', txt: t, say: t, color: '#7A5CFF' }))
-        .concat(this.personPhrases(section, nm).filter((o) => !own.includes(o.txt)));
+      const options = [{ glyph: '\uD83D\uDC4B', txt: nm, say: nm, color: ring }]
+        .concat(own.filter((t) => t !== nm).map((t) => ({ glyph: '\u2B50', txt: t, say: t, color: '#7A5CFF' })))
+        .concat(this.personPhrases(section, nm).filter((o) => !own.includes(o.txt) && o.txt !== nm));
       const bigAvatar = img
         ? React.createElement('img', { src: img, style: { width: 84, height: 84, borderRadius: '50%', objectFit: 'cover', border: '3px solid ' + ring } })
         : this.initialEl({ name: nm, ring }, 84);
