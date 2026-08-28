@@ -4023,7 +4023,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;">
             <div>
               <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">{{ edNameLabel }}</div>
-              <input defaultValue="{{ edLabel }}" onInput="{{ edOnLabel }}" placeholder="Button name" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
+              <input defaultValue="{{ edLabel }}" onInput="{{ edOnLabel }}" placeholder="{{ edNamePlaceholder }}" style="box-sizing:border-box;width:100%;padding:12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
             </div>
             <sc-if value="{{ edShowSay }}" hint-placeholder-val="{{ true }}"><div>
               <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:0 2px 5px;">What it says out loud</div>
@@ -4525,6 +4525,8 @@ class Component extends DCLogic {
   edSave() {
     const e = this._ed; if (!e) return;
     if (e.isPerson && e.person) {
+      this._pendingNew = null;
+      if (!(e.label && e.label.trim()) && !(e.person.name || '').trim()) e.person.name = 'New Person';
       if (e.label && e.label.trim()) e.person.name = e.label.trim();
       if (e.image) e.person.photo = e.image;
       const setField = (k, v) => { const t = (v || '').trim(); if (t) e.person[k] = t; else delete e.person[k]; };
@@ -4545,7 +4547,23 @@ class Component extends DCLogic {
     this.saveStore(); this._ed = null; this.setState({ editSheet: false });
   }
   edReset() { const e = this._ed; if (!e) return; const d = this.data(); if (d.overrides) delete d.overrides[e.key]; this.saveStore(); this._ed = null; this.setState({ editSheet: false }); }
-  edCancel() { this._ed = null; this.setState({ editSheet: false }); }
+  edCancel() {
+    // Backing out of a brand new person takes them off the board again, so a
+    // cancelled add never leaves a blank face behind.
+    const pending = this._pendingNew;
+    if (pending) {
+      const d = this.data();
+      for (const list of [d.school, d.friends, d.family]) {
+        if (!list) continue;
+        const i = list.indexOf(pending);
+        if (i >= 0) { list.splice(i, 1); break; }
+      }
+      this._pendingNew = null;
+      this.saveStore();
+    }
+    this._ed = null;
+    this.setState({ editSheet: false });
+  }
 
   // Food is one of the few boards that isn't stored per-device — it's read
   // straight from here every render. So the buyer's neutral list and Evan's
@@ -5868,7 +5886,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28'; }
+  APP_BUILD() { return '2026.08.29'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7151,25 +7169,19 @@ class Component extends DCLogic {
       // mode is unlocked — same rule as every other editing control.
       canAddPerson: !!s.editMode && (s.screen === 'schoolpeople' || s.screen === 'friends' || s.screen === 'family'),
       addPersonHere: () => {
-        const sec = s.screen === 'friends' ? 'friends'
-          : s.screen === 'family' ? 'family'
-          : 'school:' + (s.schoolCat || 'teachers');
-        const d = this.nb();
-        d.section = sec; d.label = ''; d.emoji = '⭐'; d.image = null; d.phrases = [''];
-        // Land on the form, not at the top of Settings. A teacher who has just
-        // typed the password should be looking at the name field, not hunting
-        // for it past the voice and sync controls.
-        this.setState({ screen: 'settings', setOpen: 'buttons', pwUnlocked: true, nbErr: '', nbAdded: '' }, () => {
-          const put = () => {
-            const root = document.getElementById('nb-form');
-            if (!root) return false;
-            const sc = root.closest('[style*="overflow"]');
-            if (sc) sc.scrollTop = Math.max(0, root.offsetTop - 12);
-            return true;
-          };
-          if (!put()) setTimeout(put, 60);
-          setTimeout(put, 240);
-        });
+        // Adding somebody happens right here on the board. This used to throw
+        // the teacher out to the Settings screen and a generic button form
+        // with an emoji picker, a section dropdown and a phrase list, which
+        // is why teachers could not work out how to add a teacher. Now it
+        // makes the person and opens their card: name, photo, save.
+        const d = this.data();
+        const p = { id: 'p' + Date.now(), name: '', ring: this.ringFor('n' + Date.now()) };
+        if (s.screen === 'friends') { d.friends = d.friends || []; d.friends.push(p); }
+        else if (s.screen === 'family') { d.family = d.family || []; d.family.push(p); }
+        else { p.cat = s.schoolCat || 'teachers'; d.school = d.school || []; d.school.push(p); }
+        this._pendingNew = p;
+        this.saveStore();
+        this.openEditPerson(p);
       },
       peopleTitle: s.screen === 'schoolpeople'
         ? (this.schoolCatLabel(s.schoolCat) || 'School')
@@ -7371,6 +7383,7 @@ class Component extends DCLogic {
       edHasOverride: !!(this._ed && !this._ed.isPerson && this.data().overrides && this.data().overrides[this._ed.key]),
       edShowSay: !(this._ed && this._ed.isPerson),
       edNameLabel: (this._ed && this._ed.isPerson) ? 'Name (spoken when tapped)' : 'Name on the button',
+      edNamePlaceholder: (this._ed && this._ed.isPerson) ? 'Their name, for example Mrs. Delgado' : 'Button name',
       edTitle: (this._ed && this._ed.isPerson) ? 'Edit Person' : 'Edit Button',
       edIsPerson: !!(this._ed && this._ed.isPerson),
       edPhone: this._ed ? (this._ed.phone || '') : '',
