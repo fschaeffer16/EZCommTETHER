@@ -128,6 +128,14 @@
   .msg .play{display:inline-flex;align-items:center;gap:8px;color:#fff}
   .msg .play .dot{width:30px;height:30px;border-radius:50%;background:var(--violet);display:inline-flex;align-items:center;justify-content:center;color:#1A1024;font-size:13px}
 
+  .steps{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column;gap:34px}
+  .steps li{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:start;padding-top:30px;border-top:1px solid var(--line)}
+  .steps li:first-child{border-top:none;padding-top:0}
+  .steps .n{font-family:var(--disp);font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:8px}
+  .steps b{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1.25;letter-spacing:-.01em;display:block;margin-bottom:10px;color:var(--ink)}
+  .steps p{margin:0 0 .7em;color:var(--sub);font-size:17.5px}
+  .steps img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+  @media (max-width:760px){ .steps li{grid-template-columns:1fr;gap:16px} .steps img{max-width:360px} }
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
@@ -161,6 +169,7 @@
       <button class="tab" role="tab" data-page="different" aria-selected="false">What Makes It Different</button>
       <button class="tab" role="tab" data-page="means" aria-selected="false">What EZvoxa Means</button>
       <button class="tab" role="tab" data-page="try" aria-selected="false">Why Try It</button>
+      <button class="tab" role="tab" data-page="setup" aria-selected="false">Add a Teacher</button>
       <button class="tab" role="tab" data-page="secure" aria-selected="false">Is It Secure?</button>
     </div>
   </div>
@@ -446,7 +455,7 @@
     <p class="quiet" style="font-family:var(--disp);font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-top:34px">Frank Schaeffer · EZ Voice LLC · Fort Pierce, Florida · ezvoxa.com</p>
   </div></section>
 
-  <div class="nextbar"><button class="nextbtn" data-goto="secure">Continue: is it secure? →</button></div>
+  <div class="nextbar"><button class="nextbtn" data-goto="setup">Continue: adding a teacher →</button></div>
 </main>
 
 <!-- ============ TAB 7: IS IT SECURE ============ -->
@@ -482,6 +491,36 @@
   </div></section>
 
   <div class="nextbar"><button class="nextbtn" data-goto="story">↺ Back to the beginning</button></div>
+</main>
+
+
+<!-- ============ TAB: ADD A TEACHER ============ -->
+<main class="tabpage" id="page-setup">
+  <section class="beat reveal" style="border-top:none;padding-top:12vh"><div class="wrap">
+    <div class="eyebrow">For teachers and staff</div>
+    <p class="big">Add a teacher in 9 taps. Here is a picture of every step.</p>
+    <p>Practise on the demo copy first. It is not connected to any student, so nothing you do there can break anything: <a href="https://ez-comm-tether.vercel.app/demo.html" target="_blank" rel="noopener" style="color:var(--amber)">open the practice app</a>.</p>
+    <ul class="steps">
+      <li><div><span class="n">Step 1</span><b>Open the app and tap School</b><p>Everything about the people in the classroom lives behind the School button.</p></div><img src="guide/step1.jpg" loading="lazy" alt="Screenshot of step 1"></li>
+      <li><div><span class="n">Step 2</span><b>Tap Teachers</b><p>Speech/OT and Bus Driver work exactly the same way.</p></div><img src="guide/step2.jpg" loading="lazy" alt="Screenshot of step 2"></li>
+      <li><div><span class="n">Step 3</span><b>Tap Edit, top right</b><p>Nothing can be changed until you do. That is what stops a student changing the board by accident.</p></div><img src="guide/step3.jpg" loading="lazy" alt="Screenshot of step 3"></li>
+      <li><div><span class="n">Step 4</span><b>Type the password and tap Unlock</b><p>In the practice copy the password is 1234. On a student device it is the family password, which the parent gives you. You type it once per visit.</p></div><img src="guide/step4.jpg" loading="lazy" alt="Screenshot of step 4"></li>
+      <li><div><span class="n">Step 5</span><b>Tap the dashed + Add someone square</b><p>It sits at the end of the faces.</p></div><img src="guide/step5.jpg" loading="lazy" alt="Screenshot of step 5"></li>
+      <li><div><span class="n">Step 6</span><b>A card opens right on the board</b><p>You never leave the Teachers board. Everything you need is on this card.</p></div><img src="guide/step6.jpg" loading="lazy" alt="Screenshot of step 6"></li>
+      <li><div><span class="n">Step 7</span><b>Type the name, then add the photo</b><p>Type the name the way the student should hear it out loud. Then tap the Photo square, choose Take Photo, take the picture, and tap Use Photo. The camera menu comes from the iPad itself, so it is not pictured here.</p></div><img src="guide/step7.jpg" loading="lazy" alt="Screenshot of step 7"></li>
+      <li><div><span class="n">Step 8</span><b>Tap Save</b><p>They are on the board straight away, with their face as the button.</p></div><img src="guide/step8.jpg" loading="lazy" alt="Screenshot of step 8"></li>
+      <li><div><span class="n">Step 9</span><b>Tap Done to lock the board again</b><p>Edit turns back into a locked board so nothing changes by accident.</p></div><img src="guide/step9.jpg" loading="lazy" alt="Screenshot of step 9"></li>
+      <li><div><span class="n">Step 10</span><b>That is it. They can already talk.</b><p>Tap the person and the phrases are there, starting with their name: "Can you help me?", "I finished my work.", "May I go see the nurse?" and more. You never have to type any phrases.</p></div><img src="guide/step10.jpg" loading="lazy" alt="Screenshot of step 10"></li>
+    </ul>
+  </div></section>
+
+  <section class="beat reveal"><div class="wrap">
+    <div class="eyebrow">Two things worth knowing</div>
+    <p><strong>Photos never leave the device.</strong> A picture you take is stored on that tablet only. It is never uploaded, never synced, and it is gone when you remove the person or delete the app.</p>
+    <p><strong>The picture is the button.</strong> A student who does not read finds you by your face. The name underneath is really for the adults.</p>
+  </div></section>
+
+  <div class="nextbar"><button class="nextbtn" data-goto="secure">Continue: is it secure? →</button></div>
 </main>
 
 
