@@ -11,7 +11,7 @@
     --serif:'Newsreader', Georgia, 'Times New Roman', serif;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.65;font-size:19px;font-weight:300}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.6;font-size:19px;font-weight:400}
   ::selection{background:var(--amber);color:#0A0A0F}
   .eyebrow{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
@@ -137,11 +137,17 @@
   @media (max-width:900px){
     .lab-grid{grid-template-columns:1fr;gap:28px}
     .phone-col{position:static;max-width:390px;margin:0 auto}
-    .panel{min-height:0}
+    .panel{min-height:0;padding:26px 22px}
     .mast-in{flex-direction:column;gap:0;align-items:stretch}
     .brand{padding:12px 0 4px}
     .tabs{margin-left:0;justify-content:flex-start;padding-bottom:4px}
-    .hero{min-height:56vh}
+    .hero{min-height:0;padding:52px 0 40px}
+    body{font-size:20px}
+    .beat{padding:46px 0}
+    .question{padding:70px 0}
+    .hero p{font-size:20px}
+    .nextbar{padding:40px 0 64px}
+    .lab{padding:40px 0 70px}
   }
 </style>
 
