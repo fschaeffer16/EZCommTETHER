@@ -5967,7 +5967,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.6'; }
+  APP_BUILD() { return '2026.08.28.7'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7163,12 +7163,12 @@ class Component extends DCLogic {
       // (box + picture + caption baked in), so the grid renders the image only.
       neonTiles: [
         { label: 'Help', img: this.iconUri('qn_help'), onTap: () => this.speak('I need help.') },
+        // Sits beside Help on purpose. Needing help and having a question are
+        // the two things he has to be able to say without hunting for them.
+        { label: 'Question', img: this.iconUri('qn_question'), onTap: () => this.speak('I have a question.') },
         { label: 'Good', img: this.iconUri('qn_good'), onTap: () => this.speak('Good.') },
         { label: 'Bad', img: this.iconUri('qn_bad'), onTap: () => this.speak('Bad.') },
         { label: 'Restroom', img: this.iconUri('qn_restroom'), onTap: () => this.speak('I need to use the bathroom.') },
-        // Right after the four he already knows, so their positions do not
-        // move and this is the next thing his thumb reaches.
-        { label: 'Question', img: this.iconUri('qn_question'), onTap: () => this.speak('I have a question.') },
         { label: 'Thank you', img: this.iconUri('qn_thankyou'), onTap: () => this.speak('Thank you.') },
         { label: 'Good morning', img: this.iconUri('qn_goodmorning'), onTap: () => this.speak('Good morning!') },
         { label: 'Hi', img: this.iconUri('qn_hi'), onTap: () => this.speak('Hello!') },
