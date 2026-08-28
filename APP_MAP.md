@@ -154,6 +154,40 @@ The home-screen top stack (`showTopStack`) is a **dark neon control band**
   their own overlay; left untouched by the neon-panel styling.
 - Applies to both apps.
 
+## TABLET AND LAPTOP LAYOUT (shipped 28 Aug 2026, both apps)
+
+A tablet is not a big phone, so it gets its own shape rather than a stretched
+phone column. Two pieces, both pure CSS on top of the same DOM:
+
+### The classroom rail (`#ez-rail`)
+- Lives inside `#ez-stage`, a flex row that wraps the content region. The
+  content region keeps its exact `flex:1;position:relative;overflow:hidden`
+  style, so every board overlay still resolves against it.
+- `display:none` by default. Shown at **`min-width:760px` and
+  `min-height:600px`**, which covers portrait iPad (820px) and keeps a phone in
+  landscape on the phone layout.
+- Width **280px** at that breakpoint (2 columns, ~120px pictures), **400px** at
+  `min-width:1040px` (3 columns, ~116px pictures).
+- Contents come from `railTiles()`: the four School people categories from
+  `schoolTiles()` (Teachers, Office Staff, Speech/OT, Bus Driver for the
+  template; Teachers/Staff, Friends, Speech/OT, Bus Driver for Evan) followed by
+  the four classroom tools — **ABC, 123, Calculator, Colors**.
+- Every rail button lands on the same screen the School board sends you to, so
+  a teacher reaches any of them in one tap from anywhere instead of Home →
+  School → the button.
+- The rail stays on screen while a board is open. The slim Home/Help/Done bar
+  runs full width above it.
+
+### Board columns
+- `schoolCats` and `railItems` both read `schoolTiles()`. Add a category there
+  and it appears on the School board and in the rail.
+- Column bumps are deferred until the **board itself** has the room, because the
+  rail takes 280–400px off the width: nothing changes at 760px, `min-width:1040px`
+  adds one column to every grid, `min-width:1280px` adds another. `#tether-root`
+  is capped at 1200px.
+- Selectors match React's **normalised** inline styles (`gap: 4px 14px`, spaces
+  after colons), not the source strings.
+
 ## GOTCHAS / LESSONS
 - **Numbers is a School button, not a home tile** (for Evan). Verify a "tile"
   actually exists before adding one.

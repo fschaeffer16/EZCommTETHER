@@ -2019,14 +2019,22 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   }
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
   @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;height:100lvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
-  /* ── Tablet and laptop layout ─────────────────────────────────────────
-     On an iPad or a computer the app used to draw a 480px phone column in
-     the middle of a big screen. Here it uses the room it has: a wider
-     frame, more tiles per row, and BIGGER pictures, never smaller ones.
-     Selectors match React's normalised inline styles. Guarded on height as
-     well as width, so a phone held sideways keeps the phone layout. */
-  @media (min-width:700px) and (min-height:600px){
+  /* ── Tablet and laptop layout ──────────────────────────────────
+     A tablet is not a big phone. It gets its own shape: the classroom rail
+     opens down the left side so every school button is one tap from
+     anywhere, and the board keeps the roomy column the pictures were drawn
+     for. Wider still and the board gains columns, with BIGGER pictures,
+     never smaller ones. Selectors match React's normalised inline styles.
+     Guarded on height as well as width, so a phone held sideways keeps the
+     phone layout. */
+  @media (min-width:760px) and (min-height:600px){
     #tether-root{max-width:1200px!important;box-shadow:none!important;}
+    #ez-rail{display:block!important;}
+    /* Neon quick words: four visible becomes six, each one larger */
+    div[style*="width: calc(25% - 6px)"]{width:calc(16.66% - 6px)!important;}
+  }
+  /* Wide enough that the board itself has room for another column */
+  @media (min-width:1040px) and (min-height:600px){
     /* Home board: two across becomes three */
     div[style*="grid-template-columns: 1fr 1fr; gap: 4px 14px"]{grid-template-columns:repeat(3,1fr)!important;gap:10px 20px!important;}
     /* Item boards that were two across (food, drinks, snacks, watch) */
@@ -2035,11 +2043,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
     /* People boards: three faces across becomes four */
     div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
-    /* Neon quick words: four visible becomes six, each one larger */
-    div[style*="width: calc(25% - 6px)"]{width:calc(16.66% - 6px)!important;}
+    /* The rail has room for a third column of school buttons */
+    #ez-rail{width:400px!important;}
+    #ez-rail div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:repeat(3,1fr)!important;}
   }
-  /* Landscape iPad and any computer: one more column again */
-  @media (min-width:1000px) and (min-height:600px){
+  /* A laptop or a desktop: one more column again */
+  @media (min-width:1280px) and (min-height:600px){
     div[style*="grid-template-columns: 1fr 1fr; gap: 4px 14px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(5,1fr)!important;}
@@ -2782,6 +2791,22 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </div>
   </sc-if>
 
+  <!-- ── CLASSROOM RAIL ─────────────────────────────────────────
+       Tablet and laptop only. CSS hides it under 760px, so a phone is
+       untouched. On a phone School is a board you have to open; on a tablet
+       there is room to leave the school buttons out in the open, down one
+       side, where a teacher reaches any of them in a single tap without
+       taking the device away from him. Same destinations and the same
+       pictures as the School board, so there is nothing new to learn. -->
+  <div id="ez-stage" style="flex:1;display:flex;min-height:0;">
+  <div id="ez-rail" style="display:none;flex:none;width:280px;box-sizing:border-box;background:#0a0a0f;border-right:1px solid rgba(255,255,255,.10);border-radius:0 26px 0 0;padding:15px 14px 22px;overflow-y:auto;box-shadow:6px 0 22px rgba(0,0,0,.35);">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7FD7FF;padding:0 2px 12px;">Classroom</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px 12px;">
+      <sc-for list="{{ railItems }}" as="r" hint-placeholder-count="0">
+        <div onClick="{{ r.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.94)"><sc-if value="{{ r.noIcon }}" hint-placeholder-val="{{ true }}"><span style="width:100%;aspect-ratio:1;font-size:66px;line-height:1;display:flex;align-items:center;justify-content:center;">{{ r.glyph }}</span></sc-if>{{ r.iconEl }}<span style="font-size:14px;font-weight:800;color:#fff;text-align:center;line-height:1.1;">{{ r.label }}</span></div>
+      </sc-for>
+    </div>
+  </div>
   <!-- board -->
   <div style="flex:1;position:relative;overflow:hidden;">
     <div ref="{{ boardScrollRef }}" style="position:absolute;top:0;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 46px);overflow-y:auto;padding:4px 18px 10px;">
@@ -4008,6 +4033,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </sc-if>
 
   </div>
+  </div><!-- /ez-stage -->
 
   <sc-if value="{{ showEditSheet }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ edCancel }}" style="position:absolute;inset:0;background:rgba(20,16,12,.5);display:flex;flex-direction:column;justify-content:flex-end;">
@@ -5891,7 +5917,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.30'; }
+  APP_BUILD() { return '2026.08.28'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6016,6 +6042,61 @@ class Component extends DCLogic {
   schoolCatLabel(id) {
     const c = this.schoolCatList().find((x) => x.id === id);
     return c ? c.label : null;
+  }
+
+  // The School board's people tiles, as data. The School board and the
+  // classroom rail both draw from this, so a category added here shows up
+  // in both places instead of only one.
+  schoolTiles() {
+    return (this.isEvanProfile() ? [
+      // Teachers opened a list of phrases, which meant Evan's board had
+      // nowhere to put an actual teacher — no faces, no Edit, no way in.
+      // It opens the people board now, the same one Family uses: tap a
+      // face to get that teacher's phrases, tap Edit to give them a name
+      // and a photograph.
+      { label: 'Teachers/Staff', glyph: '👩‍🏫', icon: 'school_teachers_staff', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
+      { label: 'Friends', glyph: '👫', icon: 'school_friends', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
+      // Speech/OT and the bus driver are people boards like Teachers/Staff:
+      // tap the person for their phrases, Edit to add a name and photo.
+      { label: 'Speech/OT', glyph: '\u{1F5E3}️', icon: 'school_speech', color: '#A855F7', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'speech', editMode: false }) },
+      { label: 'Bus Driver', glyph: '\u{1F68C}', icon: 'ph_bus', color: '#F59E0B', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'bus', editMode: false }) },
+    ] : this.schoolCatList().map((c) => ({
+      label: c.label, glyph: c.glyph, color: c.color, icon: c.icon,
+      // A category holds the actual people now. Tapping one of them is what
+      // reaches the phrases, so nothing is lost by the extra tap.
+      open: () => this.setState({ screen: 'schoolpeople', schoolCat: c.id, editMode: false }),
+    }))).map((c) => ({
+      ...c,
+      onTap: c.open,
+      iconEl: c.icon && this.iconUri(c.icon)
+        ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
+        : null,
+      noIcon: !(c.icon && this.iconUri(c.icon)),
+    }));
+  }
+
+  // Every school button in one list: the people categories above, then the
+  // classroom tools. This is what the tablet rail draws down the side.
+  railTiles() {
+    const ev = this.isEvanProfile();
+    const face = (key, fallback) => {
+      const src = this.iconUri(key);
+      return src
+        ? React.createElement('img', { src, alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
+        : React.createElement('span', { style: { fontSize: 44, lineHeight: 1 } }, fallback);
+    };
+    const tools = [
+      { label: 'ABC', icon: ev ? 'abc_evan' : 'school_abc', glyph: '\u{1F524}', open: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'school' }) },
+      { label: '123', icon: ev ? 'numbers_evan' : 'school_123', glyph: '\u{1F522}', open: () => this.setState({ screen: 'numbers', numFrom: 'school' }) },
+      { label: 'Calculator', icon: 'school_calc', glyph: '\u{1F9EE}', open: () => this.setState({ screen: 'calc' }) },
+      { label: 'Colors', icon: ev ? 'colors_tile' : 'tile_colors', glyph: '\u{1F3A8}', open: () => this.setState({ screen: 'colors', colorsFrom: 'school' }) },
+    ];
+    return this.schoolTiles().concat(tools.map((t) => ({
+      ...t,
+      onTap: t.open,
+      iconEl: this.iconUri(t.icon) ? face(t.icon, t.glyph) : null,
+      noIcon: !this.iconUri(t.icon),
+    })));
   }
 
   speechOtPhrases() {
@@ -7224,31 +7305,8 @@ class Component extends DCLogic {
       // set a school actually has — Friends moved out to its own home tile, and
       // Speech/OT took the empty slot. The colours are the cue for a child who
       // can't read the words, so they are fixed per category and never shuffle.
-      schoolCats: (this.isEvanProfile() ? [
-        // Teachers opened a list of phrases, which meant Evan's board had
-        // nowhere to put an actual teacher — no faces, no Edit, no way in.
-        // It opens the people board now, the same one Family uses: tap a
-        // face to get that teacher's phrases, tap Edit to give them a name
-        // and a photograph.
-        { label: 'Teachers/Staff', glyph: '👩‍🏫', icon: 'school_teachers_staff', color: '#0EA5E9', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'teachers', editMode: false }) },
-        { label: 'Friends', glyph: '👫', icon: 'school_friends', color: '#0EA5E9', open: () => this.openPhraseChooser('Friends', '👫', this.friendPhrases()) },
-        // Speech/OT and the bus driver are people boards like Teachers/Staff:
-        // tap the person for their phrases, Edit to add a name and photo.
-        { label: 'Speech/OT', glyph: '\u{1F5E3}️', icon: 'school_speech', color: '#A855F7', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'speech', editMode: false }) },
-        { label: 'Bus Driver', glyph: '\u{1F68C}', icon: 'ph_bus', color: '#F59E0B', open: () => this.setState({ screen: 'schoolpeople', schoolCat: 'bus', editMode: false }) },
-      ] : this.schoolCatList().map((c) => ({
-        label: c.label, glyph: c.glyph, color: c.color, icon: c.icon,
-        // A category holds the actual people now. Tapping one of them is what
-        // reaches the phrases, so nothing is lost by the extra tap.
-        open: () => this.setState({ screen: 'schoolpeople', schoolCat: c.id, editMode: false }),
-      }))).map((c) => ({
-        ...c,
-        onTap: c.open,
-        iconEl: c.icon && this.iconUri(c.icon)
-          ? React.createElement('img', { src: this.iconUri(c.icon), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
-          : null,
-        noIcon: !(c.icon && this.iconUri(c.icon)),
-      })),
+      schoolCats: this.schoolTiles(),
+      railItems: this.railTiles(),
       openABC: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'school' }),
       // Word-tools menu: the Sentence Build tile opens here, then Evan picks the
       // sentence builder or the ABC word speller. Each remembers it came from the
