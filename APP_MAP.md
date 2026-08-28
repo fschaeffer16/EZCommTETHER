@@ -156,51 +156,52 @@ The home-screen top stack (`showTopStack`) is a **dark neon control band**
 
 ## TABLET AND LAPTOP LAYOUT (rebuilt 28 Aug 2026, both apps)
 
-A tablet is a different app shape, not a stretched phone. On a phone
-navigation is one screen at a time: you open a board, it covers everything,
-you press Back before you can go anywhere else. On a tablet nothing is ever
-covered, so nothing has to be un-covered.
+Built for function, not for looks. The left rail that shipped earlier the same
+day is **gone** — it was a suggestion, not the design. What replaced it follows
+Frank's own mockups: two-level navigation with a clear back path, one toolbar
+that never leaves, and his most-used words always on screen.
 
-Everything below is one `wide` state flag plus width-driven CSS on the **same
-markup**. A phone renders exactly what it always did (verified pixel-identical).
+Everything is one `wide` state flag plus width-driven CSS on the **same**
+markup. A phone renders exactly what it always did (verified pixel-identical).
 
 ### The `wide` flag
 - `isWideScreen()` — `matchMedia('(min-width: 760px) and (min-height: 600px)')`.
-  Read in the constructor so the first paint is already correct; `watchWidth()`
+  Read in the constructor so the first paint is already right; `watchWidth()`
   re-reads it on rotation. Height is in the test so a phone held sideways stays
-  a phone.
-- 760px covers portrait iPad (820px).
+  a phone. 760px covers portrait iPad (820px).
 
-### Three regions when `wide`
-1. **Toolbar** (`wideTop`) — one row, always on screen: photo, name, **Yes ·
-   No · Help**, Home, Close, gear. Replaces the phone's tall neon top stack.
-   `showTopStack` and `inBoard` are both forced false when `wide`, so the
-   phone's stack and its slim Home/Help/Done bar never render on a tablet.
-2. **Left rail** (`#ez-rail`, inside `#ez-stage`) — the navigation, permanent.
-   **Classroom** section from `railTiles()` (the `schoolTiles()` categories then
-   ABC / 123 / Calculator / Colors), then **Boards** from `homeTiles` — every
-   home tile. 340px wide (2 columns), 400px at `min-width:1100px` (3 columns).
-3. **Main pane** — the content region, unchanged in structure, so every board
-   overlay still resolves against it.
+### Level one: home
+- **Toolbar** (`wideTop`), one row, always on screen: photo, name, **Yes · No ·
+  Help**, Home, Close, gear. `showTopStack` and `inBoard` are both forced false
+  when `wide`, so the phone's tall neon stack and its slim Home/Help/Done bar
+  never render on a tablet. Yes and No no longer vanish when a board opens.
+- **Boards grid** — the ordinary home tiles, 3 across at 760px, 4 at 1100px.
+- **Quick words** (`#ez-quick`, shown on `wideHome`) — all **12 `neonTiles`**
+  pinned above the emergency bar and never scrolled away. 6 across in two rows,
+  12 across in one row at 1100px; each tile capped at 118px. The caption is
+  baked into the picture, so the tile is the whole button.
+- `wideHome` = wide, `screen === 'board'`, **not** `editMode`. In edit mode the
+  quick block hides and the grid gets the full height back, because that is
+  where tiles are rearranged.
+- `homeScrollCss` moves the scroller's floor to clear the quick block
+  (`bottom: safe + 350px`; `#ez-homescroll` overrides it to `+208px` at 1100px).
+  **If the quick block's height changes, both numbers change together.**
 
-### What "home" is on a tablet
-`wideHome` = wide, `screen === 'board'`, not `editMode`. The home tile grid is
-hidden (`homeScrollCss` → `display:none`) because the rail already holds every
-tile, and the pane shows the **12 `neonTiles` at full size** instead — the strip
-that scrolls four-at-a-time on a phone. In **edit mode the grid comes back** and
-the tile pane hides, so tiles are still arranged the same way.
+### Level two: a board
+A board overlay covers the grid and the quick words, exactly as on a phone.
+The toolbar stays. The board's own `‹` returns home. Nothing else to learn.
 
 ### Column growth
-The rail takes 340–400px, so grids only gain a column once the pane itself has
-the room: nothing at 760px, one more at `min-width:1100px`, one more at
-`min-width:1280px`. `#tether-root` is capped at 1280px. Selectors match React's
-**normalised** inline styles (`gap: 4px 14px`, spaces after colons), not source.
+`min-width:760px` and `min-width:1100px` are the two tiers. Home 3 → 4; the
+two-across item boards 3 → 4; the three-across boards (School, colours, night,
+feelings) go to **4 and stay there**, matching the mockup; people boards 4 → 5.
+`#tether-root` is capped at 1280px. Selectors match React's **normalised**
+inline styles (`gap: 4px 14px`, spaces after colons), not the source.
 
 ### Known, pre-existing
 A board overlay paints over the red SOS bar (it is earlier in the content
-region), on phone and tablet alike. The bar is on screen at home and inside
-Settings; Emergency is still reachable from the rail's Home button. Not changed
-here.
+region), on phone and tablet alike. The bar is on screen at home and in
+Settings. Not changed here.
 
 ## GOTCHAS / LESSONS
 - **Numbers is a School button, not a home tile** (for Evan). Verify a "tile"
