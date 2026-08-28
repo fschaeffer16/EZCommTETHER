@@ -24,6 +24,10 @@ program for low-income/disability families.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.
+- **Anything meant to be shown or shared lives on OUR domain, never behind Claude.** No
+  Claude-hosted artifacts as the deliverable — recipients must never need a Claude account
+  to view something. Interactive pages ship as static files in this repo (deployed via
+  main → ez-comm-tether.vercel.app / ezvoxa.com), e.g. `hearhim.html`.
 - **Keep the interactive model and the business plan in sync.** They are one artifact in two
   forms; if one changes, change the other.
 
