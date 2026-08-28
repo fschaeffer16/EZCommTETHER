@@ -154,39 +154,53 @@ The home-screen top stack (`showTopStack`) is a **dark neon control band**
   their own overlay; left untouched by the neon-panel styling.
 - Applies to both apps.
 
-## TABLET AND LAPTOP LAYOUT (shipped 28 Aug 2026, both apps)
+## TABLET AND LAPTOP LAYOUT (rebuilt 28 Aug 2026, both apps)
 
-A tablet is not a big phone, so it gets its own shape rather than a stretched
-phone column. Two pieces, both pure CSS on top of the same DOM:
+A tablet is a different app shape, not a stretched phone. On a phone
+navigation is one screen at a time: you open a board, it covers everything,
+you press Back before you can go anywhere else. On a tablet nothing is ever
+covered, so nothing has to be un-covered.
 
-### The classroom rail (`#ez-rail`)
-- Lives inside `#ez-stage`, a flex row that wraps the content region. The
-  content region keeps its exact `flex:1;position:relative;overflow:hidden`
-  style, so every board overlay still resolves against it.
-- `display:none` by default. Shown at **`min-width:760px` and
-  `min-height:600px`**, which covers portrait iPad (820px) and keeps a phone in
-  landscape on the phone layout.
-- Width **280px** at that breakpoint (2 columns, ~120px pictures), **400px** at
-  `min-width:1040px` (3 columns, ~116px pictures).
-- Contents come from `railTiles()`: the four School people categories from
-  `schoolTiles()` (Teachers, Office Staff, Speech/OT, Bus Driver for the
-  template; Teachers/Staff, Friends, Speech/OT, Bus Driver for Evan) followed by
-  the four classroom tools — **ABC, 123, Calculator, Colors**.
-- Every rail button lands on the same screen the School board sends you to, so
-  a teacher reaches any of them in one tap from anywhere instead of Home →
-  School → the button.
-- The rail stays on screen while a board is open. The slim Home/Help/Done bar
-  runs full width above it.
+Everything below is one `wide` state flag plus width-driven CSS on the **same
+markup**. A phone renders exactly what it always did (verified pixel-identical).
 
-### Board columns
-- `schoolCats` and `railItems` both read `schoolTiles()`. Add a category there
-  and it appears on the School board and in the rail.
-- Column bumps are deferred until the **board itself** has the room, because the
-  rail takes 280–400px off the width: nothing changes at 760px, `min-width:1040px`
-  adds one column to every grid, `min-width:1280px` adds another. `#tether-root`
-  is capped at 1200px.
-- Selectors match React's **normalised** inline styles (`gap: 4px 14px`, spaces
-  after colons), not the source strings.
+### The `wide` flag
+- `isWideScreen()` — `matchMedia('(min-width: 760px) and (min-height: 600px)')`.
+  Read in the constructor so the first paint is already correct; `watchWidth()`
+  re-reads it on rotation. Height is in the test so a phone held sideways stays
+  a phone.
+- 760px covers portrait iPad (820px).
+
+### Three regions when `wide`
+1. **Toolbar** (`wideTop`) — one row, always on screen: photo, name, **Yes ·
+   No · Help**, Home, Close, gear. Replaces the phone's tall neon top stack.
+   `showTopStack` and `inBoard` are both forced false when `wide`, so the
+   phone's stack and its slim Home/Help/Done bar never render on a tablet.
+2. **Left rail** (`#ez-rail`, inside `#ez-stage`) — the navigation, permanent.
+   **Classroom** section from `railTiles()` (the `schoolTiles()` categories then
+   ABC / 123 / Calculator / Colors), then **Boards** from `homeTiles` — every
+   home tile. 340px wide (2 columns), 400px at `min-width:1100px` (3 columns).
+3. **Main pane** — the content region, unchanged in structure, so every board
+   overlay still resolves against it.
+
+### What "home" is on a tablet
+`wideHome` = wide, `screen === 'board'`, not `editMode`. The home tile grid is
+hidden (`homeScrollCss` → `display:none`) because the rail already holds every
+tile, and the pane shows the **12 `neonTiles` at full size** instead — the strip
+that scrolls four-at-a-time on a phone. In **edit mode the grid comes back** and
+the tile pane hides, so tiles are still arranged the same way.
+
+### Column growth
+The rail takes 340–400px, so grids only gain a column once the pane itself has
+the room: nothing at 760px, one more at `min-width:1100px`, one more at
+`min-width:1280px`. `#tether-root` is capped at 1280px. Selectors match React's
+**normalised** inline styles (`gap: 4px 14px`, spaces after colons), not source.
+
+### Known, pre-existing
+A board overlay paints over the red SOS bar (it is earlier in the content
+region), on phone and tablet alike. The bar is on screen at home and inside
+Settings; Emergency is still reachable from the rail's Home button. Not changed
+here.
 
 ## GOTCHAS / LESSONS
 - **Numbers is a School button, not a home tile** (for Evan). Verify a "tile"

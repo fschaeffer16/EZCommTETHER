@@ -2020,22 +2020,23 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
   @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;height:100lvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
   /* ── Tablet and laptop layout ──────────────────────────────────
-     A tablet is not a big phone. It gets its own shape: the classroom rail
-     opens down the left side so every school button is one tap from
-     anywhere, and the board keeps the roomy column the pictures were drawn
-     for. Wider still and the board gains columns, with BIGGER pictures,
-     never smaller ones. Selectors match React's normalised inline styles.
-     Guarded on height as well as width, so a phone held sideways keeps the
-     phone layout. */
+     A tablet is not a big phone, so it is not drawn like one. The rail down
+     the left is the navigation and it never goes away; the pane beside it is
+     the only thing that changes. Everything here is width-driven CSS on the
+     same markup, so a phone renders exactly what it always did.
+     Selectors match React's normalised inline styles, not the source. */
   @media (min-width:760px) and (min-height:600px){
-    #tether-root{max-width:1200px!important;box-shadow:none!important;}
+    #tether-root{max-width:1280px!important;box-shadow:none!important;}
     #ez-rail{display:block!important;}
-    /* Neon quick words: four visible becomes six, each one larger */
-    div[style*="width: calc(25% - 6px)"]{width:calc(16.66% - 6px)!important;}
   }
-  /* Wide enough that the board itself has room for another column */
-  @media (min-width:1040px) and (min-height:600px){
-    /* Home board: two across becomes three */
+  /* Past here the pane beside the rail has room for another column, so the
+     grids grow. The pictures grow with them; they never shrink. */
+  @media (min-width:1100px) and (min-height:600px){
+    #ez-rail{width:400px!important;}
+    #ez-rail div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:repeat(3,1fr)!important;}
+    /* Tablet home pane: three of his words across becomes four */
+    div[style*="grid-template-columns: repeat(3, 1fr); gap: 14px"]{grid-template-columns:repeat(4,1fr)!important;}
+    /* Home board (edit mode): two across becomes three */
     div[style*="grid-template-columns: 1fr 1fr; gap: 4px 14px"]{grid-template-columns:repeat(3,1fr)!important;gap:10px 20px!important;}
     /* Item boards that were two across (food, drinks, snacks, watch) */
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(3,1fr)!important;}
@@ -2043,9 +2044,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
     /* People boards: three faces across becomes four */
     div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
-    /* The rail has room for a third column of school buttons */
-    #ez-rail{width:400px!important;}
-    #ez-rail div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:repeat(3,1fr)!important;}
   }
   /* A laptop or a desktop: one more column again */
   @media (min-width:1280px) and (min-height:600px){
@@ -2715,6 +2713,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
        this spacer just keeps our content clear of them -->
   <div style="height:max(env(safe-area-inset-top,0px),14px);flex:none;"></div>
 
+  <!-- START SCREEN: what he lands on when the app opens. One button, so a
+       pocket has nothing to press and nothing to say. The emergency bar stays,
+       because it has to work from anywhere. -->
+  <sc-if value="{{ notStarted }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;z-index:70;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;">
+      <img src="{{ startIcon }}" alt="" style="width:min(62vw,260px);height:min(62vw,260px);border-radius:28%;box-shadow:0 14px 40px rgba(20,16,12,.28);" />
+      <div onClick="{{ startApp }}" style="width:min(78vw,320px);background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);color:#fff;border-radius:22px;padding:22px;text-align:center;font-size:28px;font-weight:800;cursor:pointer;letter-spacing:-.01em;box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 8px 22px rgba(61,143,29,.4);text-shadow:0 1px 2px rgba(0,0,0,.25);" style-active="transform:scale(.96)">Open</div>
+    </div>
+  </sc-if>
+
   <!-- Full top stack (header + core words + phrase strip) shows on the home
        screen and the emergency screen. When Evan opens a board it collapses so
        the board fills the screen from the top; a slim Home/Help/Done bar (below)
@@ -2757,15 +2765,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <div onClick="{{ sayNo }}" style="flex:1;height:62px;display:flex;align-items:center;justify-content:center;gap:11px;cursor:pointer;color:#fff;border-radius:18px;font-weight:800;font-size:27px;letter-spacing:-.01em;background:linear-gradient(180deg,#F05A4C 0%,#DC3225 52%,#B62214 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.18),0 0 20px rgba(220,50,37,.5),0 5px 14px rgba(182,34,20,.35);text-shadow:0 1px 2px rgba(0,0,0,.3);margin-left:-26px;padding-left:30px;" style-active="transform:scale(.96)"><span style="width:36px;height:36px;flex:none;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:19px;line-height:1;font-weight:900;">✕</span>No</div>
   </div>
 
-  <!-- START SCREEN: what he lands on when the app opens. One button, so a
-       pocket has nothing to press and nothing to say. The emergency bar stays,
-       because it has to work from anywhere. -->
-  <sc-if value="{{ notStarted }}" hint-placeholder-val="{{ true }}">
-    <div style="position:absolute;inset:0;z-index:70;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;">
-      <img src="{{ startIcon }}" alt="" style="width:min(62vw,260px);height:min(62vw,260px);border-radius:28%;box-shadow:0 14px 40px rgba(20,16,12,.28);" />
-      <div onClick="{{ startApp }}" style="width:min(78vw,320px);background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);color:#fff;border-radius:22px;padding:22px;text-align:center;font-size:28px;font-weight:800;cursor:pointer;letter-spacing:-.01em;box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 8px 22px rgba(61,143,29,.4);text-shadow:0 1px 2px rgba(0,0,0,.25);" style-active="transform:scale(.96)">Open</div>
-    </div>
-  </sc-if>
 
   <!-- neon quick tiles: 5 across, 2 rows. Each tile is a full neon image
        (box + picture + caption baked in), so there is no separate text label.
@@ -2791,25 +2790,53 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </div>
   </sc-if>
 
-  <!-- ── CLASSROOM RAIL ─────────────────────────────────────────
-       Tablet and laptop only. CSS hides it under 760px, so a phone is
-       untouched. On a phone School is a board you have to open; on a tablet
-       there is room to leave the school buttons out in the open, down one
-       side, where a teacher reaches any of them in a single tap without
-       taking the device away from him. Same destinations and the same
-       pictures as the School board, so there is nothing new to learn. -->
+  <!-- TABLET TOOLBAR: one row, always on screen. Yes, No and Help are the
+       three he needs from anywhere, so on a tablet they do not disappear the
+       moment a board opens the way they have to on a phone. -->
+  <sc-if value="{{ wideTop }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#0a0a0f;padding:8px 16px 12px;flex:none;display:flex;align-items:center;gap:12px;box-shadow:0 10px 24px rgba(0,0,0,.42);">
+    <label style="position:relative;flex:none;display:inline-block;cursor:pointer;line-height:0;"><sc-if value="{{ hasEvanPhoto }}" hint-placeholder-val="{{ false }}">{{ evanPhotoEl }}</sc-if><sc-if value="{{ noEvanPhoto }}" hint-placeholder-val="{{ true }}">{{ ownerFaceEl }}</sc-if><input type="file" accept="image/*" onChange="{{ onEvanPhoto }}" style="position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;" /></label>
+    <div style="flex:none;max-width:200px;font-size:21px;font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ownerName }}</div>
+    <div onClick="{{ sayYes }}" style="flex:1;height:60px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;font-size:25px;background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -3px 0 rgba(0,0,0,.16),0 0 18px rgba(79,178,43,.45);text-shadow:0 1px 2px rgba(0,0,0,.3);" style-active="transform:scale(.96)"><span style="width:32px;height:32px;flex:none;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;font-weight:900;">✓</span>Yes</div>
+    <div onClick="{{ sayNo }}" style="flex:1;height:60px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;font-size:25px;background:linear-gradient(180deg,#F05A4C 0%,#DC3225 52%,#B62214 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.18),0 0 18px rgba(220,50,37,.42);text-shadow:0 1px 2px rgba(0,0,0,.3);" style-active="transform:scale(.96)"><span style="width:32px;height:32px;flex:none;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;font-weight:900;">✕</span>No</div>
+    <div onClick="{{ sayHelpTop }}" style="flex:1;height:60px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;font-size:25px;background:linear-gradient(180deg,#F7A63C 0%,#EE8A1E 52%,#CE6F10 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 0 18px rgba(238,138,30,.42);text-shadow:0 1px 2px rgba(0,0,0,.3);" style-active="transform:scale(.96)"><span style="font-size:26px;line-height:1;">🙋</span>Help</div>
+    <div onClick="{{ goHome }}" style="flex:none;width:64px;height:64px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#fff;background:radial-gradient(circle at 50% 35%,#3FC4FF,#0C86D6);box-shadow:0 0 18px rgba(63,196,255,.7),0 4px 12px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.55);" style-active="transform:scale(.93)"><span style="font-size:27px;line-height:1;">🏠</span><span style="font-size:10.5px;font-weight:800;line-height:1;margin-top:1px;">Home</span></div>
+    <div onClick="{{ closeApp }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:6px 4px;cursor:pointer;" style-active="transform:scale(.92)"><span style="font-size:23px;font-weight:900;line-height:1;color:#F59E0B;">✕</span><span style="font-size:16px;font-weight:800;color:#F59E0B;white-space:nowrap;">Close</span></div>
+    <div onClick="{{ openSettings }}" style="flex:none;width:44px;height:44px;border-radius:50%;background:#1b1f27;display:flex;align-items:center;justify-content:center;font-size:21px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.55);" style-active="transform:scale(.92)">⚙️</div>
+  </div>
+  </sc-if>
+
+  <!-- ── LEFT RAIL: the navigation, and it never goes away ─────────────
+       This is what makes the tablet a different app instead of a stretched
+       phone. On a phone you go somewhere and the board covers everything, so
+       you have to come back before you can go anywhere else. Here the
+       classroom buttons and every board sit down the side permanently and the
+       main pane changes underneath them. Nothing is ever covered, so nothing
+       has to be un-covered: he goes Food, then Feelings, without a Back in
+       between. Hidden under 760px, so a phone is untouched. -->
   <div id="ez-stage" style="flex:1;display:flex;min-height:0;">
-  <div id="ez-rail" style="display:none;flex:none;width:280px;box-sizing:border-box;background:#0a0a0f;border-right:1px solid rgba(255,255,255,.10);border-radius:0 26px 0 0;padding:15px 14px 22px;overflow-y:auto;box-shadow:6px 0 22px rgba(0,0,0,.35);">
-    <div style="font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7FD7FF;padding:0 2px 12px;">Classroom</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px 12px;">
+  <div id="ez-rail" style="display:none;flex:none;width:340px;box-sizing:border-box;background:#0a0a0f;border-right:1px solid rgba(255,255,255,.10);padding:14px 13px 24px;overflow-y:auto;">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7FD7FF;padding:0 2px 11px;">Classroom</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px 11px;">
       <sc-for list="{{ railItems }}" as="r" hint-placeholder-count="0">
         <div onClick="{{ r.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.94)"><sc-if value="{{ r.noIcon }}" hint-placeholder-val="{{ true }}"><span style="width:100%;aspect-ratio:1;font-size:66px;line-height:1;display:flex;align-items:center;justify-content:center;">{{ r.glyph }}</span></sc-if>{{ r.iconEl }}<span style="font-size:14px;font-weight:800;color:#fff;text-align:center;line-height:1.1;">{{ r.label }}</span></div>
+      </sc-for>
+    </div>
+    <div style="font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#9AA3B2;margin-top:20px;padding:16px 2px 11px;border-top:1px solid rgba(255,255,255,.09);">Boards</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px 11px;">
+      <sc-for list="{{ homeTiles }}" as="t" hint-placeholder-count="11">
+        <div onClick="{{ t.onTap }}" style="display:flex;flex-direction:column;gap:5px;cursor:pointer;" style-active="transform:scale(.96)">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;border:3px solid {{ t.color }};border-radius:14px;overflow:hidden;background:#12141b;display:flex;align-items:center;justify-content:center;">
+            {{ t.faceEl }}
+          </div>
+          <span style="font-size:13.5px;font-weight:800;color:#fff;text-align:center;line-height:1.1;">{{ t.label }}</span>
+        </div>
       </sc-for>
     </div>
   </div>
   <!-- board -->
   <div style="flex:1;position:relative;overflow:hidden;">
-    <div ref="{{ boardScrollRef }}" style="position:absolute;top:0;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 46px);overflow-y:auto;padding:4px 18px 10px;">
+    <div ref="{{ boardScrollRef }}" style="position:absolute;top:0;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 46px);overflow-y:auto;padding:4px 18px 10px;{{ homeScrollCss }}">
 
       <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;gap:7px;margin:2px 2px 10px;color:var(--hint,#A8A095);">
@@ -2850,6 +2877,21 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="display:flex;gap:8px;margin-top:13px;">
           <div onClick="{{ notePlay }}" style="flex:1;text-align:center;background:rgba(255,255,255,.2);color:#fff;border-radius:13px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play again</div>
           <div onClick="{{ noteDone }}" style="flex:none;background:#fff;color:#4F46E5;border-radius:13px;padding:13px 20px;font-size:16px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">OK</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- TABLET HOME PANE: the words he uses most, at full size. On a phone
+         these are a strip of four that scrolls sideways; there is no reason
+         for that on a screen this size. The categories are not repeated here
+         because the rail on the left already holds every one of them and
+         never goes away. -->
+    <sc-if value="{{ wideHome }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 46px);overflow-y:auto;padding:8px 18px 12px;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+          <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="12">
+            <div onClick="{{ g.onTap }}" style="aspect-ratio:1;border-radius:18px;overflow:hidden;cursor:pointer;" style-active="transform:scale(.95)"><img src="{{ g.img }}" alt="{{ g.label }}" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          </sc-for>
         </div>
       </div>
     </sc-if>
@@ -4147,7 +4189,10 @@ class Component extends DCLogic {
     this.rootRef = React.createRef();
     this.boardScrollRef = React.createRef();
     // Dark only — the app is drawn for it and the neon artwork needs it.
-    this.state = { screen: 'board', theme: 'dark' };
+    // A tablet is a different device, not a bigger phone, so it renders
+    // differently from the first paint. matchMedia answers before anything is
+    // drawn; a phone never matches and takes the untouched phone path.
+    this.state = { screen: 'board', theme: 'dark', wide: this.isWideScreen() };
   }
 
   colors(theme) {
@@ -4167,7 +4212,24 @@ class Component extends DCLogic {
     try { document.body.style.background = c.bg || '#FBFAF7'; document.documentElement.style.background = c.bg || '#FBFAF7'; } catch (e) {}
   }
 
+  // The one place the tablet layout is decided. Height is in the test as well
+  // as width so a phone held sideways stays a phone.
+  isWideScreen() {
+    try { return window.matchMedia('(min-width: 760px) and (min-height: 600px)').matches; } catch (e) { return false; }
+  }
+
+  // Rotating an iPad crosses the line in both directions, so the layout has to
+  // follow it rather than being read once at launch.
+  watchWidth() {
+    const mq = window.matchMedia('(min-width: 760px) and (min-height: 600px)');
+    const sync = () => { if (mq.matches !== !!this.state.wide) this.setState({ wide: mq.matches }); };
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    sync();
+  }
+
   componentDidMount() {
+    try { this.watchWidth(); } catch (e) {}
     this.applyTheme();
     // Pull the family's saved contact info from the server and fill in any
     // number this phone is missing — so numbers survive a storage wipe.
@@ -5917,7 +5979,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28'; }
+  APP_BUILD() { return '2026.08.28.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7166,8 +7228,20 @@ class Component extends DCLogic {
       goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       // Home (and the emergency screen) keep the full top stack; every other
       // board collapses it and shows the slim Home/Help/Done bar instead.
-      showTopStack: s.screen === 'board' || s.screen === 'sos' || s.screen === 'sosSent',
-      inBoard: s.screen !== 'board' && s.screen !== 'sos' && s.screen !== 'sosSent',
+      // On a phone the top stack belongs to the home screen and collapses to a
+      // slim bar the moment a board opens. On a tablet the rail is permanent,
+      // so the toolbar is too: Yes, No and Help never go away behind a board,
+      // and there is no Back to press because nothing was ever covered.
+      showTopStack: !s.wide && (s.screen === 'board' || s.screen === 'sos' || s.screen === 'sosSent'),
+      inBoard: !s.wide && s.screen !== 'board' && s.screen !== 'sos' && s.screen !== 'sosSent',
+      wideTop: !!s.wide && s.screen !== 'sos' && s.screen !== 'sosSent',
+      // Home on a tablet is not a second copy of the rail. The rail is the
+      // navigation, so the main pane gives the words he reaches for most, at
+      // full size, instead of the four-at-a-time strip a phone has room for.
+      // Edit mode is the exception: that is where the tiles get rearranged, so
+      // the grid comes back.
+      wideHome: !!s.wide && s.screen === 'board' && !s.editMode,
+      homeScrollCss: (s.wide && s.screen === 'board' && !s.editMode) ? 'display:none;' : '',
       isFood: s.screen === 'food',
       isDrinks: s.screen === 'drinks',
       isRestaurants: s.screen === 'restaurants',
