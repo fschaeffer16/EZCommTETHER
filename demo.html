@@ -4087,7 +4087,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </div><!-- /ez-stage -->
 
   <sc-if value="{{ showEditSheet }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ edCancel }}" style="position:absolute;inset:0;background:rgba(20,16,12,.5);display:flex;flex-direction:column;justify-content:flex-end;">
+    <div onClick="{{ edCancel }}" style="position:absolute;inset:0;z-index:60;background:rgba(20,16,12,.5);display:flex;flex-direction:column;justify-content:flex-end;">
       <div onClick="{{ sheetGuard }}" key="{{ editSheetKey }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:22px 20px 26px;box-shadow:0 -10px 40px rgba(0,0,0,.3);">
         <div style="width:40px;height:5px;border-radius:3px;background:var(--hint,#C9C2B8);margin:0 auto 16px;"></div>
         <div style="font-size:21px;font-weight:800;text-align:center;color:var(--ink,#1A1714);margin-bottom:16px;">{{ edTitle }}</div>
@@ -4132,7 +4132,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </sc-if>
 
   <sc-if value="{{ showUnlock }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ cancelUnlock }}" style="position:absolute;inset:0;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;">
+    <div onClick="{{ cancelUnlock }}" style="position:absolute;inset:0;z-index:60;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;">
       <div onClick="{{ sheetGuard }}" style="background:var(--bg,#FBFAF7);border-radius:22px;padding:24px 22px;width:100%;max-width:320px;box-shadow:0 16px 50px rgba(0,0,0,.35);">
         <div style="font-size:34px;text-align:center;line-height:1;">🔒</div>
         <div style="font-size:20px;font-weight:800;text-align:center;margin:10px 0 4px;color:var(--ink,#1A1714);">Grown-ups only</div>
@@ -4146,7 +4146,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </sc-if>
 
   <sc-if value="{{ hasChooser }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeChooser }}" style="position:absolute;inset:0;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:flex-end;">
+    <div onClick="{{ closeChooser }}" style="position:absolute;inset:0;z-index:60;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:flex-end;">
       <div onClick="{{ sheetGuard }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:20px 20px 28px;box-shadow:0 -10px 40px rgba(0,0,0,.3);max-height:calc(100% - max(env(safe-area-inset-top,0px),14px) - 12px);display:flex;flex-direction:column;">
         <div style="width:40px;height:5px;border-radius:3px;background:var(--hint,#C9C2B8);margin:0 auto 16px;"></div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px;">
@@ -4159,7 +4159,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         </div>
         <!-- Two-up cards: the picture is four times the size it was in the rows,
              which is what a child who cannot read is actually navigating by.
-             Evan keeps the rows he knows until his own pass. -->
+             Both apps draw them this way. The rows below are still used where
+             each phrase carries a Text button, which a card has nowhere to put. -->
         <sc-if value="{{ cardChooser }}" hint-placeholder-val="{{ false }}">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;">
             <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
@@ -5996,7 +5997,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.2'; }
+  APP_BUILD() { return '2026.08.28.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7228,7 +7229,7 @@ class Component extends DCLogic {
         { label: 'Done', img: this.iconUri('qn_done'), onTap: () => this.speak("I'm done.") },
       ],
       sayFamily: () => this.speak('Family'),
-      goHome: () => { this.setState({ screen: 'board' }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
+      goHome: () => { this.setState({ screen: 'board', chooser: null, unlockFor: null }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       // Home (and the emergency screen) keep the full top stack; every other
       // board collapses it and shows the slim Home/Help/Done bar instead.
       // On a phone the top stack belongs to the home screen and collapses to a
@@ -7556,8 +7557,8 @@ class Component extends DCLogic {
       chooser: s.chooser || {},
       // The card layout is the template's. Texting a phrase still needs the row
       // with its Text button beside it, so a chooser that can text stays rows.
-      cardChooser: !this.isEvanProfile() && !((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
-      rowChooser: this.isEvanProfile() || ((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
+      cardChooser: !((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
+      rowChooser: ((s.chooser && s.chooser.options) || []).some((o) => o && o.canText),
       chooserOptions: (((s.chooser && s.chooser.options) || []).map((o, i, arr) => ({
         ...o,
         // an odd number of phrases: the last one fills the row instead of
@@ -7571,7 +7572,7 @@ class Component extends DCLogic {
           : React.createElement('span', { style: { fontSize: 52, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
       }))),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },
-      cancelCss: this.isEvanProfile() ? 'border:none;' : 'border:1.5px solid rgba(255,255,255,.18);border-radius:16px;',
+      cancelCss: 'border:1.5px solid rgba(255,255,255,.18);border-radius:16px;',
       closeChooser: () => this.setState({ chooser: null }),
       sheetGuard: (e) => e.stopPropagation(),
       tiles: this.tiles(),
