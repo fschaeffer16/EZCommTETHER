@@ -5884,7 +5884,7 @@ class Component extends DCLogic {
     } catch (e) {}
     return true;
   }
-  saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); } catch (e) {} }
+  saveStore() { try { localStorage.setItem(this.DATA_KEY, JSON.stringify(this.data())); return true; } catch (e) { return false; } }
   data() {
     if (this._data) return this._data;
     let d = this.loadData();
@@ -6147,7 +6147,30 @@ class Component extends DCLogic {
   readFileAsDataUrl(file, cb) {
     if (!file) return;
     const r = new FileReader();
-    r.onload = () => cb(r.result);
+    r.onload = () => {
+      const raw = r.result;
+      // A camera photo is megabytes; the store is small and shared by every
+      // button. Scale it to what a button actually displays before saving,
+      // so a board full of faces never fills the phone's storage.
+      try {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const MAX = 512;
+            const scale = Math.min(1, MAX / Math.max(img.width || 1, img.height || 1));
+            if (scale >= 1) { cb(raw); return; }
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            const out = canvas.toDataURL('image/jpeg', 0.85);
+            cb(out && out.length > 64 ? out : raw);
+          } catch (e) { cb(raw); }
+        };
+        img.onerror = () => cb(raw);
+        img.src = raw;
+      } catch (e) { cb(raw); }
+    };
     r.readAsDataURL(file);
   }
 
@@ -6519,7 +6542,7 @@ class Component extends DCLogic {
     this.data().family.push({ id: 'p' + Date.now(), name: 'New Person', ring, tint: '#EDEAE3' });
     this.forceUpdate();
   }
-  setPersonPhoto(p, file) { this.readFileAsDataUrl(file, (url) => { p.photo = url; this.forceUpdate(); }); }
+  setPersonPhoto(p, file) { this.readFileAsDataUrl(file, (url) => { p.photo = url; this.saveStore(); this.forceUpdate(); }); }
   setEvanPhoto(file) { if (!file) return; this.readFileAsDataUrl(file, (url) => { this.data().evanPhoto = url; this.saveStore(); this.forceUpdate(); }); }
 
   moveHome(i, dir) {
@@ -6549,18 +6572,21 @@ class Component extends DCLogic {
     const d = this.nb();
     const phrases = d.phrases.map((p) => (p || '').trim()).filter(Boolean);
     if (!d.label.trim() && !phrases.length) { this.setState({ nbErr: 'Add a name or at least one phrase.' }); return; }
+    const nm = d.label.trim() || 'Button';
     if (d.editId) {
       const b = this.data().buttons.find((x) => x.id === d.editId);
-      if (b) { b.section = d.section; b.label = d.label.trim() || 'Button'; b.emoji = d.emoji || '⭐'; b.image = d.image || null; b.phrases = phrases; }
-      this._nb = null;
-      this.setState({ nbErr: '', nbAdded: (d.label.trim() || 'Button') + ' updated' });
+      if (b) { b.section = d.section; b.label = nm; b.emoji = d.emoji || '⭐'; b.image = d.image || null; b.phrases = phrases; }
     } else {
-      this.data().buttons.push({ id: 'b' + Date.now(), section: d.section, label: d.label.trim() || 'Button', emoji: d.emoji || '⭐', image: d.image || null, phrases });
-      this._nb = null;
-      this.setState({ nbErr: '', nbAdded: (d.label.trim() || 'Button') + ' added to ' + this.sectionLabel(d.section) });
+      this.data().buttons.push({ id: 'b' + Date.now(), section: d.section, label: nm, emoji: d.emoji || '⭐', image: d.image || null, phrases });
     }
+    // Write to the phone immediately. Adding a person used to live only in
+    // memory until the big Save button ran, and a force-close lost them.
+    const ok = this.saveStore();
+    this._nb = null;
+    if (ok) this.setState({ nbErr: '', nbAdded: nm + (d.editId ? ' updated' : ' added to ' + this.sectionLabel(d.section)) });
+    else this.setState({ nbAdded: '', nbErr: 'NOT SAVED. This phone\'s storage for the app is full. Remove a photo or an old button, then add ' + nm + ' again.' });
   }
-  removeCustom(id) { const a = this.data().buttons; const i = a.findIndex((b) => b.id === id); if (i >= 0) a.splice(i, 1); if (this._nb && this._nb.editId === id) this._nb = null; this.forceUpdate(); }
+  removeCustom(id) { const a = this.data().buttons; const i = a.findIndex((b) => b.id === id); if (i >= 0) a.splice(i, 1); if (this._nb && this._nb.editId === id) this._nb = null; this.saveStore(); this.forceUpdate(); }
 
   // Save / password / sync
   isDataUrl(v) { return typeof v === 'string' && v.slice(0, 5) === 'data:'; }
