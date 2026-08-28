@@ -24,6 +24,11 @@ program for low-income/disability families.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.
+- **Writing style: NO em dashes, and don't sound like AI.** Anything Frank presents or
+  publishes (documents, web pages, app copy) uses plain human punctuation: periods, commas,
+  colons. Short sentences beat clause-chains. He has called this out more than once.
+- **When Frank says he's editing something himself, freeze it.** His edited version becomes
+  the master; fold his wording into every other surface, never the reverse.
 - **Anything meant to be shown or shared lives on OUR domain, never behind Claude.** No
   Claude-hosted artifacts as the deliverable — recipients must never need a Claude account
   to view something. Interactive pages ship as static files in this repo (deployed via
