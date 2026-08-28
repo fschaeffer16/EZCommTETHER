@@ -2019,6 +2019,32 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   }
   @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
   @media (max-width:480px){#tether-root{width:100%!important;height:100vh!important;height:100dvh!important;height:100lvh!important;margin:0!important;box-shadow:none!important;border-radius:0!important;}}
+  /* ── Tablet and laptop layout ─────────────────────────────────────────
+     On an iPad or a computer the app used to draw a 480px phone column in
+     the middle of a big screen. Here it uses the room it has: a wider
+     frame, more tiles per row, and BIGGER pictures, never smaller ones.
+     Selectors match React's normalised inline styles. Guarded on height as
+     well as width, so a phone held sideways keeps the phone layout. */
+  @media (min-width:700px) and (min-height:600px){
+    #tether-root{max-width:1200px!important;box-shadow:none!important;}
+    /* Home board: two across becomes three */
+    div[style*="grid-template-columns: 1fr 1fr; gap: 4px 14px"]{grid-template-columns:repeat(3,1fr)!important;gap:10px 20px!important;}
+    /* Item boards that were two across (food, drinks, snacks, watch) */
+    div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(3,1fr)!important;}
+    /* Boards that were three across (school, colours, night, feelings) */
+    div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
+    /* People boards: three faces across becomes four */
+    div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+    /* Neon quick words: four visible becomes six, each one larger */
+    div[style*="width: calc(25% - 6px)"]{width:calc(16.66% - 6px)!important;}
+  }
+  /* Landscape iPad and any computer: one more column again */
+  @media (min-width:1000px) and (min-height:600px){
+    div[style*="grid-template-columns: 1fr 1fr; gap: 4px 14px"]{grid-template-columns:repeat(4,1fr)!important;}
+    div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
+    div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(5,1fr)!important;}
+    div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
+  }
   /* Fill the home-indicator strip below the app instead of showing white. */
   html,body{background:var(--bg,#FBFAF7);min-height:100%;}
 </style>
