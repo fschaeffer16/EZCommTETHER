@@ -4058,7 +4058,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div style="font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ g.color }};margin:12px 2px 7px;">{{ g.label }}</div>
             <div style="display:grid;grid-template-columns:repeat({{ g.cols }},1fr);gap:7px;">
               <sc-for list="{{ g.words }}" as="w" hint-placeholder-count="0">
-                <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ g.color }};border-radius:12px;padding:9px 2px;{{ g.cardCss }}display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;" style-active="transform:scale(.93)"><span style="line-height:1;{{ g.emojiCss }}">{{ w.e }}</span><span style="font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;{{ g.wordCss }}">{{ w.t }}</span></div>
+                <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ g.color }};border-radius:12px;padding:9px 2px;{{ g.cardCss }}display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;" style-active="transform:scale(.93)"><span style="line-height:1;{{ g.emojiCss }}{{ w.eCss }}">{{ w.e }}</span><sc-if value="{{ w.showWord }}" hint-placeholder-val="{{ true }}"><span style="font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;{{ g.wordCss }}">{{ w.t }}</span></sc-if></div>
               </sc-for>
             </div>
           </sc-for>
@@ -6008,7 +6008,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.11'; }
+  APP_BUILD() { return '2026.08.28.12'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7435,6 +7435,12 @@ class Component extends DCLogic {
         wordCss: this.isEvanProfile() ? 'font-size:13px;' : 'font-size:14px;',
         words: g.words.map((w) => ({
           ...w,
+          // A number has no picture to stand in for it: the digit IS the
+          // picture. Printing it big and then again underneath as a caption
+          // just says the same thing twice, so where the two are identical the
+          // caption is dropped and the digit is drawn at full size.
+          showWord: String(w.t) !== String(w.e),
+          eCss: String(w.t) === String(w.e) ? 'font-size:30px;font-weight:800;padding:4px 0;' : '',
           onTap: () => { const out = w.say || w.t; this.speak(out); this.setState({ wordSent: [...(this.state.wordSent || []), out] }); },
         })),
       })),
