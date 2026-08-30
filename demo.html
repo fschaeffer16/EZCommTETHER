@@ -2056,7 +2056,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
      boards above them back their height. */
   @media (min-width:1100px) and (min-height:600px){
     #ez-quick{height:132px!important;}
-    #ez-quick div[style*="grid-template-columns: repeat(7, 1fr)"]{grid-template-columns:repeat(13,1fr)!important;}
+    #ez-quick div[style*="grid-template-columns: repeat(7, 1fr)"]{grid-template-columns:repeat(14,1fr)!important;}
     #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 190px)!important;}
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px 14px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
@@ -2882,7 +2882,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div id="ez-quick" style="position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 58px);height:268px;box-sizing:border-box;padding:8px 18px 6px;background:#0a0a0f;border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.45);">
         <div style="font-size:11.5px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7FD7FF;padding:0 2px 7px;">Quick words</div>
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:9px;">
-          <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="13">
+          <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="14">
             <div onClick="{{ g.onTap }}" style="width:100%;max-width:118px;justify-self:center;aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:pointer;" style-active="transform:scale(.94)"><img src="{{ g.img }}" alt="{{ g.label }}" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
           </sc-for>
         </div>
@@ -6002,7 +6002,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.8'; }
+  APP_BUILD() { return '2026.08.28.9'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7209,6 +7209,7 @@ class Component extends DCLogic {
         { label: 'Good morning', img: this.iconUri('qn_goodmorning'), onTap: () => this.speak('Good morning!') },
         { label: 'Hi', img: this.iconUri('qn_hi'), onTap: () => this.speak('Hello!') },
         { label: 'Bye', img: this.iconUri('qn_bye'), onTap: () => this.speak('Goodbye!') },
+        { label: 'I Love You', img: this.iconUri('qn_iloveyou'), onTap: () => this.speak('I love you.') },
         { label: 'More', img: this.iconUri('qn_more'), onTap: () => this.speak('More.') },
         { label: 'Now', img: this.iconUri('qn_now'), onTap: () => this.speak('Now.') },
         { label: 'Later', img: this.iconUri('qn_later'), onTap: () => this.speak('Later.') },
