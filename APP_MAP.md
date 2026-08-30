@@ -76,8 +76,16 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 "open to the top" behavior (see below).
 
 - **family** — Family people board. (Home → Family; Friends tile → same board, friends set)
-- **food** — Food board. Sub-boards: **drinks**, **snacks**, **restaurants** →
-  **restaurant** (mcdonalds / popeyes / chinese / outback).
+- **food** — Food board. **One board with the same four sections in both apps,
+  in this order: Drinks, Food, Snacks, Restaurants**, under the hunger chips
+  (Hungry / Thirsty / Full / Snack). Evan's items differ from the template's;
+  the organization does not. Tapping a restaurant opens **restaurant**
+  (mcdonalds / popeyes / chinese / outback), and its back arrow returns to the
+  Food board. Evan's old menu of three tiles (My Foods / My Drinks / Favorite
+  Restaurants) and the standalone `restaurants` list screen are both gone;
+  Restaurants had never been reachable at all in the template before this.
+  **drinks** and **snacks** still exist as their own boards, reached from home
+  tiles, not from the Food board.
 - **school** — School hub. Buttons: **123 → numbers**;
   **Calculator → calc**; **Colors → colors**; plus people categories →
   **schoolpeople**. Evan's categories: **Teachers/Staff**, **Speech/OT** and
