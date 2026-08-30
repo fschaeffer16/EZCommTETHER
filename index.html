@@ -4137,7 +4137,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <sc-if value="{{ cardChooser }}" hint-placeholder-val="{{ false }}">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;">
             <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
-              <button onClick="{{ opt.onTap }}" style="{{ opt.span }}background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:20px;padding:13px 9px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:140px;box-shadow:0 0 14px {{ opt.glow }}, inset 0 0 22px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
+              <button onClick="{{ opt.onTap }}" style="{{ opt.span }}background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:20px;padding:13px 9px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:140px;box-shadow:0 0 14px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
                 {{ opt.bigGlyphEl }}
                 <span style="font-size:17px;font-weight:800;line-height:1.2;text-align:center;color:var(--ink,#fff);">{{ opt.txt }}</span>
               </button>
@@ -5993,7 +5993,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.14'; }
+  APP_BUILD() { return '2026.08.28.15'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7441,7 +7441,10 @@ class Component extends DCLogic {
         cols: g.cols || 4,
         // Neon cards on a bought phone: a glow in the group's own colour, a
         // bigger picture and more room to tap. Evan keeps the flatter tiles.
-        cardCss: this.isEvanProfile() ? '' : ('box-shadow:0 0 10px ' + this.glowFrom(g.color) + ', inset 0 0 16px ' + this.glowFrom(g.color) + ';border-radius:14px;padding:12px 3px;'),
+        // One box per button. The tile already has a border and a radius; an
+        // inset glow draws a second rounded outline inside the first, which is
+        // the box-inside-a-box. The glow goes outward only.
+        cardCss: this.isEvanProfile() ? '' : ('box-shadow:0 0 10px ' + this.glowFrom(g.color) + ';padding:12px 3px;'),
         emojiCss: this.isEvanProfile() ? 'font-size:21px;' : 'font-size:27px;',
         wordCss: this.isEvanProfile() ? 'font-size:13px;' : 'font-size:14px;',
         words: g.words.map((w) => ({

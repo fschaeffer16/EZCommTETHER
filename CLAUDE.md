@@ -89,6 +89,14 @@ program for low-income/disability families.
 - `api/settings.js` — Family Sync via Upstash KV.
 - **Secrets never ship in the app.** Phone numbers, keys, and the medical note live only in
   Vercel environment variables. The client sends person *ids*, never numbers.
+- **One box per button. This one keeps coming back.** A button gets exactly one
+  visible container: one border, one radius, one glow, and the glow goes
+  outward. Two of anything reads as a box inside a box and he has called it out
+  more than once. The specific traps: a `border` plus an `inset` box-shadow
+  (the inset draws a second outline just inside the first); a second
+  `border-radius` in an appended style string; and a bordered tile wrapped
+  around artwork that already carries its own painted frame. If the picture is
+  framed, the tile draws nothing.
 - **Artwork Frank sends is the picture, not the frame.** The neon box baked into
   supplied art is whatever shape that render came out; the app's icon set is a
   square box, same size, same stroke, same corner radius. Strip the supplied
