@@ -3928,7 +3928,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <sc-for list="{{ schoolCats }}" as="cat" hint-placeholder-count="0">
               <div onClick="{{ cat.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)"><sc-if value="{{ cat.noIcon }}" hint-placeholder-val="{{ true }}"><span style="width:100%;aspect-ratio:1;font-size:76px;line-height:1;display:flex;align-items:center;justify-content:center;">{{ cat.glyph }}</span></sc-if>{{ cat.iconEl }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ cat.label }}</span></div>
             </sc-for>
-            <div onClick="{{ openABC }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolABCFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">ABC</span></div>
             <div onClick="{{ openNumbers }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolNumbersFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">123</span></div>
             <div onClick="{{ openCalc }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolCalcFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Calculator</span></div>
             <div onClick="{{ openColorsSchool }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">{{ schoolColorsFace }}<span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">Colors</span></div>
@@ -6008,7 +6007,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.13'; }
+  APP_BUILD() { return '2026.08.28.14'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7377,7 +7376,6 @@ class Component extends DCLogic {
           schoolColorsFace: this.isEvanProfile()
             ? React.createElement('img', { src: this.iconUri('colors_tile'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 16, display: 'block' } })
             : face('tile_colors', '🎨'),
-          schoolABCFace: face('school_abc', '🔤'),
           schoolNumbersFace: face('school_123', '🔢'),
           schoolCalcFace: face('school_calc', '🧮'),
         };
@@ -7393,7 +7391,6 @@ class Component extends DCLogic {
       // Speech/OT took the empty slot. The colours are the cue for a child who
       // can't read the words, so they are fixed per category and never shuffle.
       schoolCats: this.schoolTiles(),
-      openABC: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'school' }),
       // Word-tools menu: the Sentence Build tile opens here, then pick the
       // sentence builder or the ABC word speller. Each remembers it came from
       // the menu so its back arrow returns here, not to the home screen.
@@ -7403,7 +7400,10 @@ class Component extends DCLogic {
       builderFace: React.createElement('img', { src: this.iconUri('tile_sentbuild'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
       spellerFace: React.createElement('img', { src: this.iconUri('school_abc'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
       wordsBack: () => this.setState({ screen: this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board', editMode: false }),
-      abcBack: () => this.setState({ screen: this.state.navFrom === 'school' ? 'school' : (this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board') }),
+      // The speller lives under Sentence Build now and nowhere else, so back
+      // goes to that menu. A phone with 'school' still saved falls through to
+      // home rather than to a board that no longer offers it.
+      abcBack: () => this.setState({ screen: this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board' }),
       openNumbers: () => this.setState({ screen: 'numbers', numFrom: 'school' }),
       isCalc: s.screen === 'calc',
       openCalc: () => this.setState({ screen: 'calc' }),

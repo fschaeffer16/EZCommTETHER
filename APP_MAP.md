@@ -68,7 +68,7 @@ Evan's home is intentionally leaner; these live one level in:
 - **Time** → Calendar shows the live current time inline (tap → board `clock`,
   which speaks it).
 - **Friends** → School people categories (friends is a school category).
-- **ABC** → School → **ABC**, and Sentence Build → **ABC Word Speller** (`abc`).
+- **ABC** → Sentence Build → **ABC Word Speller** (`abc`). Not on School.
 
 ## ALL BOARDS (screens) AND HOW YOU REACH THEM
 
@@ -78,7 +78,7 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 - **family** — Family people board. (Home → Family; Friends tile → same board, friends set)
 - **food** — Food board. Sub-boards: **drinks**, **snacks**, **restaurants** →
   **restaurant** (mcdonalds / popeyes / chinese / outback).
-- **school** — School hub. Buttons: **abc**; **123 → numbers**;
+- **school** — School hub. Buttons: **123 → numbers**;
   **Calculator → calc**; **Colors → colors**; plus people categories →
   **schoolpeople**. Evan's categories: **Teachers/Staff**, **Speech/OT** and
   **Bus Driver** (people boards — add people, name/photo via edit wheel) and
@@ -92,7 +92,10 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   school_office, school_speech, ph_bus, school_calc (neutral neon art; no
   faces), all rendered full-cell (~125px at 430w) like the Food board.
 - **buildmenu** — Sentence Build chooser → **words** (Sentence Builder) and
-  **abc** (ABC Word Speller).
+  **abc** (ABC Word Speller). **The speller is reached from here and nowhere
+  else.** It used to sit on the School board as well, which meant two tiles,
+  two different pictures, one board. Removed from School 28 Aug 2026; `abcBack`
+  returns to this menu.
 - **watch** — TV/Watch. Sub-boards: **netflix**, **disney**, **sports**
   (plus tv / tablet / movies / internet tiles).
 - **houses** — Houses → **houserooms** (bathroom / kitchen / living room / outside).
