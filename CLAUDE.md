@@ -89,6 +89,12 @@ program for low-income/disability families.
 - `api/settings.js` — Family Sync via Upstash KV.
 - **Secrets never ship in the app.** Phone numbers, keys, and the medical note live only in
   Vercel environment variables. The client sends person *ids*, never numbers.
+- **Artwork Frank sends is the picture, not the frame.** The neon box baked into
+  supplied art is whatever shape that render came out; the app's icon set is a
+  square box, same size, same stroke, same corner radius. Strip the supplied
+  frame, keep the glyph and its caption, and rebuild the box to match the set.
+  Cropping to the source's own border is what produces the squat, undersized
+  tiles he has had to point out twice.
 - Prefer CSS over base64 images for UI chrome — sharper on every screen and the file is
   already large.
 
