@@ -4009,11 +4009,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:0 2px 14px;">Pick one.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div onClick="{{ openBuilder }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
-              <div style="width:100%;background:var(--card,#fff);border:3px solid #0EA5E9;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(14,165,233,.18);">{{ builderFace }}</div>
+              <div style="width:100%;border-radius:20px;overflow:hidden;">{{ builderFace }}</div>
               <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">Sentence Builder</span>
             </div>
             <div onClick="{{ openSpeller }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
-              <div style="width:100%;background:var(--card,#fff);border:3px solid #F97316;border-radius:20px;padding:14px;box-shadow:0 3px 10px rgba(249,115,22,.18);">{{ spellerFace }}</div>
+              <div style="width:100%;border-radius:20px;overflow:hidden;">{{ spellerFace }}</div>
               <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">ABC Word Speller</span>
             </div>
           </div>
@@ -6007,7 +6007,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.15'; }
+  APP_BUILD() { return '2026.08.28.16'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7397,8 +7397,8 @@ class Component extends DCLogic {
       isBuildMenu: s.screen === 'buildmenu',
       openBuilder: () => this.setState({ screen: 'words', wordSent: [], navFrom: 'buildmenu' }),
       openSpeller: () => this.setState({ screen: 'abc', spellText: '', navFrom: 'buildmenu' }),
-      builderFace: React.createElement('img', { src: this.iconUri('tile_sentbuild'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
-      spellerFace: React.createElement('img', { src: this.iconUri('school_abc'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'contain', display: 'block' } }),
+      builderFace: React.createElement('img', { src: this.iconUri('tile_sentbuild'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' } }),
+      spellerFace: React.createElement('img', { src: this.iconUri('school_abc'), alt: '', style: { width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' } }),
       wordsBack: () => this.setState({ screen: this.state.navFrom === 'buildmenu' ? 'buildmenu' : 'board', editMode: false }),
       // The speller lives under Sentence Build now and nowhere else, so back
       // goes to that menu. A phone with 'school' still saved falls through to
