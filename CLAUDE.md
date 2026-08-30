@@ -89,6 +89,14 @@ program for low-income/disability families.
 - `api/settings.js` — Family Sync via Upstash KV.
 - **Secrets never ship in the app.** Phone numbers, keys, and the medical note live only in
   Vercel environment variables. The client sends person *ids*, never numbers.
+- **A wide screen gets re-laid out, not stretched.** Every grid needs a column
+  count for the width it is actually on. The failure looks like this: a word
+  tile grew to 623px on a laptop to hold the words "I want", and eight of them
+  filled the screen. Before shipping any board on a tablet, measure one tile.
+  If it is much bigger than the same tile on a phone, the layout was never
+  done, it was only allowed to stretch. Add columns until the tiles are back to
+  phone size, then stop. Stacks that only stack because a phone is narrow
+  (a strip above a search box, a label above a field) sit side by side here.
 - **One box per button. This one keeps coming back.** A button gets exactly one
   visible container: one border, one radius, one glow, and the glow goes
   outward. Two of anything reads as a box inside a box and he has called it out

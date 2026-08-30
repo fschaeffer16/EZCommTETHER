@@ -201,6 +201,14 @@ markup. A phone renders exactly what it always did (verified pixel-identical).
 A board overlay covers the grid and the quick words, exactly as on a phone.
 The toolbar stays. The board's own `‹` returns home. Nothing else to learn.
 
+### The word bank on a tablet (`#ez-words`, `#ez-wordtop`)
+Sentence Build is a keyboard, not a picture board, so it packs rather than
+grows. Group columns multiply with width: the two-across groups (Starters,
+Quick phrases) go 2 → 4 → 5, everything else 4 → 8 → 10, at 760px and 1100px.
+The sentence strip and the word finder, which stack on a phone only because it
+is narrow, sit side by side. Scoped by the `#ez-words` id so the rules cannot
+reach the quick-phrase pills, which use the same `repeat(4, 1fr)` string.
+
 ### Column growth
 `min-width:760px` and `min-width:1100px` are the two tiers. Home 3 → 4; the
 two-across item boards 3 → 4; the three-across boards (School, colours, night,
