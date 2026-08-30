@@ -12,9 +12,9 @@
     --serif:'Newsreader', Georgia, 'Times New Roman', serif;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.6;font-size:19px;font-weight:400}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.62;font-size:21px;font-weight:400}
   ::selection{background:var(--amber);color:#0A0A0F}
-  .eyebrow{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+  .eyebrow{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
   /* masthead + tabs */
@@ -23,7 +23,7 @@
   .brand{font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:-.01em;padding:14px 0;white-space:nowrap}
   .brand .vx{color:var(--amber)}
   .tabs{display:flex;flex-wrap:wrap;gap:2px 2px;margin-left:auto;justify-content:flex-end}
-  .tab{font-family:var(--disp);font-weight:600;font-size:13.5px;letter-spacing:.02em;color:var(--sub);background:none;border:none;border-bottom:2.5px solid transparent;padding:12px 13px 9px;cursor:pointer;white-space:nowrap}
+  .tab{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--sub);background:none;border:none;border-bottom:2.5px solid transparent;padding:12px 13px 9px;cursor:pointer;white-space:nowrap}
   .tab:hover{color:var(--ink)}
   .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--amber)}
   .tab:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
@@ -36,7 +36,7 @@
   .hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;padding:56px 0 40px}
   .hero h1{font-family:var(--disp);font-weight:750;font-size:clamp(42px,8vw,96px);line-height:.98;letter-spacing:-.025em;margin:18px 0 26px;text-wrap:balance}
   .hero h1 .dim{color:var(--faint)}
-  .hero p{max-width:34em;font-size:clamp(19px,2.1vw,23px);color:var(--sub);margin:0}
+  .hero p{max-width:34em;font-size:clamp(21px,2.3vw,25px);color:var(--sub);margin:0}
   .beat{padding:9vh 0;border-top:1px solid var(--line)}
   .beat:first-child{border-top:none}
   .beat .wrap{max-width:820px}
@@ -53,11 +53,11 @@
   .receipts{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:18px}
   .receipts li{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
   .receipts .tick{font-family:var(--disp);font-weight:800;color:var(--green);font-size:18px;line-height:1.5}
-  .receipts b{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:-.01em;display:block;margin-bottom:4px;color:var(--ink)}
-  .receipts p{margin:0;color:var(--sub);font-size:17px}
+  .receipts b{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.01em;display:block;margin-bottom:4px;color:var(--ink)}
+  .receipts p{margin:0;color:var(--sub);font-size:19px}
 
   .nextbar{padding:56px 0 88px;text-align:center}
-  .nextbtn{font-family:var(--disp);font-weight:700;font-size:16px;color:#0A0A0F;background:var(--amber);border:none;border-radius:999px;padding:16px 30px;cursor:pointer}
+  .nextbtn{font-family:var(--disp);font-weight:700;font-size:17.5px;color:#0A0A0F;background:var(--amber);border:none;border-radius:999px;padding:16px 30px;cursor:pointer}
   .nextbtn:hover{filter:brightness(1.08)}
   .nextbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
@@ -104,23 +104,23 @@
   .panel .eyebrow{margin-bottom:10px}
   .panel h3{font-family:var(--disp);font-weight:750;font-size:clamp(24px,2.6vw,34px);line-height:1.12;letter-spacing:-.015em;margin:0 0 18px;text-wrap:balance}
   .panel p{color:var(--ink);margin:0 0 1.1em;max-width:36em}
-  .panel .why{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--disp);font-weight:600;font-size:15px;color:var(--amber)}
+  .panel .why{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--disp);font-weight:600;font-size:16.5px;color:var(--amber)}
   .panel.flash{animation:fadein .35s ease}
   @keyframes fadein{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   /* chain diagram (What Makes It Different) */
   .chain{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px;align-items:center}
-  .chain .step{font-family:var(--disp);font-weight:700;font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:12px 20px}
+  .chain .step{font-family:var(--disp);font-weight:700;font-size:16.5px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:12px 20px}
   .chain .step.kept{border-color:var(--green);color:var(--green)}
   .chain .step.cut{border-color:var(--red);color:var(--red);text-decoration:line-through;text-decoration-thickness:2px;opacity:.75}
   .chain .arrow{color:var(--faint);font-family:var(--disp)}
-  .legend{font-family:var(--disp);font-size:13.5px;color:var(--sub);margin-top:10px}
+  .legend{font-family:var(--disp);font-size:15px;color:var(--sub);margin-top:10px}
   .legend .g{color:var(--green);font-weight:700}
   .legend .r{color:var(--red);font-weight:700}
 
   /* means tab: message exchange */
   .exchange{display:flex;flex-direction:column;gap:14px;max-width:480px;margin:30px 0 10px}
-  .msg{border-radius:18px;padding:14px 18px;font-family:var(--disp);font-size:16px;line-height:1.45;max-width:85%}
+  .msg{border-radius:18px;padding:14px 18px;font-family:var(--disp);font-size:17.5px;line-height:1.45;max-width:85%}
   .msg .who{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:4px;font-weight:700}
   .msg.mom{background:#2A2036;border:1px solid #4A3A5E;align-self:flex-start;border-bottom-left-radius:6px}
   .msg.mom .who{color:var(--violet)}
@@ -133,8 +133,8 @@
   .steps li{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:start;padding-top:30px;border-top:1px solid var(--line)}
   .steps li:first-child{border-top:none;padding-top:0}
   .steps .n{font-family:var(--disp);font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:8px}
-  .steps b{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1.25;letter-spacing:-.01em;display:block;margin-bottom:10px;color:var(--ink)}
-  .steps p{margin:0 0 .7em;color:var(--sub);font-size:17.5px}
+  .steps b{font-family:var(--disp);font-weight:700;font-size:23px;line-height:1.25;letter-spacing:-.01em;display:block;margin-bottom:10px;color:var(--ink)}
+  .steps p{margin:0 0 .7em;color:var(--sub);font-size:19.5px}
   .steps img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
   @media (max-width:760px){ .steps li{grid-template-columns:1fr;gap:16px} .steps img{max-width:360px} }
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
@@ -151,10 +151,10 @@
     .brand{padding:12px 0 4px}
     .tabs{margin-left:0;justify-content:flex-start;padding-bottom:4px}
     .hero{min-height:0;padding:52px 0 40px}
-    body{font-size:20px}
+    body{font-size:22px}
     .beat{padding:46px 0}
     .question{padding:70px 0}
-    .hero p{font-size:20px}
+    .hero p{font-size:22px}
     .nextbar{padding:40px 0 64px}
     .lab{padding:40px 0 70px}
   }
@@ -233,9 +233,9 @@
 
   <section class="beat reveal"><div class="wrap">
     <div class="eyebrow">Not a gimmick. A method.</div>
-    <p class="big">This isn't something a father built for his son. It's hundreds of design decisions, each one traced to a way to help unlock the cognitive abilities of the nonverbal.</p>
+    <p class="big">This is not a cute thing a father made for his son. It is hundreds of design decisions, each one traced to a way to help unlock the mind of a person who cannot speak.</p>
     <p>The quick-word row exists because I paid attention to what he actually needed to say across his days: help, good, bad, restroom, thank you. Then I put those words one thumb-swipe from anywhere. The pictures are as large as the screen physically allows because Evan doesn't read: the picture <em>is</em> the button, and I measured his boards at his screen size, hunted down every layout where a border or a box was stealing pixels from the artwork, and rebuilt it. When a board was wrong, he showed me by ignoring it. When it was right, he showed me by using it without being asked.</p>
-    <p>I did the reading, too. The communication-rate literature. The device-abandonment research and its predictors. The field's own findings on why teenagers walk away from AAC. Every citation is in the written case statement that accompanies this page, and I'll happily be graded on it. But the peer reviewer who mattered most was sixteen, nonverbal, and brutally honest: he voted with his hands, every single day. This app is the tally.</p>
+    <p>I did the reading, too. The communication-rate literature. The device-abandonment research and its predictors. The field's own findings on why teenagers walk away from AAC. Every citation is in the <a href="opening-statement.html" style="color:var(--amber)">opening statement</a> that accompanies this page, and I'll happily be graded on it. But the peer reviewer who mattered most was sixteen, nonverbal, and brutally honest: he voted with his hands, every single day. This app is the tally.</p>
   </div></section>
 
   <section class="beat reveal"><div class="wrap">
@@ -414,8 +414,8 @@
   <section class="beat reveal"><div class="wrap">
     <div class="eyebrow">Reason three · the dedicated device, reinvented</div>
     <p class="big">A phone can be a dedicated talker. Evan's is. Here's exactly how.</p>
-    <p>The credibility of a $4,000 SGD is that it does one thing: it talks, and a student can't wander off into games. A phone can be given the same integrity. Evan's talker is a phone locked to EZvoxa with iOS Guided Access. It cannot open YouTube, cannot browse, cannot do anything but be his voice. The app is built for that life: it brings its own start screen and close button, so a phone in a pocket can't press its own buttons and start talking, and the emergency alert still works even though the phone is locked to a single app.</p>
-    <p>And it doesn't even need a phone plan. The talker works fully offline and syncs on Wi-Fi, so an inexpensive handset with no SIM card becomes a dedicated device at a fraction of SGD hardware cost, in a pocket instead of a backpack. Or skip the dedicated handset entirely and install it on the phone a teenager already carries. Either way, the days of the bag with the handle are over.</p>
+    <p>The credibility of a $4,000 speech-generating device is that it does one thing: it talks, and a student can't wander off into games. A phone can be given the same integrity. Evan's talker is a phone locked to EZvoxa with iOS Guided Access. It cannot open YouTube, cannot browse, cannot do anything but be his voice. The app is built for that life: it brings its own start screen and close button, so a phone in a pocket can't press its own buttons and start talking, and the emergency alert still works even though the phone is locked to a single app.</p>
+    <p>And it doesn't even need a phone plan. The talker works fully offline and syncs on Wi-Fi, so an inexpensive handset with no SIM card becomes a dedicated device at a fraction of what that hardware costs, in a pocket instead of a backpack. Or skip the dedicated handset entirely and install it on the phone a teenager already carries. Either way, the days of the bag with the handle are over.</p>
   </div></section>
 
   <section class="beat reveal"><div class="wrap">
@@ -499,8 +499,8 @@
 <main class="tabpage" id="page-setup">
   <section class="beat reveal" style="border-top:none;padding-top:12vh"><div class="wrap">
     <div class="eyebrow">For teachers and staff</div>
-    <p class="big">Add a teacher in 9 taps. Here is a picture of every step.</p>
-    <p>Practise on the demo copy first. It is not connected to any student, so nothing you do there can break anything: <a href="https://ez-comm-tether.vercel.app/demo.html" target="_blank" rel="noopener" style="color:var(--amber)">open the practice app</a>.</p>
+    <p class="big">Add a teacher, step by step. Here is a picture of every one.</p>
+    <p>Practice on the demo copy first. It is not connected to any student, so nothing you do there can break anything: <a href="https://ez-comm-tether.vercel.app/demo.html" target="_blank" rel="noopener" style="color:var(--amber)">open the practice app</a>.</p>
     <ul class="steps">
       <li><div><span class="n">Step 1</span><b>Open the app and tap School</b><p>Everything about the people in the classroom lives behind the School button.</p></div><img src="guide/step1.jpg" loading="lazy" alt="Screenshot of step 1"></li>
       <li><div><span class="n">Step 2</span><b>Tap Teachers</b><p>Speech/OT and Bus Driver work exactly the same way.</p></div><img src="guide/step2.jpg" loading="lazy" alt="Screenshot of step 2"></li>
