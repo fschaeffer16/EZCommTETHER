@@ -5019,9 +5019,15 @@ class Component extends DCLogic {
         { glyph: '✋', txt: "I'm finished", say: "I'm finished.", color: '#1F9E6E' },
       ];
     } else {
+      // "more pizza?" reads fine; "more a Frozen Hawaiian Punch?" does not.
+      // Anything whose wording starts with an article takes the generic line,
+      // the same one the restaurant menus already use.
+      const more = /^(a|an|the)\s/i.test(base)
+        ? 'Can I have more, please?'
+        : 'Can I have more ' + base + '?';
       options = [
         { glyph: '🙋', txt: 'Can I have ' + base + '?', say: 'Can I have ' + base + '?', color: '#3B82F6' },
-        { glyph: '➕', txt: 'Can I have more ' + base + '?', say: 'Can I have more ' + base + '?', color: '#F59E0B' },
+        { glyph: '➕', txt: more, say: more, color: '#F59E0B' },
         { glyph: '✋', txt: "I'm finished", say: "I'm finished.", color: '#1F9E6E' },
       ];
     }
@@ -6002,7 +6008,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.9'; }
+  APP_BUILD() { return '2026.08.28.10'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
