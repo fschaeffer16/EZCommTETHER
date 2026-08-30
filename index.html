@@ -2042,9 +2042,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   /* Wide enough for the quick words to sit on one line, which gives the
      boards above them back their height. */
   @media (min-width:1100px) and (min-height:600px){
-    #ez-quick{height:132px!important;}
-    #ez-quick div[style*="grid-template-columns: repeat(7, 1fr)"]{grid-template-columns:repeat(14,1fr)!important;}
-    #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 190px)!important;}
+    #ez-quick{height:236px!important;}
+    #ez-quick div[style*="grid-template-columns: repeat(4, 1fr)"]{grid-template-columns:repeat(5,1fr)!important;}
+    #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 294px)!important;}
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px 14px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
@@ -2788,27 +2788,26 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   </sc-if>
 
   <!-- TABLET TOOLBAR: two rows, both always on screen. The identity line on
-       top, then the actions. Yes and No share one bar with Home nested in the
-       middle of it, the same shape he already knows from the phone, so Home
-       stays centred no matter how many buttons sit beside it. Help and
-       Restroom ride up here from the quick words because they are the two he
-       needs from inside a board, not just from home. -->
+       top, then the five buttons he needs from anywhere, with Home its own
+       circle in the middle of them. Help and Bathroom ride up here from the
+       quick phrases because they are the two he needs from inside a board and
+       not only from home. -->
   <sc-if value="{{ wideTop }}" hint-placeholder-val="{{ false }}">
-  <div style="background:#0a0a0f;padding:6px 16px 12px;flex:none;box-shadow:0 10px 24px rgba(0,0,0,.42);">
-    <div style="display:flex;align-items:center;gap:11px;padding-bottom:8px;">
+  <div style="background:#0a0a0f;padding:8px 18px 14px;flex:none;box-shadow:0 10px 24px rgba(0,0,0,.42);">
+    <div style="display:flex;align-items:center;gap:12px;padding-bottom:10px;">
       <label style="position:relative;flex:none;display:inline-block;cursor:pointer;line-height:0;"><sc-if value="{{ hasEvanPhoto }}" hint-placeholder-val="{{ false }}">{{ evanPhotoEl }}</sc-if><sc-if value="{{ noEvanPhoto }}" hint-placeholder-val="{{ true }}">{{ ownerFaceEl }}</sc-if><input type="file" accept="image/*" onChange="{{ onEvanPhoto }}" style="position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;" /></label>
-      <div style="flex:1;min-width:0;font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ownerName }}</div>
-      <div onClick="{{ closeApp }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:6px 4px;cursor:pointer;" style-active="transform:scale(.92)"><span style="font-size:23px;font-weight:900;line-height:1;color:#F59E0B;">✕</span><span style="font-size:17px;font-weight:800;color:#F59E0B;white-space:nowrap;">Close</span></div>
-      <div onClick="{{ openSettings }}" style="flex:none;width:44px;height:44px;border-radius:50%;background:#1b1f27;display:flex;align-items:center;justify-content:center;font-size:21px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.55);" style-active="transform:scale(.92)">⚙️</div>
+      <div style="flex:none;max-width:44%;font-size:26px;font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ownerName }}</div>
+      <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#1D9BF0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;line-height:1;">✓</span>
+      <div style="flex:1;"></div>
+      <div onClick="{{ openSettings }}" style="flex:none;width:52px;height:44px;border-radius:14px;background:#14161d;border:1.5px solid #2A2E39;display:flex;align-items:center;justify-content:center;font-size:21px;cursor:pointer;" style-active="transform:scale(.93)">⚙️</div>
+      <div onClick="{{ closeApp }}" style="flex:none;height:44px;border-radius:14px;background:#14161d;border:1.5px solid #2A2E39;display:flex;align-items:center;gap:8px;padding:0 16px;cursor:pointer;" style-active="transform:scale(.94)"><span style="font-size:20px;font-weight:900;line-height:1;color:#E5533D;">✕</span><span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;">Close</span></div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <div style="flex:3;min-width:0;display:flex;align-items:center;">
-        <div onClick="{{ sayYes }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;height:64px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);font-size:26px;background:linear-gradient(180deg,#6FD048 0%,#4FB22B 52%,#3D8F1D 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -3px 0 rgba(0,0,0,.16),0 0 18px rgba(79,178,43,.45);margin-right:-28px;padding-right:32px;" style-active="transform:scale(.96)"><span style="width:34px;height:34px;flex:none;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:19px;line-height:1;font-weight:900;">✓</span>Yes</div>
-        <div onClick="{{ goHome }}" style="flex:none;width:68px;height:68px;border-radius:50%;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#fff;background:radial-gradient(circle at 50% 35%,#3FC4FF,#0C86D6);box-shadow:0 0 0 5px #0a0a0f,0 0 20px rgba(63,196,255,.85),0 4px 12px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.55);" style-active="transform:scale(.93)"><span style="font-size:29px;line-height:1;">🏠</span><span style="font-size:11px;font-weight:800;line-height:1;margin-top:1px;">Home</span></div>
-        <div onClick="{{ sayNo }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;height:64px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);font-size:26px;background:linear-gradient(180deg,#F05A4C 0%,#DC3225 52%,#B62214 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.18),0 0 18px rgba(220,50,37,.42);margin-left:-28px;padding-left:32px;" style-active="transform:scale(.96)"><span style="width:34px;height:34px;flex:none;border-radius:50%;border:3px solid #fff;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;font-weight:900;">✕</span>No</div>
-      </div>
-      <div onClick="{{ sayHelpTop }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;height:64px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);font-size:20px;background:linear-gradient(180deg,#F7A63C 0%,#EE8A1E 52%,#CE6F10 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 0 18px rgba(238,138,30,.42);" style-active="transform:scale(.96)"><span style="font-size:25px;line-height:1;">🙋</span>Help</div>
-      <div onClick="{{ sayRestroomTop }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;height:64px;cursor:pointer;color:#fff;border-radius:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);font-size:17px;background:linear-gradient(180deg,#4FB9F2 0%,#1E96DE 52%,#1177B5 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -3px 0 rgba(0,0,0,.16),0 0 18px rgba(30,150,222,.42);" style-active="transform:scale(.96)"><span style="font-size:22px;line-height:1;">🚻</span>Restroom</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div onClick="{{ sayYes }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;height:66px;cursor:pointer;color:#fff;border-radius:18px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);min-width:0;font-size:26px;background:linear-gradient(180deg,#5FC63C 0%,#3E9E22 60%,#2F7D18 100%);border:2px solid #7BE05A;box-shadow:0 0 16px rgba(95,198,60,.45);" style-active="transform:scale(.96)"><span style="width:34px;height:34px;flex:none;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:19px;line-height:1;font-weight:900;">✓</span>Yes</div>
+      <div onClick="{{ sayNo }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;height:66px;cursor:pointer;color:#fff;border-radius:18px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);min-width:0;font-size:26px;background:linear-gradient(180deg,#E24B3D 0%,#C42B1E 60%,#9E1D12 100%);border:2px solid #FF6B5A;box-shadow:0 0 16px rgba(226,75,61,.45);" style-active="transform:scale(.96)"><span style="width:34px;height:34px;flex:none;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;font-weight:900;">✕</span>No</div>
+      <div onClick="{{ goHome }}" style="flex:none;width:84px;height:84px;margin:-9px 2px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#fff;background:radial-gradient(circle at 50% 34%,#1E3A5F,#0B1B2E);border:3px solid #4FC3FF;box-shadow:0 0 22px rgba(79,195,255,.75);" style-active="transform:scale(.93)"><span style="font-size:30px;line-height:1;">🏠</span><span style="font-size:12px;font-weight:800;line-height:1;margin-top:2px;">Home</span></div>
+      <div onClick="{{ sayHelpTop }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;height:66px;cursor:pointer;color:#fff;border-radius:18px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);min-width:0;font-size:23px;background:linear-gradient(180deg,#F0A62F 0%,#D2851A 60%,#A96613 100%);border:2px solid #FFC559;box-shadow:0 0 16px rgba(240,166,47,.45);" style-active="transform:scale(.96)"><span style="font-size:26px;line-height:1;">✋</span>Help</div>
+      <div onClick="{{ sayRestroomTop }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;height:66px;cursor:pointer;color:#fff;border-radius:18px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.3);min-width:0;font-size:21px;background:linear-gradient(180deg,#6D4BC9 0%,#5334A6 60%,#3F2782 100%);border:2px solid #A98CFF;box-shadow:0 0 16px rgba(109,75,201,.45);" style-active="transform:scale(.96)"><span style="font-size:24px;line-height:1;">🚻</span>Bathroom</div>
     </div>
   </div>
   </sc-if>
@@ -2863,18 +2862,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       </div>
     </sc-if>
 
-    <!-- TABLET QUICK WORDS: the twelve he reaches for most, pinned above the
+    <!-- TABLET QUICK PHRASES: the words he reaches for most, pinned above the
          emergency bar and never scrolled away. On a phone these are a strip of
-         four that scrolls sideways because there is no room for more. Here all
-         twelve are on screen at once, so every one of them is a single tap
-         from the home screen. The caption is baked into each picture, so the
-         tile is the whole button. -->
+         four that scrolls sideways because there is no room for more. Here
+         every one of them is on screen, as a labelled pill: the drawing on the
+         left, the word beside it. One border, one glow, outward only. -->
     <sc-if value="{{ wideHome }}" hint-placeholder-val="{{ false }}">
-      <div id="ez-quick" style="position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 58px);height:268px;box-sizing:border-box;padding:8px 18px 6px;background:#0a0a0f;border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.45);">
-        <div style="font-size:11.5px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7FD7FF;padding:0 2px 7px;">Quick words</div>
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:9px;">
+      <div id="ez-quick" style="position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 58px);height:300px;box-sizing:border-box;padding:9px 18px 8px;background:#0a0a0f;border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.45);">
+        <div style="font-size:13px;font-weight:800;letter-spacing:.04em;color:#C9C2B8;padding:0 2px 8px;display:flex;align-items:center;gap:7px;"><span style="color:#4FC3FF;font-size:14px;">⚡</span>Quick Phrases</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
           <sc-for list="{{ neonTiles }}" as="g" hint-placeholder-count="14">
-            <div onClick="{{ g.onTap }}" style="width:100%;max-width:118px;justify-self:center;aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:pointer;" style-active="transform:scale(.94)"><img src="{{ g.img }}" alt="{{ g.label }}" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div onClick="{{ g.onTap }}" style="display:flex;align-items:center;gap:11px;padding:9px 13px;border:2px solid {{ g.c }};border-radius:15px;background:#0e0e14;box-shadow:0 0 11px {{ g.glow }};cursor:pointer;min-width:0;" style-active="transform:scale(.96)"><img src="{{ g.gl }}" alt="" style="width:36px;height:36px;object-fit:contain;flex:none;display:block;" /><span style="font-size:15.5px;font-weight:800;color:#fff;line-height:1.15;min-width:0;overflow:hidden;text-overflow:ellipsis;">{{ g.label }}</span></div>
           </sc-for>
         </div>
       </div>
@@ -2885,7 +2883,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;overflow:hidden;">{{ sosBadgeEl }}</div>
       <div style="flex:1;min-width:0;display:flex;align-items:baseline;gap:7px;overflow:hidden;">
         <span style="font-size:16px;font-weight:800;color:#fff;line-height:1.1;white-space:nowrap;">Emergency</span>
-        <span style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tap to send an SOS to everyone</span>
+        <span style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ sosHint }}</span>
       </div>
       <div style="font-size:22px;color:rgba(255,255,255,.9);line-height:1;">›</div>
     </div>
@@ -5993,7 +5991,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.17'; }
+  APP_BUILD() { return '2026.08.28.18'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7211,28 +7209,30 @@ class Component extends DCLogic {
       sayThankYou: () => this.speak('Thank you'),
       sayHelpTop: () => this.speak('I need help.'),
       sayRestroomTop: () => this.speak('I need to use the bathroom.'),
-      sayRestroomTop: () => this.speak('I need to use the bathroom.'),
+      // The phone's bar is one short line and the longer wording truncates in
+      // it; the tablet has the room for the accurate sentence.
+      sosHint: s.wide ? 'Tap to send an SOS to my trusted contacts.' : 'Tap to send an SOS to everyone',
       // The 10 neon quick tiles under Yes/Home/No. Each is a full image
       // (box + picture + caption baked in), so the grid renders the image only.
       // Help and Restroom keep the same spoken words as the old top buttons.
       neonTiles: [
-        { label: 'Help', img: this.iconUri('qn_help'), onTap: () => this.speak('I need help.') },
+        { label: 'Help', img: this.iconUri('qn_help'), gl: this.iconUri('qng_help'), c: '#FFAB07', onTap: () => this.speak('I need help.') },
         // Sits beside Help on purpose. Needing help and having a question are
         // the two things he has to be able to say without hunting for them.
-        { label: 'Question', img: this.iconUri('qn_question'), onTap: () => this.speak('I have a question.') },
-        { label: 'Good', img: this.iconUri('qn_good'), onTap: () => this.speak('Good.') },
-        { label: 'Bad', img: this.iconUri('qn_bad'), onTap: () => this.speak('Bad.') },
-        { label: 'Restroom', img: this.iconUri('qn_restroom'), onTap: () => this.speak('I need to use the bathroom.') },
-        { label: 'Thank you', img: this.iconUri('qn_thankyou'), onTap: () => this.speak('Thank you.') },
-        { label: 'Good morning', img: this.iconUri('qn_goodmorning'), onTap: () => this.speak('Good morning!') },
-        { label: 'Hi', img: this.iconUri('qn_hi'), onTap: () => this.speak('Hello!') },
-        { label: 'Bye', img: this.iconUri('qn_bye'), onTap: () => this.speak('Goodbye!') },
-        { label: 'I Love You', img: this.iconUri('qn_iloveyou'), onTap: () => this.speak('I love you.') },
-        { label: 'More', img: this.iconUri('qn_more'), onTap: () => this.speak('More.') },
-        { label: 'Now', img: this.iconUri('qn_now'), onTap: () => this.speak('Now.') },
-        { label: 'Later', img: this.iconUri('qn_later'), onTap: () => this.speak('Later.') },
-        { label: 'Done', img: this.iconUri('qn_done'), onTap: () => this.speak("I'm done.") },
-      ],
+        { label: 'Question', img: this.iconUri('qn_question'), gl: this.iconUri('qng_question'), c: '#7516E3', onTap: () => this.speak('I have a question.') },
+        { label: 'Good', img: this.iconUri('qn_good'), gl: this.iconUri('qng_good'), c: '#18C901', onTap: () => this.speak('Good.') },
+        { label: 'Bad', img: this.iconUri('qn_bad'), gl: this.iconUri('qng_bad'), c: '#F51802', onTap: () => this.speak('Bad.') },
+        { label: 'Restroom', img: this.iconUri('qn_restroom'), gl: this.iconUri('qng_restroom'), c: '#054AFF', onTap: () => this.speak('I need to use the bathroom.') },
+        { label: 'Thank you', img: this.iconUri('qn_thankyou'), gl: this.iconUri('qng_thankyou'), c: '#ED0660', onTap: () => this.speak('Thank you.') },
+        { label: 'Good morning', img: this.iconUri('qn_goodmorning'), gl: this.iconUri('qng_goodmorning'), c: '#F57A01', onTap: () => this.speak('Good morning!') },
+        { label: 'Hi', img: this.iconUri('qn_hi'), gl: this.iconUri('qng_hi'), c: '#FEA419', onTap: () => this.speak('Hello!') },
+        { label: 'Bye', img: this.iconUri('qn_bye'), gl: this.iconUri('qng_bye'), c: '#F9D35D', onTap: () => this.speak('Goodbye!') },
+        { label: 'I Love You', img: this.iconUri('qn_iloveyou'), gl: this.iconUri('qng_iloveyou'), c: '#FCBA3E', onTap: () => this.speak('I love you.') },
+        { label: 'More', img: this.iconUri('qn_more'), gl: this.iconUri('qng_more'), c: '#FBA000', onTap: () => this.speak('More.') },
+        { label: 'Now', img: this.iconUri('qn_now'), gl: this.iconUri('qng_now'), c: '#1AFE83', onTap: () => this.speak('Now.') },
+        { label: 'Later', img: this.iconUri('qn_later'), gl: this.iconUri('qng_later'), c: '#FBAD0B', onTap: () => this.speak('Later.') },
+        { label: 'Done', img: this.iconUri('qn_done'), gl: this.iconUri('qng_done'), c: '#FFE300', onTap: () => this.speak("I'm done.") },
+      ].map((q) => ({ ...q, glow: this.glowFrom(q.c) })),
       sayFamily: () => this.speak('Family'),
       goHome: () => { this.setState({ screen: 'board', chooser: null, unlockFor: null }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
       // Home (and the emergency screen) keep the full top stack; every other
@@ -7254,7 +7254,7 @@ class Component extends DCLogic {
       // scroller above them has to stop where they start. Edit mode gets the
       // whole height back, because that is where the tiles get rearranged.
       homeScrollCss: (s.wide && s.screen === 'board' && !s.editMode)
-        ? 'bottom:calc(env(safe-area-inset-bottom,0px) + 326px);'
+        ? 'bottom:calc(env(safe-area-inset-bottom,0px) + 358px);'
         : '',
       isFood: s.screen === 'food',
       isDrinks: s.screen === 'drinks',

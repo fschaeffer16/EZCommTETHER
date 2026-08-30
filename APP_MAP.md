@@ -174,20 +174,27 @@ markup. A phone renders exactly what it always did (verified pixel-identical).
   a phone. 760px covers portrait iPad (820px).
 
 ### Level one: home
-- **Toolbar** (`wideTop`), one row, always on screen: photo, name, **Yes · No ·
-  Help**, Home, Close, gear. `showTopStack` and `inBoard` are both forced false
-  when `wide`, so the phone's tall neon stack and its slim Home/Help/Done bar
-  never render on a tablet. Yes and No no longer vanish when a board opens.
+- **Toolbar** (`wideTop`), two rows, always on screen. Identity: photo, name
+  with a verified tick, gear, Close. Actions: **Yes · No · (Home) · Help ·
+  Bathroom**, with Home its own circle in the middle of the five.
+  `showTopStack` and `inBoard` are both forced false when `wide`, so the
+  phone's tall neon stack and its slim Home/Help/Done bar never render on a
+  tablet. Yes and No no longer vanish when a board opens. Built from Frank's
+  own mockup, 28 Aug 2026.
 - **Boards grid** — the ordinary home tiles, 3 across at 760px, 4 at 1100px.
-- **Quick words** (`#ez-quick`, shown on `wideHome`) — all **12 `neonTiles`**
-  pinned above the emergency bar and never scrolled away. 6 across in two rows,
-  12 across in one row at 1100px; each tile capped at 118px. The caption is
-  baked into the picture, so the tile is the whole button.
+- **Quick Phrases** (`#ez-quick`, shown on `wideHome`) — all **14 `neonTiles`**
+  pinned above the emergency bar and never scrolled away, as labelled pills:
+  the drawing on the left, the word beside it. 4 across at 760px (4 rows), 5
+  across at 1100px (3 rows). The pill art is a separate set of **glyph-only
+  transparent PNGs, `qng_*`**, lifted out of the `qn_*` tiles by stripping the
+  painted frame and the baked caption; each `neonTiles` entry carries `gl` (the
+  glyph) and `c` (its own colour, sampled from the drawing). The square `qn_*`
+  tiles are still what the phone's scrolling strip uses.
 - `wideHome` = wide, `screen === 'board'`, **not** `editMode`. In edit mode the
   quick block hides and the grid gets the full height back, because that is
   where tiles are rearranged.
 - `homeScrollCss` moves the scroller's floor to clear the quick block
-  (`bottom: safe + 350px`; `#ez-homescroll` overrides it to `+208px` at 1100px).
+  (`bottom: safe + 358px`; `#ez-homescroll` overrides it to `+294px` at 1100px).
   **If the quick block's height changes, both numbers change together.**
 
 ### Level two: a board
