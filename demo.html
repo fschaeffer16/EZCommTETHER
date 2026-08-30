@@ -4010,11 +4010,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div onClick="{{ openBuilder }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
               <div style="width:100%;border-radius:20px;overflow:hidden;">{{ builderFace }}</div>
-              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">Sentence Builder</span>
+              <span style="font-size:clamp(12.5px,3.9vw,17px);font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;white-space:nowrap;">Sentence Builder</span>
             </div>
             <div onClick="{{ openSpeller }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;" style-active="transform:scale(.95)">
               <div style="width:100%;border-radius:20px;overflow:hidden;">{{ spellerFace }}</div>
-              <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">ABC Word Speller</span>
+              <span style="font-size:clamp(12.5px,3.9vw,17px);font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;white-space:nowrap;">ABC Word Speller</span>
             </div>
           </div>
         </div>
@@ -6007,7 +6007,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.16'; }
+  APP_BUILD() { return '2026.08.28.17'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7148,12 +7148,6 @@ class Component extends DCLogic {
       ]},
       // Numbers 0–20, for putting a number in a sentence ("I am 16", "two
       // cookies"). The word finder reaches bigger numbers by typing.
-      { label: 'Numbers', color: '#4F46E5', words: [
-        { t: '0', e: '0' }, { t: '1', e: '1' }, { t: '2', e: '2' }, { t: '3', e: '3' }, { t: '4', e: '4' },
-        { t: '5', e: '5' }, { t: '6', e: '6' }, { t: '7', e: '7' }, { t: '8', e: '8' }, { t: '9', e: '9' },
-        { t: '10', e: '10' }, { t: '11', e: '11' }, { t: '12', e: '12' }, { t: '13', e: '13' }, { t: '14', e: '14' },
-        { t: '15', e: '15' }, { t: '16', e: '16' }, { t: '17', e: '17' }, { t: '18', e: '18' }, { t: '19', e: '19' }, { t: '20', e: '20' },
-      ]},
       { label: 'Adverbs', color: '#A16207', words: [
         { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
         { t: 'here', e: '📍' }, { t: 'there', e: '🫵' }, { t: 'again', e: '🔁' }, { t: 'more', e: '➕' },
@@ -7193,6 +7187,14 @@ class Component extends DCLogic {
         { t: "that's funny", e: '😂', say: "That's funny." },
         { t: 'I found it', e: '🙌', say: 'I found it.' },
         { t: 'bye', e: '✌️', say: 'Bye!' },
+      ]},
+      // Digits sit at the bottom. They are not what he reaches for when he
+      // starts a sentence, and putting them up top pushed the actual words down.
+      { label: 'Numbers', color: '#4F46E5', words: [
+        { t: '0', e: '0' }, { t: '1', e: '1' }, { t: '2', e: '2' }, { t: '3', e: '3' }, { t: '4', e: '4' },
+        { t: '5', e: '5' }, { t: '6', e: '6' }, { t: '7', e: '7' }, { t: '8', e: '8' }, { t: '9', e: '9' },
+        { t: '10', e: '10' }, { t: '11', e: '11' }, { t: '12', e: '12' }, { t: '13', e: '13' }, { t: '14', e: '14' },
+        { t: '15', e: '15' }, { t: '16', e: '16' }, { t: '17', e: '17' }, { t: '18', e: '18' }, { t: '19', e: '19' }, { t: '20', e: '20' },
       ]},
     ];
   }
