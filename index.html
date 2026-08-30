@@ -2040,9 +2040,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     /* The word bank is a keyboard, not a picture board: pack it. A tile wide
        enough to hold "I want" and nothing else is wasted room, and the whole
        bank should be reachable without scrolling past three words a row. */
-    #ez-words div[style*="grid-template-columns: repeat(2, 1fr)"]{grid-template-columns:repeat(4,1fr)!important;}
-    #ez-words div[style*="grid-template-columns: repeat(4, 1fr)"]{grid-template-columns:repeat(8,1fr)!important;}
-    #ez-words div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(8,1fr)!important;}
+    #ez-wordcols{column-count:2;column-gap:20px;}
+    /* Inside a narrower column the two-across groups would be huge, so they
+       take a third column; the four-across groups already land near the tile
+       size they have on a phone. */
+    #ez-words div[style*="grid-template-columns: repeat(2, 1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
     /* Food and drinks carry a dozen-plus items, so they pack tighter than
        the School hub does with its seven. Measured target: keep a picture
        near the 180px it is on a phone rather than letting it reach 286. */
@@ -2060,9 +2062,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
   /* Wide enough for the quick words to sit on one line, which gives the
      boards above them back their height. */
   @media (min-width:1100px) and (min-height:600px){
-    #ez-words div[style*="grid-template-columns: repeat(2, 1fr)"]{grid-template-columns:repeat(5,1fr)!important;}
-    #ez-words div[style*="grid-template-columns: repeat(4, 1fr)"]{grid-template-columns:repeat(10,1fr)!important;}
-    #ez-words div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(10,1fr)!important;}
+    #ez-wordcols{column-count:3;}
     #ez-food div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(6,1fr)!important;}
     #ez-food div[style*="grid-template-columns: 1fr 1fr;"]{grid-template-columns:repeat(6,1fr)!important;}
     #ez-quick{height:236px!important;}
@@ -4069,14 +4069,23 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </sc-if>
           <sc-if value="{{ wordSearchIdle }}" hint-placeholder-val="{{ true }}">
+          <!-- The groups flow into columns on a tablet, so several sit side by
+               side instead of each one running the full width. The wrapper is
+               what carries the columns, not the scroller: a multi-column box
+               that is itself scrollable spills sideways instead of down. Each
+               group is kept whole with break-inside. -->
+          <div id="ez-wordcols">
           <sc-for list="{{ wordGroups }}" as="g" hint-placeholder-count="0">
+            <div style="break-inside:avoid;-webkit-column-break-inside:avoid;">
             <div style="font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ g.color }};margin:12px 2px 7px;">{{ g.label }}</div>
             <div style="display:grid;grid-template-columns:repeat({{ g.cols }},1fr);gap:7px;">
               <sc-for list="{{ g.words }}" as="w" hint-placeholder-count="0">
                 <div onClick="{{ w.onTap }}" style="background:var(--card,#fff);border:2.5px solid {{ g.color }};border-radius:12px;padding:9px 2px;{{ g.cardCss }}display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;" style-active="transform:scale(.93)"><span style="line-height:1;{{ g.emojiCss }}{{ w.eCss }}">{{ w.e }}</span><sc-if value="{{ w.showWord }}" hint-placeholder-val="{{ true }}"><span style="font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;{{ g.wordCss }}">{{ w.t }}</span></sc-if></div>
               </sc-for>
             </div>
+            </div>
           </sc-for>
+          </div>
           </sc-if>
         </div>
       </div>
@@ -6018,7 +6027,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.28.21'; }
+  APP_BUILD() { return '2026.08.28.22'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7131,71 +7140,6 @@ class Component extends DCLogic {
       // Sentence starters — pronoun + verb, the beginning of most sentences.
       // Two across so "I don't want" stays on one line. Tap a starter, then a
       // noun, and the sentence is built in two taps: "I want" + "TV".
-      { label: 'Starters', color: '#0D9488', cols: 2, words: [
-        { t: 'I want', e: '🤲' }, { t: 'I need', e: '❗' }, { t: 'I am', e: '🙋' },
-        { t: 'I feel', e: '💗' }, { t: 'I like', e: '👍' }, { t: 'I have', e: '✊' },
-        { t: 'I see', e: '👀' }, { t: "I don't want", e: '🙅' },
-      ]},
-      { label: 'Pronouns', color: '#EAB308', words: [
-        { t: 'I', e: '🙋' }, { t: 'me', e: '🙋‍♂️' }, { t: 'you', e: '👉' }, { t: 'he', e: '👦' },
-        { t: 'she', e: '👧' }, { t: 'we', e: '👥' }, { t: 'they', e: '👬' }, { t: 'it', e: '🔷' },
-        { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
-      ]},
-      { label: 'Verbs', color: '#1F9E6E', words: [
-        // The "to be" verbs lead — they are the backbone of a sentence and of
-        // both a simile ("the moon IS like a balloon") and a metaphor ("the
-        // moon IS a balloon"). "is" was missing entirely; "am" also lives in
-        // Starters as "I am".
-        { t: 'is', e: '🟰' }, { t: 'am', e: '🙋' }, { t: 'are', e: '👥' }, { t: 'was', e: '⏪' },
-        { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
-        { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
-        { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
-        { t: 'eat', e: '🍕' }, { t: 'stop', e: '✋' }, { t: 'think', e: '💭' }, { t: 'feel', e: '💗' },
-      ]},
-      { label: 'Adjectives', color: '#2F6BFF', words: [
-        { t: 'good', e: '😄' }, { t: 'bad', e: '😖' }, { t: 'big', e: '🐘' }, { t: 'little', e: '🐭' },
-        { t: 'happy', e: '😊' }, { t: 'sad', e: '😢' }, { t: 'funny', e: '😂' }, { t: 'cool', e: '😎' },
-        { t: 'hot', e: '🥵' }, { t: 'cold', e: '🥶' }, { t: 'hard', e: '🧱' }, { t: 'easy', e: '🍰' },
-        { t: 'tired', e: '😴' }, { t: 'hungry', e: '🤤' }, { t: 'done', e: '🏁' },
-      ]},
-      { label: 'Articles', color: '#64748B', words: [
-        // The little words that introduce a noun. "a" is what makes a metaphor
-        // a metaphor — "the moon is A balloon" — so it sits right before Nouns.
-        { t: 'a', e: '🔹' }, { t: 'an', e: '🔸' }, { t: 'the', e: '⭐' },
-      ]},
-      { label: 'Nouns', color: '#F97316', words: [
-        // The five Frank asked for, first, then the school and around-town set.
-        { t: 'beach', e: '🏖️' }, { t: 'school', e: '🏫' }, { t: 'home', e: '🏠' }, { t: 'TV', e: '📺' }, { t: 'work', e: '💼' },
-        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
-        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
-        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
-      ]},
-      // Numbers 0–20, for putting a number in a sentence ("I am 16", "two
-      // cookies"). The word finder reaches bigger numbers by typing.
-      { label: 'Adverbs', color: '#A16207', words: [
-        { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
-        { t: 'here', e: '📍' }, { t: 'there', e: '🫵' }, { t: 'again', e: '🔁' }, { t: 'more', e: '➕' },
-        { t: 'fast', e: '💨' }, { t: 'slow', e: '🐢' },
-      ]},
-      { label: 'Prepositions', color: '#0891B2', words: [
-        { t: 'to', e: '➡️' }, { t: 'with', e: '👫' }, { t: 'in', e: '📥' }, { t: 'on', e: '🔛' },
-        { t: 'up', e: '⬆️' }, { t: 'down', e: '⬇️' }, { t: 'out', e: '📤' }, { t: 'at', e: '📌' },
-      ]},
-      { label: 'Little words', color: '#E23B2E', words: [
-        // "as" is the other half of a simile — "as big as a house". It rides
-        // here with the connectors.
-        { t: 'as', e: '⚖️' }, { t: 'and', e: '🔗' }, { t: 'but', e: '↔️' }, { t: 'or', e: '🔀' },
-        { t: 'not', e: '🚫' }, { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
-      ]},
-      { label: 'Question words', color: '#7A5CFF', words: [
-        { t: 'what', e: '❓' }, { t: 'where', e: '🧭' }, { t: 'when', e: '⏰' },
-        { t: 'who', e: '👤' }, { t: 'why', e: '🤔' }, { t: 'how', e: '🤷' },
-      ]},
-      // Ready-made language, below the grammar spine.
-      { label: 'Social', color: '#DB2777', words: [
-        { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
-        { t: 'please', e: '🙏' }, { t: 'thank you', e: '😊' }, { t: 'sorry', e: '😔' }, { t: "what's up", e: '🤙' },
-      ]},
       { label: 'Quick phrases', color: '#DB2777', cols: 2, words: [
         { t: "that's cool", e: '😎', say: "That's cool." },
         { t: 'I like that', e: '👍', say: 'I like that.' },
@@ -7211,10 +7155,58 @@ class Component extends DCLogic {
         { t: "that's funny", e: '😂', say: "That's funny." },
         { t: 'I found it', e: '🙌', say: 'I found it.' },
         { t: 'bye', e: '✌️', say: 'Bye!' },
-      ]},
-      // Digits sit at the bottom. They are not what he reaches for when he
-      // starts a sentence, and putting them up top pushed the actual words down.
-      { label: 'Numbers', color: '#4F46E5', words: [
+      ]},      { label: 'Starters', color: '#0D9488', cols: 2, words: [
+        { t: 'I want', e: '🤲' }, { t: 'I need', e: '❗' }, { t: 'I am', e: '🙋' },
+        { t: 'I feel', e: '💗' }, { t: 'I like', e: '👍' }, { t: 'I have', e: '✊' },
+        { t: 'I see', e: '👀' }, { t: "I don't want", e: '🙅' },
+      ]},      { label: 'Little words', color: '#E23B2E', words: [
+        // "as" is the other half of a simile — "as big as a house". It rides
+        // here with the connectors.
+        { t: 'as', e: '⚖️' }, { t: 'and', e: '🔗' }, { t: 'but', e: '↔️' }, { t: 'or', e: '🔀' },
+        { t: 'not', e: '🚫' }, { t: "don't", e: '⛔' }, { t: 'can', e: '💪' }, { t: "can't", e: '🙅' },
+      ]},      { label: 'Question words', color: '#7A5CFF', words: [
+        { t: 'what', e: '❓' }, { t: 'where', e: '🧭' }, { t: 'when', e: '⏰' },
+        { t: 'who', e: '👤' }, { t: 'why', e: '🤔' }, { t: 'how', e: '🤷' },
+      ]},      { label: 'Verbs', color: '#1F9E6E', words: [
+        // The "to be" verbs lead — they are the backbone of a sentence and of
+        // both a simile ("the moon IS like a balloon") and a metaphor ("the
+        // moon IS a balloon"). "is" was missing entirely; "am" also lives in
+        // Starters as "I am".
+        { t: 'is', e: '🟰' }, { t: 'am', e: '🙋' }, { t: 'are', e: '👥' }, { t: 'was', e: '⏪' },
+        { t: 'want', e: '🤲' }, { t: 'need', e: '❗' }, { t: 'like', e: '👍' }, { t: 'go', e: '🏃' },
+        { t: 'come', e: '🚶' }, { t: 'help', e: '🤝' }, { t: 'have', e: '✊' }, { t: 'get', e: '🎁' },
+        { t: 'see', e: '👀' }, { t: 'know', e: '🧠' }, { t: 'make', e: '🛠️' }, { t: 'play', e: '🎮' },
+        { t: 'eat', e: '🍕' }, { t: 'stop', e: '✋' }, { t: 'think', e: '💭' }, { t: 'feel', e: '💗' },
+      ]},      { label: 'Adjectives', color: '#2F6BFF', words: [
+        { t: 'good', e: '😄' }, { t: 'bad', e: '😖' }, { t: 'big', e: '🐘' }, { t: 'little', e: '🐭' },
+        { t: 'happy', e: '😊' }, { t: 'sad', e: '😢' }, { t: 'funny', e: '😂' }, { t: 'cool', e: '😎' },
+        { t: 'hot', e: '🥵' }, { t: 'cold', e: '🥶' }, { t: 'hard', e: '🧱' }, { t: 'easy', e: '🍰' },
+        { t: 'tired', e: '😴' }, { t: 'hungry', e: '🤤' }, { t: 'done', e: '🏁' },
+      ]},      { label: 'Pronouns', color: '#EAB308', words: [
+        { t: 'I', e: '🙋' }, { t: 'me', e: '🙋‍♂️' }, { t: 'you', e: '👉' }, { t: 'he', e: '👦' },
+        { t: 'she', e: '👧' }, { t: 'we', e: '👥' }, { t: 'they', e: '👬' }, { t: 'it', e: '🔷' },
+        { t: 'my', e: '💙' }, { t: 'that', e: '👆' },
+      ]},      { label: 'Prepositions', color: '#0891B2', words: [
+        { t: 'to', e: '➡️' }, { t: 'with', e: '👫' }, { t: 'in', e: '📥' }, { t: 'on', e: '🔛' },
+        { t: 'up', e: '⬆️' }, { t: 'down', e: '⬇️' }, { t: 'out', e: '📤' }, { t: 'at', e: '📌' },
+      ]},      { label: 'Social', color: '#DB2777', words: [
+        { t: 'yes', e: '✅' }, { t: 'no', e: '❌' }, { t: 'hi', e: '👋' }, { t: 'bye', e: '✌️' },
+        { t: 'please', e: '🙏' }, { t: 'thank you', e: '😊' }, { t: 'sorry', e: '😔' }, { t: "what's up", e: '🤙' },
+      ]},      { label: 'Articles', color: '#64748B', words: [
+        // The little words that introduce a noun. "a" is what makes a metaphor
+        // a metaphor — "the moon is A balloon" — so it sits right before Nouns.
+        { t: 'a', e: '🔹' }, { t: 'an', e: '🔸' }, { t: 'the', e: '⭐' },
+      ]},      { label: 'Nouns', color: '#F97316', words: [
+        // The five Frank asked for, first, then the school and around-town set.
+        { t: 'beach', e: '🏖️' }, { t: 'school', e: '🏫' }, { t: 'home', e: '🏠' }, { t: 'TV', e: '📺' }, { t: 'work', e: '💼' },
+        { t: 'teacher', e: '🧑‍🏫' }, { t: 'class', e: '🧑‍🎓' }, { t: 'homework', e: '📝' }, { t: 'lunch', e: '🥪' },
+        { t: 'book', e: '📚' }, { t: 'computer', e: '💻' }, { t: 'test', e: '📋' }, { t: 'game', e: '🕹️' },
+        { t: 'music', e: '🎵' }, { t: 'friend', e: '🤗' }, { t: 'bathroom', e: '🚻' },
+      ]},      { label: 'Adverbs', color: '#A16207', words: [
+        { t: 'now', e: '⏳' }, { t: 'later', e: '🕐' }, { t: 'today', e: '📅' }, { t: 'tomorrow', e: '🌅' },
+        { t: 'here', e: '📍' }, { t: 'there', e: '🫵' }, { t: 'again', e: '🔁' }, { t: 'more', e: '➕' },
+        { t: 'fast', e: '💨' }, { t: 'slow', e: '🐢' },
+      ]},      { label: 'Numbers', color: '#4F46E5', words: [
         { t: '0', e: '0' }, { t: '1', e: '1' }, { t: '2', e: '2' }, { t: '3', e: '3' }, { t: '4', e: '4' },
         { t: '5', e: '5' }, { t: '6', e: '6' }, { t: '7', e: '7' }, { t: '8', e: '8' }, { t: '9', e: '9' },
         { t: '10', e: '10' }, { t: '11', e: '11' }, { t: '12', e: '12' }, { t: '13', e: '13' }, { t: '14', e: '14' },

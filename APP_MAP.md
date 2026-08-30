@@ -203,8 +203,14 @@ The toolbar stays. The board's own `‹` returns home. Nothing else to learn.
 
 ### The word bank on a tablet (`#ez-words`, `#ez-wordtop`)
 Sentence Build is a keyboard, not a picture board, so it packs rather than
-grows. Group columns multiply with width: the two-across groups (Starters,
-Quick phrases) go 2 → 4 → 5, everything else 4 → 8 → 10, at 760px and 1100px.
+grows. The **groups flow into columns** (`#ez-wordcols`): two at 760px, three at
+1100px, each group kept whole with `break-inside:avoid`. The columns live on an
+inner wrapper, never on `#ez-words` itself, because a multi-column box that is
+also the scroller spills sideways instead of down. Inside the narrower columns
+the two-across groups take three; everything else keeps the four it has on a
+phone. Group order is Frank's, 28 Aug 2026: Quick phrases, Starters, Little
+words, Question words, Verbs, Adjectives, Pronouns, Prepositions, Social, then
+Articles, Nouns, Adverbs, and Numbers last.
 The sentence strip and the word finder, which stack on a phone only because it
 is narrow, sit side by side. Scoped by the `#ez-words` id so the rules cannot
 reach the quick-phrase pills, which use the same `repeat(4, 1fr)` string.
