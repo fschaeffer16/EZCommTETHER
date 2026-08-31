@@ -4224,10 +4224,26 @@ class Component extends DCLogic {
   // Rotating an iPad crosses the line in both directions, so the layout has to
   // follow it rather than being read once at launch.
   watchWidth() {
-    const mq = window.matchMedia('(min-width: 740px) and (min-height: 600px)');
-    const sync = () => { if (mq.matches !== !!this.state.wide) this.setState({ wide: mq.matches }); };
-    if (mq.addEventListener) mq.addEventListener('change', sync);
-    else if (mq.addListener) mq.addListener(sync);
+    // Belt and braces: an older iPad's Safari does not always fire the media
+    // query on rotation, and if it misses one the app stays stuck in whichever
+    // layout it booted in. resize and orientationchange are the ones that are
+    // reliable everywhere, so re-measure on all three and let sync() decide.
+    const sync = () => {
+      const w = this.isWideScreen();
+      if (w !== !!this.state.wide) this.setState({ wide: w });
+    };
+    try {
+      const mq = window.matchMedia('(min-width: 740px) and (min-height: 600px)');
+      if (mq.addEventListener) mq.addEventListener('change', sync);
+      else if (mq.addListener) mq.addListener(sync);
+    } catch (e) {}
+    window.addEventListener('resize', sync);
+    // iOS reports the old size for a beat after the turn, so measure twice
+    window.addEventListener('orientationchange', () => {
+      sync(); setTimeout(sync, 250); setTimeout(sync, 700);
+    });
+    // coming back from the app switcher can also land on a new size
+    window.addEventListener('pageshow', sync);
     sync();
   }
 
@@ -6015,7 +6031,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.31.1'; }
+  APP_BUILD() { return '2026.08.31.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

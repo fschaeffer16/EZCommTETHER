@@ -1,0 +1,146 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EZvoxa device check</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  body{padding:14px 16px 40px}
+  h1{font-size:19px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{font-size:14px;color:#8C857A;margin:0 0 14px}
+  .verdict{border-radius:12px;padding:14px 16px;margin:0 0 16px;
+    font-size:20px;font-weight:800;line-height:1.25;}
+  .ok{background:#123D1C;color:#7DE59A;border:2px solid #2C7A45}
+  .no{background:#4A1410;color:#FF9A8A;border:2px solid #A33528}
+  table{width:100%;border-collapse:collapse;font-size:17px}
+  td{padding:7px 0;border-bottom:1px solid #241E16;vertical-align:top}
+  td:first-child{color:#8C857A;padding-right:12px;white-space:nowrap;width:1%}
+  td:last-child{font-weight:700;font-variant-numeric:tabular-nums;
+    word-break:break-word;font-family:ui-monospace,Menlo,monospace}
+  .big td:last-child{font-size:23px;color:#FFB020}
+  h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#7A7060;
+    margin:20px 0 4px;font-weight:800}
+  .ua{font-size:13px;line-height:1.45;color:#B0A695;
+    font-family:ui-monospace,Menlo,monospace;word-break:break-all;
+    border:1px solid #241E16;border-radius:10px;padding:10px 12px;margin-top:4px}
+  .hint{font-size:15px;color:#8C857A;margin-top:18px;line-height:1.5}
+</style>
+
+<h1>EZvoxa device check</h1>
+<p class="sub">Screenshot this whole page and send it. Then turn the iPad the other way and screenshot it again.</p>
+
+<div id="verdict" class="verdict no">checking…</div>
+
+<h2>What the browser thinks the window is</h2>
+<table class="big">
+  <tr><td>Window</td><td id="win">-</td></tr>
+</table>
+<table>
+  <tr><td>Screen</td><td id="scr">-</td></tr>
+  <tr><td>Visual viewport</td><td id="vv">-</td></tr>
+  <tr><td>Pinch scale</td><td id="scale">-</td></tr>
+  <tr><td>Pixel ratio</td><td id="dpr">-</td></tr>
+  <tr><td>Orientation</td><td id="ori">-</td></tr>
+</table>
+
+<h2>The tablet test</h2>
+<table>
+  <tr><td>min-width 740</td><td id="mw">-</td></tr>
+  <tr><td>min-height 600</td><td id="mh">-</td></tr>
+  <tr><td>Both (tablet)</td><td id="both">-</td></tr>
+  <tr><td>Rotation events</td><td id="mql">-</td></tr>
+</table>
+
+<h2>Can this Safari draw the layout</h2>
+<table>
+  <tr><td>CSS grid</td><td id="c1">-</td></tr>
+  <tr><td>grid gap</td><td id="c2">-</td></tr>
+  <tr><td>clamp()</td><td id="c3">-</td></tr>
+  <tr><td>aspect-ratio</td><td id="c4">-</td></tr>
+  <tr><td>CSS columns</td><td id="c5">-</td></tr>
+  <tr><td>env() insets</td><td id="c6">-</td></tr>
+</table>
+
+<h2>Cached copy</h2>
+<table>
+  <tr><td>Service worker</td><td id="sw">-</td></tr>
+  <tr><td>Caches held</td><td id="cache">-</td></tr>
+</table>
+
+<h2>Browser</h2>
+<div class="ua" id="ua">-</div>
+
+<p class="hint">This page changes as you rotate. If the numbers do not change when
+you turn the iPad, that is the answer and it is worth a screenshot of both.</p>
+
+<script>
+(function () {
+  function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+  function yn(b) { return b ? 'yes' : 'NO'; }
+  function sup(prop, val) {
+    try { return (window.CSS && CSS.supports) ? CSS.supports(prop, val) : false; }
+    catch (e) { return false; }
+  }
+  var mq;
+  try { mq = matchMedia('(min-width: 740px) and (min-height: 600px)'); } catch (e) { mq = null; }
+
+  function draw() {
+    var w = window.innerWidth, h = window.innerHeight;
+    set('win', w + ' x ' + h);
+    set('scr', screen.width + ' x ' + screen.height +
+      (screen.availWidth ? '  (avail ' + screen.availWidth + ' x ' + screen.availHeight + ')' : ''));
+    var vv = window.visualViewport;
+    set('vv', vv ? Math.round(vv.width) + ' x ' + Math.round(vv.height) : 'not supported');
+    set('scale', vv && vv.scale ? vv.scale.toFixed(2) + (Math.abs(vv.scale - 1) > 0.02 ? '  <-- ZOOMED' : '') : 'n/a');
+    set('dpr', window.devicePixelRatio || '?');
+    set('ori', w > h ? 'landscape' : 'portrait');
+
+    var a = false, b = false, both = false;
+    try { a = matchMedia('(min-width: 740px)').matches; } catch (e) {}
+    try { b = matchMedia('(min-height: 600px)').matches; } catch (e) {}
+    try { both = mq ? mq.matches : false; } catch (e) {}
+    set('mw', yn(a)); set('mh', yn(b)); set('both', yn(both));
+
+    var v = document.getElementById('verdict');
+    if (both) { v.className = 'verdict ok'; v.textContent = 'TABLET LAYOUT — this iPad qualifies'; }
+    else {
+      v.className = 'verdict no';
+      v.textContent = 'PHONE LAYOUT — because ' +
+        (!a ? 'the window is only ' + window.innerWidth + 'pt wide (needs 740)' : '') +
+        (!a && !b ? ' and ' : '') +
+        (!b ? 'the window is only ' + window.innerHeight + 'pt tall (needs 600)' : '');
+    }
+  }
+
+  set('mql', mq ? (mq.addEventListener ? 'addEventListener' :
+    (mq.addListener ? 'addListener (older Safari)' : 'NONE — cannot detect rotation')) : 'no matchMedia');
+
+  set('c1', yn(sup('display', 'grid')));
+  set('c2', yn(sup('gap', '10px')));
+  set('c3', yn(sup('width', 'clamp(10px, 5vw, 20px)')));
+  set('c4', yn(sup('aspect-ratio', '1')));
+  set('c5', yn(sup('column-count', '2')));
+  set('c6', yn(sup('padding', 'env(safe-area-inset-bottom)')));
+  set('ua', navigator.userAgent);
+
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.getRegistrations().then(function (r) {
+      set('sw', r.length ? r.length + ' registered — ' + r.map(function (x) {
+        return (x.active && x.active.scriptURL || '?').split('/').pop();
+      }).join(', ') : 'none');
+    }).catch(function () { set('sw', 'could not read'); });
+  } else { set('sw', 'not supported'); }
+
+  if (window.caches && caches.keys) {
+    caches.keys().then(function (k) { set('cache', k.length ? k.join(', ') : 'none'); })
+      .catch(function () { set('cache', 'could not read'); });
+  } else { set('cache', 'not supported'); }
+
+  draw();
+  window.addEventListener('resize', draw);
+  window.addEventListener('orientationchange', function () { setTimeout(draw, 300); });
+  if (mq) { if (mq.addEventListener) mq.addEventListener('change', draw); else if (mq.addListener) mq.addListener(draw); }
+  if (window.visualViewport) { visualViewport.addEventListener('resize', draw); }
+  setInterval(draw, 1000);
+})();
+</script>
