@@ -31,6 +31,35 @@
   p.ref{font-size:17.5px;line-height:1.52;color:var(--sub);}
   a{color:var(--blue);word-break:break-word;}
   footer{padding:32px 0 64px;font-family:var(--disp);font-size:15px;color:var(--faint);}
+  /* A slim bar that slides down once you have scrolled past the contents, so
+     you can get back to the list from any section without scrolling for it. It
+     sits at the top on purpose: the top of the screen is text you have already
+     read, so nothing you are actually reading is ever covered. */
+  #bar{
+    position:fixed;z-index:20;top:0;left:0;right:0;
+    display:flex;align-items:center;gap:12px;
+    padding:9px 16px 9px 22px;
+    background:rgba(10,10,15,.94);
+    -webkit-backdrop-filter:saturate(150%) blur(10px);
+    backdrop-filter:saturate(150%) blur(10px);
+    border-bottom:1px solid var(--line);
+    transform:translateY(-102%);transition:transform .2s ease;
+  }
+  #bar.on{transform:none}
+  #bar .who{
+    flex:1;min-width:0;font-family:var(--disp);font-size:14px;font-weight:700;
+    color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  #bar button{
+    flex:none;font-family:var(--disp);font-size:15px;font-weight:800;
+    color:#0A0A0F;background:var(--amber);
+    border:0;border-radius:999px;padding:9px 16px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  #bar button:active{transform:scale(.94)}
+  /* the bar covers the top of the page, so land section headings below it */
+  section{scroll-margin-top:34px}
+  @media (prefers-reduced-motion:reduce){#bar{transition:none}}
 </style>
 
 <header class="top"><div class="wrap">
@@ -189,3 +218,27 @@
 </main>
 
 <footer class="wrap">EZ Voice LLC &middot; Fort Pierce, Florida &middot; ezvoxa.com</footer>
+
+<div id="bar">
+  <div class="who">An Opening Statement</div>
+  <button type="button" aria-label="Back to contents">&#8593; Contents</button>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('bar');
+  var toc = document.querySelector('nav.toc');
+  if (!bar || !toc) return;
+  var btn = bar.querySelector('button');
+  function update() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    bar.className = y > (toc.offsetTop + toc.offsetHeight) ? 'on' : '';
+  }
+  btn.addEventListener('click', function () {
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    catch (e) { window.scrollTo(0, 0); }
+  });
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
