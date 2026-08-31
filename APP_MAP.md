@@ -176,7 +176,21 @@ Everything is one `wide` state flag plus width-driven CSS on the **same**
 markup. A phone renders exactly what it always did (verified pixel-identical).
 
 ### The `wide` flag
-- `isWideScreen()` — `matchMedia('(min-width: 740px) and (min-height: 600px)')`.
+- `isWideScreen()` — **measures the window as if it were not zoomed**:
+  `innerWidth * scale >= 740 && innerHeight * scale >= 600`, where `scale` is
+  `visualViewport.scale`. Safari page zoom shrinks the window and leaves the
+  screen alone, so an iPad Pro at 175% reports 682x419 — in CSS terms smaller
+  than an iPhone held sideways. Nothing in the window tells those apart; the
+  zoom factor is the only thing that does.
+- `applyWideClass()` stamps `ez-wide` / `ez-wider` / `ez-short` / `ez-vshort` on
+  `<html>` from that same measurement, because CSS media queries read the
+  shrunken window and would otherwise paint phone styling onto tablet markup.
+  Both wide tiers are mirrored onto `html.ez-wide` / `html.ez-wider`; the media
+  queries are untouched, so an unzoomed device never reaches the class rules.
+- **Height is spent according to what there is.** The quick phrases panel is a
+  fixed 300px and will eat a short window whole (at 682x419 it took 300 and left
+  the boards 14px). `ez-short` (under 700px) drops it to 196px; `ez-vshort`
+  (under 560px) hides it and gives the boards the whole column.
   Read in the constructor so the first paint is already right; `watchWidth()`
   re-reads it on rotation. Height is in the test so a phone held sideways stays
   a phone (an iPhone 15 Pro Max on its side is 932×430, and 430 < 600).
