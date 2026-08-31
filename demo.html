@@ -2085,6 +2085,41 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
     div[style*="repeat(3, minmax(0px, 1fr))"]{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
   }
+  /* The same two tiers again, driven by a class instead of the window,
+     so a zoomed tablet gets tablet styling to match its tablet markup.
+     The media queries above are untouched: an unzoomed device never
+     reaches this and renders exactly as it did. */
+  :root.ez-wide{}
+    html.ez-wide #tether-root{max-width:1280px!important;box-shadow:none!important;}
+    html.ez-wide #ez-wordtop{display:grid!important;grid-template-columns:1fr 1fr;column-gap:16px;align-items:start;}
+    html.ez-wide #ez-wordtop > *:nth-child(1){grid-column:1;grid-row:1;}
+    html.ez-wide #ez-wordtop > *:nth-child(2){grid-column:1;grid-row:2;margin:10px 0 0!important;}
+    html.ez-wide #ez-wordtop > *:nth-child(3){grid-column:2;grid-row:1;align-self:end;margin-bottom:6px!important;}
+    html.ez-wide #ez-wordtop > *:nth-child(4){grid-column:2;grid-row:2;margin:10px 0 0!important;}
+    html.ez-wide #ez-wordcols{column-count:2;column-gap:20px;}
+    html.ez-wide #ez-words div[style*="grid-template-columns: repeat(2,html.ez-wide 1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
+    html.ez-wide #ez-food div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
+    html.ez-wide #ez-food div[style*="grid-template-columns: 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
+    html.ez-wide div[style*="grid-template-columns: 1fr 1fr; gap: 12px 14px"]{grid-template-columns:repeat(3,1fr)!important;gap:12px 20px!important;}
+    html.ez-wide div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(3,1fr)!important;}
+    html.ez-wide div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(4,1fr)!important;}
+    html.ez-wide div[style*="repeat(3,html.ez-wide minmax(0px,html.ez-wide 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+    html.ez-wider #ez-wordcols{column-count:3;}
+    html.ez-wider #ez-food div[style*="grid-template-columns: 1fr 1fr 1fr;"]{grid-template-columns:repeat(6,1fr)!important;}
+    html.ez-wider #ez-food div[style*="grid-template-columns: 1fr 1fr;"]{grid-template-columns:repeat(6,1fr)!important;}
+    html.ez-wider #ez-quick{height:236px!important;}
+    html.ez-wider #ez-quick div[style*="grid-template-columns: repeat(4,html.ez-wider 1fr)"]{grid-template-columns:repeat(5,1fr)!important;}
+    html.ez-wider #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 294px)!important;}
+    html.ez-wider div[style*="grid-template-columns: 1fr 1fr; gap: 12px 14px"]{grid-template-columns:repeat(4,1fr)!important;}
+    html.ez-wider div[style*="grid-template-columns: 1fr 1fr; gap: 12px"]{grid-template-columns:repeat(4,1fr)!important;}
+    html.ez-wider div[style*="repeat(3,html.ez-wider minmax(0px,html.ez-wider 1fr))"]{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
+  /* A short window cannot afford a 300px panel of quick phrases: at
+     682x419 it took 300 and left the boards 14px, so Family, Food and
+     School simply were not on screen. Give the boards the room back. */
+  html.ez-short #ez-quick{height:196px!important;}
+  html.ez-short #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 254px)!important;}
+  html.ez-vshort #ez-quick{display:none!important;}
+  html.ez-vshort #ez-homescroll{bottom:calc(env(safe-area-inset-bottom,0px) + 46px)!important;}
   /* Fill the home-indicator strip below the app instead of showing white. */
   html,body{background:var(--bg,#FBFAF7);min-height:100%;}
 </style>
@@ -4196,6 +4231,7 @@ class Component extends DCLogic {
     // differently from the first paint. matchMedia answers before anything is
     // drawn; a phone never matches and takes the untouched phone path.
     this.state = { screen: 'board', theme: 'dark', wide: this.isWideScreen() };
+    try { this.applyWideClass(); } catch (e) {}
   }
 
   colors(theme) {
@@ -4217,8 +4253,39 @@ class Component extends DCLogic {
 
   // The one place the tablet layout is decided. Height is in the test as well
   // as width so a phone held sideways stays a phone.
+  // The window is not the screen. Safari page zoom shrinks the window and
+  // leaves the screen alone, so an iPad Pro at 175% hands us 682x419 - in CSS
+  // terms smaller than an iPhone held sideways. Nothing in the window can tell
+  // those two apart, which is why the zoom factor has to come into it: multiply
+  // back up and we are asking about the glass, not about the zoom.
+  ezScale() {
+    try {
+      const vv = window.visualViewport;
+      if (vv && typeof vv.scale === 'number' && vv.scale > 1.01) return vv.scale;
+    } catch (e) {}
+    return 1;
+  }
   isWideScreen() {
-    try { return window.matchMedia('(min-width: 740px) and (min-height: 600px)').matches; } catch (e) { return false; }
+    try {
+      const s = this.ezScale();
+      return (window.innerWidth * s) >= 740 && (window.innerHeight * s) >= 600;
+    } catch (e) { return false; }
+  }
+  // CSS media queries read the same shrunken window the detection used to, so
+  // they would disagree with us and paint phone styling onto tablet markup.
+  // Stamp the answer on <html> and let the stylesheet follow the same call.
+  applyWideClass() {
+    try {
+      const s = this.ezScale();
+      const w = window.innerWidth * s, h = window.innerHeight * s;
+      const r = document.documentElement, wide = w >= 740 && h >= 600;
+      r.classList.toggle('ez-wide', wide);
+      r.classList.toggle('ez-wider', wide && w >= 1100);
+      // How much real height the layout has to spend, zoom included. The quick
+      // phrases panel is a fixed 300px and will eat a short window whole.
+      r.classList.toggle('ez-short', wide && window.innerHeight < 700);
+      r.classList.toggle('ez-vshort', wide && window.innerHeight < 560);
+    } catch (e) {}
   }
 
   // Rotating an iPad crosses the line in both directions, so the layout has to
@@ -4229,6 +4296,7 @@ class Component extends DCLogic {
     // layout it booted in. resize and orientationchange are the ones that are
     // reliable everywhere, so re-measure on all three and let sync() decide.
     const sync = () => {
+      this.applyWideClass();
       const w = this.isWideScreen();
       if (w !== !!this.state.wide) this.setState({ wide: w });
     };
@@ -6031,7 +6099,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.31.3'; }
+  APP_BUILD() { return '2026.08.31.4'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
