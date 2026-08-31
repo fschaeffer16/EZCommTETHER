@@ -19,6 +19,23 @@
 //                         Use "eleven_flash_v2_5" for lower latency/cost.
 //   ALLOWED_ORIGIN        Your deployed site origin, e.g. https://ez-comm-tether.vercel.app
 
+
+function allowBrowser(req) {
+  const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  const env = process.env.ALLOWED_ORIGIN || '';
+  const hosts = new Set(['ez-comm-tether.vercel.app', 'ezvoxa.com', 'www.ezvoxa.com', 'myezvoice.com']);
+  if (req.headers.host) hosts.add(String(req.headers.host).split(':')[0].toLowerCase());
+  if (env) {
+    try { hosts.add(new URL(env).host.toLowerCase()); } catch (e) {}
+  }
+  const ok = (u) => {
+    if (!u) return false;
+    try { return hosts.has(new URL(u).host.toLowerCase()); } catch (e) { return false; }
+  };
+  return ok(origin) || ok(referer);
+}
+
 const MAX_CHARS = 400; // AAC phrases are short; this is a safety valve, not a feature.
 
 const crypto = require('crypto');
@@ -37,16 +54,11 @@ const voiceTag = () =>
   crypto.createHash('sha1').update(String(process.env.ELEVENLABS_VOICE_ID || '') + ':' + speed()).digest('hex').slice(0, 8);
 
 module.exports = async (req, res) => {
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
+  }
   const key = process.env.ELEVENLABS_API_KEY;
   const voice = process.env.ELEVENLABS_VOICE_ID;
-
-  const allowed = process.env.ALLOWED_ORIGIN;
-  if (allowed) {
-    const origin = req.headers.origin || '';
-    if (origin && origin !== allowed) {
-      return res.status(403).json({ ok: false, error: 'forbidden_origin' });
-    }
-  }
 
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');

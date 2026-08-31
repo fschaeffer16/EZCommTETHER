@@ -21,6 +21,23 @@
 // Optional (light abuse protection):
 //   ALLOWED_ORIGIN       Your deployed site origin, e.g. https://ezcommtether.vercel.app
 
+
+function allowBrowser(req) {
+  const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  const env = process.env.ALLOWED_ORIGIN || '';
+  const hosts = new Set(['ez-comm-tether.vercel.app', 'ezvoxa.com', 'www.ezvoxa.com', 'myezvoice.com']);
+  if (req.headers.host) hosts.add(String(req.headers.host).split(':')[0].toLowerCase());
+  if (env) {
+    try { hosts.add(new URL(env).host.toLowerCase()); } catch (e) {}
+  }
+  const ok = (u) => {
+    if (!u) return false;
+    try { return hosts.has(new URL(u).host.toLowerCase()); } catch (e) { return false; }
+  };
+  return ok(origin) || ok(referer);
+}
+
 const list = (v) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 function buildText(payload) {
@@ -81,6 +98,9 @@ async function sendEmail(toList, subject, text) {
 }
 
 module.exports = async (req, res) => {
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
+  }
   // Health check + diagnostics: confirm configuration and live-test the Twilio
   // credentials, without sending a message or exposing any secret.
   if (req.method === 'GET') {
@@ -91,8 +111,8 @@ module.exports = async (req, res) => {
         sms: Boolean(sid && token && from && process.env.SOS_SMS_TO),
         email: Boolean(process.env.SENDGRID_API_KEY && process.env.SOS_EMAIL_FROM && process.env.SOS_EMAIL_TO),
       },
-      recipients: list(process.env.SOS_SMS_TO).length,
-      from: from ? (from.slice(0, 3) + '…' + from.slice(-4)) : null,
+      recipients: 0,
+      from: null,
     };
     // Live credential check: ask Twilio for the account. 200 = credentials good.
     if (sid && token) {
@@ -114,12 +134,8 @@ module.exports = async (req, res) => {
 
   // Light abuse protection: if you set ALLOWED_ORIGIN, reject requests from
   // anywhere else. Same-origin taps from the installed app always pass.
-  const allowed = process.env.ALLOWED_ORIGIN;
-  if (allowed) {
-    const origin = req.headers.origin || '';
-    if (origin && origin !== allowed) {
-      return res.status(403).json({ ok: false, error: 'forbidden_origin' });
-    }
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
   }
 
   let payload = req.body;
@@ -166,7 +182,7 @@ module.exports = async (req, res) => {
     failed,
     pending,
     recipients: results.length,
-    sms: results.map((r) => ({ to: r.to, status: r.status, errorCode: r.errorCode || null, detail: r.detail || '' })),
+    sms: results.map((r) => ({ last4: String(r.to||'').slice(-4), status: r.status, errorCode: r.errorCode || null, detail: r.detail || '' })),
     email: emailResult,
     test: isTest,
   });

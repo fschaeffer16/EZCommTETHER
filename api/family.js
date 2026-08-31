@@ -19,6 +19,23 @@
 // Optional:
 //   ALLOWED_ORIGIN     Your deployed site origin, e.g. https://ez-comm-tether.vercel.app
 
+
+function allowBrowser(req) {
+  const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  const env = process.env.ALLOWED_ORIGIN || '';
+  const hosts = new Set(['ez-comm-tether.vercel.app', 'ezvoxa.com', 'www.ezvoxa.com', 'myezvoice.com']);
+  if (req.headers.host) hosts.add(String(req.headers.host).split(':')[0].toLowerCase());
+  if (env) {
+    try { hosts.add(new URL(env).host.toLowerCase()); } catch (e) {}
+  }
+  const ok = (u) => {
+    if (!u) return false;
+    try { return hosts.has(new URL(u).host.toLowerCase()); } catch (e) { return false; }
+  };
+  return ok(origin) || ok(referer);
+}
+
 const FIELDS = ['phone', 'email', 'address', 'birthdate'];
 
 module.exports = async (req, res) => {
@@ -30,12 +47,8 @@ module.exports = async (req, res) => {
   // Light abuse protection: if ALLOWED_ORIGIN is set, reject cross-origin
   // callers. Same-origin taps from the installed app pass (no Origin header,
   // or a matching one).
-  const allowed = process.env.ALLOWED_ORIGIN;
-  if (allowed) {
-    const origin = req.headers.origin || '';
-    if (origin && origin !== allowed) {
-      return res.status(403).json({ ok: false, error: 'forbidden_origin' });
-    }
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
   }
 
   let raw = {};

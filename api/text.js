@@ -18,6 +18,23 @@
 //   CHILD_NAME           Defaults to "Evan" — used for the "From Evan:" prefix
 //   ALLOWED_ORIGIN       Your deployed site origin, e.g. https://ez-comm-tether.vercel.app
 
+
+function allowBrowser(req) {
+  const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  const env = process.env.ALLOWED_ORIGIN || '';
+  const hosts = new Set(['ez-comm-tether.vercel.app', 'ezvoxa.com', 'www.ezvoxa.com', 'myezvoice.com']);
+  if (req.headers.host) hosts.add(String(req.headers.host).split(':')[0].toLowerCase());
+  if (env) {
+    try { hosts.add(new URL(env).host.toLowerCase()); } catch (e) {}
+  }
+  const ok = (u) => {
+    if (!u) return false;
+    try { return hosts.has(new URL(u).host.toLowerCase()); } catch (e) { return false; }
+  };
+  return ok(origin) || ok(referer);
+}
+
 const CHILD = () => String(process.env.CHILD_NAME || 'Evan').trim() || 'Evan';
 
 function directory() {
@@ -58,16 +75,14 @@ async function fetchStatus(messageSid) {
 }
 
 module.exports = async (req, res) => {
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
+  }
   // Health check: confirm configuration without sending anything or exposing secrets.
   if (req.method === 'GET') {
-    const dir = directory();
-    const withPhones = Object.keys(dir).filter((id) => dir[id] && dir[id].phone);
     return res.status(200).json({
       ok: true,
       configured: Boolean(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM),
-      reachable: withPhones.length,
-      people: withPhones,
-      child: CHILD(),
     });
   }
 
@@ -76,10 +91,8 @@ module.exports = async (req, res) => {
     return res.status(405).json({ ok: false, error: 'method_not_allowed' });
   }
 
-  const allowed = process.env.ALLOWED_ORIGIN;
-  if (allowed) {
-    const origin = req.headers.origin || '';
-    if (origin && origin !== allowed) return res.status(403).json({ ok: false, error: 'forbidden_origin' });
+  if (!allowBrowser(req)) {
+    return res.status(403).json({ ok: false, error: 'forbidden_origin' });
   }
 
   let payload = req.body;
