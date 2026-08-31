@@ -176,10 +176,13 @@ Everything is one `wide` state flag plus width-driven CSS on the **same**
 markup. A phone renders exactly what it always did (verified pixel-identical).
 
 ### The `wide` flag
-- `isWideScreen()` — `matchMedia('(min-width: 760px) and (min-height: 600px)')`.
+- `isWideScreen()` — `matchMedia('(min-width: 740px) and (min-height: 600px)')`.
   Read in the constructor so the first paint is already right; `watchWidth()`
   re-reads it on rotation. Height is in the test so a phone held sideways stays
-  a phone. 760px covers portrait iPad (820px).
+  a phone (an iPhone 15 Pro Max on its side is 932×430, and 430 < 600).
+  **740px, not 760px:** an iPad mini in portrait is 744pt wide and was falling
+  through to the phone layout. Verified tablet at 744×1133, 1133×744, 820×1180,
+  834×1194, 1024×1366 and 1366×1024; still phone at 430×932, 932×430, 375×667.
 
 ### Level one: home
 - **Toolbar** (`wideTop`), two rows, always on screen. Identity: photo, name
@@ -189,10 +192,10 @@ markup. A phone renders exactly what it always did (verified pixel-identical).
   phone's tall neon stack and its slim Home/Help/Done bar never render on a
   tablet. Yes and No no longer vanish when a board opens. Built from Frank's
   own mockup, 28 Aug 2026.
-- **Boards grid** — the ordinary home tiles, 3 across at 760px, 4 at 1100px.
+- **Boards grid** — the ordinary home tiles, 3 across at 740px, 4 at 1100px.
 - **Quick Phrases** (`#ez-quick`, shown on `wideHome`) — all **14 `neonTiles`**
   pinned above the emergency bar and never scrolled away, as labelled pills:
-  the drawing on the left, the word beside it. 4 across at 760px (4 rows), 5
+  the drawing on the left, the word beside it. 4 across at 740px (4 rows), 5
   across at 1100px (3 rows). The pill art is a separate set of **glyph-only
   transparent PNGs, `qng_*`**, lifted out of the `qn_*` tiles by stripping the
   painted frame and the baked caption; each `neonTiles` entry carries `gl` (the
@@ -211,7 +214,7 @@ The toolbar stays. The board's own `‹` returns home. Nothing else to learn.
 
 ### The word bank on a tablet (`#ez-words`, `#ez-wordtop`)
 Sentence Build is a keyboard, not a picture board, so it packs rather than
-grows. The **groups flow into columns** (`#ez-wordcols`): two at 760px, three at
+grows. The **groups flow into columns** (`#ez-wordcols`): two at 740px, three at
 1100px, each group kept whole with `break-inside:avoid`. The columns live on an
 inner wrapper, never on `#ez-words` itself, because a multi-column box that is
 also the scroller spills sideways instead of down. Inside the narrower columns
@@ -224,7 +227,7 @@ is narrow, sit side by side. Scoped by the `#ez-words` id so the rules cannot
 reach the quick-phrase pills, which use the same `repeat(4, 1fr)` string.
 
 ### Column growth
-`min-width:760px` and `min-width:1100px` are the two tiers. Home 3 → 4; the
+`min-width:740px` and `min-width:1100px` are the two tiers. Home 3 → 4; the
 two-across item boards 3 → 4; the three-across boards (School, colours, night,
 feelings) go to **4 and stay there**, matching the mockup; people boards 4 → 5.
 `#tether-root` is capped at 1280px. Selectors match React's **normalised**
