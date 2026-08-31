@@ -6017,7 +6017,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.31.2'; }
+  APP_BUILD() { return '2026.08.31.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7931,6 +7931,63 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+
+<!-- Zoomed-page warning. Safari remembers page zoom per website, so a tablet
+     can be handed a window far smaller than its screen: an iPad Pro 11 at 175%
+     reports 682x419, fails the tablet test, and gets the phone layout drawn
+     huge. Nothing in CSS can undo that, so say so plainly instead of letting
+     somebody conclude the app is broken. Deliberately outside the app: plain
+     DOM, no React, so it cannot affect a render. -->
+<script>
+(function () {
+  var KEY = 'ez_zoom_dismissed';
+  // Only visualViewport.scale is trusted. Comparing the window against
+  // screen.width looks tempting but cannot tell zoom apart from an iPad in
+  // Split View, where the window really is that narrow and there is nothing
+  // to fix. A false warning on a working device is worse than no warning.
+  function zoom() {
+    try {
+      var vv = window.visualViewport;
+      if (vv && typeof vv.scale === 'number' && vv.scale > 1.01) return vv.scale;
+    } catch (e) {}
+    return 1;
+  }
+  var el = null;
+  function show() {
+    var z = zoom();
+    try { if (sessionStorage.getItem(KEY)) return hide(); } catch (e) {}
+    if (z < 1.25) return hide();
+    if (!el) {
+      el = document.createElement('div');
+      el.setAttribute('role', 'status');
+      el.style.cssText = 'position:fixed;z-index:2147483000;left:0;right:0;top:0;' +
+        'background:#FFB020;color:#0A0A0F;font:700 15px/1.35 -apple-system,BlinkMacSystemFont,sans-serif;' +
+        'padding:9px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.45);';
+      var t = document.createElement('div');
+      t.style.cssText = 'flex:1;min-width:0';
+      el.appendChild(t);
+      var x = document.createElement('div');
+      x.textContent = '\u00d7';
+      x.setAttribute('aria-label', 'Dismiss');
+      x.style.cssText = 'flex:none;font-size:22px;font-weight:800;line-height:1;padding:2px 6px;cursor:pointer';
+      x.onclick = function () { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} hide(); };
+      el.appendChild(x);
+      el._t = t;
+      document.body.appendChild(el);
+    }
+    el._t.textContent = 'This page is zoomed to ' + Math.round(z * 100) +
+      '%, so the buttons are the wrong size. Tap AA in the address bar and choose 100%.';
+    el.style.display = 'flex';
+  }
+  function hide() { if (el) el.style.display = 'none'; }
+  function check() { try { show(); } catch (e) {} }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', check);
+  else check();
+  window.addEventListener('resize', check);
+  window.addEventListener('orientationchange', function () { setTimeout(check, 350); });
+  if (window.visualViewport) visualViewport.addEventListener('resize', check);
+})();
 </script>
 </body>
 </html>
