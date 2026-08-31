@@ -10,6 +10,18 @@
   .sub{font-size:14px;color:#8C857A;margin:0 0 14px}
   .verdict{border-radius:12px;padding:14px 16px;margin:0 0 16px;
     font-size:20px;font-weight:800;line-height:1.25;}
+  /* the zoom meter is the point of this page for anyone setting a device up:
+     tap the small A and watch this number, no guessing when you have arrived */
+  #zoombox{border-radius:14px;padding:16px;margin:0 0 16px;text-align:center;
+    border:3px solid #A33528;background:#4A1410;}
+  #zoombox.good{border-color:#2C7A45;background:#123D1C;}
+  .zlbl{font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:800;color:#B0A695;}
+  .zval{font-size:64px;font-weight:800;line-height:1.05;margin:2px 0 4px;
+    font-variant-numeric:tabular-nums;color:#FF9A8A;}
+  #zoombox.good .zval{color:#7DE59A}
+  .zmsg{font-size:17px;font-weight:700;line-height:1.35;color:#FF9A8A}
+  #zoombox.good .zmsg{color:#7DE59A}
   .ok{background:#123D1C;color:#7DE59A;border:2px solid #2C7A45}
   .no{background:#4A1410;color:#FF9A8A;border:2px solid #A33528}
   table{width:100%;border-collapse:collapse;font-size:17px}
@@ -27,7 +39,13 @@
 </style>
 
 <h1>EZvoxa device check</h1>
-<p class="sub">Screenshot this whole page and send it. Then turn the iPad the other way and screenshot it again.</p>
+<p class="sub">Leave this page open while you change the zoom. The number below updates as you tap.</p>
+
+<div id="zoombox">
+  <div class="zlbl">Page zoom</div>
+  <div class="zval" id="zval">-</div>
+  <div class="zmsg" id="zmsg">-</div>
+</div>
 
 <div id="verdict" class="verdict no">checking…</div>
 
@@ -86,10 +104,10 @@ you turn the iPad, that is the answer and it is worth a screenshot of both.</p>
 
   function draw() {
     var w = window.innerWidth, h = window.innerHeight;
+    var vv = window.visualViewport;
     set('win', w + ' x ' + h);
     set('scr', screen.width + ' x ' + screen.height +
       (screen.availWidth ? '  (avail ' + screen.availWidth + ' x ' + screen.availHeight + ')' : ''));
-    var vv = window.visualViewport;
     set('vv', vv ? Math.round(vv.width) + ' x ' + Math.round(vv.height) : 'not supported');
     set('scale', vv && vv.scale ? vv.scale.toFixed(2) + (Math.abs(vv.scale - 1) > 0.02 ? '  <-- ZOOMED' : '') : 'n/a');
     set('dpr', window.devicePixelRatio || '?');
@@ -100,6 +118,28 @@ you turn the iPad, that is the answer and it is worth a screenshot of both.</p>
     try { b = matchMedia('(min-height: 600px)').matches; } catch (e) {}
     try { both = mq ? mq.matches : false; } catch (e) {}
     set('mw', yn(a)); set('mh', yn(b)); set('both', yn(both));
+
+    // the app trusts visualViewport.scale, so show exactly that; the
+    // window-against-screen ratio is a readout fallback only, never a verdict
+    var z = 1, vvs = (vv && typeof vv.scale === 'number') ? vv.scale : null;
+    if (vvs && vvs > 1.01) z = vvs;
+    else if (screen.width && w) {
+      var land = w > h;
+      var sLong = Math.max(screen.width, screen.height);
+      var sShort = Math.min(screen.width, screen.height);
+      var r = (land ? sLong : sShort) / w;
+      if (r > 1.05) z = r;
+    }
+    var pct = Math.round(z * 100);
+    var box = document.getElementById('zoombox');
+    set('zval', pct + '%');
+    if (pct <= 105) {
+      box.className = 'good';
+      set('zmsg', 'Correct. Nothing to change.');
+    } else {
+      box.className = '';
+      set('zmsg', 'Too big. Tap AA in the address bar, then the small A, until this reads 100%.');
+    }
 
     var v = document.getElementById('verdict');
     if (both) { v.className = 'verdict ok'; v.textContent = 'TABLET LAYOUT — this iPad qualifies'; }
