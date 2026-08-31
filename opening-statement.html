@@ -31,6 +31,63 @@
   p.ref{font-size:17.5px;line-height:1.52;color:var(--sub);}
   a{color:var(--blue);word-break:break-word;}
   footer{padding:32px 0 64px;font-family:var(--disp);font-size:15px;color:var(--faint);}
+  /* ---------- figures ------------------------------------------------- */
+  figure{margin:28px 0 26px}
+  figcaption{font-family:var(--disp);font-size:14.5px;line-height:1.45;color:var(--faint);margin-top:11px;}
+  /* real screenshots of the app, captured from the template */
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:22px;margin:28px 0 26px;}
+  .shots figure{margin:0}
+  .shots img{width:100%;display:block;border:1px solid var(--line);border-radius:14px;}
+  /* two things set against each other */
+  .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin:28px 0;}
+  .pair>div{border:1px solid var(--line);border-radius:14px;padding:18px 19px 20px;}
+  .pair .k{font-family:var(--disp);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+  .pair .t{font-family:var(--disp);font-size:19px;font-weight:800;line-height:1.25;color:var(--amber);margin-bottom:7px;}
+  .pair p{font-size:18px;line-height:1.5;color:var(--sub);margin:0;}
+  /* the sentence that answers the objection */
+  blockquote{margin:30px 0;padding:2px 0 2px 22px;border-left:3px solid var(--amber);}
+  blockquote p{font-family:var(--disp);font-size:clamp(20px,3.6vw,24px);font-weight:700;line-height:1.34;color:var(--ink);margin:0;}
+  /* ---------- rate chart ----------------------------------------------- */
+  .chart{border:1px solid var(--line);border-radius:14px;padding:20px 19px 17px;}
+  .chart .ct{font-family:var(--disp);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px;}
+  .chart .row{margin-bottom:18px}
+  .chart .row:last-of-type{margin-bottom:6px}
+  .chart .lab{font-family:var(--disp);font-size:16.5px;font-weight:800;color:var(--ink);display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px;}
+  .chart .lab em{font-style:normal;font-weight:600;font-size:14px;color:var(--faint);}
+  .chart .lab b{font-variant-numeric:tabular-nums;color:var(--amber);font-size:17px;white-space:nowrap;}
+  /* the empty track is the 0-190 reference; ticks sit behind the bar */
+  .chart .track{position:relative;height:20px;border-radius:5px;background:#16130E;overflow:hidden;}
+  .chart .tick{position:absolute;top:0;bottom:0;width:1px;background:#241E16;}
+  .chart .fill{position:absolute;top:0;bottom:0;left:0;display:flex;}
+  .chart .b1{background:var(--amber);border-radius:5px 0 0 5px;}
+  .chart .b2{background:#A86E10;border-radius:0 5px 5px 0;margin-left:2px;}
+  .chart .one .b1{border-radius:5px}
+  /* labels are pinned to the same percentages as the ticks, never spaced out
+     by flexbox, or the axis would disagree with its own gridlines */
+  .chart .scale{position:relative;height:15px;margin-top:8px;font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--faint);font-variant-numeric:tabular-nums;}
+  .chart .scale span{position:absolute;top:0;transform:translateX(-50%);}
+  .chart .scale span:first-child{transform:none}
+  .chart .scale span:last-child{transform:translateX(-100%)}
+  /* ---------- what the app holds --------------------------------------- */
+  /* held / never collected are the pair; what travels is the caveat under
+     both, so it spans rather than leaving a hole beside them */
+  .facts{display:grid;grid-template-columns:1fr;gap:13px;margin:28px 0 14px;}
+  @media (min-width:560px){
+    .facts{grid-template-columns:1fr 1fr;}
+    .facts>div:last-child{grid-column:1 / -1;}
+    .facts>div:last-child ul{columns:2;column-gap:26px;}
+    .facts>div:last-child li{break-inside:avoid;-webkit-column-break-inside:avoid;}
+  }
+  .facts>div{border:1px solid var(--line);border-radius:14px;padding:17px 18px 19px;}
+  .facts .k{font-family:var(--disp);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:11px;line-height:1.35;}
+  .facts ul{margin:0;padding:0;list-style:none;}
+  .facts li{font-family:var(--disp);font-size:16px;font-weight:600;line-height:1.4;color:var(--sub);padding:0 0 0 15px;position:relative;margin-bottom:7px;}
+  .facts li:last-child{margin-bottom:0}
+  .facts li:before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--faint);}
+  .verify{border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-family:var(--disp);font-size:16px;line-height:1.45;color:var(--sub);margin-bottom:26px;}
+  .verify b{color:var(--amber);font-weight:800}
+  /* ---------- the closing ---------------------------------------------- */
+  .close p{font-size:24px;line-height:1.55;}
   /* A slim bar that slides down once you have scrolled past the contents, so
      you can get back to the list from any section without scrolling for it. It
      sits at the top on purpose: the top of the screen is text you have already
@@ -140,6 +197,16 @@
   <h2>4. What EZvoxa is</h2>
   <p>A phrase-first communication app for a phone or iPad: the user’s real, recurring sentences, organized into boards for family, food, school, feelings, health, places, and routines. Each easily spoken with a single tap.</p>
   <p>A generative layer underneath: a color-coded sentence builder and an alphabet speller, so novel messages remain fully possible. Phrase-first does not mean phrase-only.</p>
+  <div class="shots">
+    <figure>
+      <img src="statement/shot-home.jpg" loading="lazy" alt="The EZvoxa home board on a phone. Yes, No and a Home button across the top, a row of Help, Question, Good and Bad, then picture buttons for Family, Food, School, Sentence Build, Friends, Morning, Fun and Watch, with an Emergency bar at the bottom.">
+      <figcaption>The boards. Every button is a picture, because for a user who does not read the picture is the button. One tap speaks the phrase.</figcaption>
+    </figure>
+    <figure>
+      <img src="statement/shot-builder.jpg" loading="lazy" alt="The Sentence Builder with the sentence I want more assembled in the compose bar, a Say it button, a word search field, and color-coded word groups labeled Starters and Little words.">
+      <figcaption>The layer underneath. Color-coded word groups build anything the boards do not already hold, so nothing is limited to the pre-written phrases.</figcaption>
+    </figure>
+  </div>
   <p>Personalized with real photographs. A generic symbol of a woman is not a student’s mother; a photograph of his mother is. Families put real faces and real places on the buttons, because for a non-reading user the picture is the button.</p>
   <p>Fully functional offline. Everything the user has said before still speaks with no signal and no Wi-Fi, verified by testing with all network access disabled. School buildings with dead zones and restricted networks do not silence it.</p>
   <p>Fully customizable. The device comes pre-loaded, but it is also fully customizable. Every family, therapist or school can make it their own. Add your own buttons with your own words and phrases. Put a real photograph on any of them: their grandmother's face, their actual bedroom, the exact snack they ask for. Or use approved avatars drawn of your child and their family, so the whole app is filled with pictures of them, not clip art of somebody else. Rearrange the home screen. Add people by name and photo. As their life changes, the app changes with them: new teachers, new foods, new interests, added in minutes by the people who know them best. No two EZvoxa apps look alike, because no two kids are alike.</p>
@@ -159,15 +226,46 @@
 <section id="s6">
   <h2>6. Why ages 13-and-up?</h2>
   <p>The age line is not a marketing choice; it is the design thesis, and it rests on three legs.</p>
+  <div class="pair">
+    <div>
+      <div class="k">Traditional AAC</div>
+      <div class="t">A teaching instrument</div>
+      <p>Exists to build language. The right answer for a child who is still learning to combine words, because assembling them is how the learning happens.</p>
+    </div>
+    <div>
+      <div class="k">EZvoxa</div>
+      <div class="t">A using instrument</div>
+      <p>Exists to lower the cost of language a person already has. For the user who knows what they want to say and is tired of paying a toll to say it.</p>
+    </div>
+  </div>
   <p>First: acquisition and use are different jobs. Traditional AAC platforms are, rightly, teaching instruments. They exist to build language. EZvoxa is a using instrument that exists to lower the cost of language a person already has. A tool that optimizes for one-tap speed would be the wrong tool for a 6-year-old who still needs to assemble sentences because assembling them is how the learning happens. We say so plainly, to parents, on our own website: if your child is still learning to combine words, the prescribed device and the therapist remain the right answer.</p>
   <p>Second: the rate problem grows up with the user. Adult and adolescent AAC users typically produce 12–18 words per minute against 125–185 for spoken conversation (Trnka et al., 2008), roughly a tenfold gap. A young child’s conversational partners wait; a teenager’s do not. By adolescence, the social cost of slow output compounds. Turns get skipped, conversations move on, and the user learns to say less. Pre-stored, self-chosen sentences attack precisely this, because with ease of use the user has more to say and isn’t that what we all want for our nonverbal teens and young adults?</p>
+  <figure class="chart">
+    <div class="ct">Words per minute</div>
+    <div class="row">
+      <div class="lab"><span>AAC user <em>adolescent or adult</em></span><b>12&ndash;18</b></div>
+      <div class="track">
+        <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div>
+        <div class="fill" style="width:9%"><div class="b1" style="flex:12"></div><div class="b2" style="flex:6"></div></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="lab"><span>Spoken conversation</span><b>125&ndash;185</b></div>
+      <div class="track">
+        <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div>
+        <div class="fill" style="width:92.5%"><div class="b1" style="flex:125"></div><div class="b2" style="flex:60"></div></div>
+      </div>
+    </div>
+    <div class="scale"><span style="left:0">0</span><span style="left:25%">50</span><span style="left:50%">100</span><span style="left:75%">150</span><span style="left:100%">200</span></div>
+    <figcaption>The gap the age line is built around. Bars span the low and high end of each range; the darker segment is the top of the range. Figures as cited above (Trnka et al., 2008).</figcaption>
+  </figure>
   <p>Third: adolescence is where devices get abandoned. The foundational research on assistive-technology abandonment found roughly a third of devices completely abandoned and identified the leading predictors: the user’s opinion was not considered in selection, and the user’s needs changed (Phillips &amp; Zhao, 1993). That is a description of an AAC teenager: the device was chosen for the child they were, their needs changed, and their own preferences, including the wish to carry what every other teenager carries, went unweighted. The field’s own literature credits the move to mainstream mobile devices with reducing the stigma and attitudinal barriers around AAC (McNaughton &amp; Light, 2013). A phone in a pocket is not merely more convenient than a tablet in a bag; for a teenager, it is the difference between a device that marks him as being different and one that makes him look like everyone else in the hallway.</p>
   <p>In one sentence: EZvoxa is for the person who already knows exactly what they want to say, and is tired of paying a ten-tap toll to say it, and that person is almost always thirteen or older. The same logic extends to adults who lose speech to stroke, ALS, or injury after a lifetime of language; an adult-specific edition for that population is in design now.</p>
 </section>
 <section id="s7">
   <h2>7. Building on traditional AAC</h2>
   <p>I want to address the concern I would have in your seat: that a parent-built app encourages families to walk away from clinically appropriate systems. Our position, stated publicly and built into the product:</p>
-  <p>Keep the device. The prescribed system remains the right tool for language growth, for therapy sessions, and for the messages EZvoxa’s phrase-first model does not cover. We tell families this explicitly.</p>
+  <blockquote><p>Keep the device. The prescribed system remains the right tool for language growth, for therapy sessions, and for the messages EZvoxa’s phrase-first model does not cover. We tell families this explicitly.</p></blockquote>
   <p>Multimodal is the standard we build to. The field’s consensus is that users should routinely have multiple communication options and choose among them (Donaldson et al., 2021; AssistiveWare, n.d.). Adding a fast everyday channel is an application of that standard, not a departure from it.</p>
   <p>The relationship is sequential, not rivalrous. The dedicated device taught Evan that sentences can be built. EZvoxa exists because he learned that lesson. One is the classroom; the other is the hallway, the bus, the McDonald’s counter, the 9 p.m. “I need help.” A district does not choose between them any more than it chooses between a reading curriculum and a library card.</p>
   <p>Educators shaped the app already. The School board inside it has boards for teachers, office staff, Speech/OT, and the bus driver. Each opens phrases fitted to that relationship (“Can you say that again?”, “I finished my work”, “Can I go see the nurse?”). Plus spelling, numbers, a calculator, and colors. Teachers can be added by name and photograph, because “Mrs. Delgado” with her face on the button is findable by a student who does not read. Those photos can be uploaded only to the user’s device and removed anytime you want to take them off.</p>
@@ -178,6 +276,21 @@
   <p>I am not a security company, so instead of assurances, here is exactly how the app is put together and what that does and does not protect. Everything below can be verified by your own staff.</p>
   <p>It is one file with no third-party code running inside it. The entire app is a single web page. There are no advertising libraries, no analytics packages, no tracking scripts, and no outside code loaded while it runs. Your technology staff can confirm this in about a minute: open the app with the browser’s network inspector on, and watch it make no outside requests at all. I tested the app with all network access switched off and it launched and ran completely, which is only possible because nothing outside is required to run it.</p>
   <p>There is nothing stored about a student to steal. No accounts, no usernames, no passwords for students, no email addresses, no grades, no attendance, no assessment data, and no identifiers of any kind. The app cannot tell you who is using it. Boards, phrases, and photographs live in the device’s own local storage and nowhere else. A person who took the device would see the same buttons the student sees, and nothing more.</p>
+  <div class="facts">
+    <div>
+      <div class="k">Held on the device, and nowhere else</div>
+      <ul><li>Boards and phrases</li><li>Photographs</li><li>Every customization the family makes</li></ul>
+    </div>
+    <div>
+      <div class="k">Never collected, anywhere</div>
+      <ul><li>Accounts and usernames</li><li>Student passwords</li><li>Email addresses</li><li>Grades and attendance</li><li>Assessment data</li><li>Identifiers of any kind</li></ul>
+    </div>
+    <div>
+      <div class="k">Leaves the device only when the feature is used</div>
+      <ul><li>The text of a phrase spoken in the AI voice, encrypted, and cached so it is not sent twice</li><li>An emergency alert, with location, to the family contacts the parent set up</li><li>A text message, to the family number the parent entered</li></ul>
+    </div>
+  </div>
+  <div class="verify"><b>Verify it yourselves.</b> Open the app with the browser&rsquo;s network inspector on and watch it make no outside requests at all. Nothing above needs to be taken on trust.</div>
   <p>Photographs never leave the device. A photo taken for a button is written to that device only. It is never uploaded, never included in anything shared between devices, and it is gone when the person is removed or the app is deleted.</p>
   <p>The device is what is locked, and the school already knows how to do that. On a dedicated device the app is locked with iOS Guided Access, so the student cannot leave the app, browse the internet, or reach anything else on the device. The app adds its own start screen and close step so a device in a pocket or a backpack cannot press its own buttons. Editing is behind a password, so a student cannot change or delete their own board.</p>
   <p>What travels, and only when the feature is used. Speaking a phrase in the AI voice sends the text of that phrase to our server so it can be spoken, over an encrypted connection, and it is cached so a repeated phrase is not sent again. An emergency alert sends the message and the location at that moment to the family contacts the parent set up. Sending a text message sends that message to the family number the parent entered. Nothing else is transmitted, and none of it is attached to a name or an identifier.</p>
@@ -201,7 +314,7 @@
   <h2>10. What I am asking, and what I am not</h2>
   <p>I am not asking the district to purchase anything, endorse anything, or change any student’s IEP. I am asking for three things. First, meet your students where they are instead of making them use only “approved tools.” It is called a spectrum for a reason. Second, the chance to demonstrate the app as Evan actually uses it, and the professional reactions of the people in this room, especially where you think I am wrong. Third, if there is interest, a conversation about what a small, properly supervised pilot with appropriate students would need to look like for you to trust it. The teacher who asked me about her father is the reason I believe this conversation is worth an hour of your time.</p>
 </section>
-<section id="s11">
+<section id="s11" class="close">
   <h2>One more thing</h2>
   <p>When Evan was 3, 4, 5, 6 years old, I put him to bed every night the same way. I would kiss him, tell him I loved him, and say the same words: I don’t know how, but someday, you and I are gonna change the world. Every single night. I had no idea how, or when, or in what way. I just always felt that something great would come from all of it. I believe this is the start of us keeping that promise.</p>
 </section>
