@@ -68,13 +68,14 @@
   .hero-join input{flex:1;min-width:0}
   .hero-join .btn{width:auto;margin-top:0;flex:none;white-space:nowrap}
   @media (max-width:520px){ .hero-join{flex-direction:column} .hero-join .btn{width:100%} }
-  /* the live demo slot: only on screens wide enough to sit it beside the words */
-  #heroDemo{display:none}
-  @media (min-width:1000px){
-    #heroDemo{display:flex;justify-content:center}
-    #heroBeach{display:none}
-    .phone.inline{position:static;height:min(78vh,680px);box-shadow:0 24px 70px rgba(10,12,18,.28)}
-  }
+  /* the real app screenshot, in a bezel, sized so it is never drawn past
+     half its 786px file: sharp on every screen including retina */
+  .hero-shot-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .hero-shot{display:block;width:min(100%,375px);padding:0;border:10px solid #14161F;border-radius:46px;
+    overflow:hidden;background:#000;cursor:pointer;box-shadow:0 26px 70px rgba(10,12,18,.38)}
+  .hero-shot img{display:block;width:100%;height:auto}
+  .hero-shot-cap{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:15.5px;font-weight:700;margin:0}
+  .hero-shot-cap img{border-radius:13px;flex:none}
 
   /* ── sections ────────────────────────────────────────── */
   section{padding:64px 0;border-top:1px solid var(--line)}
@@ -231,11 +232,13 @@
     <div class="msg" id="heroMsg" role="status" aria-live="polite"></div>
     <p class="under">Not for sale yet. Your email goes nowhere else. The emergency button works whether you subscribe or not.</p>
   </div>
-  <div>
-    <!-- On a big screen the real demo sits here, live. On a phone it stays a
-         full-screen overlay and the beach photo holds this spot instead. -->
-    <div id="heroDemo"></div>
-    <div class="hero-art" id="heroBeach"><img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450"></div>
+  <div class="hero-shot-wrap">
+    <!-- The real app, Frank's own screenshot, shown at full sharpness.
+         Tapping it opens the working demo. -->
+    <button class="hero-shot" data-open-demo aria-label="Open a working demo of EZvoxa">
+      <img src="shot-home.jpg" alt="The real EZvoxa home screen: glowing picture buttons for Yes, No, Family, Food, School, Sentence Build, Friends and Morning, with the red Emergency bar at the bottom" width="786" height="1481">
+    </button>
+    <p class="hero-shot-cap"><img src="app-icon.jpg" alt="" width="54" height="54">This is the real app. Tap it to try a working demo.</p>
   </div>
 </div></div>
 
@@ -250,6 +253,7 @@
            grid is capped at 660px: the source photos are 480-960px wide, and a photo
            must never be displayed larger than the file or it goes soft. -->
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start;max-width:660px;margin:0 auto">
+        <img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450" loading="lazy" style="width:min(100%,450px);min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
         <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:min(100%,497px);min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
         <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
         <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
@@ -776,8 +780,7 @@
 
   async function runTour() {
     tourOn = true; tourStop = false;
-    // When the phone lives in the hero, the tour runs right there on the page.
-    if (!document.querySelector('.phone.inline')) { scrim.classList.add('on'); document.body.style.overflow = 'hidden'; }
+    scrim.classList.add('on'); document.body.style.overflow = 'hidden';
     tourbar.classList.add('on');
     cap.classList.add('tour');
     home();
@@ -816,39 +819,6 @@
   document.getElementById('closeDemo').onclick = closeDemo;
   scrim.addEventListener('click', function (e) { if (e.target === scrim) closeDemo(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && scrim.classList.contains('on')) closeDemo(); });
-
-  /* ---------- the demo lives in the hero on a big screen ----------
-     The .phone node is moved, not copied, so there is exactly one demo and
-     one set of ids no matter the screen. On a phone it stays in the overlay. */
-  var heroSlot = document.getElementById('heroDemo');
-  var phoneEl = document.querySelector('.phone');
-  var wideDemo = null; try { wideDemo = matchMedia('(min-width: 1000px)'); } catch (e) {}
-  function placePhone() {
-    if (!heroSlot || !phoneEl || !wideDemo) return;
-    if (wideDemo.matches && phoneEl.parentNode !== heroSlot) {
-      heroSlot.appendChild(phoneEl); phoneEl.classList.add('inline'); home();
-    } else if (!wideDemo.matches && phoneEl.parentNode === heroSlot) {
-      phoneEl.classList.remove('inline'); scrim.appendChild(phoneEl);
-    }
-  }
-  placePhone();
-  if (wideDemo) { if (wideDemo.addEventListener) wideDemo.addEventListener('change', placePhone); else if (wideDemo.addListener) wideDemo.addListener(placePhone); }
-
-  // These run after the overlay bindings above, so they win. When the demo is
-  // already on the page, the buttons bring you to it instead of covering the site.
-  function demoInline() { return wideDemo && wideDemo.matches && phoneEl && phoneEl.classList.contains('inline'); }
-  Array.prototype.forEach.call(document.querySelectorAll('[data-open-demo]'), function (b) {
-    b.onclick = function () {
-      if (demoInline()) { home(); phoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-      else openDemo();
-    };
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-watch-demo]'), function (b) {
-    b.onclick = function () {
-      if (demoInline()) phoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      runTour();
-    };
-  });
 
   /* ---------- hero signup: same list, email only ---------- */
   var hj = document.getElementById('heroJoin'), hjMsg = document.getElementById('heroMsg');
