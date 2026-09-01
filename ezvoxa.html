@@ -62,8 +62,8 @@
   .under{color:var(--faint);font-size:14.5px;margin-top:16px}
   /* The beach photo file is 450px wide. It is never drawn larger than that,
      because a family photo blown up past its pixels goes soft. */
-  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:var(--sunk);aspect-ratio:1/1;max-width:450px;margin:0 auto}
-  .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:#090C14;aspect-ratio:1/1;max-width:450px;margin:0 auto}
+  .hero-art img{width:100%;height:100%;object-fit:contain;display:block}
   .hero-join{display:flex;gap:10px;margin-top:20px;max-width:540px}
   .hero-join input{flex:1;min-width:0}
   .hero-join .btn{width:auto;margin-top:0;flex:none;white-space:nowrap}
@@ -73,7 +73,7 @@
   .hero-shot-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
   .hero-shot{display:block;width:min(100%,375px);padding:0;border:10px solid #14161F;border-radius:46px;
     overflow:hidden;background:#000;cursor:pointer;box-shadow:0 26px 70px rgba(10,12,18,.38)}
-  .hero-shot img{display:block;width:100%;height:auto}
+  .hero-shot img{display:block;width:100%;height:auto;object-fit:contain}
   .hero-shot-cap{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:15.5px;font-weight:700;margin:0}
   .hero-shot-cap img{border-radius:13px;flex:none}
 
@@ -206,9 +206,9 @@
 <div class="top"><div class="wrap">
   <a class="logo" href="#top"><img src="icon192.png" alt=""><span>EZ</span>voxa</a>
   <nav>
-    <a class="hide-sm" href="#story">Evan's story</a>
+    <a class="hide-sm" href="hearhim.html">His story</a>
+    <a class="hide-sm" href="opening-statement.html">Opening statement</a>
     <a class="hide-sm" href="#what">What it does</a>
-    <a class="hide-sm" href="#avatars">Pictures</a>
     <a class="hide-sm" href="#price">Price</a>
     <a class="hide-sm" href="#schools">Schools</a>
     <button class="btn sm" data-watch-demo>Watch how it works</button>
@@ -218,8 +218,8 @@
 
 <div class="hero" id="top"><div class="wrap">
   <div>
-    <h1>A voice for people who don't have one.</h1>
-    <p class="sub">A communication app for nonverbal teenagers and adults, on the phone they already carry, for a fraction of what a dedicated device costs.</p>
+    <h1>He didn't need a better device. He needed one that would grow with him.</h1>
+    <p class="sub">I had to find a way to meet him where he was. So I became the student and he became my teacher.</p>
     <div class="cta-row">
       <button class="btn" data-watch-demo>Watch how it works</button>
       <button class="btn ghost" data-open-demo>Try it myself</button>
@@ -244,7 +244,7 @@
 
 <section id="story"><div class="wrap">
   <p class="eyebrow">Evan's story</p>
-  <h2>He didn't need a better device; he needed one that could grow with him</h2>
+  <h2>He didn't need a better device. He needed one that would grow with him.</h2>
 
   <div class="two" style="margin-top:32px;align-items:start">
     <div>
@@ -253,22 +253,22 @@
            grid is capped at 660px: the source photos are 480-960px wide, and a photo
            must never be displayed larger than the file or it goes soft. -->
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start;max-width:660px;margin:0 auto">
-        <img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450" loading="lazy" style="width:min(100%,450px);min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:min(100%,497px);min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-04.jpg" alt="Evan as a baby with his big brothers" width="640" height="470" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
-        <img src="collage-05.jpg" alt="Evan and his brothers in the water at sunset" width="640" height="500" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-06.jpg" alt="Evan with his brothers at the beach" width="624" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline preload="metadata" width="720" height="404" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;" aria-label="Evan riding a wave on his boogie board, his dad behind him"></video>
-        <img src="collage-08.jpg" alt="Evan with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-09.jpg" alt="Evan riding on his dad's shoulders" width="574" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-10.jpg" alt="Evan as a baby on the sand" width="640" height="526" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-11.jpg" alt="Evan as a toddler eating a banana" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-12.jpg" alt="Evan and his dad" width="720" height="627" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
-        <img src="collage-13.jpg" alt="Evan with his dad, out riding" width="592" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-14.jpg" alt="Evan jumping on the trampoline" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-15.jpg" alt="Evan watching the baby chicks" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
+        <img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450" loading="lazy" style="width:min(100%,450px);height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
+        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:min(100%,497px);height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
+        <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-04.jpg" alt="Evan as a baby with his big brothers" width="640" height="470" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
+        <img src="collage-05.jpg" alt="Evan and his brothers in the water at sunset" width="640" height="500" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-06.jpg" alt="Evan with his brothers at the beach" width="624" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline preload="metadata" width="720" height="404" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;" aria-label="Evan riding a wave on his boogie board, his dad behind him"></video>
+        <img src="collage-08.jpg" alt="Evan with his mom" width="720" height="960" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-09.jpg" alt="Evan riding on his dad's shoulders" width="574" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-10.jpg" alt="Evan as a baby on the sand" width="640" height="526" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-11.jpg" alt="Evan as a toddler eating a banana" width="480" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-12.jpg" alt="Evan and his dad" width="720" height="627" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
+        <img src="collage-13.jpg" alt="Evan with his dad, out riding" width="592" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-14.jpg" alt="Evan jumping on the trampoline" width="480" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-15.jpg" alt="Evan watching the baby chicks" width="480" height="640" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
       </div>
     </div>
     <div class="story">
