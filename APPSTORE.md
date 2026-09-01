@@ -1,90 +1,204 @@
-# APPSTORE — the native store builds of the EZvoxa template
+# APPSTORE — from this repo to "for sale" on both stores
 
-*How the App Store (and later Google Play) version of EZvoxa is built from this
-repo. Companion to the "EZvoxa App Store Compliance Audit" document. Started
-27 Aug 2026.*
+*The complete runbook for shipping the EZvoxa template as a real store app,
+updating it, and selling the subscription. Rewritten 1 Sep 2026 when the
+Android shell and the subscription rails landed. The companion audit is the
+"EZvoxa App Store Compliance Audit" document (26 Aug).*
 
 ## The one-sentence architecture
 
 `demo.html` stays the single source of truth; `native/build.js` packages it
-into `native/www/`, and the Capacitor shell in `native/ios/` wraps that into a
-real iOS app. **Nothing about the web app, Evan's app, or the deploy lanes
-changes.**
+into `native/www/`, the Capacitor shells in `native/ios/` and
+`native/android/` wrap that into real apps, and Codemagic builds, signs, and
+publishes both from this repo. Nothing about the web app, Evan's app, or the
+deploy lanes changes.
 
-## Layout
+## What is DONE in this repo (1 Sep 2026)
 
-- `native/capacitor.config.json` — app id `com.ezvoxa.app`, name EZvoxa,
-  `CapacitorHttp` enabled (routes fetch through native HTTP, so our `api/*`
-  endpoints need no CORS headers and see no browser Origin).
-- `native/build.js` — the packaging step. Run before every sync:
-  - `demo.html` → `www/index.html`, injecting `window.__EZ_NATIVE`, an API
-    base (`https://app.ezvoxa.com`, override with `EZ_API_BASE=` for
-    TestFlight against the family lane), a fetch wrapper that prefixes
-    `/api/...` calls, and a rewrite of the one speak-audio literal.
-  - `tether-icons.js` copied; **`tether-photos.js` replaced with an empty
-    stub — our family's photos must never ship inside a customer binary.**
-  - Service-worker code needs no change: WKWebView has no `serviceWorker`,
-    so the existing guard skips it. Native updates ship as app releases.
-- `native/ios/` — the generated Xcode project (committed). Already done:
-  - `Info.plist`: purpose strings for location (SOS only), microphone
-    (voice notes), camera + photo library (personalizing buttons);
-    portrait-only on iPhone.
-  - `PrivacyInfo.xcprivacy`: no tracking; precise location + audio collected
-    for app functionality only, not linked to identity; UserDefaults CA92.1.
-    (Must be added to the App target in Xcode once — drag it into the project
-    navigator on the first Mac build.)
-  - App icon 1024 in `Assets.xcassets` (upscaled from the 512 PWA icon —
-    replace with original-resolution art before submission if available).
-- `privacy.html` — the privacy policy, served at `ezvoxa.com/privacy.html`
-  once merged (App Store Connect requires this URL).
-- The template SOS screen now carries "EZvoxa alerts your family. It is not a
-  substitute for calling 911." (in `demo.html`, so web and native match).
+- **iOS shell** (`native/ios/`): purpose strings (location for SOS only,
+  microphone for voice notes, camera and photo library for personalizing
+  buttons), `PrivacyInfo.xcprivacy` (no tracking, nothing linked to
+  identity), portrait-only on iPhone, app icon at 1024 from the real icon
+  art, dark splash matching the app.
+- **Android shell** (`native/android/`): generated 1 Sep. Manifest
+  permissions (location for SOS, microphone for voice notes, Play Billing),
+  launcher icons (legacy, round, adaptive) and dark splash from the same
+  art, release signing wired to Codemagic's keystore env vars, version code
+  from the build number. `play-icon-512.png` in `native/` is the Play
+  listing icon.
+- **Packaging** (`native/build.js`): strips our family's photos
+  (`tether-photos.js` becomes an empty stub), points `/api/...` at the
+  customer lane, and injects the billing bridge only when asked (below).
+- **Subscription rails, dormant until switched on**:
+  - `demo.html` has the entitlement gate (`ezPremium()`): without a billing
+    bridge everything is unlocked, exactly as today. With billing on and no
+    subscription, the natural voice steps aside and the device voice speaks.
+    A lapse changes the sound, never the ability to talk.
+  - Settings grows a **Subscription** card only in billing-enabled store
+    builds: status, "See subscription options" (the store's own sheet shows
+    the price — we never print one), **Restore purchases** (Apple requires
+    it), Manage subscription, Privacy Policy and Terms links. Verified
+    working against a simulated store 1 Sep.
+  - `native/billing.js` implements the bridge with RevenueCat
+    (`@revenuecat/purchases-capacitor`, installed on both platforms). It
+    fails open: if billing can't initialize, the app is simply unlocked.
+  - **The Emergency button reads none of this. Hard rule, enforced in code
+    comments at every layer.**
+- **Codemagic** (`codemagic.yaml`): iOS workflow (signs, TestFlight) and
+  Android workflow (signs, Play internal track). Both carry the
+  `EZ_BILLING` switch, off by default.
+- **Safety**: on any phone that is not stamped as ours, SOS and cloud
+  texting are safe demonstrations. A store customer can never ring our
+  family. (`sendSos`, `textPerson` in demo.html.)
 
-## Building — Codemagic (decided 27 Aug 2026: no Mac in the house)
+## The order of operations for Frank
 
-`codemagic.yaml` at the repo root is the build: it packages the template
-(`native/build.js`), syncs Capacitor, signs, builds the IPA on Codemagic's
-macOS machines, and pushes to TestFlight. Personal accounts get 500 free
-macOS build minutes/month (a build is well under 20), then $0.095/min.
+### This week (enrollment lands Thursday or Friday)
 
-The yaml's header comment is the one-time setup checklist (Codemagic signup →
-App Store Connect API key → Developer Portal integration named "ezvoxa" →
-create the app record). It cannot run until Apple Developer enrollment is
-done; everything before signing can be smoke-tested earlier.
+1. **Apple Developer Program**, Organization, $99. Have the D-U-N-S email
+   open; copy the legal name exactly as D&B spelled it. Expect the
+   verification phone call within about a week; answer unknown numbers.
+2. **Google Play Console**, organization account, $25 one-time. Needs the
+   D-U-N-S, LLC docs, address proof, your ID.
+3. **Codemagic**: sign up with the GitHub account, add this repo. Then the
+   header comments in `codemagic.yaml` are the exact checklist for each
+   store (App Store Connect API key, the "ezvoxa" integration, the Android
+   upload keystore, the Play service account).
+4. **App Store Connect**: create the app, bundle id `com.ezvoxa.app`.
+   **Play Console**: create the app, package `com.ezvoxa.app`.
+5. First iOS build to **TestFlight** through Codemagic, on your phone the
+   same day. First Android .aab uploaded to Play **internal testing** by
+   hand (Play requires the first upload manually; automated after that).
 
-For reference, the local-Mac equivalent (if one ever appears):
+### v1 submission (free, everything unlocked)
 
-```
-cd native
-node build.js            # or EZ_API_BASE=https://ez-comm-tether.vercel.app node build.js
-npx cap sync ios
-npx cap open ios         # opens Xcode; set the signing team, build
-```
-
-## Still to do — code
-
-- [ ] Server: `api/speak.js` honors `ALLOWED_ORIGIN`; CapacitorHttp sends no
-      browser Origin so it passes today, but decide the policy for native
-      before launch (e.g. an app token) rather than relying on that.
-- [ ] Quiet the harmless boot-time `appendChild` error (pre-existing, shows
-      under `file://`; verify it does not appear under `capacitor://`).
-- [ ] Native niceties for the Guideline 4.2 case: haptics on tap, push
-      notifications for family voice notes (needs a plugin build pass).
-- [ ] Android: `npx cap add android` when iOS is through review.
-- [ ] Backup/restore before any paid launch (RELEASE.md gate).
-
-## Still to do — Frank / accounts
-
-- [ ] D-U-N-S number for EZ VOICE LLC (free; start immediately — long pole).
-- [ ] Apple Developer Program, Organization, $99/yr (needs the D-U-N-S).
-- [ ] Decide: Mac available, or set up Codemagic?
-- [ ] App Store Connect once enrolled: listing text, screenshots (6.7" and
-      6.1"), privacy questionnaire (answers mirror privacy.html), age rating,
-      support URL `ezvoxa.com`, marketing URL `ezvoxa.com`.
-
-## Review posture (from the audit)
-
-v1 ships **free with everything unlocked** — no IAP, no licensing, which keeps
-the review surface minimal. The 4.2 defense: fully offline single-file app,
-real assistive function, established AAC category. Expect and budget for one
+This is the fastest path to being ON the stores, and nothing about pricing
+has to be decided for it. Review posture: fully offline single-file app,
+real assistive function, established AAC category. Budget for one
 rejection/fix cycle.
+
+Listing needs from Frank:
+- Screenshots: 6.7" and 6.1" iPhone (TestFlight build on your phone,
+  screenshots of the home board, Food, a person's phrases, Choose Voice,
+  the SOS screen in demo mode). Play wants phone screenshots plus the
+  512 icon (`native/play-icon-512.png`) and a 1024x500 feature graphic
+  (I can generate it from the icon art when you say go).
+- Description: I draft, you approve. No prices in it.
+- **privacy.html must be approved and live before submission** (both stores
+  require the URL). It is drafted; your call on the wording.
+- Support URL and marketing URL: `ezvoxa.com`.
+- Age rating questionnaires: everything "none" (no violence, no user
+  content, no web browsing, no data collection). EZvoxa is NOT a Kids
+  Category app; it is a utility for all ages.
+
+App privacy questionnaire (mirrors privacy.html):
+- Data used to track you: **none**.
+- Data linked to you: **none**.
+- Data not linked to you: **Precise location** (emergency alerts only, app
+  functionality), **Audio** (voice notes, app functionality). Nothing else.
+
+Review notes to paste into App Store Connect (avoids the two questions
+reviewers always ask):
+> EZvoxa is an AAC (augmentative and alternative communication) app for
+> nonverbal teenagers and adults. No account is needed; every feature is
+> usable immediately. The Emergency button in this build is a demonstration:
+> it shows the alert flow but sends nothing. Location is requested only at
+> the moment an alert would be sent. The app is fully functional offline.
+
+### Switching the subscription on (needs two decisions first)
+
+Blocked on: **pricing confirmed by Frank** (LEDGER rule: no price is
+published anywhere until then) and **the customer-SOS decision** (below).
+Then, in order:
+
+1. **RevenueCat account** (free tier covers us far past launch): create the
+   project, add the Apple app and the Google app, create entitlement
+   **`premium`**, offering **`default`** with the packages.
+2. **App Store Connect**: Subscriptions → create group "EZvoxa Premium" →
+   auto-renewable subscription(s) (suggested ids: `ezvoxa_premium_monthly`,
+   optional `ezvoxa_premium_yearly`). Price set HERE, never in code.
+   Fill the subscription's own privacy/terms fields. Attach the
+   subscription to the app version you submit.
+3. **Play Console**: Monetize → Subscriptions → same products, same ids.
+4. **Codemagic**: set `EZ_BILLING: "1"` and the RevenueCat public SDK keys
+   (`EZ_RC_KEY_IOS`, `EZ_RC_KEY_ANDROID`) in the workflow vars, build,
+   submit as an update. Apple reviews the IAP with it.
+5. Test the whole loop in TestFlight sandbox before release: subscribe,
+   natural voice on; cancel in sandbox, voice falls back on expiry; Restore
+   purchases works on a reinstall.
+
+What the subscription gates today: the natural voice. Cloud texting, voice
+notes, and Family Sync are gated in principle but are demonstrations in the
+template until the per-family backend exists, so the store listing and the
+subscription description must promise only what is real: **the natural
+voice**. Widen the promise as features land.
+
+### Selling on the website (Frank's lane, one hard rule)
+
+RevenueCat Web Billing (Stripe underneath) can sell the same `premium`
+entitlement on ezvoxa.com later, and the app can honor it. But note: without
+accounts in the app there is nothing to attach a web purchase to on a
+phone. Web sales become real when we add some account-lite handle (family
+code). Until then the website sells nothing in-app.
+
+**The hard rule (Apple 3.1.1): the iOS app must never mention, link to, or
+hint at buying anywhere but the App Store.** The website may say whatever it
+likes about pricing; the app may not point at it. The Subscription card
+already complies. Anything Frank writes for the site is fine; nothing about
+web pricing goes into demo.html.
+
+## The decision Frank owes: SOS for customers
+
+On our phones SOS really alerts the family through our server. On a
+customer's phone it is a demonstration, because the server only knows OUR
+family's numbers. Before we can honestly market "the emergency button
+always works" to customers, one of these has to be built:
+
+- **Recommended for v1.1**: on-device SOS. The alert opens Messages
+  prefilled with the alert text and a location link, addressed to the
+  contacts the parent typed into the app. No server, no account, works for
+  every customer, free forever, and honest. One press short of fully
+  automatic (the customer taps send).
+- **Later, as a premium feature**: cloud SOS like ours (sends by itself,
+  works when the phone is locked to the app) — needs per-family server
+  config, authentication, and rate limiting. Real engineering; do not rush
+  it.
+
+Until one exists, listings must describe the emergency flow honestly as a
+demonstration, or not feature it. My recommendation: build on-device SOS
+before v1 ships, so the flagship claim is true on day one. Say the word and
+I build it.
+
+## Pushing updates
+
+- **Store app**: edit `demo.html` (or the shells), merge, press Build on
+  Codemagic (or wire the workflows to a git tag later). iOS: TestFlight
+  immediately, App Review for release (usually about a day; expedited
+  review exists for broken-app emergencies). Android: internal track
+  immediately, production after staged rollout. Native binaries carry the
+  web app inside them; customers do not depend on our web hosting to keep
+  talking. That is a feature, not a bug.
+- **Web/PWA**: unchanged, `main` → the three phones, `release` →
+  app.ezvoxa.com when a release is cut.
+
+## Still to do — code (I own these)
+
+- [ ] On-device SOS for customers (awaiting Frank's go, above).
+- [ ] `api/speak`: an app token or entitlement check server-side before
+      launch scale — today the shared endpoint would give free users the
+      natural voice; acceptable for TestFlight, not for scale.
+- [ ] Play feature graphic 1024x500 + iPad screenshots if we ship iPad.
+- [ ] Backup/restore before any paid launch (RELEASE.md gate).
+- [ ] Push notifications for family voice notes (Guideline 4.2 "native
+      feel" bonus; needs a plugin pass).
+
+## Still to do — Frank
+
+- [ ] Thursday/Friday: Apple $99, Play $25, Codemagic signup (order of
+      operations above).
+- [ ] Approve privacy.html wording (blocks every submission).
+- [ ] Confirm pricing (blocks the subscription build only).
+- [ ] Decide customer SOS (blocks honest emergency marketing).
+- [ ] Screenshots from your phone when the TestFlight build lands.
+- [ ] If the icon art exists above 808px resolution, send it; the 1024 icon
+      is a slight upscale today and Apple's icon reviewers have eyes.

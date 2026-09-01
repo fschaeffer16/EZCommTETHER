@@ -33,12 +33,17 @@ workflows:
         # TestFlight builds talk to the family lane until app.ezvoxa.com is
         # live (RELEASE.md); flip this to https://app.ezvoxa.com for release.
         EZ_API_BASE: https://ez-comm-tether.vercel.app
+        # Subscriptions are off until pricing is confirmed and the products
+        # exist (APPSTORE.md, "Switching the subscription on"). To enable:
+        #   EZ_BILLING: "1"
+        #   EZ_RC_KEY_IOS: <RevenueCat public Apple SDK key, appl_...>
+        EZ_BILLING: "0"
     scripts:
       - name: Package the template into the native shell
         script: |
           cd native
           npm ci
-          EZ_API_BASE=$EZ_API_BASE node build.js
+          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING EZ_RC_KEY_IOS=${EZ_RC_KEY_IOS:-} node build.js
           npx cap sync ios
       - name: Bump build number
         script: |
@@ -57,6 +62,59 @@ workflows:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+      email:
+        recipients:
+          - fschaeffer16@yahoo.com
+        notify:
+          success: true
+          failure: true
+
+  # ── Google Play ──────────────────────────────────────────────────────────
+  # One-time setup (after the $25 Play Console org account exists):
+  #   1. Generate an upload keystore ONCE and upload it to Codemagic:
+  #      Teams → Personal → Code signing identities → Android →
+  #      "Generate new keystore", reference name "ezvoxa_upload". Codemagic
+  #      stores it; it never lives in this repo. Losing it is recoverable
+  #      (Play app signing), but don't.
+  #   2. Play Console → Setup → API access → create a service account with
+  #      "Release manager" on this app; download its JSON key.
+  #   3. Codemagic → Teams → Personal → Integrations → Google Play →
+  #      upload that JSON (this feeds the publishing block below).
+  #   4. Create the app in Play Console (package com.ezvoxa.app), then upload
+  #      the FIRST .aab by hand (Play requires a manual first upload before
+  #      the API may publish). Every build after that publishes itself.
+  android-template:
+    name: EZvoxa Android (template app)
+    instance_type: linux_x2
+    max_build_duration: 60
+    environment:
+      java: 17
+      node: 22
+      android_signing:
+        - ezvoxa_upload
+      vars:
+        EZ_API_BASE: https://ez-comm-tether.vercel.app
+        # Same switch as iOS; use the RevenueCat public Google SDK key:
+        #   EZ_BILLING: "1"
+        #   EZ_RC_KEY_ANDROID: <goog_...>
+        EZ_BILLING: "0"
+    scripts:
+      - name: Package the template into the native shell
+        script: |
+          cd native
+          npm ci
+          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING EZ_RC_KEY_ANDROID=${EZ_RC_KEY_ANDROID:-} node build.js
+          npx cap sync android
+      - name: Build the signed bundle
+        script: |
+          cd native/android
+          ./gradlew bundleRelease
+    artifacts:
+      - native/android/app/build/outputs/**/*.aab
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
       email:
         recipients:
           - fschaeffer16@yahoo.com

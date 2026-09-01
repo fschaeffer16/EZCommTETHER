@@ -10,5 +10,8 @@
     "CapacitorHttp": {
       "enabled": true
     }
+  },
+  "android": {
+    "backgroundColor": "#15120F"
   }
 }

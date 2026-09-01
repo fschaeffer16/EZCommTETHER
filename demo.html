@@ -3480,6 +3480,35 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                     </sc-if>
 </sc-if>
 
+          <!-- Subscription — store builds only. The billing bridge
+               (native/billing.js) sets window.__EZ_BILLING; without it this
+               card does not exist, so the web app and the PWA never show it.
+               No price appears here: the store's own purchase sheet carries
+               the price, which is also Apple's rule. The talker and the
+               Emergency button are never behind this card. Hard rule. -->
+          <sc-if value="{{ showPlanCard }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ setTog_plan }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">⭐</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Subscription</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_plan }}</span>
+          </div>
+          <sc-if value="{{ setOpen_plan }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+            <div style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);">{{ planStatusLabel }}</div>
+            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:5px 0 12px;line-height:1.45;">{{ planStatusDetail }}</div>
+            <sc-if value="{{ planNotActive }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ planSubscribe }}" style="width:100%;background:#4F46E5;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)"><sc-if value="{{ planBusy }}" hint-placeholder-val="{{ false }}">One moment…</sc-if><sc-if value="{{ planNotBusy }}" hint-placeholder-val="{{ true }}">See subscription options</sc-if></button>
+            </sc-if>
+            <sc-if value="{{ planActive }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ planManage }}" style="width:100%;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Manage subscription</button>
+            </sc-if>
+            <button onClick="{{ planRestore }}" style="width:100%;margin-top:9px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Restore purchases</button>
+            <sc-if value="{{ planMsg }}" hint-placeholder-val=""><div style="color:#C0473A;font-size:13px;font-weight:700;margin-top:9px;">{{ planMsg }}</div></sc-if>
+            <div style="margin-top:11px;font-size:12px;font-weight:600;color:var(--sub,#8C857A);line-height:1.45;">Auto-renews until cancelled in your store account settings. <span onClick="{{ planOpenPrivacy }}" style="color:#3B82F6;cursor:pointer;text-decoration:underline;">Privacy Policy</span> &middot; <span onClick="{{ planOpenTerms }}" style="color:#3B82F6;cursor:pointer;text-decoration:underline;">Terms of Use</span></div>
+          </div>
+          </sc-if>
+          </sc-if>
+
           <!-- Family Sync is our single-family system; a template/buyer phone
                has no working sync yet, so the controls are hidden there. -->
           <sc-if value="{{ showFamilySync }}" hint-placeholder-val="{{ false }}">
@@ -4401,13 +4430,51 @@ class Component extends DCLogic {
     setTimeout(next, 2500);
   }
 
+  // ── Subscription / entitlement ──────────────────────────────────────────
+  // window.__EZ_BILLING is set only by the native store shells
+  // (native/billing.js, injected by native/build.js when billing is switched
+  // on). On the web, in the PWA, and in store builds without billing, it is
+  // absent and everything below reports unlocked. Fail-open on purpose: a
+  // billing outage must never take a feature away from someone who paid —
+  // the worst failure mode here is generosity.
+  // THE EMERGENCY BUTTON IS NEVER CHECKED AGAINST THIS. Hard rule.
+  ezPremium() {
+    const b = window.__EZ_BILLING;
+    if (!b || !b.configured) return true;
+    return !!b.premium;
+  }
+  ezBillingUi() { const b = window.__EZ_BILLING; return !!(b && b.configured); }
+  // purchase/restore go through the store's own sheets; this only reflects
+  // the outcome. Register for changes once so a purchase made in the store
+  // sheet re-renders the card without reopening Settings.
+  planAction(kind) {
+    const b = window.__EZ_BILLING;
+    if (!b || !b[kind]) return;
+    this.setState({ planBusy: true, planMsg: '' });
+    try {
+      b[kind]((err) => {
+        this.setState({
+          planBusy: false,
+          planMsg: err ? (kind === 'restore' ? 'Nothing to restore on this account.' : 'The purchase did not go through. Nothing was charged beyond what the store shows.') : '',
+        });
+      });
+    } catch (e) { this.setState({ planBusy: false }); }
+  }
+  planWatch() {
+    if (this._planWatched) return;
+    const b = window.__EZ_BILLING;
+    if (b && b.onChange) { this._planWatched = true; try { b.onChange(() => this.setState({})); } catch (e) {} }
+  }
+
   speak(t) {
     const text = String(t == null ? '' : t).trim();
     if (!text) return;
     // AI voice first (Evan's real teen voice, via /api/speak). Any failure —
     // not configured, offline, playback blocked — falls back to the device
-    // voice below, so a tap always speaks.
-    if (this._cloudVoice) {
+    // voice below, so a tap always speaks. The natural voice is the paid
+    // feature: without the subscription the device voice speaks instead, so
+    // a lapse changes the sound, never the ability to talk.
+    if (this._cloudVoice && this.ezPremium()) {
       try {
         if (this._cloudAudio) { try { this._cloudAudio.pause(); } catch (e) {} }
         // The voice tag keys the phone's audio cache to the current voice, so
@@ -6099,7 +6166,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.01.1'; }
+  APP_BUILD() { return '2026.09.01.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6705,7 +6772,7 @@ class Component extends DCLogic {
   }
 
   // ── Settings actions ────────────────────────────────────────────────────
-  openSettings() { this._nb = null; this._pwSession = null; this._pw = ''; this._syncPw = ''; this.setState({ screen: 'settings', pwInput: '', pwErr: '', pwUnlocked: false, setOpen: '' }); }
+  openSettings() { this._nb = null; this._pwSession = null; this._pw = ''; this._syncPw = ''; this.planWatch(); this.setState({ screen: 'settings', pwInput: '', pwErr: '', pwUnlocked: false, setOpen: '', planMsg: '', planBusy: false }); }
 
   // Voice picker — lists the phone's built-in voices (free; also enables other
   // languages). Tapping one saves it and speaks a test line.
@@ -7698,7 +7765,7 @@ class Component extends DCLogic {
       ...(() => {
         const open = s.setOpen || '';
         const out = {};
-        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password'].forEach((k) => {
+        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password', 'plan'].forEach((k) => {
           out['setOpen_' + k] = open === k;
           out['setChev_' + k] = open === k ? '▲' : '▼';
           out['setTog_' + k] = () => this.setState({ setOpen: open === k ? '' : k });
@@ -7706,6 +7773,25 @@ class Component extends DCLogic {
         return out;
       })(),
       showFamilySync: !this.isTemplateMode(),
+
+      // Subscription card — exists only when a store build's billing bridge
+      // is present (ezBillingUi). Prices are never written here: the store's
+      // own purchase sheet shows them, which is also Apple's rule.
+      showPlanCard: this.ezBillingUi(),
+      planActive: this.ezPremium() && this.ezBillingUi(),
+      planNotActive: !this.ezPremium(),
+      planStatusLabel: this.ezPremium() ? 'Subscription active' : 'Not subscribed',
+      planStatusDetail: this.ezPremium()
+        ? 'The natural voice is on. Thank you for supporting EZvoxa.'
+        : 'The talker and the Emergency button always work, with or without a subscription. Subscribing adds the natural voice.',
+      planMsg: s.planMsg || '',
+      planBusy: !!s.planBusy,
+      planNotBusy: !s.planBusy,
+      planSubscribe: () => this.planAction('purchase'),
+      planRestore: () => this.planAction('restore'),
+      planManage: () => { try { const b = window.__EZ_BILLING; if (b && b.manage) b.manage(); } catch (e) {} },
+      planOpenPrivacy: () => { try { window.open('https://ezvoxa.com/privacy.html', '_blank'); } catch (e) {} },
+      planOpenTerms: () => { try { window.open('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/', '_blank'); } catch (e) {} },
 
       // Guided Access can't guard a Home Screen, so the app brings its own: one
       // picture, one button. Nothing here can speak by accident.

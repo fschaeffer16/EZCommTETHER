@@ -32,6 +32,24 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **Store plan** (audit of 26 Aug): template only, wrapped with Capacitor,
   tracking the `release` lane; v1 free with everything unlocked; ~3–6 weeks
   from Apple enrollment to live. Evan's app never goes to a store.
+- **Store readiness build-out, 1 Sep 2026** (Frank: full focus on a
+  legitimate, sellable, updatable app; he handles the website): Android
+  shell generated (`native/android/`, permissions, icons, dark splash,
+  Codemagic signing); subscription rails built and verified but DORMANT —
+  `ezPremium()` gate in demo.html (natural voice only; lapse changes the
+  sound, never the ability to talk), Subscription card in Settings that
+  exists only when a store build injects `native/billing.js` (RevenueCat,
+  fail-open, Restore purchases included), switched on per build with
+  EZ_BILLING=1 + RevenueCat keys. Emergency button reads none of it. Both
+  Codemagic workflows (TestFlight + Play internal) in codemagic.yaml.
+  **APPSTORE.md is the runbook Frank follows from enrollment to on-sale.**
+- **Decision Frank owes: SOS for customers.** On customer phones SOS is a
+  demonstration today. Recommended: on-device SOS (prefilled Messages to
+  the family contacts typed into the app) before v1 ships, so "the
+  emergency button always works" is true for customers. Cloud SOS for
+  customers is later, premium, needs per-family backend + auth.
+- Store listings/subscription copy promise ONLY the natural voice as
+  premium until per-family texting/voice-notes/sync exist for customers.
 - **privacy.html**: drafted from the api/ code, live but unlinked, marked
   DRAFT. Not the policy until Frank approves the wording.
 

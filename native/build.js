@@ -53,6 +53,28 @@ const nativeBoot = MARKER + '\n<script>\n'
   + '</script>';
 html = html.replace(MARKER, nativeBoot);
 
+// Subscriptions are opt-in per build: EZ_BILLING=1 injects the billing
+// bridge (billing.js) plus the RevenueCat public SDK keys, and demo.html's
+// Subscription card comes alive. Without the flag nothing billing-related
+// ships and the app is fully unlocked — the v1 store posture.
+if (process.env.EZ_BILLING === '1') {
+  const keyIos = process.env.EZ_RC_KEY_IOS || '';
+  const keyAndroid = process.env.EZ_RC_KEY_ANDROID || '';
+  if (!keyIos && !keyAndroid) {
+    console.error('build failed: EZ_BILLING=1 but neither EZ_RC_KEY_IOS nor EZ_RC_KEY_ANDROID is set');
+    process.exit(1);
+  }
+  const billingBoot = '<script>\n'
+    + 'window.__EZ_RC_KEY_IOS = ' + JSON.stringify(keyIos) + ';\n'
+    + 'window.__EZ_RC_KEY_ANDROID = ' + JSON.stringify(keyAndroid) + ';\n'
+    + '</script>\n<script src="billing.js"></script>';
+  html = html.replace('</head>', billingBoot + '\n</head>');
+  fs.copyFileSync(path.join(__dirname, 'billing.js'), path.join(www, 'billing.js'));
+  console.log('billing: ENABLED (RevenueCat keys injected for ' + [keyIos && 'ios', keyAndroid && 'android'].filter(Boolean).join(', ') + ')');
+} else {
+  console.log('billing: off (set EZ_BILLING=1 with EZ_RC_KEY_IOS/EZ_RC_KEY_ANDROID to enable)');
+}
+
 // One URL bypasses fetch: the AI-voice <audio> element. Rewrite that literal
 // so it too resolves against the API base. Media loads are not CORS requests,
 // so this needs no CapacitorHttp involvement server-side.

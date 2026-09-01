@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">EZvoxa</string>
+    <string name="title_activity_main">EZvoxa</string>
+    <string name="package_name">com.ezvoxa.app</string>
+    <string name="custom_url_scheme">com.ezvoxa.app</string>
+</resources>
