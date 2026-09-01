@@ -53,8 +53,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **The emergency button never gates on payment. Hard rule.**
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
-- Prices not set yet: needs comparables + per-family server cost, with unit
-  counts, folded into the business plan and interactive model together.
+- **Working prices, set late Aug and already public on the site and in the
+  district document: $79.99 once for the communicator, $12.99/month for the
+  optional family subscription.** (Corrected 1 Sep: an earlier ledger entry
+  wrongly said no price existed.) Final pricing session still owed:
+  comparables + per-family server cost, with unit counts, business plan and
+  interactive model updated together.
 
 ## Devices
 
@@ -81,4 +85,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   added around it 31 Aug (screenshots, rate chart, security panels).
 - `whatami.html`: device check + live zoom meter. Parent-facing warnings
   belong there, never inside the apps (the zoom banner lesson, 1 Sep).
-- Until DNS propagates, working links are on `ez-comm-tether.vercel.app`.
+- **ezvoxa.com went live 1 Sep 2026** (A @ 216.150.1.1, CNAME www per
+  Vercel's card; GoDaddy keeps the ImprovMX email records). The root of
+  ezvoxa.com / myezvoice.com serves the website (`ezvoxa.html`) via
+  host-scoped rewrites in vercel.json; the vercel.app root still serves
+  Evan's app for the three phones. The website's story section carries
+  Frank's own wording from EZ's Voice, and links to both documents.
