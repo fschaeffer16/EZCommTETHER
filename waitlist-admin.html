@@ -1,0 +1,70 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZvoxa Waitlist</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  body{padding:22px 18px 60px;max-width:760px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{font-size:14px;color:#8C857A;margin:0 0 18px}
+  form{display:flex;gap:10px;margin-bottom:20px}
+  input{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;
+    color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
+  button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;
+    font-size:16px;font-weight:800;padding:12px 20px;cursor:pointer}
+  #msg{font-size:15px;color:#FF9A8A;min-height:22px;margin-bottom:10px}
+  #count{font-size:15px;color:#7DE59A;margin-bottom:14px;font-weight:700}
+  .entry{border:1px solid #2B241C;border-radius:12px;padding:13px 15px;margin-bottom:10px}
+  .entry b{font-size:17px}
+  .entry .c{color:#5CC8FF;font-size:15px;word-break:break-all}
+  .entry .m{color:#B0A695;font-size:14px;margin-top:4px}
+  .entry .t{color:#7A7060;font-size:12.5px;margin-top:4px}
+</style>
+
+<h1>EZvoxa Waitlist</h1>
+<p class="sub">The people who asked to be told the day it goes on sale. Newest first.
+This page shows nothing without the family password.</p>
+
+<form id="f">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
+  <button type="submit">Show the list</button>
+</form>
+<div id="msg"></div>
+<div id="count"></div>
+<div id="out"></div>
+
+<script>
+(function () {
+  var f = document.getElementById('f');
+  f.addEventListener('submit', async function (ev) {
+    ev.preventDefault();
+    var msg = document.getElementById('msg');
+    var out = document.getElementById('out');
+    var cnt = document.getElementById('count');
+    msg.textContent = 'Loading…'; out.innerHTML = ''; cnt.textContent = '';
+    try {
+      var r = await fetch('/api/waitlist', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'list', password: document.getElementById('pw').value }),
+      });
+      var j = await r.json();
+      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : ('Could not load: ' + (j.error || 'unknown')); return; }
+      var list = (j.entries || []).slice().reverse();
+      msg.textContent = '';
+      cnt.textContent = list.length + (list.length === 1 ? ' person' : ' people') + ' on the list';
+      if (!list.length) { msg.textContent = 'The list is empty.'; return; }
+      list.forEach(function (e) {
+        var d = document.createElement('div'); d.className = 'entry';
+        function esc(x){ var s=document.createElement('span'); s.textContent=String(x==null?'':x); return s.innerHTML; }
+        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
+          '<div class="c">' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' +
+          (e.about ? '<div class="m">' + esc(e.about) + '</div>' : '') +
+          (e.source ? '<div class="m">Came from: ' + esc(e.source) + '</div>' : '') +
+          (e.at ? '<div class="t">' + esc(new Date(e.at).toLocaleString('en-US')) + '</div>' : '');
+        out.appendChild(d);
+      });
+    } catch (err) { msg.textContent = 'Could not reach the server. Try again.'; }
+  });
+})();
+</script>
