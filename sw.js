@@ -6,7 +6,7 @@
 // fallback so the app still opens with no internet. The emergency endpoint
 // (/api/) is never cached — sending an alert must always hit the live network.
 
-const CACHE = 'evans-talker-v12';
+const CACHE = 'evans-talker-v13';
 
 // Spoken audio is kept separately and never expires: the same words in the same
 // voice are the same sound forever, so a phrase Evan has already used plays back
@@ -81,16 +81,9 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     fetch(req)
-      .then(async (res) => {
+      .then((res) => {
+        // Save a fresh copy for offline use.
         if (res && res.ok) {
-          const ct = (res.headers.get('content-type') || '');
-          if (ct.indexOf('text/html') !== -1) {
-            var text = await res.text();
-            text = text.replace(/<!-- Zoomed-page warning[\s\S]*?<\/script>/, '');
-            var out = new Response(text, { status: res.status, statusText: res.statusText, headers: res.headers });
-            caches.open(CACHE).then((cache) => cache.put(req, out.clone())).catch(function(){});
-            return out;
-          }
           const copy = res.clone();
           caches.open(CACHE).then((cache) => cache.put(req, copy));
         }
