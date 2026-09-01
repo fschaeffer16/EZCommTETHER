@@ -53,12 +53,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **The emergency button never gates on payment. Hard rule.**
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
-- **Working prices, set late Aug and already public on the site and in the
-  district document: $79.99 once for the communicator, $12.99/month for the
-  optional family subscription.** (Corrected 1 Sep: an earlier ledger entry
-  wrongly said no price existed.) Final pricing session still owed:
-  comparables + per-family server cost, with unit counts, business plan and
-  interactive model updated together.
+- **PRICING IS NOT CONFIRMED. Frank, 1 Sep 2026: "remove the pricing. I
+  have not confirmed that yet."** All dollar figures ($79.99 once, $12.99/mo,
+  $99/student/yr for schools) are stripped from the public website; only
+  market comparisons ($3,000-$5,000 devices, $250-$300 iPad apps) remain.
+  $79.99 and $12.99 stay as internal working numbers in the revenue model
+  only. Do not publish any EZvoxa price anywhere until Frank confirms it.
+  His own Opening Statement wording says "a fraction of the cost" and
+  mentions the $12.99/mo subscription; his document, his call whether that
+  stays. Final pricing session owed: comparables + per-family server cost,
+  with unit counts, business plan and interactive model updated together.
 
 ## Devices
 
