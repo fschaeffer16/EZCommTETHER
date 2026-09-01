@@ -90,8 +90,9 @@
     font:16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   }
   #hmsg{font:14px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--violet);min-height:1.2em;margin:8px 0 0}
-  .strip{clear:both;display:grid;grid-template-columns:1.2fr .8fr .9fr;gap:10px;margin:40px 0 8px}
-  .strip img,.strip video{width:100%;height:auto;border-radius:4px;object-fit:contain}
+  .strip{clear:both;display:grid;grid-template-columns:168px 1fr 1fr;gap:10px;align-items:start;margin:40px 0 8px}
+  .strip img{width:100%;height:auto;border-radius:4px;object-fit:contain}
+  .clip{width:168px;height:auto;border-radius:4px}
   h2{font-size:28px;line-height:1.25;margin:40px 0 12px}
   .small{font-size:17px;color:var(--mute)}
   footer{
@@ -104,7 +105,8 @@
   @media(max-width:720px){
     .lead{float:none;width:100%;max-width:none;margin:0 0 20px}
     .phone{float:none;width:110px;margin:0 0 16px}
-    .strip{grid-template-columns:1fr 1fr}
+    .strip{grid-template-columns:120px 1fr 1fr}
+    .clip{width:120px}
     .stage{grid-template-columns:1fr}
   }
   .x{position:fixed;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;font-weight:800;cursor:pointer}
@@ -151,7 +153,7 @@
   <div id="hmsg" role="status" aria-live="polite"></div>
 
   <div class="strip">
-    <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline width="720" height="404" aria-label="Evan on a boogie board"></video>
+    <video class="clip" src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline width="720" height="404" aria-label="Evan on a boogie board"></video>
     <img src="collage-03.jpg" width="720" height="960" alt="Evan as a little boy with his mom">
     <img src="collage-02.jpg" width="720" height="721" alt="Evan as a little boy with his dad">
   </div>
