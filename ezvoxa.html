@@ -60,8 +60,21 @@
   .sub{font-size:20px;color:var(--mute);margin:0 0 28px;max-width:34em}
   .cta-row{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
   .under{color:var(--faint);font-size:14.5px;margin-top:16px}
-  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:var(--sunk);aspect-ratio:1/1}
+  /* The beach photo file is 450px wide. It is never drawn larger than that,
+     because a family photo blown up past its pixels goes soft. */
+  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:var(--sunk);aspect-ratio:1/1;max-width:450px;margin:0 auto}
   .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-join{display:flex;gap:10px;margin-top:20px;max-width:540px}
+  .hero-join input{flex:1;min-width:0}
+  .hero-join .btn{width:auto;margin-top:0;flex:none;white-space:nowrap}
+  @media (max-width:520px){ .hero-join{flex-direction:column} .hero-join .btn{width:100%} }
+  /* the live demo slot: only on screens wide enough to sit it beside the words */
+  #heroDemo{display:none}
+  @media (min-width:1000px){
+    #heroDemo{display:flex;justify-content:center}
+    #heroBeach{display:none}
+    .phone.inline{position:static;height:min(78vh,680px);box-shadow:0 24px 70px rgba(10,12,18,.28)}
+  }
 
   /* ── sections ────────────────────────────────────────── */
   section{padding:64px 0;border-top:1px solid var(--line)}
@@ -209,11 +222,21 @@
     <div class="cta-row">
       <button class="btn" data-watch-demo>Watch how it works</button>
       <button class="btn ghost" data-open-demo>Try it myself</button>
-      <a class="btn ghost" href="#list">Tell me when it's ready</a>
     </div>
-    <p class="under">The emergency button works whether you subscribe or not.</p>
+    <!-- Same waitlist as the bottom of the page, email only, source marked hero. -->
+    <form class="hero-join" id="heroJoin" novalidate>
+      <input id="heroEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email">
+      <button class="btn" type="submit">Tell me when it's ready</button>
+    </form>
+    <div class="msg" id="heroMsg" role="status" aria-live="polite"></div>
+    <p class="under">Not for sale yet. Your email goes nowhere else. The emergency button works whether you subscribe or not.</p>
   </div>
-  <div class="hero-art"><img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450"></div>
+  <div>
+    <!-- On a big screen the real demo sits here, live. On a phone it stays a
+         full-screen overlay and the beach photo holds this spot instead. -->
+    <div id="heroDemo"></div>
+    <div class="hero-art" id="heroBeach"><img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450"></div>
+  </div>
 </div></div>
 
 <section id="story"><div class="wrap">
@@ -223,9 +246,11 @@
   <div class="two" style="margin-top:32px;align-items:start">
     <div>
       <!-- Frank's collage, his arrangement, from his original photos. minmax(0,1fr)
-           so a column can shrink below a photo's natural width on a phone. -->
-      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start">
-        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;">
+           so a column can shrink below a photo's natural width on a phone. The whole
+           grid is capped at 660px: the source photos are 480-960px wide, and a photo
+           must never be displayed larger than the file or it goes soft. -->
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start;max-width:660px;margin:0 auto">
+        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:min(100%,497px);min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
         <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
         <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
         <img src="collage-04.jpg" alt="Evan as a baby with his big brothers" width="640" height="470" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
@@ -265,7 +290,7 @@
       <p class="sig">Frank Schaeffer, Fort Pierce, Florida</p>
 
       <p style="margin-top:18px"><a href="hearhim.html"><b>The whole story is EZ's Voice</b></a>, with a working copy of his talker you can touch. The research behind every claim is in <a href="opening-statement.html"><b>An Opening Statement</b></a>.</p>
-    </div</div>
+    </div>
   </div>
 
   <div class="card" style="margin-top:26px;border-left:4px solid var(--blue)">
@@ -751,7 +776,8 @@
 
   async function runTour() {
     tourOn = true; tourStop = false;
-    scrim.classList.add('on'); document.body.style.overflow = 'hidden';
+    // When the phone lives in the hero, the tour runs right there on the page.
+    if (!document.querySelector('.phone.inline')) { scrim.classList.add('on'); document.body.style.overflow = 'hidden'; }
     tourbar.classList.add('on');
     cap.classList.add('tour');
     home();
@@ -790,6 +816,57 @@
   document.getElementById('closeDemo').onclick = closeDemo;
   scrim.addEventListener('click', function (e) { if (e.target === scrim) closeDemo(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && scrim.classList.contains('on')) closeDemo(); });
+
+  /* ---------- the demo lives in the hero on a big screen ----------
+     The .phone node is moved, not copied, so there is exactly one demo and
+     one set of ids no matter the screen. On a phone it stays in the overlay. */
+  var heroSlot = document.getElementById('heroDemo');
+  var phoneEl = document.querySelector('.phone');
+  var wideDemo = null; try { wideDemo = matchMedia('(min-width: 1000px)'); } catch (e) {}
+  function placePhone() {
+    if (!heroSlot || !phoneEl || !wideDemo) return;
+    if (wideDemo.matches && phoneEl.parentNode !== heroSlot) {
+      heroSlot.appendChild(phoneEl); phoneEl.classList.add('inline'); home();
+    } else if (!wideDemo.matches && phoneEl.parentNode === heroSlot) {
+      phoneEl.classList.remove('inline'); scrim.appendChild(phoneEl);
+    }
+  }
+  placePhone();
+  if (wideDemo) { if (wideDemo.addEventListener) wideDemo.addEventListener('change', placePhone); else if (wideDemo.addListener) wideDemo.addListener(placePhone); }
+
+  // These run after the overlay bindings above, so they win. When the demo is
+  // already on the page, the buttons bring you to it instead of covering the site.
+  function demoInline() { return wideDemo && wideDemo.matches && phoneEl && phoneEl.classList.contains('inline'); }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open-demo]'), function (b) {
+    b.onclick = function () {
+      if (demoInline()) { home(); phoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      else openDemo();
+    };
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-watch-demo]'), function (b) {
+    b.onclick = function () {
+      if (demoInline()) phoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      runTour();
+    };
+  });
+
+  /* ---------- hero signup: same list, email only ---------- */
+  var hj = document.getElementById('heroJoin'), hjMsg = document.getElementById('heroMsg');
+  if (hj) hj.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('heroEmail').value.trim();
+    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { hjMsg.className = 'msg bad'; hjMsg.textContent = ERRORS.bad_email; return; }
+    var btn = hj.querySelector('.btn');
+    btn.disabled = true; btn.textContent = 'Adding…'; hjMsg.textContent = '';
+    fetch('/api/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: '', how: 'email', email: email, phone: '', consentText: '', about: '', source: 'hero' }) })
+      .then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.ok) { hj.hidden = true; hjMsg.className = 'msg ok'; hjMsg.textContent = 'You’re on the list. I’ll email you the day it’s ready.'; }
+        else { btn.disabled = false; btn.textContent = 'Tell me when it’s ready'; hjMsg.className = 'msg bad';
+               hjMsg.textContent = (j && ERRORS[j.error]) || 'Something went wrong. Please try again.'; }
+      }).catch(function () { btn.disabled = false; btn.textContent = 'Tell me when it’s ready';
+        hjMsg.className = 'msg bad'; hjMsg.textContent = 'No connection. Please try again in a moment.'; });
+  });
 })();
 </script>
 </body>
