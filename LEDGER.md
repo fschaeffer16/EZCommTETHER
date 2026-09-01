@@ -89,6 +89,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   added around it 31 Aug (screenshots, rate chart, security panels).
 - `whatami.html`: device check + live zoom meter. Parent-facing warnings
   belong there, never inside the apps (the zoom banner lesson, 1 Sep).
+- Waitlist: public form at the bottom of ezvoxa.com; Frank reads it at
+  `/waitlist-admin.html` with the family password. **A signup confirmation
+  email is wanted, but Frank must vet the wording before it ever sends
+  (his words, 1 Sep). Nothing automated goes out until he approves the
+  text.** Draft offered 1 Sep; send via the SendGrid sender the SOS email
+  already uses.
 - **ezvoxa.com went live 1 Sep 2026** (A @ 216.150.1.1, CNAME www per
   Vercel's card; GoDaddy keeps the ImprovMX email records). The root of
   ezvoxa.com / myezvoice.com serves the website (`ezvoxa.html`) via
