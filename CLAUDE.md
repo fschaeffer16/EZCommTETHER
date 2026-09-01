@@ -96,6 +96,11 @@ program for low-income/disability families.
 - `api/settings.js` — Family Sync via Upstash KV.
 - **Secrets never ship in the app.** Phone numbers, keys, and the medical note live only in
   Vercel environment variables. The client sends person *ids*, never numbers.
+- **Use the canvas. All of it. Frank has now said this three times** (word bank
+  15 Aug, tablet layout 28 Aug, website 1 Sep: "why do we constantly have to
+  discuss using the available canvas?"). A wide monitor gets a wide layout, not
+  a phone column floating in margins. Website container caps at 1600px (94vw-style tricks broke phones);
+  inside it, grids grow columns rather than letting content shrink into a strip.
 - **A wide screen gets re-laid out, not stretched.** Every grid needs a column
   count for the width it is actually on. The failure looks like this: a word
   tile grew to 623px on a laptop to hold the words "I want", and eight of them

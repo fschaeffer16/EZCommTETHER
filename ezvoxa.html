@@ -14,7 +14,7 @@
     --card:#FFFFFF; --bg:#FAF9F6; --sunk:#F1EFE9;
     --blue:#2F6BFF; --green:#18B26B; --amber:#F59E0B; --red:#E23B2E; --violet:#7A5CFF;
     --sh:0 1px 2px rgba(14,18,32,.05), 0 14px 40px rgba(14,18,32,.09);
-    --maxw:1120px;
+    --maxw:1600px;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
@@ -218,12 +218,29 @@
 
 <section id="story"><div class="wrap">
   <p class="eyebrow">Evan's story</p>
-  <h2>He didn't need a better device. He needed a different one.</h2>
+  <h2>He didn't need a better device; he needed one that could grow with him</h2>
 
   <div class="two" style="margin-top:32px;align-items:start">
     <div>
-      <div class="hero-art" style="aspect-ratio:1/1"><img src="photo-frank-evan.jpg" alt="Frank and Evan in the pool at sunset" width="900" height="900"></div>
-      <p style="color:var(--faint);font-size:14px;margin-top:12px">Evan and me, this summer.</p>
+      <!-- Frank's collage, his arrangement, from his original photos. minmax(0,1fr)
+           so a column can shrink below a photo's natural width on a phone. -->
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start">
+        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;">
+        <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-04.jpg" alt="Evan as a baby with his big brothers" width="640" height="470" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
+        <img src="collage-05.jpg" alt="Evan and his brothers in the water at sunset" width="640" height="500" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-06.jpg" alt="Evan with his brothers at the beach" width="624" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline preload="metadata" width="720" height="404" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;" aria-label="Evan riding a wave on his boogie board, his dad behind him"></video>
+        <img src="collage-08.jpg" alt="Evan with his mom" width="720" height="960" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-09.jpg" alt="Evan riding on his dad's shoulders" width="574" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-10.jpg" alt="Evan as a baby on the sand" width="640" height="526" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-11.jpg" alt="Evan as a toddler eating a banana" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-12.jpg" alt="Evan and his dad" width="720" height="627" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
+        <img src="collage-13.jpg" alt="Evan with his dad, out riding" width="592" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-14.jpg" alt="Evan jumping on the trampoline" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;">
+        <img src="collage-15.jpg" alt="Evan watching the baby chicks" width="480" height="640" loading="lazy" style="width:100%;min-width:0;border-radius:12px;display:block;grid-column:1/-1;width:72%;margin:0 auto;">
+      </div>
     </div>
     <div class="story">
       <p>My son Evan was born in August 2010. I am not a speech pathologist. I am a father who has spent the past 16 years in silence with my son, learning what every look, every nuance of his face, his eyes and his body language are trying to tell me.</p>
@@ -236,6 +253,7 @@
 
       <p><b>He wasn't failing the device. The device was pricing him out of his own voice.</b> And he responded the way anyone would: he stopped paying.</p>
 
+      <h3 style="font-size:21px;line-height:1.3;margin:28px 0 10px">To meet him where he was, I became the student and he became my teacher.</h3>
       <p>I didn't design this app. Evan guided me to it. When something in the app wasted his time, he told me the only way he can: he stopped using it. Every one of those silences was a design review, and I treated it like one. This is not a cute thing a father made for his son. It is hundreds of design decisions, each one traced to a way to help unlock the mind of a person who cannot speak.</p>
 
       <p>When it came time to choose how he would sound, I didn't pick. I played him voices one after another and watched his face. He reached out and pointed at one. It wasn't close. For the first time, the voice coming out of his device was one he chose. A teenage boy's voice, not a grown man's, not a robot's.</p>
@@ -330,7 +348,7 @@
       <table class="price">
         <tr><td>Dedicated communication devices</td><td>$3,000–$5,000</td></tr>
         <tr><td>Leading iPad apps</td><td>$250–$300</td></tr>
-        <tr class="us"><td>EZvoxa</td><td>Price announced at launch</td></tr>
+        <tr class="us"><td>EZvoxa</td><td>Announced at launch</td></tr>
       </table>
       <p class="fine">Final pricing comes with the launch, along with an optional monthly subscription for the family extras. A hardship program will keep it reachable for families who can't manage the price. Nobody should lose a voice over money.</p>
     </div>
