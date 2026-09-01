@@ -3,839 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EZvoxa: a voice for people who don't have one</title>
-<meta name="description" content="A communication app for nonverbal teenagers and adults, on the phone they already carry. Built by a father for his son. Try the demo.">
-<meta name="theme-color" content="#0A0D16">
-<link rel="icon" type="image/png" href="icon192.png">
-<link rel="apple-touch-icon" href="icon180.png">
+<title>EZvoxa — a letter from a father</title>
+<meta name="description" content="My son Evan is nonverbal. I became the student. He became my teacher. This is the talker he walked me to.">
+<link rel="icon" type="image/png" href="icon-ezvoxa-192.png">
+<link rel="apple-touch-icon" href="icon-ezvoxa-180.png">
 <style>
   :root{
-    --ink:#0E1220; --mute:#5A6072; --faint:#8A90A2; --line:#E5E3DD;
-    --card:#FFFFFF; --bg:#FAF9F6; --sunk:#F1EFE9;
-    --blue:#2F6BFF; --green:#18B26B; --amber:#F59E0B; --red:#E23B2E; --violet:#7A5CFF;
-    --sh:0 1px 2px rgba(14,18,32,.05), 0 14px 40px rgba(14,18,32,.09);
-    --maxw:1600px;
-  }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --ink:#EEF0F7; --mute:#9AA1B5; --faint:#6E7488; --line:#232838;
-      --card:#151A28; --bg:#090C14; --sunk:#10141F;
-      --sh:0 1px 2px rgba(0,0,0,.4), 0 16px 44px rgba(0,0,0,.5);
-    }
+    --paper:#F4EFE4;
+    --ink:#1C1916;
+    --mute:#5C564E;
+    --line:rgba(28,25,22,.12);
+    --cyan:#1A8FB5;
+    --violet:#6B3FA0;
+    --max:820px;
   }
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Segoe UI,Roboto,sans-serif;
-    -webkit-font-smoothing:antialiased}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  a{color:var(--blue)}
-  b{font-weight:700}
-
-  /* ── top bar ─────────────────────────────────────────── */
-  .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
-    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line)}
-  .top .wrap{display:flex;align-items:center;gap:14px;height:70px}
-  .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
-  .logo img{width:38px;height:38px;border-radius:11px;display:block}
-  .logo span{color:var(--blue)}
-  .top nav{margin-left:auto;display:flex;align-items:center;gap:26px}
-  .top nav a{color:var(--mute);text-decoration:none;font-size:15.5px;font-weight:600}
-  .top nav a:hover{color:var(--ink)}
-  @media (max-width:820px){ .top nav a.hide-sm{display:none} }
-
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;
-    font:inherit;font-weight:800;border-radius:14px;padding:15px 24px;font-size:17px;
-    background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;text-decoration:none;
-    box-shadow:0 6px 18px rgba(47,107,255,.28)}
-  .btn:hover{filter:brightness(1.05)}
-  .btn.sm{padding:11px 18px;font-size:15.5px;border-radius:12px;box-shadow:none}
-  .btn.ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
-
-  /* ── hero ────────────────────────────────────────────── */
-  .hero{padding:70px 0 20px}
-  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr;gap:36px} .hero{padding:44px 0 10px} }
-  h1{font-size:clamp(34px,5vw,56px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px;text-wrap:balance}
-  .sub{font-size:20px;color:var(--mute);margin:0 0 28px;max-width:34em}
-  .cta-row{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
-  .under{color:var(--faint);font-size:14.5px;margin-top:16px}
-  /* The beach photo file is 450px wide. It is never drawn larger than that,
-     because a family photo blown up past its pixels goes soft. */
-  .hero-art{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh);background:#090C14;aspect-ratio:1/1;max-width:450px;margin:0 auto}
-  .hero-art img{width:100%;height:100%;object-fit:contain;display:block}
-  .hero-join{display:flex;gap:10px;margin-top:20px;max-width:540px}
-  .hero-join input{flex:1;min-width:0}
-  .hero-join .btn{width:auto;margin-top:0;flex:none;white-space:nowrap}
-  @media (max-width:520px){ .hero-join{flex-direction:column} .hero-join .btn{width:100%} }
-  /* the real app screenshot, in a bezel, sized so it is never drawn past
-     half its 786px file: sharp on every screen including retina */
-  .hero-shot-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
-  .hero-shot{display:block;width:min(100%,375px);padding:0;border:10px solid #14161F;border-radius:46px;
-    overflow:hidden;background:#000;cursor:pointer;box-shadow:0 26px 70px rgba(10,12,18,.38)}
-  .hero-shot img{display:block;width:100%;height:auto;object-fit:contain}
-  .hero-shot-cap{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:15.5px;font-weight:700;margin:0}
-  .hero-shot-cap img{border-radius:13px;flex:none}
-
-  /* ── sections ────────────────────────────────────────── */
-  section{padding:64px 0;border-top:1px solid var(--line)}
-  .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
-  h2{font-size:clamp(26px,3.4vw,38px);line-height:1.12;letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
-  h3{font-size:19px;margin:0 0 7px;letter-spacing:-.01em}
-  p{margin:0 0 16px} p:last-child{margin-bottom:0}
-  .lede{font-size:19px;color:var(--mute);max-width:46em}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
-  @media (max-width:900px){ .two{grid-template-columns:1fr;gap:28px} }
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:34px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh)}
-  .card .ic{font-size:26px;line-height:1;margin-bottom:12px}
-  .card p{color:var(--mute);font-size:15.5px;margin:0}
-  .story{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px;box-shadow:var(--sh)}
-  .story p{font-size:18px}
-  .sig{color:var(--mute);font-size:15.5px;margin-top:18px}
-
-  .tag{display:inline-flex;align-items:center;gap:6px;background:rgba(122,92,255,.14);color:var(--violet);
-    border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;letter-spacing:.03em;white-space:nowrap}
-  .tag.free{background:rgba(24,178,107,.15);color:var(--green)}
-
-  table.price{width:100%;border-collapse:collapse;margin-top:22px;font-size:17px}
-  table.price td{padding:15px 0;border-bottom:1px solid var(--line)}
-  table.price tr:last-child td{border-bottom:0}
-  table.price td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mute)}
-  table.price tr.us td{font-weight:800;font-size:19px}
-  table.price tr.us td:last-child{color:var(--green)}
-
-  ul.plain{list-style:none;margin:0;padding:0}
-  ul.plain li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);align-items:flex-start}
-  ul.plain li:last-child{border-bottom:0}
-  ul.plain .k{flex:none;width:22px;color:var(--green);font-weight:900}
-  ul.plain .t{flex:1;min-width:0}
-  ul.plain .t small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
-
-  /* ── waitlist ────────────────────────────────────────── */
-  form{max-width:520px}
-  label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px}
-  input,textarea{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:13px;
-    background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
-  input:focus,textarea:focus{outline:3px solid rgba(47,107,255,.32);outline-offset:1px;border-color:var(--blue)}
-  textarea{min-height:88px;resize:vertical}
-  form .btn{width:100%;margin-top:20px}
-  .msg{margin-top:14px;font-weight:700;font-size:15.5px}
-  .msg.bad{color:var(--red)} .msg.ok{color:var(--green)}
-  .fine{color:var(--faint);font-size:13.5px;margin-top:12px}
-
-  /* How they want to be reached. Two big targets, not a dropdown. */
-  .pick{display:flex;gap:10px;margin-top:6px}
-  .pick label{flex:1;margin:0;display:flex;align-items:center;justify-content:center;gap:8px;
-    padding:14px 10px;border:1.5px solid var(--line);border-radius:13px;cursor:pointer;
-    font-size:15.5px;font-weight:700;background:var(--bg);text-align:center}
-  .pick input{position:absolute;opacity:0;width:1px;height:1px}
-  .pick label:has(input:checked){border-color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
-  .pick label:has(input:focus-visible){outline:3px solid rgba(47,107,255,.32);outline-offset:1px}
-  /* The consent box is a legal record, so it can never start ticked. */
-  .consent{display:flex;gap:11px;align-items:flex-start;margin-top:16px;
-    padding:14px;border:1.5px solid var(--line);border-radius:13px}
-  .consent input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--blue)}
-  .consent span{font-size:13.5px;line-height:1.5;color:var(--mute);font-weight:500}
-  [hidden]{display:none !important}
-
-  footer{padding:44px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
-  footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
-
-  /* ── phone demo ──────────────────────────────────────── */
-  .scrim{position:fixed;inset:0;z-index:50;background:rgba(6,8,14,.72);backdrop-filter:blur(6px);
-    display:none;align-items:center;justify-content:center;padding:20px}
-  .scrim.on{display:flex}
-  .phone{width:392px;max-width:100%;height:min(96vh,800px);background:#FBFAF7;border-radius:38px;
-    overflow:hidden;position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6);display:flex;flex-direction:column;
-    border:9px solid #14161F}
-  .phone-x{position:fixed;top:22px;right:22px;z-index:60;background:#fff;color:#14161F;
-    border:0;border-radius:50%;width:46px;height:46px;font-size:23px;font-weight:800;cursor:pointer;line-height:1;
-    box-shadow:0 6px 20px rgba(0,0,0,.4)}
-  @media (max-width:520px){ .phone{border-radius:0;border-width:0;height:100vh;width:100vw} .scrim{padding:0}
-    .phone-x{top:10px;right:10px;width:42px;height:42px;background:rgba(255,255,255,.94)} }
-  /* guided walkthrough */
-  .d-cap{position:absolute;left:0;right:0;bottom:0;z-index:4;background:linear-gradient(180deg,rgba(10,12,18,0),rgba(10,12,18,.94) 34%);
-    padding:44px 20px 22px;color:#fff;font-size:17px;font-weight:700;line-height:1.35;text-align:center;
-    opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none}
-  .d-cap.on{opacity:1;transform:none}
-  /* while the walkthrough runs, keep the words clear of the Skip / Try bar */
-  .d-cap.tour{padding-bottom:92px}
-  .d-cap .step{display:block;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-    color:rgba(255,255,255,.5);margin-bottom:7px}
-  .d-hl{position:relative;z-index:3;animation:dhl 1.15s ease-in-out infinite}
-  @keyframes dhl{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.9),0 0 0 0 rgba(47,107,255,.55)}
-    50%{box-shadow:0 0 0 4px rgba(255,255,255,.95),0 0 22px 7px rgba(47,107,255,.5)}}
-  .d-tourbar{position:absolute;left:0;right:0;bottom:0;z-index:6;display:none;gap:10px;padding:16px 18px;
-    background:rgba(10,12,18,.94);justify-content:center}
-  .d-tourbar.on{display:flex}
-  .d-tourbar button{border:0;border-radius:14px;padding:14px 20px;font:inherit;font-size:16px;font-weight:800;cursor:pointer}
-  .d-skip{background:transparent;color:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.24)}
-  .d-try{background:#2F6BFF;color:#fff}
-  @media (prefers-reduced-motion:reduce){ .d-hl{animation:none;box-shadow:0 0 0 4px rgba(255,255,255,.95)} }
-  .d-head{display:flex;align-items:center;gap:10px;padding:16px 16px 10px;flex:none}
-  .d-back{width:38px;height:38px;border-radius:50%;background:#fff;border:0;font-size:22px;font-weight:700;
-    cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);color:#1A1714;line-height:1}
-  .d-title{font-size:21px;font-weight:800;letter-spacing:-.02em;color:#1A1714;flex:1;min-width:0}
-  .d-body{flex:1;overflow-y:auto;padding:4px 16px 18px;-webkit-overflow-scrolling:touch}
-  .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-  .d-tile{border:0;background:#fff;border-radius:17px;padding:16px 8px;cursor:pointer;font:inherit;
-    display:flex;flex-direction:column;align-items:center;gap:7px;box-shadow:0 2px 8px rgba(20,16,12,.08);
-    border:3px solid var(--tc,#2F6BFF)}
-  .d-tile .e{font-size:36px;line-height:1}
-  .d-tile .l{font-size:15.5px;font-weight:800;color:#1A1714}
-  .d-phr{width:100%;border:0;border-radius:15px;padding:15px 14px;margin-bottom:9px;cursor:pointer;font:inherit;
-    font-size:16.5px;font-weight:800;color:#fff;text-align:left;display:flex;align-items:center;gap:11px}
-  .d-note{font-size:13px;color:#8C857A;font-weight:600;margin:2px 2px 12px}
-  .d-sos{position:absolute;left:14px;right:14px;bottom:14px;background:#E23B2E;border:0;border-radius:16px;
-    padding:12px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;font:inherit;text-align:left}
-  .d-sos .t{flex:1;color:#fff;font-weight:800;font-size:16px}
-  .d-sos .s{display:block;font-weight:600;font-size:11.5px;color:rgba(255,255,255,.85)}
-  .d-sub{display:inline-block;background:rgba(255,255,255,.26);color:#fff;border-radius:999px;
-    padding:3px 10px;font-size:11px;font-weight:800;margin-left:8px;white-space:nowrap;
-    border:1px solid rgba(255,255,255,.5)}
-  .d-panel{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(20,16,12,.1);font-size:15px;color:#1A1714}
-  .d-panel h4{margin:0 0 8px;font-size:17px}
-  .d-panel .who{color:#8C857A;font-size:14px;margin-top:8px}
-  .d-warn{background:#FFF3CD;border:1.5px solid #F0D68A;color:#6B5300;border-radius:12px;padding:11px 13px;
-    font-size:13.5px;font-weight:700;margin-bottom:12px}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font:20px/1.65 Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--cyan)}
+  img,video{max-width:100%;height:auto;display:block;object-fit:contain}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  header.top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(244,239,228,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  header.top .wrap{display:flex;align-items:center;gap:14px;height:64px}
+  .mark{
+    display:flex;align-items:center;gap:10px;
+    text-decoration:none;color:var(--ink);
+    font:800 16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    letter-spacing:-.02em;
+  }
+  .mark img{width:42px;height:42px;border-radius:10px;object-fit:cover}
+  nav{margin-left:auto;display:flex;gap:18px;font:650 13px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+  nav a{color:var(--mute);text-decoration:none}
+  nav a:hover{color:var(--ink)}
+  .btn{
+    appearance:none;border:0;cursor:pointer;
+    font:700 14px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    border-radius:999px;padding:12px 18px;
+    color:#fff;background:var(--ink);text-decoration:none;
+    display:inline-flex;align-items:center;
+  }
+  .btn.quiet{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+  article{padding:48px 0 24px}
+  .lead{
+    float:right;width:46%;max-width:340px;
+    margin:6px 0 22px 28px;
+  }
+  .lead img,.lead video{width:100%;border-radius:4px}
+  .lead figcaption{
+    font:12px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--mute);margin-top:8px;letter-spacing:.02em;
+  }
+  h1{
+    font-size:clamp(32px,5vw,46px);
+    line-height:1.18;font-weight:700;letter-spacing:-.02em;
+    margin:0 0 18px;
+  }
+  .kicker{font-size:22px;color:var(--mute);margin:0 0 22px;font-style:italic}
+  .letter p{margin:0 0 1.1em}
+  .phone{
+    float:left;width:132px;
+    margin:6px 22px 12px 0;
+  }
+  .phone img{
+    width:132px;border-radius:18px;
+    box-shadow:0 10px 28px rgba(28,25,22,.18);
+  }
+  .ask{
+    clear:both;
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    margin:28px 0 8px;padding:18px 0 0;border-top:1px solid var(--line);
+    font:16px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  }
+  form.mini{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:240px}
+  form.mini input{
+    flex:1;min-width:180px;padding:12px 14px;border-radius:999px;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink);
+    font:16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  }
+  #hmsg{font:14px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--violet);min-height:1.2em;margin:8px 0 0}
+  .strip{clear:both;display:grid;grid-template-columns:1.2fr .8fr .9fr;gap:10px;margin:40px 0 8px}
+  .strip img,.strip video{width:100%;height:auto;border-radius:4px;object-fit:contain}
+  h2{font-size:28px;line-height:1.25;margin:40px 0 12px}
+  .small{font-size:17px;color:var(--mute)}
+  footer{
+    margin-top:48px;padding:28px 0 48px;border-top:1px solid var(--line);
+    font:13px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--mute);
+  }
+  .film{position:fixed;inset:0;z-index:80;background:rgba(28,25,22,.82);display:none;align-items:center;justify-content:center;padding:18px}
+  .film.on{display:flex}
+  .stage{width:min(860px,100%);background:var(--paper);color:var(--ink);border-radius:8px;padding:28px;display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:center}
+  @media(max-width:720px){
+    .lead{float:none;width:100%;max-width:none;margin:0 0 20px}
+    .phone{float:none;width:110px;margin:0 0 16px}
+    .strip{grid-template-columns:1fr 1fr}
+    .stage{grid-template-columns:1fr}
+  }
+  .x{position:fixed;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;font-weight:800;cursor:pointer}
 </style>
 </head>
 <body>
-
-<div class="top"><div class="wrap">
-  <a class="logo" href="#top"><img src="icon192.png" alt=""><span>EZ</span>voxa</a>
+<header class="top"><div class="wrap">
+  <a class="mark" href="#top"><img src="icon-ezvoxa-512.png" alt="">EZvoxa</a>
   <nav>
-    <a class="hide-sm" href="hearhim.html">His story</a>
-    <a class="hide-sm" href="opening-statement.html">Opening statement</a>
-    <a class="hide-sm" href="#what">What it does</a>
-    <a class="hide-sm" href="#price">Price</a>
-    <a class="hide-sm" href="#schools">Schools</a>
-    <button class="btn sm" data-watch-demo>Watch how it works</button>
-    <button class="btn sm ghost" data-open-demo>Try it myself</button>
+    <a href="hearhim.html">His story</a>
+    <a href="opening-statement.html">For schools</a>
+    <a href="#list">The list</a>
   </nav>
-</div></div>
+</div></header>
 
-<div class="hero" id="top"><div class="wrap">
-  <div>
-    <h1>He didn't need a better device. He needed one that would grow with him.</h1>
-    <p class="sub">I had to find a way to meet him where he was. So I became the student and he became my teacher.</p>
-    <div class="cta-row">
-      <button class="btn" data-watch-demo>Watch how it works</button>
-      <button class="btn ghost" data-open-demo>Try it myself</button>
-    </div>
-    <!-- Same waitlist as the bottom of the page, email only, source marked hero. -->
-    <form class="hero-join" id="heroJoin" novalidate>
-      <input id="heroEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Your email">
-      <button class="btn" type="submit">Tell me when it's ready</button>
+<article id="top"><div class="wrap">
+  <figure class="lead">
+    <img src="photo-beach.jpg" width="450" height="450" alt="Frank and Evan on the beach">
+    <figcaption>Evan and me. Fort Pierce.</figcaption>
+  </figure>
+
+  <h1>He didn’t need a better device. He needed one that would grow with him.</h1>
+  <p class="kicker">I had to find a way to meet him where he was. So I became the student and he became my teacher.</p>
+
+  <div class="letter">
+    <p>My name is Frank. My son Evan was born in August 2010. He is nonverbal. I am not a speech pathologist. I am a father who spent sixteen years learning every look on his face.</p>
+    <figure class="phone">
+      <img src="shot-home.jpg" width="786" height="1481" alt="The home board on his phone">
+    </figure>
+    <p>A four-thousand-dollar board taught him that words exist. Then he grew up, and a sentence like <i>I’m tired, can I go to bed</i> cost a minute of menus. He stopped paying. He wasn’t failing the device. The device was pricing him out of his own voice.</p>
+    <p>I didn’t design what came next. He walked me to it. When a board was wrong, he ignored it. When it was right, he used it without being asked. Then he took my phone, opened the app himself, and told me what he wanted to watch. Unprompted. Sixteen years. That had never happened.</p>
+    <p>EZvoxa is that talker. Phrase-first, on the phone in his pocket. His photos. His people. Hurt, so nobody has to guess. School, with the faces in the building. Family — I love you, I miss you, a birthday text. Family Alert is two taps to the people we choose. It is not 911. It is not a medical device. It is him, being heard.</p>
+    <p>It is not for sale yet. If you want the day it is, leave your email. If you want to see what he taught me, watch. If you want the whole story, it’s already written.</p>
+  </div>
+
+  <div class="ask" id="list">
+    <button class="btn" id="watch" type="button">Watch how it works</button>
+    <a class="btn quiet" href="hearhim.html">Read EZ’s Voice</a>
+    <form class="mini" id="hf" novalidate>
+      <input id="hemail" type="email" autocomplete="email" placeholder="Your email">
+      <button class="btn" type="submit" id="hgo">Tell me when</button>
     </form>
-    <div class="msg" id="heroMsg" role="status" aria-live="polite"></div>
-    <p class="under">Not for sale yet. Your email goes nowhere else. The emergency button works whether you subscribe or not.</p>
   </div>
-  <div class="hero-shot-wrap">
-    <!-- The real app, Frank's own screenshot, shown at full sharpness.
-         Tapping it opens the working demo. -->
-    <button class="hero-shot" data-open-demo aria-label="Open a working demo of EZvoxa">
-      <img src="shot-home.jpg" alt="The real EZvoxa home screen: glowing picture buttons for Yes, No, Family, Food, School, Sentence Build, Friends and Morning, with the red Emergency bar at the bottom" width="786" height="1481">
-    </button>
-    <p class="hero-shot-cap"><img src="app-icon.jpg" alt="" width="54" height="54">This is the real app. Tap it to try a working demo.</p>
-  </div>
-</div></div>
+  <div id="hmsg" role="status" aria-live="polite"></div>
 
-<section id="story"><div class="wrap">
-  <p class="eyebrow">Evan's story</p>
-  <h2>He didn't need a better device. He needed one that would grow with him.</h2>
-
-  <div class="two" style="margin-top:32px;align-items:start">
-    <div>
-      <!-- Frank's collage, his arrangement, from his original photos. minmax(0,1fr)
-           so a column can shrink below a photo's natural width on a phone. The whole
-           grid is capped at 660px: the source photos are 480-960px wide, and a photo
-           must never be displayed larger than the file or it goes soft. -->
-      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start;max-width:660px;margin:0 auto">
-        <img src="photo-beach.jpg" alt="Frank and Evan sitting together on the beach, looking out at the water" width="450" height="450" loading="lazy" style="width:min(100%,450px);height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-01.jpg" alt="Frank and Evan, poolside" width="497" height="392" loading="lazy" style="width:min(100%,497px);height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-03.jpg" alt="Evan as a little boy with his mom" width="720" height="960" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-02.jpg" alt="Evan as a little boy with his dad at the beach" width="720" height="721" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-04.jpg" alt="Evan as a baby with his big brothers" width="640" height="470" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-05.jpg" alt="Evan and his brothers in the water at sunset" width="640" height="500" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-06.jpg" alt="Evan with his brothers at the beach" width="624" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline preload="metadata" width="720" height="404" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;" aria-label="Evan riding a wave on his boogie board, his dad behind him"></video>
-        <img src="collage-08.jpg" alt="Evan with his mom" width="720" height="960" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-09.jpg" alt="Evan riding on his dad's shoulders" width="574" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-10.jpg" alt="Evan as a baby on the sand" width="640" height="526" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-11.jpg" alt="Evan as a toddler eating a banana" width="480" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-12.jpg" alt="Evan and his dad" width="720" height="627" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-        <img src="collage-13.jpg" alt="Evan with his dad, out riding" width="592" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-14.jpg" alt="Evan jumping on the trampoline" width="480" height="640" loading="lazy" style="width:100%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;">
-        <img src="collage-15.jpg" alt="Evan watching the baby chicks" width="480" height="640" loading="lazy" style="width:72%;height:auto;object-fit:contain;min-width:0;border-radius:12px;display:block;grid-column:1/-1;margin:0 auto;">
-      </div>
-    </div>
-    <div class="story">
-      <p>My son Evan was born in August 2010. I am not a speech pathologist. I am a father who has spent the past 16 years in silence with my son, learning what every look, every nuance of his face, his eyes and his body language are trying to tell me.</p>
-
-      <p>We did not know for certain what we were dealing with until Evan was about 7. That is when the diagnosis of Speech Apraxia came into focus. His mind knows what he wants to say, but the signal never gets from that part of his brain to his vocal cords to produce the words.</p>
-
-      <p><b>The device he was given worked.</b> A speech therapist introduced him to a real AAC device, an iPad running serious and respected software, billed at over four thousand dollars. It taught a small boy that words exist, that they can be chosen, that they can be put together to mean something. I'm grateful for it. It gave him language. But it was built for the boy he was. And he grew up.</p>
-
-      <p>Given the choice, Evan ignored the device and went back to grunting and pointing, the currency he and I had traded his whole life. It was faster. And when I made him use it, I watched the frustration build in his face as he navigated in and out of a dozen screens to construct something as simple as: "I'm tired, can I go to bed." A sentence any other teenager says in two seconds cost him a minute of menu-diving. Every night. For a thought he'd had a thousand times.</p>
-
-      <p><b>He wasn't failing the device. The device was pricing him out of his own voice.</b> And he responded the way anyone would: he stopped paying.</p>
-
-      <h3 style="font-size:21px;line-height:1.3;margin:28px 0 10px">To meet him where he was, I became the student and he became my teacher.</h3>
-      <p>I didn't design this app. Evan guided me to it. When something in the app wasted his time, he told me the only way he can: he stopped using it. Every one of those silences was a design review, and I treated it like one. This is not a cute thing a father made for his son. It is hundreds of design decisions, each one traced to a way to help unlock the mind of a person who cannot speak.</p>
-
-      <p>When it came time to choose how he would sound, I didn't pick. I played him voices one after another and watched his face. He reached out and pointed at one. It wasn't close. For the first time, the voice coming out of his device was one he chose. A teenage boy's voice, not a grown man's, not a robot's.</p>
-
-      <p>Then one day he came to me, asked for my phone, opened the app, and told me he wanted to watch a specific show on Netflix. Unprompted. Nobody put a device in front of him. Nobody cued him. He had something he wanted, and he came and got the tool to say it. Sixteen years, and that had never happened. Not once, with any device, in any therapy.</p>
-
-      <p>He uses it every single day. He turned sixteen with it in his pocket.</p>
-
-      <p class="sig">Frank Schaeffer, Fort Pierce, Florida</p>
-
-      <p style="margin-top:18px"><a href="hearhim.html"><b>The whole story is EZ's Voice</b></a>, with a working copy of his talker you can touch. The research behind every claim is in <a href="opening-statement.html"><b>An Opening Statement</b></a>.</p>
-    </div>
+  <div class="strip">
+    <video src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline width="720" height="404" aria-label="Evan on a boogie board"></video>
+    <img src="collage-03.jpg" width="720" height="960" alt="Evan as a little boy with his mom">
+    <img src="collage-02.jpg" width="720" height="721" alt="Evan as a little boy with his dad">
   </div>
 
-  <div class="card" style="margin-top:26px;border-left:4px solid var(--blue)">
-    <p style="margin:0;font-size:18px"><b>This is not a replacement for the device that taught your child language.</b> It's what comes after it, for the person who already has the words and needs a faster way to use them.</p>
-  </div>
-</div></section>
-
-<section id="what"><div class="wrap">
-  <p class="eyebrow">What you get</p>
-  <h2>Everything below is included when you buy it.</h2>
-  <p class="lede">One price, no subscription needed, and customising it never costs extra.</p>
-
-  <div class="cards">
-    <div class="card"><div class="ic">🗣️</div><h3>Boards built for a real day</h3>
-      <p>Family, food, school, feelings, routines, places, health, with the phrases that go with each, ready to tap.</p></div>
-    <div class="card"><div class="ic">✏️</div><h3>Make it theirs, free forever <span class="tag free">Included</span></h3>
-      <p>Your photos, your buttons, your words. Rearrange the home screen. No upgrade, no limit, no extra charge.</p></div>
-    <div class="card"><div class="ic">🧩</div><h3>Build a sentence</h3>
-      <p>Colour-coded words to say something nobody wrote in advance, for when the ready-made phrase isn't the right one.</p></div>
-    <div class="card"><div class="ic">🆘</div><h3>Emergency button <span class="tag free">Always free</span></h3>
-      <p>One tap reaches everyone on your list with a message and a live location. It keeps working whether you subscribe or not.</p></div>
-    <div class="card"><div class="ic">📵</div><h3>Works without a signal</h3>
-      <p>Everything they've said before still speaks with no bars and no wifi. It updates itself when there is.</p></div>
-    <div class="card"><div class="ic">🔒</div><h3>Lockable for a dedicated phone</h3>
-      <p>A start screen and a close button, so a phone in a pocket can't press its own buttons and start talking.</p></div>
-  </div>
-</div></section>
-
-<section id="plus"><div class="wrap">
-  <p class="eyebrow">And if you want more</p>
-  <h2>The subscription adds the parts that run on our servers.</h2>
-  <p class="lede">Part of the optional family subscription. Without it the app falls back to the phone's own voice and everything above still works.</p>
-
-  <div class="two" style="margin-top:30px">
-    <ul class="plain">
-      <li><span class="k">✓</span><span class="t"><b>AI voices</b><small>Age-appropriate voices instead of the phone's robot. Pick one that fits.</small></span></li>
-      <li><span class="k">✓</span><span class="t"><b>Texting from the app</b><small>They text family directly, without needing to open Messages.</small></span></li>
-      <li><span class="k">✓</span><span class="t"><b>Voice messages from family</b><small>A message arrives and plays in their mother's actual voice.</small></span></li>
-    </ul>
-    <ul class="plain">
-      <li><span class="k">✓</span><span class="t"><b>Family sync</b><small>A parent edits buttons on their own phone; it lands on the child's.</small></span></li>
-      <li><span class="k">✓</span><span class="t"><b>AI avatars of your child</b><small>Approve one avatar of them, and every button gets built around it.</small></span></li>
-      <li><span class="k">✓</span><span class="t"><b>Cancel any time</b><small>The app you bought keeps working. You only lose the extras.</small></span></li>
-    </ul>
-  </div>
-</div></section>
-
-<section id="avatars"><div class="wrap">
-  <p class="eyebrow">Pictures that mean something</p>
-  <h2>Buttons that look like the people and things they actually know.</h2>
-  <p class="lede">A generic symbol of a woman is not their mother. A photo of their mother is.</p>
-
-  <div class="two" style="margin-top:34px">
-    <div class="card">
-      <h3>Use your own photos <span class="tag free">Included</span></h3>
-      <p style="color:var(--mute);font-size:15.5px">Put a real photo on any button: their grandmother, their actual bedroom, the exact cereal they want. Straight from your phone, as many as you like, free forever.</p>
-    </div>
-    <div class="card">
-      <h3>Or let us draw them <span class="tag">Subscription</span></h3>
-      <p style="color:var(--mute);font-size:15.5px">We can generate an avatar of your child and each family member. Once you approve your child's avatar, <b>we build their whole set of buttons around it</b>: them at the pool, them at dinner, them going to bed, so the app is full of pictures of <i>them</i>, not clip art of somebody else.</p>
-    </div>
-  </div>
-
-  <div class="two" style="margin-top:26px;align-items:center">
-    <div class="hero-art" style="aspect-ratio:1/1;max-width:420px"><img src="icon512.png" alt="Evan's avatar, surrounded by the things he talks about"></div>
-    <div>
-      <h3>This is Evan's.</h3>
-      <p style="color:var(--mute)">One approved avatar of him, and then every part of his day drawn around it: the pool, the beach, the car, movie night, bedtime, his friends. He recognises himself in his own app, and people comment on it constantly.</p>
-      <p style="color:var(--mute)">You keep control: nothing is generated without you approving it first, and you can replace any of it with a real photograph at any time.</p>
-    </div>
-  </div>
-</div></section>
-
-<section id="price"><div class="wrap">
-  <div class="two">
-    <div>
-      <p class="eyebrow">What it costs</p>
-      <h2>A fraction of what families pay today.</h2>
-      <p class="lede">Against what families are asked to pay today for the same job.</p>
-      <table class="price">
-        <tr><td>Dedicated communication devices</td><td>$3,000–$5,000</td></tr>
-        <tr><td>Leading iPad apps</td><td>$250–$300</td></tr>
-        <tr class="us"><td>EZvoxa</td><td>Announced at launch</td></tr>
-      </table>
-      <p class="fine">Final pricing comes with the launch, along with an optional monthly subscription for the family extras. A hardship program will keep it reachable for families who can't manage the price. Nobody should lose a voice over money.</p>
-    </div>
-    <div class="card">
-      <h3>Try it before anything else</h3>
-      <p style="color:var(--mute);font-size:15.5px">Tap through the real boards, hear the real voice, and walk through the emergency button. Nothing gets sent.</p>
-      <button class="btn" style="width:100%;margin-top:18px" data-open-demo>Open the demo</button>
-    </div>
-  </div>
-</div></section>
-
-<section id="schools"><div class="wrap">
-  <div class="two">
-    <div>
-      <p class="eyebrow">For schools</p>
-      <h2>For the student who has outgrown the format, not the goal.</h2>
-      <p>Your equipment did its job. It taught them that language exists and can be assembled. But somewhere around middle school, building every sentence word by word stops being instruction and starts being a toll, and the device starts staying in the bag.</p>
-      <p>EZvoxa is built for that student: the phrases they say every day ready in one tap, the words still underneath for everything else, on something that fits in a pocket and doesn't announce itself.</p>
-      <p>It runs on the iPads you already have.</p>
-    </div>
-    <div class="card">
-      <h3>On the hardware you already own</h3>
-      <p style="color:var(--mute);font-size:15.5px;margin-bottom:14px">Everything in the app plus the extras, on your existing iPads. No new devices to buy. School pricing comes with the launch.</p>
-      <p style="color:var(--mute);font-size:15.5px">Pilots welcome: a free semester, with usage data your team can take into an IEP meeting.</p>
-      <a class="btn ghost" style="width:100%;margin-top:18px" href="#list">Talk to us about a pilot</a>
-    </div>
-  </div>
-</div></section>
-
-<section id="list"><div class="wrap">
-  <p class="eyebrow">Not for sale yet</p>
-  <h2>Leave your name and I'll tell you the day it is.</h2>
-  <p class="lede">No cost, no card, and your details go nowhere else.</p>
-  <!-- novalidate on purpose: the browser refuses to submit when a field it can't
-       even see is invalid, which killed the form silently when someone mistyped an
-       email and then switched to text. All checking happens in the script below. -->
-  <form id="f" novalidate>
-    <label for="name">Your name</label>
-    <input id="name" autocomplete="name" placeholder="Your name">
-    <label>How should I reach you?</label>
-    <div class="pick" role="radiogroup" aria-label="How should I reach you?">
-      <label><input type="radio" name="how" value="email" checked>Email</label>
-      <label><input type="radio" name="how" value="sms">Text message</label>
-    </div>
-
-    <div id="wrapEmail">
-      <label for="email">Email</label>
-      <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
-    </div>
-
-    <div id="wrapSms" hidden>
-      <label for="phone">Mobile number</label>
-      <input id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555">
-      <!-- Prior express written consent. Unticked by default, and the exact wording
-           shown is stored with the signup so there is a record of what was agreed to. -->
-      <label class="consent" for="smsok">
-        <input id="smsok" type="checkbox">
-        <span id="consentText">I agree to receive text messages from EZvoxa about when it goes on
-        sale. Message frequency varies and will be rare. Message and data rates may apply. Consent
-        is not a condition of any purchase. Reply STOP to stop, or HELP for help.</span>
-      </label>
-    </div>
-
-    <label for="about">Who is it for? <span style="color:var(--faint);font-weight:600">(optional)</span></label>
-    <textarea id="about" placeholder="Their age, what they use now, or whether you're asking for a school."></textarea>
-    <button class="btn" id="go" type="submit">Add me to the list</button>
-    <div id="msg" class="msg" role="status" aria-live="polite"></div>
-    <p class="fine">Prefer to talk to a person? Say so above and leave the best way to reach you.</p>
-  </form>
-</div></section>
+  <h2>For a teacher who has to decide.</h2>
+  <p class="small">I wrote down what this is, and what it is not, so a district doesn’t have to guess. It is a pocket talker. It is not a language curriculum. It does not call 911.</p>
+  <p><a href="opening-statement.html">The opening statement for schools</a></p>
+</div></article>
 
 <footer><div class="wrap">
-  <div>EZvoxa is made by EZ Voice LLC in Florida.</div>
-  <div>It helps someone communicate. It is not a medical device and does not replace calling 911.</div>
+  EZ Voice LLC · Fort Pierce, Florida. EZvoxa helps someone communicate. It is not a medical device and does not replace 911.
 </div></footer>
 
-<!-- ── the demo ─────────────────────────────────────────── -->
-<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-label="EZvoxa demo">
-  <button class="phone-x" id="closeDemo" aria-label="Close the demo">✕</button>
-  <div class="phone">
-    <div class="d-head">
-      <button class="d-back" id="back" style="visibility:hidden">‹</button>
-      <div class="d-title" id="title">Sam</div>
+<div class="film" id="film">
+  <button class="x" id="close" aria-label="Close">×</button>
+  <div class="stage">
+    <img id="still" src="shot-home.jpg" alt="" style="width:100%;border-radius:16px">
+    <div>
+      <p id="stept" style="font-size:22px;line-height:1.35;margin:0 0 16px;font-weight:700"></p>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="next" type="button">Next</button>
+        <button class="btn quiet" id="skip" type="button">Close</button>
+      </div>
     </div>
-    <div class="d-body" id="body"></div>
-    <div class="d-cap" id="cap"></div>
-    <div class="d-tourbar" id="tourbar">
-      <button class="d-skip" id="tourSkip">Skip</button>
-      <button class="d-try" id="tourTry">Try it yourself</button>
-    </div>
-    <button class="d-sos" id="sos"><span style="font-size:19px">🆘</span><span class="t">Emergency<span class="s">Tap to send an SOS to everyone</span></span></button>
   </div>
 </div>
-
 <script>
-(function () {
-  /* ---------- waitlist ---------- */
-  var f = document.getElementById('f'), msg = document.getElementById('msg'), go = document.getElementById('go');
-  var wrapEmail = document.getElementById('wrapEmail'), wrapSms = document.getElementById('wrapSms');
-  var howEls = f.querySelectorAll('input[name=how]');
-  var how = function () { return f.querySelector('input[name=how]:checked').value; };
-
-  // Only one contact field is on screen at a time, so nobody fills in both and
-  // wonders which one gets used.
-  Array.prototype.forEach.call(howEls, function (el) {
-    el.addEventListener('change', function () {
-      var sms = how() === 'sms';
-      wrapSms.hidden = !sms; wrapEmail.hidden = sms;
-      msg.textContent = '';
-    });
-  });
-
-  var ERRORS = {
-    bad_email: 'That email address doesn’t look right.',
-    bad_phone: 'That doesn’t look like a US mobile number.',
-    no_consent: 'Please tick the box so I’m allowed to text you.',
-  };
-
-  f.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var sms = how() === 'sms';
-    var email = document.getElementById('email').value.trim();
-    var phone = document.getElementById('phone').value.trim();
-    var digits = phone.replace(/\D/g, '');
-    var ok = document.getElementById('smsok').checked;
-
-    if (!sms && !/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { msg.className='msg bad'; msg.textContent=ERRORS.bad_email; return; }
-    if (sms && !(digits.length === 10 || (digits.length === 11 && digits[0] === '1'))) { msg.className='msg bad'; msg.textContent=ERRORS.bad_phone; return; }
-    if (sms && !ok) { msg.className='msg bad'; msg.textContent=ERRORS.no_consent; return; }
-
-    go.disabled = true; go.textContent = 'Adding…'; msg.textContent = '';
-    fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ name:document.getElementById('name').value,
-        how: sms ? 'sms' : 'email',
-        email: sms ? '' : email, phone: sms ? phone : '',
-        // Stored verbatim: what someone actually agreed to is the whole record.
-        consentText: sms ? document.getElementById('consentText').textContent.replace(/\s+/g,' ').trim() : '',
-        about:document.getElementById('about').value, source: location.pathname }) })
-      .then(function(r){return r.json()}).then(function(j){
-        if (j && j.ok) {
-          f.innerHTML = '<h3>You’re on the list.</h3><p style="color:var(--mute)">I’ll ' +
-            (sms ? 'text' : 'email') + ' you the day it’s ready. Thank you, genuinely.</p>';
-        }
-        else { go.disabled=false; go.textContent='Add me to the list'; msg.className='msg bad';
-               msg.textContent = (j && ERRORS[j.error]) || 'Something went wrong. Please try again.'; }
-      }).catch(function(){ go.disabled=false; go.textContent='Add me to the list';
-        msg.className='msg bad'; msg.textContent='No connection. Please try again in a moment.'; });
-  });
-
-  /* ---------- demo ---------- */
-  // Phrase ids match api/demo-audio.js exactly.
-  var P = { yes:0, no:1, help:2, bathroom:3, hello:4, bye:5, please:6, thanks:7, stop:8, go:9, done:10, wait:11,
-            pizza:12, morePizza:13, chicken:14, snack:15, hungry:16, thirsty:17, juice:18,
-            loveMom:19, missMom:20, morningMom:21, loveDad:22,
-            head:23, stomach:24, unwell:25, nurse:26, pool:27, happy:28, movie:29 };
-
-  var audio = null;
-  function say(id) {
-    try {
-      if (!audio) audio = new Audio();
-      audio.pause();
-      audio.src = '/api/demo-audio?p=' + id;
-      var p = audio.play(); if (p && p.catch) p.catch(function(){});
-    } catch (e) {}
-  }
-
-  var COL = ['#2F6BFF','#18B26B','#F59E0B','#7A5CFF','#E5533D','#0EA5E9','#DB2777','#14B8A6'];
-  var body = document.getElementById('body'), title = document.getElementById('title'), back = document.getElementById('back');
-  var stack = [];
-
-  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
-  function note(t) { return el('div','d-note',t); }
-
-  function tiles(list) {
-    var g = el('div','d-grid');
-    list.forEach(function (t, i) {
-      var b = el('button','d-tile','<span class="e">'+t.e+'</span><span class="l">'+t.l+'</span>');
-      b.style.setProperty('--tc', t.c || COL[i % COL.length]);
-      b.onclick = t.go; g.appendChild(b);
-    });
-    return g;
-  }
-  function phrases(list) {
-    var w = el('div');
-    list.forEach(function (p, i) {
-      var b = el('button','d-phr','<span style="font-size:21px">'+(p.e||'💬')+'</span><span>'+p.t+(p.sub?'<span class="d-sub">Subscription</span>':'')+'</span>');
-      b.style.background = p.c || COL[i % COL.length];
-      b.onclick = p.go || function () { say(p.id); };
-      w.appendChild(b);
-    });
-    return w;
-  }
-
-  function show(name, render, isRoot) {
-    title.textContent = name;
-    body.innerHTML = '';
-    body.appendChild(render());
-    body.scrollTop = 0;
-    back.style.visibility = isRoot ? 'hidden' : 'visible';
-  }
-  function push(name, render) { stack.push(name); show(name, render, false); }
-  back.onclick = function () { stack.pop(); home(); };
-
-  function home() {
-    stack = [];
-    show('Sam', function () {
-      var w = el('div');
-      w.appendChild(note('Tap a picture. It says it out loud. This is a demo; the real app has many more boards.'));
-      var quick = el('div');
-      quick.style.cssText = 'display:flex;gap:8px;overflow-x:auto;padding-bottom:12px';
-      [['Hello',P.hello],['Stop',P.stop],['Go',P.go],['Please',P.please],['Thank you',P.thanks],['Wait',P.wait]].forEach(function (q) {
-        var b = el('button', null, q[0]);
-        b.style.cssText = 'flex:none;border:2.5px solid #2F6BFF;background:#fff;border-radius:15px;padding:10px 14px;font:inherit;font-size:15px;font-weight:800;color:#1A1714;cursor:pointer';
-        b.onclick = function () { say(q[1]); };
-        quick.appendChild(b);
-      });
-      w.appendChild(quick);
-      w.appendChild(tiles([
-        { e:'👪', l:'Family',  go:family },
-        { e:'🍽️', l:'Food',    go:food },
-        { e:'➕', l:'Health',  go:health, c:'#E23B2E' },
-        { e:'💬', l:'Sentence', go:sentence },
-        { e:'😊', l:'Feelings', go:function(){ push('Feelings', function(){ return phrases([
-            {e:'😄',t:'I feel happy',id:P.happy},{e:'🤢',t:"I don't feel good.",id:P.unwell},
-            {e:'🏊',t:'I want to go to the pool',id:P.pool},{e:'🍿',t:'I want to watch a movie',id:P.movie}]); }); } },
-        { e:'✏️', l:'Make it yours', go:custom, c:'#18B26B' },
-      ]));
-      return w;
-    }, true);
-  }
-
-  function food() {
-    push('Food', function () {
-      var w = el('div');
-      w.appendChild(note('Every food has its own phrases behind it, already written, ready to tap.'));
-      w.appendChild(tiles([
-        { e:'🍕', l:'Pizza', go:function(){ push('Pizza', function(){ return phrases([
-            {e:'🙋',t:'Can I have pizza?',id:P.pizza},{e:'➕',t:'Can I have more pizza?',id:P.morePizza},
-            {e:'✋',t:"I'm done",id:P.done}]); }); } },
-        { e:'🍗', l:'Chicken Fingers', go:function(){ push('Chicken Fingers', function(){ return phrases([
-            {e:'🙋',t:'Can I have chicken fingers?',id:P.chicken},{e:'✋',t:"I'm done",id:P.done}]); }); } },
-        { e:'🧃', l:'Apple Juice', go:function(){ push('Apple Juice', function(){ return phrases([
-            {e:'🙋',t:'Can I have apple juice?',id:P.juice},{e:'🥤',t:"I'm thirsty.",id:P.thirsty}]); }); } },
-        { e:'🍪', l:'Snack', go:function(){ push('Snack', function(){ return phrases([
-            {e:'🙋',t:'Can I have a snack?',id:P.snack},{e:'🍽️',t:"I'm hungry.",id:P.hungry}]); }); } },
-      ]));
-      return w;
-    });
-  }
-
-  function family() {
-    push('Family', function () {
-      var w = el('div');
-      w.appendChild(note('Tap a person to say something to them, or send it as a text or a voice message.'));
-      w.appendChild(tiles([
-        { e:'👩', l:'Mom', c:'#E5533D', go:function(){ push('Mom', function(){ return phrases([
-            {e:'❤️',t:'I love you Mom',id:P.loveMom},{e:'🥰',t:'I miss you Mom',id:P.missMom},
-            {e:'☀️',t:'Good morning Mom',id:P.morningMom},
-            {e:'📱',t:'Text this to Mom',sub:true,c:'#7A5CFF',go:function(){ push('Text to Mom', function(){
-                return el('div','d-panel','<h4>Sent to Mom ✓</h4><div>“I love you Mom”</div>'+
-                  '<div class="who">It arrives as an ordinary text message. She can text back.</div>'+
-                  '<div class="who"><b>Part of the optional family subscription.</b></div>'); }); }},
-            {e:'🎙️',t:'Hear a voice message',sub:true,c:'#7A5CFF',go:function(){ push('From Mom', function(){
-                return el('div','d-panel','<h4>Message from Mom</h4><div>Mom records a message on her phone and it plays here, in her own voice, not read aloud by a machine.</div>'+
-                  '<div class="who">The real app plays her recording. This demo has no recording to play.</div>'+
-                  '<div class="who"><b>Part of the optional family subscription.</b></div>'); }); }},
-          ]); }); } },
-        { e:'👨', l:'Dad', c:'#2F6BFF', go:function(){ push('Dad', function(){ return phrases([
-            {e:'❤️',t:'I love you Dad',id:P.loveDad},{e:'🙋',t:'I need help.',id:P.help}]); }); } },
-      ]));
-      return w;
-    });
-  }
-
-  function health() {
-    push('Health', function () {
-      var w = el('div');
-      w.appendChild(note('How he says what hurts, and where, without anyone guessing.'));
-      w.appendChild(phrases([
-        {e:'🤕',t:'My head hurts.',id:P.head},{e:'🤢',t:'My stomach hurts.',id:P.stomach},
-        {e:'😖',t:"I don't feel good.",id:P.unwell},{e:'🏥',t:'I need to go to the nurse.',id:P.nurse},
-      ]));
-      return w;
-    });
-  }
-
-  function sentence() {
-    push('Sentence Build', function () {
-      var w = el('div');
-      w.appendChild(note('For the things nobody wrote in advance. Tap words to build a sentence, then say it.'));
-      var strip = el('div', null, '<span style="color:#C9C2B8">Tap words to build a sentence…</span>');
-      strip.style.cssText = 'min-height:54px;background:#fff;border:2px solid #0EA5E9;border-radius:15px;padding:13px;font-size:19px;font-weight:800;color:#1A1714;margin-bottom:12px';
-      var picked = [];
-      w.appendChild(strip);
-      var row = el('div');
-      row.style.cssText = 'display:flex;gap:8px;margin-bottom:14px';
-      var sayIt = el('button', null, '🔊 Say it');
-      sayIt.style.cssText = 'flex:2;background:#18B26B;color:#fff;border:0;border-radius:13px;padding:13px;font:inherit;font-weight:800;cursor:pointer';
-      sayIt.onclick = function () { if (picked.length) say(P.movie); };
-      var clr = el('button', null, 'Clear');
-      clr.style.cssText = 'flex:1;background:#FCE4E2;color:#E23B2E;border:0;border-radius:13px;padding:13px;font:inherit;font-weight:800;cursor:pointer';
-      clr.onclick = function () { picked = []; strip.innerHTML = '<span style="color:#C9C2B8">Tap words to build a sentence…</span>'; };
-      row.appendChild(sayIt); row.appendChild(clr); w.appendChild(row);
-      var groups = [['Pronouns','#EAB308',['I','you','we','my']],['Actions','#18B26B',['want','need','like','go','see','help']],
-                    ['Describe','#2F6BFF',['more','done','good','big','funny']],['Questions','#7A5CFF',['what','where','when','why']]];
-      groups.forEach(function (g) {
-        var h = el('div', null, g[0]);
-        h.style.cssText = 'font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:'+g[1]+';margin:12px 2px 7px';
-        w.appendChild(h);
-        var grid = el('div'); grid.style.cssText = 'display:grid;grid-template-columns:repeat(4,1fr);gap:7px';
-        g[2].forEach(function (word) {
-          var b = el('button', null, word);
-          b.style.cssText = 'background:#fff;border:2.5px solid '+g[1]+';border-radius:12px;padding:10px 2px;font:inherit;font-size:13px;font-weight:800;color:#1A1714;cursor:pointer';
-          b.onclick = function () { picked.push(word); strip.textContent = picked.join(' '); };
-          grid.appendChild(b);
-        });
-        w.appendChild(grid);
-      });
-      return w;
-    });
-  }
-
-  function custom() {
-    push('Make it yours', function () {
-      return el('div','d-panel',
-        '<h4>Your photos. Your buttons. Your words.</h4>' +
-        '<div>Every button can carry a photo from your own phone: their grandmother, their actual bedroom, the exact cereal they want. You can write your own phrases in the words your family already uses, and rearrange the home screen so what they use most is first.</div>' +
-        '<div class="who" style="margin-top:12px"><b>Free forever.</b> Customising is not an upgrade and never costs extra. It is the whole reason this works better than a device somebody else configured.</div>' +
-        '<div class="who">Or let us draw an avatar of them and build every button around it. That part comes with the subscription.</div>' +
-        '<div class="who">Editing is behind a password, so it stays the way you set it.</div>');
-    });
-  }
-
-  document.getElementById('sos').onclick = function () {
-    push('Emergency', function () {
-      var w = el('div');
-      w.appendChild(el('div','d-warn','This is a demo. Nothing was sent to anyone.'));
-      w.appendChild(el('div','d-panel',
-        '<h4>What one tap does</h4>' +
-        '<div>Sends this to everyone on the family list, at once:</div>' +
-        '<div style="background:#F1EFE9;border-radius:11px;padding:12px;margin:11px 0;font-weight:700">“HELP! It’s Sam. I need help.”<br><span style="font-weight:600;color:#8C857A">…with a live map link to exactly where he is.</span></div>' +
-        '<div class="who">Reaches Dad, Mom, and two more people, by text, wherever they are.</div>' +
-        '<div class="who" style="margin-top:10px"><b style="color:#18B26B">Included when you buy the app.</b> It keeps working whether you subscribe or not, because an emergency button that stops working is not an emergency button.</div>'));
-      return w;
-    });
-  };
-
-  var scrim = document.getElementById('scrim');
-  function openDemo() { scrim.classList.add('on'); document.body.style.overflow = 'hidden'; home(); }
-
-  /* ---------- guided walkthrough ----------
-     Captions, not a voiceover. The only voice heard is the app's own, saying
-     the phrases a child would tap — which is the point of the demo. */
-  var cap = document.getElementById('cap'), tourbar = document.getElementById('tourbar');
-  var tourOn = false, tourStop = false, hlNode = null;
-
-  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-  function caption(n, total, text) {
-    cap.innerHTML = '<span class="step">Step ' + n + ' of ' + total + '</span>' + text;
-    cap.classList.add('on');
-  }
-  function clearHl() { if (hlNode) { hlNode.classList.remove('d-hl'); hlNode = null; } }
-  function findBtn(label) {
-    // Button text starts with an emoji, so an exact or leading match never
-    // fires — take an exact hit if there is one, otherwise any button whose
-    // text contains the label.
-    var all = document.querySelectorAll('#body button'), loose = null;
-    for (var i = 0; i < all.length; i++) {
-      var t = all[i].textContent.replace(/\s+/g, ' ').trim();
-      if (t === label) return all[i];
-      if (!loose && t.indexOf(label) >= 0) loose = all[i];
-    }
-    return loose;
-  }
-  // Point at a button, pause so the eye can follow, then press it.
-  async function press(label, hold) {
-    clearHl();
-    var b = findBtn(label);
-    if (!b) return false;
-    b.scrollIntoView({ block: 'center' });
-    hlNode = b; b.classList.add('d-hl');
-    await sleep(hold || 900);
-    if (tourStop) return false;
-    b.click();
-    return true;
-  }
-
+(function(){
   var STEPS = [
-    { t: 'This is the whole app. Every button is a picture, and every picture speaks.', run: async function () { home(); await sleep(1100); } },
-    { t: 'He taps. It talks. Nothing is typed, and nothing has to be spelled.', run: async function () { await press('Hello', 950); await sleep(1200); } },
-    { t: 'The people he wants to reach are on the first screen, not buried in a menu.', run: async function () { await press('Family', 850); await sleep(900); } },
-    { t: 'Every person has their own things to say, already written.', run: async function () { await press('Mom', 850); await sleep(900); } },
-    { t: 'Four words most parents of a nonspeaking child have never heard out loud.', run: async function () { await press('I love you Mom', 1000); await sleep(2000); } },
-    { t: 'This is the board I would have wanted first.', run: async function () { home(); await sleep(700); await press('Health', 850); await sleep(800); } },
-    { t: 'He can say where it hurts. Without this, somebody has to guess, and guessing is how things get missed.', run: async function () { await press('My head hurts.', 1000); await sleep(2300); } },
-    { t: 'Food works the same way. Ask for it, ask for more of it, say when you are done.', run: async function () { home(); await sleep(700); await press('Food', 800); await sleep(700); await press('Pizza', 800); await sleep(700); await press('Can I have pizza?', 900); await sleep(1700); } },
-    { t: 'And for everything nobody wrote down in advance, he builds the sentence himself.', run: async function () { home(); await sleep(700); await press('Sentence Build', 850); await sleep(1400); } },
-    { t: 'It was built for one boy by his father. It works for anyone who cannot speak.', run: async function () { home(); await sleep(900); } },
+    "This is his home. The pictures are the buttons.",
+    "Hurt is on the home screen. He points to where it hurts.",
+    "School is the people in the building. Their faces. Their names.",
+    "Phrases first. Then a sentence bar. Then a speller. Phrase-first is not phrase-only.",
+    "Family is I love you, I miss you, a birthday text.",
+    "Family Alert is two taps to the people loaded in the app. Not 911.",
+    "You put their photos, their phrases, their people. Nothing generic survives.",
+    "He didn’t need a better device. He needed one that would grow with him."
   ];
-
-  async function runTour() {
-    tourOn = true; tourStop = false;
-    scrim.classList.add('on'); document.body.style.overflow = 'hidden';
-    tourbar.classList.add('on');
-    cap.classList.add('tour');
-    home();
-    await sleep(700);
-    for (var i = 0; i < STEPS.length; i++) {
-      if (tourStop) break;
-      caption(i + 1, STEPS.length, STEPS[i].t);
-      await sleep(900);
-      if (tourStop) break;
-      try { await STEPS[i].run(); } catch (e) {}
-      cap.classList.remove('on');
-      await sleep(260);
-    }
-    endTour(!tourStop);
+  var i = 0, film = document.getElementById("film");
+  function speak(t){
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(t);
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    } catch(e){}
   }
-  function endTour(finished) {
-    tourStop = true; tourOn = false;
-    clearHl();
-    tourbar.classList.remove('on');
-    cap.classList.remove('tour');
-    if (finished) {
-      caption('', '', '');
-      cap.innerHTML = '<span class="step">Your turn</span>Tap anything you like. It all works.';
-      cap.classList.add('on');
-      setTimeout(function () { cap.classList.remove('on'); }, 3400);
-      home();
-    } else {
-      cap.classList.remove('on');
-    }
+  function show(n){
+    i = n;
+    document.getElementById("stept").textContent = STEPS[i];
+    speak(STEPS[i]);
   }
-  document.getElementById('tourSkip').onclick = function () { endTour(false); };
-  document.getElementById('tourTry').onclick = function () { endTour(true); };
-  Array.prototype.forEach.call(document.querySelectorAll('[data-watch-demo]'), function (b) { b.onclick = runTour; });
-  function closeDemo() { tourStop = true; if (typeof endTour === 'function') { try { endTour(false); } catch (e) {} } scrim.classList.remove('on'); document.body.style.overflow = ''; if (audio) { try { audio.pause(); } catch (e) {} } }
-  Array.prototype.forEach.call(document.querySelectorAll('[data-open-demo]'), function (b) { b.onclick = openDemo; });
-  document.getElementById('closeDemo').onclick = closeDemo;
-  scrim.addEventListener('click', function (e) { if (e.target === scrim) closeDemo(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && scrim.classList.contains('on')) closeDemo(); });
-
-  /* ---------- hero signup: same list, email only ---------- */
-  var hj = document.getElementById('heroJoin'), hjMsg = document.getElementById('heroMsg');
-  if (hj) hj.addEventListener('submit', function (e) {
+  function open(){ film.classList.add("on"); show(0); }
+  function close(){ film.classList.remove("on"); try{ speechSynthesis.cancel(); }catch(e){} }
+  document.getElementById("watch").onclick = open;
+  document.getElementById("close").onclick = close;
+  document.getElementById("skip").onclick = close;
+  document.getElementById("next").onclick = function(){ if(i < STEPS.length-1) show(i+1); else close(); };
+  document.getElementById("hf").addEventListener("submit", function(e){
     e.preventDefault();
-    var email = document.getElementById('heroEmail').value.trim();
-    if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)) { hjMsg.className = 'msg bad'; hjMsg.textContent = ERRORS.bad_email; return; }
-    var btn = hj.querySelector('.btn');
-    btn.disabled = true; btn.textContent = 'Adding…'; hjMsg.textContent = '';
-    fetch('/api/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: '', how: 'email', email: email, phone: '', consentText: '', about: '', source: 'hero' }) })
-      .then(function (r) { return r.json(); }).then(function (j) {
-        if (j && j.ok) { hj.hidden = true; hjMsg.className = 'msg ok'; hjMsg.textContent = 'You’re on the list. I’ll email you the day it’s ready.'; }
-        else { btn.disabled = false; btn.textContent = 'Tell me when it’s ready'; hjMsg.className = 'msg bad';
-               hjMsg.textContent = (j && ERRORS[j.error]) || 'Something went wrong. Please try again.'; }
-      }).catch(function () { btn.disabled = false; btn.textContent = 'Tell me when it’s ready';
-        hjMsg.className = 'msg bad'; hjMsg.textContent = 'No connection. Please try again in a moment.'; });
+    var email = document.getElementById("hemail").value.trim();
+    var msg = document.getElementById("hmsg");
+    var btn = document.getElementById("hgo");
+    if(!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)){ msg.textContent = "That email doesn’t look right."; return; }
+    btn.disabled = true;
+    fetch("/api/waitlist", { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ name:"", how:"email", email:email, phone:"", consentText:"", about:"", source:"letter-home" }) })
+      .then(function(r){ return r.json(); }).then(function(j){
+        if(j && j.ok){ msg.textContent = "You’re on the list."; btn.hidden = true; }
+        else { btn.disabled = false; msg.textContent = "Something went wrong. Try again."; }
+      }).catch(function(){ btn.disabled = false; msg.textContent = "No connection."; });
   });
 })();
 </script>
