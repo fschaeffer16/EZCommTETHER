@@ -44,9 +44,24 @@
           "value": "no-cache, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/home",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/home",
+      "destination": "/ezvoxa.html"
+    }
+  ],
+  "redirects": [
     {
       "source": "/",
       "has": [
@@ -55,7 +70,8 @@
           "value": "ezvoxa.com"
         }
       ],
-      "destination": "/ezvoxa.html"
+      "destination": "/home",
+      "permanent": false
     },
     {
       "source": "/",
@@ -65,7 +81,8 @@
           "value": "www.ezvoxa.com"
         }
       ],
-      "destination": "/ezvoxa.html"
+      "destination": "/home",
+      "permanent": false
     },
     {
       "source": "/",
@@ -75,7 +92,8 @@
           "value": "myezvoice.com"
         }
       ],
-      "destination": "/ezvoxa.html"
+      "destination": "/home",
+      "permanent": false
     },
     {
       "source": "/",
@@ -85,7 +103,8 @@
           "value": "www.myezvoice.com"
         }
       ],
-      "destination": "/ezvoxa.html"
+      "destination": "/home",
+      "permanent": false
     }
   ]
 }
