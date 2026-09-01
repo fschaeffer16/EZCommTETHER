@@ -40,7 +40,7 @@
     font:800 16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
     letter-spacing:-.02em;
   }
-  .mark img{width:42px;height:42px;border-radius:10px;object-fit:cover}
+  .mark img{width:52px;height:52px;border-radius:12px;object-fit:cover}
   nav{margin-left:auto;display:flex;gap:18px;font:650 13px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif}
   nav a{color:var(--mute);text-decoration:none}
   nav a:hover{color:var(--ink)}
@@ -90,7 +90,8 @@
     font:16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   }
   #hmsg{font:14px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--violet);min-height:1.2em;margin:8px 0 0}
-  .strip{clear:both;display:grid;grid-template-columns:168px 1fr 1fr;gap:10px;align-items:start;margin:40px 0 8px}
+  .strip{clear:both;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start;margin:40px 0 8px}
+  .strip .clip{grid-column:auto}
   .strip img{width:100%;height:auto;border-radius:4px;object-fit:contain}
   .clip{width:168px;height:auto;border-radius:4px}
   h2{font-size:28px;line-height:1.25;margin:40px 0 12px}
@@ -105,7 +106,7 @@
   @media(max-width:720px){
     .lead{float:none;width:100%;max-width:none;margin:0 0 20px}
     .phone{float:none;width:110px;margin:0 0 16px}
-    .strip{grid-template-columns:120px 1fr 1fr}
+    .strip{grid-template-columns:1fr 1fr}
     .clip{width:120px}
     .stage{grid-template-columns:1fr}
   }
@@ -114,11 +115,11 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="mark" href="#top"><img src="icon-ezvoxa-512.png" alt="">EZvoxa</a>
+  <a class="mark" href="#top"><img src="icon-ezvoxa-512.png" alt="EZvoxa"></a>
   <nav>
-    <a href="hearhim.html">His story</a>
-    <a href="opening-statement.html">For schools</a>
-    <a href="#list">The list</a>
+    <a href="hearhim.html">EZ’s story</a>
+    <a href="#app" id="navApp">The App</a>
+    <a href="#list">Sign up</a>
   </nav>
 </div></header>
 
@@ -142,17 +143,17 @@
     <p>It is not for sale yet. If you want the day it is, leave your email. If you want to see what he taught me, watch. If you want the whole story, it’s already written.</p>
   </div>
 
-  <div class="ask" id="list">
+  <div class="ask" id="app">
     <button class="btn" id="watch" type="button">Watch how it works</button>
     <a class="btn quiet" href="hearhim.html">Read EZ’s Voice</a>
-    <form class="mini" id="hf" novalidate>
+    <form class="mini" id="list" novalidate>
       <input id="hemail" type="email" autocomplete="email" placeholder="Your email">
-      <button class="btn" type="submit" id="hgo">Tell me when</button>
+      <button class="btn" type="submit" id="hgo">Sign up</button>
     </form>
   </div>
   <div id="hmsg" role="status" aria-live="polite"></div>
 
-  <div class="strip">
+  <div class="strip family">
     <video class="clip" src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline width="720" height="404" aria-label="Evan on a boogie board"></video>
     <img src="collage-03.jpg" width="720" height="960" alt="Evan as a little boy with his mom">
     <img src="collage-02.jpg" width="720" height="721" alt="Evan as a little boy with his dad">
@@ -209,10 +210,11 @@
   function open(){ film.classList.add("on"); show(0); }
   function close(){ film.classList.remove("on"); try{ speechSynthesis.cancel(); }catch(e){} }
   document.getElementById("watch").onclick = open;
+  document.getElementById("navApp").onclick = function(e){ e.preventDefault(); open(); };
   document.getElementById("close").onclick = close;
   document.getElementById("skip").onclick = close;
   document.getElementById("next").onclick = function(){ if(i < STEPS.length-1) show(i+1); else close(); };
-  document.getElementById("hf").addEventListener("submit", function(e){
+  document.getElementById("list").addEventListener("submit", function(e){
     e.preventDefault();
     var email = document.getElementById("hemail").value.trim();
     var msg = document.getElementById("hmsg");
