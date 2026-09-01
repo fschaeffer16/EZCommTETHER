@@ -89,6 +89,21 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   added around it 31 Aug (screenshots, rate chart, security panels).
 - `whatami.html`: device check + live zoom meter. Parent-facing warnings
   belong there, never inside the apps (the zoom banner lesson, 1 Sep).
+- **Photos are never drawn larger than the file** (Frank, 1 Sep, angrily and
+  rightly: "You cannot stretch everything to fit"). His originals are mostly
+  480-720px wide. The story collage is capped at 660px, the beach photo at
+  its true 450px. Before shipping any image, compare drawn width to file
+  width at every breakpoint.
+- **The hero shows the real app**, from Frank's own home-screen screenshot
+  (`shot-home.jpg`, neon dark UI) in a phone bezel, with the EZvoxa app icon
+  (`app-icon.jpg`, his supplied art) captioning it. Tapping it opens the
+  demo. The beach photo now leads Evan's story section.
+- **The website's demo widget looks nothing like the real app** (white
+  mockup vs the real neon-dark picture-first UI) and Frank called it
+  terrible on 1 Sep. Owed: restyle the demo boards to match the real app's
+  look, using his screenshot as the reference.
+- Hero also carries an email-only waitlist signup (source marked `hero`,
+  same list, same api/waitlist).
 - Waitlist: public form at the bottom of ezvoxa.com; Frank reads it at
   `/waitlist-admin.html` with the family password. **A signup confirmation
   email is wanted, but Frank must vet the wording before it ever sends
