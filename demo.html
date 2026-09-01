@@ -6099,7 +6099,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.08.31.4'; }
+  APP_BUILD() { return '2026.08.31.5'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -8033,14 +8033,32 @@ class Component extends DCLogic {
     return 1;
   }
   var el = null;
+  // Installed to the home screen there is no address bar, so the advice is
+  // impossible to follow; say nothing and let the app adapt, which it does.
+  function standalone() {
+    try {
+      if (navigator.standalone) return true;
+      if (matchMedia('(display-mode: standalone)').matches) return true;
+    } catch (e) {}
+    return false;
+  }
   function show() {
     var z = zoom();
     try { if (sessionStorage.getItem(KEY)) return hide(); } catch (e) {}
     if (z < 1.25) return hide();
+    if (standalone()) return hide();
+    // A phone's layout is elastic: zoomed text is bigger and nothing
+    // collapses, and bigger may be exactly what that family wants. The only
+    // real casualty of zoom is a tablet crushed below its own layout
+    // (ez-short / ez-vshort), so that is the only time this speaks.
+    var cls = document.documentElement.className || '';
+    if (cls.indexOf('ez-wide') < 0) return hide();
+    if (cls.indexOf('ez-short') < 0 && cls.indexOf('ez-vshort') < 0) return hide();
     if (!el) {
       el = document.createElement('div');
       el.setAttribute('role', 'status');
       el.style.cssText = 'position:fixed;z-index:2147483000;left:0;right:0;top:0;' +
+        'padding-top:calc(9px + env(safe-area-inset-top,0px));' +
         'background:#FFB020;color:#0A0A0F;font:700 15px/1.35 -apple-system,BlinkMacSystemFont,sans-serif;' +
         'padding:9px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.45);';
       var t = document.createElement('div');
@@ -8063,6 +8081,11 @@ class Component extends DCLogic {
   function check() { try { show(); } catch (e) {} }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', check);
   else check();
+  // the layout classes are stamped when the app boots, after this first check,
+  // so look again once things have settled and then keep a slow eye on it
+  setTimeout(check, 1200);
+  setTimeout(check, 3500);
+  setInterval(check, 6000);
   window.addEventListener('resize', check);
   window.addEventListener('orientationchange', function () { setTimeout(check, 350); });
   if (window.visualViewport) visualViewport.addEventListener('resize', check);
