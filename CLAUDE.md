@@ -61,6 +61,13 @@ program for low-income/disability families.
   shipping a new default order changes nothing on a phone that already has the app. Bump the
   one-time `applyLayoutRev()` migration when a layout default changes, or the work is invisible.
 
+- **LEDGER.md is the memory that survives.** Conversation context gets condensed and
+  details vanish; Frank has been burned by this (1 Sep 2026: I forgot which domains he
+  owns). Any standing fact or decision from a conversation — domains, accounts, prices,
+  device inventory, program decisions — goes into LEDGER.md in the same commit as the
+  work. Read it at the start of business or setup tasks before asking Frank anything he
+  has already told me.
+
 ## Architecture notes
 
 - **`APP_MAP.md` is the map of every board, tile, and route** in both apps — read it
