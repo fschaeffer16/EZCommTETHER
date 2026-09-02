@@ -6263,7 +6263,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.2'; }
+  APP_BUILD() { return '2026.09.02.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6631,9 +6631,10 @@ class Component extends DCLogic {
       // Hurt is its own home tile — pointing at where it hurts should never be
       // two taps deep behind anything. Frank made it explicit 2 Sep 2026:
       // buyer phones get it on the home screen too, not buried inside Health.
-      // hurt_tile is EVAN'S AVATAR ART and never appears on a buyer phone —
-      // the template uses the neon body map itself (hurt_body).
-      { id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', ...(mine ? { img: this.iconUri('hurt_tile') } : { img: this.iconUri('hurt_body'), pos: 'center 14%' }), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) },
+      // hurt_tile is EVAN'S AVATAR ART and never appears on a buyer phone.
+      // The template uses Frank's neon figure (tile_hurtbody, supplied 2 Sep
+      // 2026); the app draws the box and the Hurt caption like every tile.
+      { id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', ...(mine ? { img: this.iconUri('hurt_tile') } : { img: this.iconUri('tile_hurtbody') }), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) },
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
       // Sentence Build sits right beside School on the template — building a
       // sentence is close kin to schoolwork, and the pairing reads naturally
