@@ -108,10 +108,9 @@ fs.writeFileSync(path.join(www, 'index.html'), html);
     'ginger_ale', 'hawaiian_punch', 'coke', 'pastrami', 'pastrami_tub', 'doritos_ranch',
     'soft_pretzel', 'pretzel_sticks', 'sp_mlb', 'sp_nba', 'sp_nfl', 'sp_espn', 'sp_raw',
     'sp_smackdown', 'sp_wwe',
-    // NOT yet in the list: rest_mcdonalds, rest_outback, mc_burger, mc_nuggets,
-    // mc_fries, mc_punch. The template's own Food board draws the McDonald's
-    // and Outback tiles, so blanking them breaks a real screen. Frank decides
-    // whether those boards keep the chain names with generic art or go.
+    // the restaurant logos and branded item art (Frank, 2 Sep: keep the chain
+    // names, generic neon art on buyer phones; demo.html swaps them)
+    'rest_mcdonalds', 'rest_outback', 'mc_burger', 'mc_nuggets', 'mc_fries', 'mc_punch',
   ];
   let icons = fs.readFileSync(path.join(root, 'tether-icons.js'), 'utf8');
   // a 1x1 transparent PNG: blank if ever drawn, never a wrong picture

@@ -4999,19 +4999,23 @@ class Component extends DCLogic {
   // anybody does.
   restaurants() {
     return [
-      { id: 'mcdonalds', label: "McDonald's", say: "McDonald's", emoji: '🍟', color: '#DA291C', icon: 'rest_mcdonalds' },
-      { id: 'outback', label: 'Outback', say: 'Outback', emoji: '🥩', color: '#7A1E12', icon: 'rest_outback' },
+      // Chain names stay (a kid really wants to say McDonald's); the logo art is
+      // Evan's board only. The template draws generic neon food (Frank, 2 Sep 2026).
+      { id: 'mcdonalds', label: "McDonald's", say: "McDonald's", emoji: '🍟', color: '#DA291C', icon: this.isEvanProfile() ? 'rest_mcdonalds' : 'food_hamburger' },
+      { id: 'outback', label: 'Outback', say: 'Outback', emoji: '🥩', color: '#7A1E12', icon: this.isEvanProfile() ? 'rest_outback' : 'hunger_hungry' },
       { id: 'chinese', label: 'Chinese Food', say: 'Chinese food', emoji: '🥡', color: '#C8102E' },
       { id: 'popeyes', label: 'Popeyes', say: "Popeyes", emoji: '🍗', color: '#F58220' },
     ];
   }
   restaurantItems(id) {
+    // Branded item art is Evan's; buyer phones get the generic icon instead.
+    const t = (evan, generic) => (this.isEvanProfile() ? evan : generic);
     const M = {
       mcdonalds: [
-        { label: 'Double Hamburger', sub: 'extra pickles', icon: 'mc_burger', say: 'a double hamburger with extra pickles' },
-        { label: 'Chicken Nuggets', icon: 'mc_nuggets', say: 'chicken nuggets' },
-        { label: 'Large French Fries', icon: 'mc_fries', say: 'large french fries' },
-        { label: 'Frozen Hawaiian Punch', icon: 'mc_punch', say: 'a frozen Hawaiian Punch' },
+        { label: 'Double Hamburger', sub: 'extra pickles', icon: t('mc_burger', 'food_hamburger'), say: 'a double hamburger with extra pickles' },
+        { label: 'Chicken Nuggets', icon: t('mc_nuggets', 'food_chicken'), say: 'chicken nuggets' },
+        { label: 'Large French Fries', icon: t('mc_fries', 'ob_fries'), say: 'large french fries' },
+        { label: 'Frozen Hawaiian Punch', icon: t('mc_punch', 'drink_soda'), say: 'a frozen Hawaiian Punch' },
       ],
       outback: [
         { label: 'Outback Sirloin', sub: '8 oz, medium rare', icon: 'ob_sirloin', say: 'the eight ounce Outback sirloin, medium rare' },
@@ -5019,7 +5023,7 @@ class Component extends DCLogic {
         { label: 'French Fries', icon: 'ob_fries', say: 'french fries' },
         { label: 'Fried Onions', emoji: '🧅', say: 'fried onions' },
         { label: 'Strawberry Lemonade', icon: 'strawberry_lemonade', say: 'a strawberry lemonade' },
-        { label: 'Coke', icon: 'coke', say: 'a Coke' },
+        { label: 'Coke', icon: t('coke', 'drink_soda'), say: 'a Coke' },
       ],
       chinese: [
         { label: 'Pork Fried Rice', icon: 'pork_fried_rice', say: 'pork fried rice' },
@@ -5029,7 +5033,7 @@ class Component extends DCLogic {
       popeyes: [
         { label: 'Chicken Tenders', icon: 'chicken_fingers', say: 'chicken tenders' },
         { label: 'French Fries', icon: 'french_fries', say: 'french fries' },
-        { label: 'Coke', icon: 'coke', say: 'a Coke' },
+        { label: 'Coke', icon: t('coke', 'drink_soda'), say: 'a Coke' },
       ],
     };
     return M[id] || [];
@@ -6287,7 +6291,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.6'; }
+  APP_BUILD() { return '2026.09.02.7'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
