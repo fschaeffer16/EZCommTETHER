@@ -93,8 +93,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **EVAN'S LIKENESS NEVER SHIPS IN THE PRODUCT. Same rule as his photos.**
   Frank had to catch Claude putting Evan's avatar art (`hurt_tile`) on the
   template's Hurt tile, hours after his brief said his face is not the
-  product. Fixed 2 Sep: the template's Hurt tile uses the neon body map
-  (`hurt_body`); `hurt_tile` and `headache` (both Evan's avatar) are
+  product. Fixed 2 Sep: the template's Hurt tile uses Frank's own neon
+  figure (`tile_hurtbody`, supplied 2 Sep, frame stripped per the artwork
+  rule); `hurt_tile` and `headache` (both Evan's avatar) are
   replaced with generic art by native/build.js in every store build.
   OWED: a full audit of tether-icons.js for any other likeness art —
   extend EVAN_LIKENESS_KEYS in native/build.js with whatever it finds.
