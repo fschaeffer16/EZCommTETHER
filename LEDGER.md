@@ -90,6 +90,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   with confirm + rescue copy).
 - **Hurt is its own button on the Home Screen** on buyer phones, exactly
   like Evan's board — not buried inside Health. Done 2 Sep (layoutRev 18).
+- **EVAN'S LIKENESS NEVER SHIPS IN THE PRODUCT. Same rule as his photos.**
+  Frank had to catch Claude putting Evan's avatar art (`hurt_tile`) on the
+  template's Hurt tile, hours after his brief said his face is not the
+  product. Fixed 2 Sep: the template's Hurt tile uses the neon body map
+  (`hurt_body`); `hurt_tile` and `headache` (both Evan's avatar) are
+  replaced with generic art by native/build.js in every store build.
+  OWED: a full audit of tether-icons.js for any other likeness art —
+  extend EVAN_LIKENESS_KEYS in native/build.js with whatever it finds.
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
 - **PRICING IS NOT CONFIRMED. Frank, 1 Sep 2026: "remove the pricing. I

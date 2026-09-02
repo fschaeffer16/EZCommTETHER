@@ -88,7 +88,30 @@ html = html.replace(AUDIO_LIT, "new Audio(window.__EZ_API_BASE + '/api/speak?");
 
 fs.writeFileSync(path.join(www, 'index.html'), html);
 
-fs.copyFileSync(path.join(root, 'tether-icons.js'), path.join(www, 'tether-icons.js'));
+// tether-icons.js mostly holds the generic neon set, but a few keys are
+// EVAN'S AVATAR ART and must never ship inside a customer binary, the same
+// rule as the family photos. Their data is replaced with the generic
+// medical-cross icon (tile_hurt) so the globals still resolve if some code
+// path asks for them. Extend this list as the likeness audit finds more.
+{
+  const EVAN_LIKENESS_KEYS = ['hurt_tile', 'headache'];
+  let icons = fs.readFileSync(path.join(root, 'tether-icons.js'), 'utf8');
+  const generic = icons.match(/"tile_hurt":\s*"(data:image\/[a-z+]+;base64,[^"]+)"/);
+  if (!generic) {
+    console.error('build failed: generic tile_hurt icon not found in tether-icons.js');
+    process.exit(1);
+  }
+  for (const key of EVAN_LIKENESS_KEYS) {
+    const re = new RegExp('"' + key + '":\\s*"data:image\\/[a-z+]+;base64,[^"]+"');
+    if (!re.test(icons)) {
+      console.error('build failed: expected icon key "' + key + '" not found in tether-icons.js');
+      process.exit(1);
+    }
+    icons = icons.replace(re, '"' + key + '": ' + JSON.stringify(generic[1]));
+  }
+  fs.writeFileSync(path.join(www, 'tether-icons.js'), icons);
+  console.log('likeness strip: replaced', EVAN_LIKENESS_KEYS.join(', '), 'with the generic icon');
+}
 fs.writeFileSync(path.join(www, 'tether-photos.js'),
   '// Stub for store builds: the real tether-photos.js holds our family\'s\n'
   + '// photos and never ships to customers. The app only needs the global.\n'
