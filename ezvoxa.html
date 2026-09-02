@@ -2,232 +2,263 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EZvoxa — a letter from a father</title>
-<meta name="description" content="My son Evan is nonverbal. I became the student. He became my teacher. This is the talker he walked me to.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EZvoxa — built with Evan, not around him</title>
+<meta name="description" content="EZvoxa is a phrase-first visual talker for nonverbal and semi-verbal teens and young adults, built by a father learning from his son.">
 <link rel="icon" type="image/png" href="icon-ezvoxa-192.png">
 <link rel="apple-touch-icon" href="icon-ezvoxa-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#F4EFE4;
-    --ink:#1C1916;
-    --mute:#5C564E;
-    --line:rgba(28,25,22,.12);
-    --cyan:#1A8FB5;
-    --violet:#6B3FA0;
-    --max:820px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font:20px/1.65 Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--cyan)}
-  img,video{max-width:100%;height:auto;display:block;object-fit:contain}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
-  header.top{
-    position:sticky;top:0;z-index:20;
-    background:rgba(244,239,228,.92);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-  }
-  header.top .wrap{display:flex;align-items:center;gap:14px;height:64px}
-  .mark{
-    display:flex;align-items:center;gap:10px;
-    text-decoration:none;color:var(--ink);
-    font:800 16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-    letter-spacing:-.02em;
-  }
-  .mark img{width:52px;height:52px;border-radius:12px;object-fit:cover}
-  nav{margin-left:auto;display:flex;gap:18px;font:650 13px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif}
-  nav a{color:var(--mute);text-decoration:none}
-  nav a:hover{color:var(--ink)}
-  .btn{
-    appearance:none;border:0;cursor:pointer;
-    font:700 14px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-    border-radius:999px;padding:12px 18px;
-    color:#fff;background:var(--ink);text-decoration:none;
-    display:inline-flex;align-items:center;
-  }
-  .btn.quiet{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
-  article{padding:48px 0 24px}
-  .lead{
-    float:right;width:46%;max-width:340px;
-    margin:6px 0 22px 28px;
-  }
-  .lead img,.lead video{width:100%;border-radius:4px}
-  .lead figcaption{
-    font:12px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-    color:var(--mute);margin-top:8px;letter-spacing:.02em;
-  }
-  h1{
-    font-size:clamp(32px,5vw,46px);
-    line-height:1.18;font-weight:700;letter-spacing:-.02em;
-    margin:0 0 18px;
-  }
-  .kicker{font-size:22px;color:var(--mute);margin:0 0 22px;font-style:italic}
-  .letter p{margin:0 0 1.1em}
-  .phone{
-    float:left;width:132px;
-    margin:6px 22px 12px 0;
-  }
-  .phone img{
-    width:132px;border-radius:18px;
-    box-shadow:0 10px 28px rgba(28,25,22,.18);
-  }
-  .ask{
-    clear:both;
-    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-    margin:28px 0 8px;padding:18px 0 0;border-top:1px solid var(--line);
-    font:16px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  }
-  form.mini{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:240px}
-  form.mini input{
-    flex:1;min-width:180px;padding:12px 14px;border-radius:999px;
-    border:1.5px solid var(--line);background:#fff;color:var(--ink);
-    font:16px/1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  }
-  #hmsg{font:14px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--violet);min-height:1.2em;margin:8px 0 0}
-  .strip{clear:both;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start;margin:40px 0 8px}
-  .strip .clip{grid-column:auto}
-  .strip img{width:100%;height:auto;border-radius:4px;object-fit:contain}
-  .clip{width:168px;height:auto;border-radius:4px}
-  h2{font-size:28px;line-height:1.25;margin:40px 0 12px}
-  .small{font-size:17px;color:var(--mute)}
-  footer{
-    margin-top:48px;padding:28px 0 48px;border-top:1px solid var(--line);
-    font:13px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--mute);
-  }
-  .film{position:fixed;inset:0;z-index:80;background:rgba(28,25,22,.82);display:none;align-items:center;justify-content:center;padding:18px}
-  .film.on{display:flex}
-  .stage{width:min(860px,100%);background:var(--paper);color:var(--ink);border-radius:8px;padding:28px;display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:center}
-  @media(max-width:720px){
-    .lead{float:none;width:100%;max-width:none;margin:0 0 20px}
-    .phone{float:none;width:110px;margin:0 0 16px}
-    .strip{grid-template-columns:1fr 1fr}
-    .clip{width:120px}
-    .stage{grid-template-columns:1fr}
-  }
-  .x{position:fixed;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;font-weight:800;cursor:pointer}
+:root{
+  --bg:#07090f;--bg2:#0d111c;--card:#111725;--card2:#151d2d;
+  --ink:#f7f8fb;--muted:#a8b0c0;--line:rgba(255,255,255,.11);
+  --cyan:#34d6ff;--blue:#4c8dff;--violet:#a66cff;--pink:#ff5ca8;
+  --amber:#ffb52f;--green:#53e28a;--red:#ff5a52;
+  --max:1500px;--round:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",Arial,sans-serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,video{display:block;max-width:100%;height:auto}
+button,input{font:inherit}
+::selection{background:var(--cyan);color:#001019}
+.shell{width:min(var(--max),calc(100% - 48px));margin:auto}
+.eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan)}
+.glow{position:absolute;border-radius:999px;filter:blur(90px);opacity:.24;pointer-events:none}
+.g1{width:38vw;height:38vw;background:#3859ff;top:-12vw;right:-8vw}
+.g2{width:32vw;height:32vw;background:#c12cff;bottom:-14vw;left:-10vw}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:60;background:linear-gradient(180deg,rgba(7,9,15,.94),rgba(7,9,15,.65),transparent);backdrop-filter:blur(12px)}
+.navin{height:84px;display:flex;align-items:center;gap:24px}
+.logo{width:56px;height:56px;border-radius:16px;overflow:hidden;box-shadow:0 0 24px rgba(166,108,255,.25);flex:none}
+.logo img{width:100%;height:100%;object-fit:cover}
+.navlinks{margin-left:auto;display:flex;align-items:center;gap:28px}
+.navlinks a{text-decoration:none;font-weight:700;color:#dce0e8}
+.navlinks a:hover{color:#fff}
+.navcta{border:1px solid rgba(52,214,255,.42);border-radius:999px;padding:10px 16px;background:rgba(52,214,255,.08)}
+.menu{display:none;margin-left:auto;background:none;border:0;color:#fff;font-size:28px}
+
+/* HERO */
+.hero{min-height:100svh;position:relative;isolation:isolate;display:flex;align-items:center;padding:120px 0 56px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 35%,rgba(76,141,255,.12),transparent 32%),radial-gradient(circle at 28% 70%,rgba(255,92,168,.11),transparent 26%),linear-gradient(180deg,#080b12 0%,#090c14 62%,#07090f 100%);z-index:-2}
+.heroGrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(430px,.85fr);gap:7vw;align-items:center}
+.heroCopy{padding:7vh 0}
+.hero h1{font-size:clamp(52px,7.2vw,118px);line-height:.91;letter-spacing:-.055em;margin:18px 0 28px;max-width:9.6ch;text-wrap:balance}
+.hero h1 .soft{color:#7f8aa1}
+.heroLead{font-size:clamp(21px,2vw,30px);line-height:1.32;max-width:24em;color:#d7dbe5;margin:0 0 34px}
+.heroQuote{border-left:3px solid var(--amber);padding-left:22px;max-width:42em;color:#bfc6d5;font-style:italic;margin:36px 0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{border:0;border-radius:999px;padding:15px 22px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;transition:.2s ease}
+.btn.primary{background:#fff;color:#080b12}.btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,255,255,.14)}
+.btn.ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line)}
+.btn.ghost:hover{background:rgba(255,255,255,.1)}
+.heroMedia{position:relative;min-height:650px}
+.photoMain{position:absolute;width:min(82%,520px);right:0;top:8%;border-radius:36px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12)}
+.photoMain img{width:100%;height:auto;object-fit:contain}
+.photoSmall{position:absolute;width:48%;left:0;bottom:3%;border-radius:28px;overflow:hidden;border:8px solid #090c14;box-shadow:0 24px 60px rgba(0,0,0,.46)}
+.photoSmall img{width:100%;height:auto;object-fit:contain}
+.captionPill{position:absolute;right:3%;bottom:5%;background:rgba(13,17,28,.82);border:1px solid var(--line);backdrop-filter:blur(16px);border-radius:18px;padding:14px 17px;color:#dfe4ed;font-size:15px;max-width:250px}
+
+/* STORY */
+.story{position:relative;padding:13vh 0;background:#f2eee5;color:#151515;overflow:hidden}
+.story .eyebrow{color:#7b3fff}
+.storyGrid{display:grid;grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr);gap:7vw;align-items:start}
+.storySticky{position:sticky;top:130px}
+.story h2{font-size:clamp(44px,6vw,88px);line-height:.96;letter-spacing:-.045em;margin:16px 0 28px;max-width:8.5ch}
+.storyIntro{font-size:24px;line-height:1.35;max-width:19em;color:#424242}
+.storyBeats{max-width:760px}
+.beat{padding:0 0 11vh;border-bottom:1px solid rgba(0,0,0,.12);margin-bottom:11vh}
+.beat:last-child{border-bottom:0;margin-bottom:0}
+.num{font-weight:700;color:#7b3fff;font-size:14px;letter-spacing:.16em}
+.beat h3{font-size:clamp(30px,3.4vw,52px);line-height:1.08;letter-spacing:-.03em;margin:14px 0 18px}
+.beat p{font-size:21px;color:#383838;max-width:32em}
+.storyPhoto{margin-top:26px;border-radius:24px;overflow:hidden;background:#ddd}
+.storyPhoto img{width:100%;height:auto;object-fit:contain}
+
+/* APP DEMO */
+.demo{padding:12vh 0 14vh;position:relative;background:linear-gradient(180deg,#080b12,#0d111c 45%,#080b12)}
+.demoHead{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:end;margin-bottom:60px}
+.demo h2,.plans h2,.signup h2{font-size:clamp(44px,5.6vw,86px);line-height:.98;letter-spacing:-.045em;margin:14px 0 0;text-wrap:balance}
+.demoHead p{font-size:22px;color:var(--muted);max-width:30em;margin:0 0 8px}
+.demoStage{display:grid;grid-template-columns:minmax(280px,.65fr) minmax(520px,1.35fr);gap:34px;align-items:stretch}
+.demoNav{display:flex;flex-direction:column;gap:10px}
+.demoTab{width:100%;text-align:left;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#e9edf5;padding:18px 20px;cursor:pointer}
+.demoTab b{display:block;font-size:19px}.demoTab span{display:block;color:#818ca1;font-size:14px;margin-top:4px}
+.demoTab.active{background:linear-gradient(135deg,rgba(52,214,255,.13),rgba(166,108,255,.12));border-color:rgba(52,214,255,.5);box-shadow:0 0 32px rgba(52,214,255,.08)}
+.deviceWrap{min-height:650px;border-radius:34px;border:1px solid var(--line);background:radial-gradient(circle at 50% 15%,rgba(76,141,255,.14),transparent 30%),#080a10;padding:34px;display:grid;grid-template-columns:minmax(270px,390px) 1fr;gap:34px;align-items:center;overflow:hidden}
+.tablet{aspect-ratio:4/5.3;background:#020304;border:10px solid #202735;border-radius:38px;padding:16px;box-shadow:0 30px 70px rgba(0,0,0,.5);max-width:390px;width:100%;justify-self:center}
+.screen{height:100%;border-radius:24px;background:linear-gradient(180deg,#151a25,#090c13);padding:14px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.miniTop{display:grid;grid-template-columns:1fr 64px 1fr;gap:8px}.miniBtn{border-radius:13px;padding:10px;text-align:center;font-weight:700}.yes{background:#2f9f58}.home{background:#1776db}.no{background:#c9413c}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.q{aspect-ratio:1;border-radius:10px;background:#151b28;border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:20px}
+.board{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;flex:1}.tile{border-radius:14px;min-height:92px;background:linear-gradient(135deg,#182238,#0e1119);border:1px solid rgba(255,255,255,.1);padding:10px;display:flex;flex-direction:column;justify-content:flex-end;font-size:13px;font-weight:700}.tile i{font-style:normal;font-size:34px;margin-bottom:auto}.sos{background:#781f22;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;color:#ffd9d9}
+.demoCopy .stepLabel{color:var(--cyan);font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase}.demoCopy h3{font-size:clamp(30px,3.2vw,48px);line-height:1.05;margin:10px 0 16px;letter-spacing:-.025em}.demoCopy p{font-size:21px;color:#c6cbd6;max-width:29em}.demoCopy .note{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);color:#8f99ac;font-size:15px}
+
+/* PRODUCT */
+.product{padding:12vh 0;background:#eef3f8;color:#12151b}
+.productHead{display:grid;grid-template-columns:1.1fr .9fr;gap:5vw;align-items:end;margin-bottom:48px}.product h2{font-size:clamp(42px,5.4vw,82px);line-height:.98;letter-spacing:-.045em;margin:12px 0 0}.productHead p{font-size:22px;color:#505968;max-width:29em}
+.featureGrid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.feature{border-radius:28px;background:#fff;padding:30px;min-height:260px;border:1px solid rgba(20,30,50,.08);box-shadow:0 12px 30px rgba(18,25,40,.05)}.feature.big{grid-column:span 7}.feature.small{grid-column:span 5}.feature.third{grid-column:span 4}.feature .ico{font-size:44px;margin-bottom:36px}.feature h3{font-size:27px;margin:0 0 10px}.feature p{color:#5b6472;margin:0;font-size:18px}
+
+/* PLANS */
+.plans{padding:12vh 0;background:#090c14}.planLead{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:end;margin-bottom:44px}.planLead p{color:var(--muted);font-size:21px}.planGrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.plan{border-radius:30px;background:#101624;border:1px solid var(--line);padding:34px}.plan.free{box-shadow:inset 0 0 0 1px rgba(83,226,138,.18)}.plan.paid{box-shadow:inset 0 0 0 1px rgba(166,108,255,.18)}.plan .tag{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--green)}.plan.paid .tag{color:var(--violet)}.plan h3{font-size:32px;margin:10px 0}.plan ul{list-style:none;padding:0;margin:22px 0 0}.plan li{padding:10px 0;border-top:1px solid var(--line);color:#cdd3df}.plan li::before{content:"✓";color:var(--green);font-weight:700;margin-right:10px}.always{margin-top:20px;background:rgba(255,90,82,.08);border:1px solid rgba(255,90,82,.25);border-radius:20px;padding:18px;color:#ffd5d1}
+
+/* SIGNUP */
+.signup{padding:14vh 0;background:radial-gradient(circle at 15% 30%,rgba(52,214,255,.14),transparent 30%),radial-gradient(circle at 85% 70%,rgba(255,92,168,.13),transparent 30%),#080b12;text-align:center}.signup .shell{max-width:1000px}.signup p{font-size:22px;color:#c2c8d4;max-width:30em;margin:22px auto 32px}.wait{display:flex;gap:10px;max-width:680px;margin:auto}.wait input{flex:1;border:1px solid rgba(255,255,255,.16);background:#111725;color:#fff;border-radius:999px;padding:16px 20px;outline:none}.wait input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(52,214,255,.12)}.status{min-height:28px;margin-top:14px;color:#7cefa7}
+.links{margin-top:40px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+footer{padding:34px 0 52px;background:#05070b;color:#8993a6;border-top:1px solid rgba(255,255,255,.07)}.foot{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}.foot a{color:#c4cbd7;text-decoration:none}.footlinks{display:flex;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+
+/* MOBILE */
+@media(max-width:1050px){
+ .heroGrid,.storyGrid,.demoHead,.productHead,.planLead{grid-template-columns:1fr}
+ .heroMedia{min-height:600px}.storySticky{position:relative;top:auto}.story h2{max-width:11ch}.storyIntro{max-width:30em}
+ .demoStage{grid-template-columns:1fr}.demoNav{display:grid;grid-template-columns:repeat(3,1fr)}.deviceWrap{grid-template-columns:minmax(250px,360px) 1fr}
+ .feature.big,.feature.small{grid-column:span 6}.feature.third{grid-column:span 6}
+}
+@media(max-width:720px){
+ .shell{width:min(100% - 28px,var(--max))}.navin{height:72px}.logo{width:48px;height:48px}.navlinks{display:none;position:absolute;top:70px;left:14px;right:14px;background:#0f1420;border:1px solid var(--line);border-radius:20px;padding:16px;flex-direction:column;align-items:stretch}.navlinks.open{display:flex}.menu{display:block}
+ .hero{padding-top:90px;align-items:flex-start}.heroGrid{gap:18px}.hero h1{font-size:clamp(50px,15vw,78px);max-width:10ch}.heroMedia{min-height:480px}.photoMain{width:78%;right:0}.photoSmall{width:44%;left:0}.captionPill{display:none}
+ .story{padding:9vh 0}.beat{padding-bottom:8vh;margin-bottom:8vh}
+ .demo{padding:9vh 0}.demoHead{margin-bottom:30px}.demoNav{grid-template-columns:1fr 1fr}.demoTab{padding:13px}.demoTab span{display:none}.deviceWrap{grid-template-columns:1fr;padding:18px;min-height:auto}.tablet{max-width:320px}.demoCopy{text-align:center}.demoCopy p{margin-left:auto;margin-right:auto}
+ .featureGrid{display:block}.feature{margin-bottom:14px;min-height:220px}.planGrid{grid-template-columns:1fr}.wait{flex-direction:column}.wait .btn{width:100%}.foot{grid-template-columns:1fr}.footlinks{justify-content:flex-start}
+}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-  <a class="mark" href="#top"><img src="icon-ezvoxa-512.png" alt="EZvoxa"></a>
-  <nav>
-    <a href="hearhim.html">EZ’s story</a>
-    <a href="#app" id="navApp">The App</a>
-    <a href="#list">Sign up</a>
+<header class="nav">
+ <div class="shell navin">
+  <a class="logo" href="#top" aria-label="EZvoxa home"><img src="icon-ezvoxa-512.png" alt=""></a>
+  <button class="menu" id="menu" aria-label="Open menu">☰</button>
+  <nav class="navlinks" id="navlinks">
+   <a href="hearhim.html">EZ’s story</a>
+   <a href="#the-app">The App</a>
+   <a href="#signup" class="navcta">Sign up</a>
   </nav>
-</div></header>
+ </div>
+</header>
 
-<article id="top"><div class="wrap">
-  <figure class="lead">
-    <img src="photo-beach.jpg" width="450" height="450" alt="Frank and Evan on the beach">
-    <figcaption>Evan and me. Fort Pierce.</figcaption>
-  </figure>
-
-  <h1>He didn’t need a better device. He needed one that would grow with him.</h1>
-  <p class="kicker">I had to find a way to meet him where he was. So I became the student and he became my teacher.</p>
-
-  <div class="letter">
-    <p>My name is Frank. My son Evan was born in August 2010. He is nonverbal. I am not a speech pathologist. I am a father who spent sixteen years learning every look on his face.</p>
-    <figure class="phone">
-      <img src="shot-home.jpg" width="786" height="1481" alt="The home board on his phone">
-    </figure>
-    <p>A four-thousand-dollar board taught him that words exist. Then he grew up, and a sentence like <i>I’m tired, can I go to bed</i> cost a minute of menus. He stopped paying. He wasn’t failing the device. The device was pricing him out of his own voice.</p>
-    <p>I didn’t design what came next. He walked me to it. When a board was wrong, he ignored it. When it was right, he used it without being asked. Then he took my phone, opened the app himself, and told me what he wanted to watch. Unprompted. Sixteen years. That had never happened.</p>
-    <p>EZvoxa is that talker. Phrase-first, on the phone in his pocket. His photos. His people. Hurt, so nobody has to guess. School, with the faces in the building. Family — I love you, I miss you, a birthday text. Family Alert is two taps to the people we choose. It is not 911. It is not a medical device. It is him, being heard.</p>
-    <p>It is not for sale yet. If you want the day it is, leave your email. If you want to see what he taught me, watch. If you want the whole story, it’s already written.</p>
+<main>
+<section class="hero" id="top">
+ <span class="glow g1"></span><span class="glow g2"></span>
+ <div class="shell heroGrid">
+  <div class="heroCopy">
+   <div class="eyebrow">A father. A son. A different way to be heard.</div>
+   <h1>He didn’t need a better device. <span class="soft">He needed one that would grow with him.</span></h1>
+   <p class="heroLead">EZvoxa is a phrase-first visual talker built for nonverbal and semi-verbal teens and young adults — born from one teenager showing his father what actually worked.</p>
+   <p class="heroQuote">“I had to find a way to meet him where he was. So I became the student and he became my teacher.”</p>
+   <div class="actions">
+    <a href="#the-app" class="btn primary">See how it works ↓</a>
+    <a href="hearhim.html" class="btn ghost">Read EZ’s Voice</a>
+   </div>
   </div>
-
-  <div class="ask" id="app">
-    <button class="btn" id="watch" type="button">Watch how it works</button>
-    <a class="btn quiet" href="hearhim.html">Read EZ’s Voice</a>
-    <form class="mini" id="list" novalidate>
-      <input id="hemail" type="email" autocomplete="email" placeholder="Your email">
-      <button class="btn" type="submit" id="hgo">Sign up</button>
-    </form>
+  <div class="heroMedia" aria-label="Evan and family photos">
+   <figure class="photoMain"><img src="photo-beach.jpg" alt="Evan and his dad at the beach"></figure>
+   <figure class="photoSmall"><img src="collage-03.jpg" alt="Evan as a young child with his mom"></figure>
+   <div class="captionPill">This didn’t begin in a product meeting. It began with one kid who stopped using a tool that took too long to say something simple.</div>
   </div>
-  <div id="hmsg" role="status" aria-live="polite"></div>
+ </div>
+</section>
 
-  <div class="strip family">
-    <video class="clip" src="evan-wave.mp4" poster="collage-07.jpg" autoplay muted loop playsinline width="720" height="404" aria-label="Evan on a boogie board"></video>
-    <img src="collage-03.jpg" width="720" height="960" alt="Evan as a little boy with his mom">
-    <img src="collage-02.jpg" width="720" height="721" alt="Evan as a little boy with his dad">
+<section class="story" id="story">
+ <div class="shell storyGrid">
+  <div class="storySticky">
+   <div class="eyebrow">The story</div>
+   <h2>Evan became the teacher.</h2>
+   <p class="storyIntro">The website can explain features later. First, people should understand why this had to exist.</p>
+   <div class="actions" style="margin-top:28px"><a href="hearhim.html" class="btn" style="background:#151515;color:#fff">Open the full interactive story ↗</a></div>
   </div>
-
-  <h2>For a teacher who has to decide.</h2>
-  <p class="small">I wrote down what this is, and what it is not, so a district doesn’t have to guess. It is a pocket talker. It is not a language curriculum. It does not call 911.</p>
-  <p><a href="opening-statement.html">The opening statement for schools</a></p>
-</div></article>
-
-<footer><div class="wrap">
-  EZ Voice LLC · Fort Pierce, Florida. EZvoxa helps someone communicate. It is not a medical device and does not replace 911.
-</div></footer>
-
-<div class="film" id="film">
-  <button class="x" id="close" aria-label="Close">×</button>
-  <div class="stage">
-    <img id="still" src="shot-home.jpg" alt="" style="width:100%;border-radius:16px">
-    <div>
-      <p id="stept" style="font-size:22px;line-height:1.35;margin:0 0 16px;font-weight:700"></p>
-      <div style="display:flex;gap:10px">
-        <button class="btn" id="next" type="button">Next</button>
-        <button class="btn quiet" id="skip" type="button">Close</button>
-      </div>
-    </div>
+  <div class="storyBeats">
+   <article class="beat"><span class="num">01 — THE FIRST VOICE</span><h3>The old device did something important. It taught him that words exist.</h3><p>But as Evan got older, too many everyday sentences demanded too many screens. A simple thought could cost a minute of menus. Eventually the friction became the message.</p><div class="storyPhoto"><img src="collage-02.jpg" alt="Evan as a child with his dad"></div></article>
+   <article class="beat"><span class="num">02 — THE TURN</span><h3>When a board was wrong, Evan ignored it. When it was right, he used it without being asked.</h3><p>That changed the job. Instead of asking him to adapt to the software, the software had to adapt to him: visual, fast, familiar, and built around the life he was already living.</p></article>
+   <article class="beat"><span class="num">03 — THE PROOF</span><h3>Then he opened the app himself and said what he wanted to watch. Unprompted.</h3><p>That moment became the standard for every screen that followed: does it make communication easier enough that the user wants to reach for it?</p><div class="storyPhoto"><img src="collage-07.jpg" alt="Evan enjoying time outdoors"></div></article>
   </div>
-</div>
+ </div>
+</section>
+
+<section class="demo" id="the-app">
+ <div class="shell">
+  <div class="demoHead">
+   <div><div class="eyebrow">The App — guided walkthrough</div><h2>Show me, don’t make me dig.</h2></div>
+   <p>This walkthrough uses a generic board and safe examples. It demonstrates the experience without exposing Evan’s private contacts or sending a real alert.</p>
+  </div>
+  <div class="demoStage">
+   <div class="demoNav" id="demoNav">
+    <button class="demoTab active" data-step="0"><b>Home</b><span>Pictures are the buttons.</span></button>
+    <button class="demoTab" data-step="1"><b>Hurt</b><span>Point to where it hurts.</span></button>
+    <button class="demoTab" data-step="2"><b>School</b><span>The people in the building.</span></button>
+    <button class="demoTab" data-step="3"><b>Build a sentence</b><span>Phrase-first, not phrase-only.</span></button>
+    <button class="demoTab" data-step="4"><b>Family</b><span>People they actually know.</span></button>
+    <button class="demoTab" data-step="5"><b>SOS Family Alert</b><span>Demo only. Never 911.</span></button>
+   </div>
+   <div class="deviceWrap">
+    <div class="tablet" aria-hidden="true"><div class="screen" id="mockScreen"></div></div>
+    <div class="demoCopy"><div class="stepLabel" id="stepLabel">Step 1 of 6</div><h3 id="stepTitle">Start with what matters most.</h3><p id="stepText"></p><div class="note" id="stepNote"></div><div class="actions" style="margin-top:26px"><button class="btn primary" id="nextDemo">Next →</button><button class="btn ghost" id="speakDemo">🔊 Hear guide</button></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="product">
+ <div class="shell">
+  <div class="productHead"><div><div class="eyebrow" style="color:#6f3df0">Built around real life</div><h2>A talker they can actually live with.</h2></div><p>Huge picture buttons. Familiar people. Fast phrases. A full sentence builder when they need more. The visual cue comes first; the menu does not.</p></div>
+  <div class="featureGrid">
+   <article class="feature big"><div class="ico">🖼️</div><h3>Pictures are the buttons</h3><p>Home boards, food, feelings, places, morning, night, friends and more use recognizable visual cues instead of walls of tiny words.</p></article>
+   <article class="feature small"><div class="ico">🩹</div><h3>Hurt has its own door</h3><p>A body map lets someone show where something hurts without building an entire sentence first. Communication, not medical advice.</p></article>
+   <article class="feature third"><div class="ico">👥</div><h3>Their people</h3><p>Custom photos and familiar faces make family, friends and school staff easier to recognize quickly.</p></article>
+   <article class="feature third"><div class="ico">🧩</div><h3>Sentence Build + spelling</h3><p>Phrase-first is not phrase-only. Users can expand into sentence building and a spelling board when they want to say something new.</p></article>
+   <article class="feature third"><div class="ico">💾</div><h3>Backup & Restore</h3><p>One file saves the setup so a caregiver can move it to a new phone without rebuilding the entire board from scratch.</p></article>
+  </div>
+ </div>
+</section>
+
+<section class="plans" id="plans">
+ <div class="shell">
+  <div class="planLead"><div><div class="eyebrow">What comes with it</div><h2>Communication first. Extras second.</h2></div><p>No made-up launch price. No made-up store date. The distinction is simple: the core talker is intended to be free; connected family features are the future premium layer.</p></div>
+  <div class="planGrid">
+   <article class="plan free"><div class="tag">Core talker — intended free</div><h3>The voice comes first.</h3><ul><li>Phrase-first visual boards</li><li>Quick phrases</li><li>Hurt body map</li><li>School, friends, feelings, food, morning, night and places</li><li>Sentence Build + spelling board</li><li>Custom photos</li><li>Device voice</li><li>Caregiver editing</li><li>Backup & Restore</li></ul><div class="always"><b>SOS Family Alert is intended to stay free forever.</b><br>It notifies people the family chooses. It is not a monitored emergency service and it does not replace 911.</div></article>
+   <article class="plan paid"><div class="tag">Premium layer — planned</div><h3>Connected family features.</h3><ul><li>Family texting</li><li>Inbound family voice notes</li><li>Sync of boards and people across phones after a real account system</li><li>A future natural-voice layer</li></ul><p style="color:#8c96a9;margin-top:22px">These are vision items. The public site will not pretend they are live before they are.</p></article>
+  </div>
+ </div>
+</section>
+
+<section class="signup" id="signup">
+ <div class="shell">
+  <div class="eyebrow">Be there when it is ready</div>
+  <h2>Want to know when EZvoxa is available?</h2>
+  <p>Leave your email. That is it. No checkout, no invented release date, no sales funnel circus.</p>
+  <form class="wait" id="waitForm" novalidate><input id="email" type="email" autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button class="btn primary" id="joinBtn" type="submit">Join the list</button></form>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+  <div class="links"><a class="btn ghost" href="hearhim.html">Read EZ’s Voice</a><a class="btn ghost" href="opening-statement.html">For schools: Opening Statement</a></div>
+ </div>
+</section>
+</main>
+
+<footer><div class="shell foot"><div><b style="color:#dce2ec">EZ Voice LLC · Fort Pierce, Florida</b><br>EZvoxa helps someone communicate. It is not a medical device and does not replace 911.</div><div class="footlinks"><a href="hearhim.html">EZ’s Voice</a><a href="opening-statement.html">For schools</a><span>Privacy policy — draft pending approval</span></div></div></footer>
+
 <script>
 (function(){
-  var STEPS = [
-    "This is his home. The pictures are the buttons.",
-    "Hurt is on the home screen. He points to where it hurts.",
-    "School is the people in the building. Their faces. Their names.",
-    "Phrases first. Then a sentence bar. Then a speller. Phrase-first is not phrase-only.",
-    "Family is I love you, I miss you, a birthday text.",
-    "Family Alert is two taps to the people loaded in the app. Not 911.",
-    "You put their photos, their phrases, their people. Nothing generic survives.",
-    "He didn’t need a better device. He needed one that would grow with him."
-  ];
-  var i = 0, film = document.getElementById("film");
-  function speak(t){
-    try {
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(t);
-      u.rate = 0.95;
-      window.speechSynthesis.speak(u);
-    } catch(e){}
-  }
-  function show(n){
-    i = n;
-    document.getElementById("stept").textContent = STEPS[i];
-    speak(STEPS[i]);
-  }
-  function open(){ film.classList.add("on"); show(0); }
-  function close(){ film.classList.remove("on"); try{ speechSynthesis.cancel(); }catch(e){} }
-  document.getElementById("watch").onclick = open;
-  document.getElementById("navApp").onclick = function(e){ e.preventDefault(); open(); };
-  document.getElementById("close").onclick = close;
-  document.getElementById("skip").onclick = close;
-  document.getElementById("next").onclick = function(){ if(i < STEPS.length-1) show(i+1); else close(); };
-  document.getElementById("list").addEventListener("submit", function(e){
-    e.preventDefault();
-    var email = document.getElementById("hemail").value.trim();
-    var msg = document.getElementById("hmsg");
-    var btn = document.getElementById("hgo");
-    if(!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)){ msg.textContent = "That email doesn’t look right."; return; }
-    btn.disabled = true;
-    fetch("/api/waitlist", { method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ name:"", how:"email", email:email, phone:"", consentText:"", about:"", source:"letter-home" }) })
-      .then(function(r){ return r.json(); }).then(function(j){
-        if(j && j.ok){ msg.textContent = "You’re on the list."; btn.hidden = true; }
-        else { btn.disabled = false; msg.textContent = "Something went wrong. Try again."; }
-      }).catch(function(){ btn.disabled = false; msg.textContent = "No connection."; });
-  });
+ const menu=document.getElementById('menu'),nav=document.getElementById('navlinks');
+ menu.onclick=()=>nav.classList.toggle('open');
+ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+ const STEPS=[
+  {title:'Start with what matters most.',text:'The home board uses large visual categories and permanent quick-access choices. A user should not have to hunt through a language tree just to say something ordinary.',note:'This website demo uses generic content. Evan’s private board is never published.',tiles:[['💬','Talk'],['🍽️','Food'],['🏫','School'],['🩹','Hurt'],['👥','Friends'],['🙂','Feelings']]},
+  {title:'“Where does it hurt?” becomes a picture question.',text:'Hurt lives on the home screen. Open it, tap the body area, then add simple follow-up choices such as how much or when it started.',note:'The body map helps someone communicate. It is not medical advice.',tiles:[['🧠','Head'],['🫁','Chest'],['🫃','Stomach'],['💪','Arm'],['🦵','Leg'],['🦶','Foot']]},
+  {title:'School means people, not bureaucracy.',text:'A student can recognize teachers, aides, speech/OT, office staff and friends by the faces or initials their caregiver loads. The school board is about getting through the day.',note:'No district sales pitch in the main experience. Just the people the student needs.',tiles:[['AB','Teacher'],['JS','Aide'],['ML','Office'],['TK','Speech/OT'],['RP','Friend'],['DN','Bus']]},
+  {title:'Fast phrase first. Build when you need more.',text:'Common phrases stay one tap away. Sentence Build and spelling are there for the moments that do not fit a preset button.',note:'Phrase-first is not phrase-only.',tiles:[['I','I'],['want','want'],['to','to'],['go','go'],['outside','outside'],['?','?']]},
+  {title:'Use the people they actually know.',text:'Family and friends can be represented by photos or simple initials, then paired with useful phrases. The visual cue is part of the communication, not decoration.',note:'The public site never exposes Evan’s private contacts or alert list.',tiles:[['AB','Andy'],['JS','Jenny'],['ML','Martin'],['TK','Tommy'],['RP','Risha'],['DN','Danelo']]},
+  {title:'SOS Family Alert is two taps to chosen people.',text:'The planned alert sends a message and location to the people the family selected. Those recipients may call 911. EZvoxa does not call 911 and is not a monitored emergency service.',note:'Demo only. No alert is sent from this website.',tiles:[['🆘','SOS'],['📍','Location'],['👥','Family'],['📱','Message'],['✓','Confirm'],['☎','They can call']]}
+ ];
+ let step=0; const screen=document.getElementById('mockScreen');
+ function draw(){const s=STEPS[step];document.getElementById('stepLabel').textContent='Step '+(step+1)+' of '+STEPS.length;document.getElementById('stepTitle').textContent=s.title;document.getElementById('stepText').textContent=s.text;document.getElementById('stepNote').textContent=s.note;document.querySelectorAll('.demoTab').forEach((b,i)=>b.classList.toggle('active',i===step));screen.innerHTML='<div class="miniTop"><div class="miniBtn yes">Yes</div><div class="miniBtn home">⌂</div><div class="miniBtn no">No</div></div><div class="quick"><div class="q">👋</div><div class="q">🙏</div><div class="q">➕</div><div class="q">?</div></div><div class="board">'+s.tiles.map(t=>'<div class="tile"><i>'+t[0]+'</i>'+t[1]+'</div>').join('')+'</div><div class="sos">SOS FAMILY ALERT · DEMO ONLY</div>'}
+ document.querySelectorAll('.demoTab').forEach((b,i)=>b.onclick=()=>{step=i;draw()});
+ document.getElementById('nextDemo').onclick=()=>{step=(step+1)%STEPS.length;draw()};
+ document.getElementById('speakDemo').onclick=()=>{try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(STEPS[step].title+' '+STEPS[step].text);u.rate=.94;speechSynthesis.speak(u)}catch(e){}};
+ draw();
+
+ document.getElementById('waitForm').addEventListener('submit',async function(e){e.preventDefault();const email=document.getElementById('email').value.trim(),status=document.getElementById('status'),btn=document.getElementById('joinBtn');if(!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)){status.textContent='That email does not look right.';return}btn.disabled=true;status.textContent='Adding you…';try{const r=await fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,how:'email',source:'ezvoxa-rebuild'})});const j=await r.json();if(j&&j.ok){status.textContent=j.already?'You are already on the list.':'You’re on the list.';btn.textContent='Done';document.getElementById('email').disabled=true}else{throw new Error()}}catch(err){btn.disabled=false;status.textContent='Something went wrong. Please try again.'}});
 })();
 </script>
 </body>
