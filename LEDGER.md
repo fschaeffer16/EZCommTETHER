@@ -110,10 +110,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Hurt, School, Sentence Build, Friends, Morning, Fun, Watch, Night,
   Bathroom, Health, Feelings, Colors, Numbers, Time, Calendar, Places,
   Houses, My Choice. Do not rearrange without his written order.
-- **Visible changes need Frank's go first** (his rule 2 Sep, now in
-  CLAUDE.md): art, icons, wording, names, layouts, tile order, features
-  appearing on screen. Invisible fixes and work he asked for ship as
-  before.
+- **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
+  CLAUDE.md). Shipping to main stays the default and is not the issue.
+  The issue was deciding what to change without him: describe the change
+  first, get his go, then build, then ship. Covers everything he did not
+  explicitly ask for and every decision inside a task he did ask for that
+  he has not made himself. Only broken/unsafe things get fixed first and
+  reported after.
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
 - **PRICING IS NOT CONFIRMED. Frank, 1 Sep 2026: "remove the pricing. I

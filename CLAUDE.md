@@ -44,13 +44,20 @@ program for low-income/disability families.
   own phones haven't already been running. Merging to `main` does **not** reach a customer.
 - **Vercel deploys `main`.** Merging to `main` puts code on **all three phones** — Evan's,
   Frank's, and Raniyah's — within minutes. All three are production; there is no "staging" phone.
-- **Ship to `main` by default — but Frank approves anything VISIBLE first (his rule, 2 Sep
-  2026).** The August "ship by default" instruction covers work he asked for and invisible
-  fixes: bug fixes, broken-deploy repair, security closures, backend hardening. It does NOT
-  cover choices that change what a user sees or what the product says: artwork, icons,
-  wording, names, layouts, features appearing on screen. For those, show him (screenshot or
-  draft), get his go, then ship. When he says he will supply something (art, wording), WAIT
-  for it — do not improvise a stand-in beyond removing something harmful.
+- **Ship to `main` by default.** Frank's standing instruction, reconfirmed 2 Sep 2026: anything
+  I build for him should reach all three phones. Work on a branch, then merge it — don't leave
+  finished work sitting on a branch waiting for approval, and don't make him ask why the change
+  didn't show up.
+- **Frank approves a change BEFORE I make it (his rule, 2 Sep 2026).** The shipping rule above
+  is about getting approved work onto the phones. It is not permission to decide what changes.
+  The process is: describe the change first (what, where, why; a screenshot or draft if it is
+  visual), wait for his go, then build it, then ship to main. This covers everything he did not
+  explicitly ask for: my own additions, "while I'm in there" improvements, and every decision
+  inside a task he did ask for that he has not made himself (artwork, icons, wording, names,
+  placement, tile order, what appears on screen). Ask, don't assume. When he says he will supply
+  something (art, wording, an order), WAIT for it.
+  The only exception is something broken or unsafe (a dead deploy, Evan's likeness in the
+  product, a security exposure): fix it immediately, then tell him what was done.
 - **Nothing of Evan goes in the template/product. Ever. No exceptions, no asking.** Not his
   likeness, his photos, his avatar art, his board contents, or his private details. Frank had
   to catch this twice on 2 Sep. The packaging step strips known likeness art; the rule is
