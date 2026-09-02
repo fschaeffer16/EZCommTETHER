@@ -25,13 +25,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>During an emergency SOS, EZvoxa shares your live location with your family so they can find you. Location is never used at any other time.</string>
+	<string>During an SOS Family Alert, EZvoxa shares your location with the family so they can find you. Location is never used at any other time.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>The microphone records short voice notes that your family can leave for each other inside EZvoxa.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>The camera lets a parent take a photo to personalize a button — for example, putting a teacher's real face on the Teachers button.</string>
+	<string>The camera lets a parent take a photo to personalize a button, for example putting a teacher's real face on the Teachers button.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photos you choose are used to personalize buttons, so the person using EZvoxa sees real faces and real places. Photos stay on this device.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

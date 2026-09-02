@@ -186,19 +186,22 @@ version before v1 ships, so the flagship claim is true on day one.
 
 ## Still to do — code (I own these)
 
-- [ ] **Attach PrivacyInfo.xcprivacy to the Xcode target** (review 2 Sep: the
-      file exists but the project does not reference it; add it to the pbxproj,
-      no Xcode UI in this plan).
-- [ ] **Native Backup & Restore path** (review 2 Sep): WKWebView cannot download
-      and Android WebView has no share sheet, so the web backup button does
-      nothing in store builds. Use @capacitor/filesystem + @capacitor/share in
-      native builds; file-picker restore already works on both.
-- [ ] `ITSAppUsesNonExemptEncryption = false` in Info.plist (HTTPS only), or
-      every TestFlight upload waits on the export-compliance question.
-- [ ] One version number for both stores (MARKETING_VERSION and Android
-      versionName are hand-edited today); stamp both from one file at build.
-- [ ] Purpose strings: say SOS Family Alert, no dashes (wording to Frank first).
-- [ ] Pin `xcode:` in codemagic.yaml after the first green build.
+- [x] PrivacyInfo.xcprivacy referenced in the Xcode project (file ref, App
+      group, Resources phase), 2 Sep. Confirm it lands in the first Codemagic
+      build log.
+- [x] Native Backup path, 2 Sep: in store builds the backup is written with
+      @capacitor/filesystem and handed to the share sheet with @capacitor/share;
+      web and PWA keep the download. Verified against a simulated bridge; MUST
+      be exercised on TestFlight and Play internal (the one thing a simulator
+      cannot prove). Restore via the file picker works on both already.
+- [x] `ITSAppUsesNonExemptEncryption = false` in Info.plist, 2 Sep.
+- [x] One version number: `native/version.json` (1.0.0) is stamped onto the
+      iOS marketing version and Android versionName by build.js, 2 Sep. Bump
+      that file for each release; build numbers stay automatic.
+- [x] Purpose strings reworded 2 Sep (SOS Family Alert, no dashes); Frank
+      approved the wording with the review.
+- [ ] Pin `xcode:` in codemagic.yaml after the first green build (noted in
+      the yaml; nothing to pin against until a build exists).
 
 - [ ] On-device SOS for customers (awaiting Frank's go, above).
 - [ ] `api/speak`: an app token or entitlement check server-side before
@@ -208,6 +211,19 @@ version before v1 ships, so the flagship claim is true on day one.
 - [x] Backup & Restore — built 2 Sep (Settings card in demo.html).
 - [ ] Push notifications for family voice notes (Guideline 4.2 "native
       feel" bonus; needs a plugin pass).
+
+- [x] Likeness audit of tether-icons.js done 2 Sep (all 253 icons viewed).
+      Sixteen keys are blanked in every store build: Evan's avatar art
+      (hurt_tile, headache, sore_throat, cold, cough, fever, stomachache,
+      rest, sleep, hamburger, abc_evan, numbers_evan) and photographs of the
+      family's homes (houses_tile, houses_tile_alt, house_dad, house_mom).
+- [ ] **Decision for Frank: brand logos in the icon file.** The set carries
+      real trademarks (McDonald's, Outback, Doritos, Lay's, Fritos, Coke,
+      Gatorade, Canada Dry, Hawaiian Punch, Hillshire, MLB, NBA, NFL, ESPN,
+      WWE). They are Evan's real preferences on his board and the template
+      never renders them, but they ship inside the binary. Apple 5.2.1
+      (intellectual property) is a rejection risk if a reviewer finds them.
+      Recommendation: add them to the strip list for store builds.
 
 ## Still to do — Frank
 

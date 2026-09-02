@@ -88,19 +88,23 @@ html = html.replace(AUDIO_LIT, "new Audio(window.__EZ_API_BASE + '/api/speak?");
 
 fs.writeFileSync(path.join(www, 'index.html'), html);
 
-// tether-icons.js mostly holds the generic neon set, but a few keys are
-// EVAN'S AVATAR ART and must never ship inside a customer binary, the same
-// rule as the family photos. Their data is replaced with the generic
-// medical-cross icon (tile_hurt) so the globals still resolve if some code
-// path asks for them. Extend this list as the likeness audit finds more.
+// tether-icons.js mostly holds the generic neon set, but some keys are
+// EVAN'S AVATAR ART or OUR FAMILY'S OWN HOUSES and must never ship inside a
+// customer binary, the same rule as the family photos. Their data is
+// replaced with a blank pixel so the globals still resolve if some code path
+// asks for them (the template never renders these keys; it has its own
+// neon versions). Audited 2 Sep 2026 across all 253 icons.
 {
-  const EVAN_LIKENESS_KEYS = ['hurt_tile', 'headache'];
+  const EVAN_LIKENESS_KEYS = [
+    // the avatar (sick-day art, sleep, the McDonald's picture, the school pages)
+    'hurt_tile', 'headache', 'sore_throat', 'cold', 'cough', 'fever', 'stomachache',
+    'rest', 'sleep', 'hamburger', 'abc_evan', 'numbers_evan',
+    // photographs of the family's actual homes
+    'houses_tile', 'houses_tile_alt', 'house_dad', 'house_mom',
+  ];
   let icons = fs.readFileSync(path.join(root, 'tether-icons.js'), 'utf8');
-  const generic = icons.match(/"tile_hurt":\s*"(data:image\/[a-z+]+;base64,[^"]+)"/);
-  if (!generic) {
-    console.error('build failed: generic tile_hurt icon not found in tether-icons.js');
-    process.exit(1);
-  }
+  // a 1x1 transparent PNG: blank if ever drawn, never a wrong picture
+  const generic = [null, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='];
   for (const key of EVAN_LIKENESS_KEYS) {
     const re = new RegExp('"' + key + '":\\s*"data:image\\/[a-z+]+;base64,[^"]+"');
     if (!re.test(icons)) {
@@ -110,7 +114,7 @@ fs.writeFileSync(path.join(www, 'index.html'), html);
     icons = icons.replace(re, '"' + key + '": ' + JSON.stringify(generic[1]));
   }
   fs.writeFileSync(path.join(www, 'tether-icons.js'), icons);
-  console.log('likeness strip: replaced', EVAN_LIKENESS_KEYS.join(', '), 'with the generic icon');
+  console.log('likeness strip: blanked ' + EVAN_LIKENESS_KEYS.length + ' keys (' + EVAN_LIKENESS_KEYS.join(', ') + ')');
 }
 fs.writeFileSync(path.join(www, 'tether-photos.js'),
   '// Stub for store builds: the real tether-photos.js holds our family\'s\n'
@@ -119,6 +123,27 @@ fs.writeFileSync(path.join(www, 'tether-photos.js'),
 
 for (const f of ['manifest-template.webmanifest', 'icon-ezvoxa-180.png', 'icon-ezvoxa-192.png', 'icon-ezvoxa-512.png']) {
   fs.copyFileSync(path.join(root, f), path.join(www, f));
+}
+
+// One version number for both stores. Bump native/version.json for each
+// release (1.0.1, 1.0.2 ...); this stamps the iOS marketing version and the
+// Android versionName so nothing is hand-edited in two places. Build
+// numbers are separate and come from Codemagic's BUILD_NUMBER.
+{
+  const version = JSON.parse(fs.readFileSync(path.join(__dirname, 'version.json'), 'utf8')).version;
+  if (!/^\d+\.\d+\.\d+$/.test(version)) { console.error('build failed: version.json must be like 1.0.0, got ' + version); process.exit(1); }
+  const pbxPath = path.join(__dirname, 'ios', 'App', 'App.xcodeproj', 'project.pbxproj');
+  let pbx = fs.readFileSync(pbxPath, 'utf8');
+  const hits = (pbx.match(/MARKETING_VERSION = [^;]+;/g) || []).length;
+  if (hits < 1) { console.error('build failed: MARKETING_VERSION not found in the Xcode project'); process.exit(1); }
+  pbx = pbx.replace(/MARKETING_VERSION = [^;]+;/g, 'MARKETING_VERSION = ' + version + ';');
+  fs.writeFileSync(pbxPath, pbx);
+  const gradlePath = path.join(__dirname, 'android', 'app', 'build.gradle');
+  let gradle = fs.readFileSync(gradlePath, 'utf8');
+  if (!/versionName "[^"]*"/.test(gradle)) { console.error('build failed: versionName not found in android/app/build.gradle'); process.exit(1); }
+  gradle = gradle.replace(/versionName "[^"]*"/, 'versionName "' + version + '"');
+  fs.writeFileSync(gradlePath, gradle);
+  console.log('version: ' + version + ' stamped on iOS (' + hits + ' configs) and Android');
 }
 
 const kb = (p) => Math.round(fs.statSync(p).size / 1024) + 'KB';

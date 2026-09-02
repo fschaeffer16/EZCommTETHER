@@ -22,6 +22,9 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
+      # Pin this (e.g. xcode: 16.4) as soon as the first build is green, so a
+      # new Xcode release cannot break the build unannounced. Left on latest
+      # only until that first build exists.
       xcode: latest
       node: 22
       ios_signing:

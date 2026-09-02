@@ -4500,8 +4500,21 @@ class Component extends DCLogic {
       const payload = { app: 'EZvoxa', kind: 'backup', build: this.APP_BUILD(), at: new Date().toISOString(), keys: this.ezOwnKeys() };
       const text = JSON.stringify(payload);
       const name = 'ezvoxa-backup-' + new Date().toISOString().slice(0, 10) + '.json';
-      // The share sheet is the path that works inside the store apps
-      // (WKWebView cannot download); the browser gets a plain download.
+      // Inside the store apps the page cannot download a file and Android's
+      // web view has no share sheet, so native builds write the file with the
+      // Filesystem plugin and hand it to the phone's own share sheet. The
+      // browser and the PWA fall through to the web paths below.
+      try {
+        const cap = window.Capacitor;
+        const FS = cap && cap.Plugins && cap.Plugins.Filesystem;
+        const SH = cap && cap.Plugins && cap.Plugins.Share;
+        if (cap && typeof cap.isNativePlatform === 'function' && cap.isNativePlatform() && FS && SH) {
+          FS.writeFile({ path: name, data: text, directory: 'CACHE', encoding: 'utf8' })
+            .then((r) => SH.share({ title: 'EZvoxa backup', files: [r.uri] }))
+            .catch((e) => { if (!/cancel/i.test(String(e && e.message || e))) alert('Could not make the backup. Nothing on this phone was changed.'); });
+          return;
+        }
+      } catch (e) { /* no native bridge: fall through */ }
       try {
         const file = new File([text], name, { type: 'application/json' });
         if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -6274,7 +6287,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.5'; }
+  APP_BUILD() { return '2026.09.02.6'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

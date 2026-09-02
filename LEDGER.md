@@ -123,6 +123,20 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   (`walk-*.jpg`, taken from the real app at phone size). SOS Family Alert
   name applied in the letter, the film, EZ's Voice's phone, and the app's
   confirm button (no dash).
+- **The seven store-readiness code items, Frank's go 2 Sep, done the same
+  day** (build 2026.09.02.6, app version 1.0.0): privacy manifest linked
+  into the Xcode project; native backup path (Filesystem + Share plugins)
+  for store builds; export-compliance key; one version number in
+  `native/version.json` stamped onto both stores at build; purpose
+  strings reworded (SOS Family Alert, no dashes); Xcode pin waits on the
+  first green build by design; full likeness audit of all 253 icons.
+- **Likeness audit result (2 Sep):** sixteen keys are Evan or the family's
+  homes and are blanked in every store build (list in native/build.js and
+  APPSTORE.md). The template never draws them; it has its own neon art.
+- **Open question for Frank:** real brand logos (McDonald's, Coke, NFL and
+  the rest) sit in the icon file and ship inside the binary though the
+  template never shows them. Apple can reject for trademarks.
+  Recommendation on the table: strip them from store builds too.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
