@@ -1,4 +1,19 @@
 (function(){
+  // Brand-size override: make the EZvoxa mark read as a real header logo,
+  // not a favicon-sized badge, while keeping navigation responsive.
+  const brandStyle=document.createElement('style');
+  brandStyle.textContent=`
+    :root{--top:94px}
+    .brand{width:72px!important;height:72px!important;border-radius:20px!important;box-shadow:0 8px 24px rgba(0,0,0,.16)!important}
+    .topbar-inner{gap:30px!important}
+    @media(max-width:900px){
+      :root{--top:86px}
+      .brand{width:64px!important;height:64px!important;border-radius:18px!important}
+      .mainnav{top:86px!important}
+    }
+  `;
+  document.head.appendChild(brandStyle);
+
   const menu=document.querySelector('.menu-btn'), nav=document.querySelector('.mainnav');
   if(menu&&nav) menu.addEventListener('click',()=>nav.classList.toggle('open'));
   const rail=document.querySelector('.rail'), railBtn=document.querySelector('.mobile-rail-trigger');
