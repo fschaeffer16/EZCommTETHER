@@ -39,8 +39,8 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 |---|---|:---:|:---:|---|
 | family | Family | ✓ | ✓ | board `family` (people) |
 | food | Food | ✓ | ✓ | board `food` |
-| hurtbody | Hurt | ✓ | — | board `hurtbody` (body map) |
-| hurt | I'm Sick / Health | ✓ | ✓ | board `hurt` |
+| hurtbody | Hurt | ✓ | ✓ | board `hurtbody` (body map) |
+| hurt | I'm Sick / Health | ✓ | — (inside Feelings) | board `hurt` |
 | school | School | ✓ | ✓ | board `school` (hub) |
 | friends | Friends | — | ✓ | board `family` (friends people) |
 | morning | Morning | ✓ | ✓ | board `morning` |
@@ -52,12 +52,19 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | sentbuild | Sentence Build | ✓ | ✓ | board `buildmenu` (chooser) |
 | calendar | Calendar | ✓ | ✓ | board `calendar` |
 | places | Places | ✓ | ✓ | board `places` |
-| houses | Houses | ✓ | ✓ | board `houses` |
-| choice | My Choice | ✓ | ✓ | **phrase chooser** |
+| houses | Houses | ✓ | — (first tiles inside Places) | board `houses` / `houserooms` |
+| choice | My Choice | ✓ | — (inside Feelings) | **phrase chooser** |
 | regulate | Overstimmed | — | ✓ | **phrase chooser** |
-| colors | Colors | — | ✓ | board `colors` |
-| numbers | Numbers | — | ✓ | board `numbers` |
-| clock | Time | — | ✓ | board `clock` |
+| colors | Colors | — | — (inside School) | board `colors` |
+| numbers | Numbers | — | — (inside School) | board `numbers` |
+| clock | Time | — | — (inside Calendar) | board `clock` |
+
+
+**Template home order (Frank, 2 Sep 2026, `templateHomeOrder()`, layoutRev 19):**
+Family, Food / School, Sentence Build / Fun, Watch / Morning, Night / Bathroom, Hurt /
+Friends, Feelings / Places, Calendar. Fourteen tiles. Health and My Choice are the last
+two tiles inside Feelings; Home One and Home Two are the first two tiles inside Places;
+Colors, Numbers and the Calculator are inside School; Time is inside Calendar.
 
 ### Where Evan reaches the tiles he does NOT have on home
 Evan's home is intentionally leaner; these live one level in:

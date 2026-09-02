@@ -102,13 +102,21 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **Frank supplied the template's Hurt tile art on 2 Sep** (neon figure
   holding a knee). Shipped the same day as `tile_hurtbody`, frame stripped,
   the app drawing the box and caption. Build 2026.09.02.3.
-- **The template's home tile order is Frank's decision, not Claude's.**
-  Claude placed Hurt in row two (before School) on 2 Sep by copying Evan's
-  board; Frank called that out. The position is provisional until he
-  gives the order he wants. Template home order today: Family, Food,
-  Hurt, School, Sentence Build, Friends, Morning, Fun, Watch, Night,
-  Bathroom, Health, Feelings, Colors, Numbers, Time, Calendar, Places,
-  Houses, My Choice. Do not rearrange without his written order.
+- **Template home order, Frank's, FINAL 2 Sep 2026 (built, layoutRev 19):**
+  Family, Food / School, Sentence Build / Fun, Watch / Morning, Night /
+  Bathroom, Hurt / Friends, Feelings / Places, Calendar. Off the home
+  screen: Health and My Choice (last two tiles inside Feelings), Houses
+  (first two tiles inside Places, rooms come back to Places), Colors and
+  Numbers (inside School with the Calculator), Time (inside Calendar).
+  The red Hurt bar inside Health is gone (Hurt is a home tile). Frank
+  approved the placements 2 Sep ("Go on the first one"). APP_MAP.md has
+  the table. Do not rearrange without his written order.
+- **Pricing: Frank is working on it the week of 2 Sep 2026.** Nothing
+  publishes until he confirms; the subscription switch-on waits on it.
+- **Privacy policy: draft delivered to Frank as a Word document 2 Sep**
+  (`EZvoxa Privacy Policy DRAFT.docx`, generated from privacy.html with
+  the SOS Family Alert name and the subscription and backup lines added;
+  privacy.html carries the same). Awaiting his wording.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

@@ -3331,7 +3331,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isHurt }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ hurtBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);flex:1;min-width:0;">{{ sickTitle }}</div>
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
@@ -6057,7 +6057,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 18) return false;
+    if (rev >= 19) return false;
 
     // Rev 17 (template only): Sentence Build moves up beside School. A fresh
     // demo already gets this from the tile order; this catches a demo phone
@@ -6242,7 +6242,18 @@ class Component extends DCLogic {
       }
     }
 
-    d.layoutRev = 18;
+    // Rev 19: Frank's template home order of 2 Sep 2026. Health, Houses,
+    // Colors, Numbers, Time and My Choice leave the home screen (they live
+    // inside Feelings, Places, School and Calendar now). Custom tiles a
+    // family added follow underneath, nothing is dropped.
+    if (rev < 19 && d.profile !== 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const want = this.templateHomeOrder();
+      const gone = ['hurt', 'houses', 'colors', 'numbers', 'clock', 'choice'];
+      const rest = d.homeOrder.filter((id) => want.indexOf(id) < 0 && gone.indexOf(id) < 0);
+      d.homeOrder = want.concat(rest);
+    }
+
+    d.layoutRev = 19;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6263,7 +6274,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.3'; }
+  APP_BUILD() { return '2026.09.02.4'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6296,7 +6307,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 18 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 19 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6651,7 +6662,9 @@ class Component extends DCLogic {
       { id: 'watch', label: mine ? 'TV' : 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: mine ? '#4F46E5' : '#6366F1', ...(mine ? { img: 'assets/night.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_night') }), onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: mine ? '#1F9E6E' : '#22B6F0', ...(mine ? { img: 'assets/bathroom.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_bathroom') }), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
-      { id: 'hurt', label: mine ? "I'm Sick" : 'Health', emoji: '➕', color: mine ? '#E23B2E' : '#E23B2E', ...(mine ? { img: this.iconUri('headache'), contain: true } : { img: this.iconUri('tile_hurt') }), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
+      // Health lives inside Feelings on buyer phones (Frank's order, 2 Sep 2026);
+      // Evan keeps his I'm Sick home tile.
+      ...(mine ? [{ id: 'hurt', label: "I'm Sick", emoji: '➕', color: '#E23B2E', img: this.iconUri('headache'), contain: true, onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) }] : []),
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: mine ? '#7A5CFF' : '#FB7185', ...(mine ? { img: 'assets/feelings.jpg', pos: 'center 38%' } : { img: this.iconUri('tile_feelings') }), onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
@@ -6661,18 +6674,17 @@ class Component extends DCLogic {
       // he picks a person to talk to, and they are in Sentence Build's quick
       // phrases as well, so a whole tile for them was a tap he didn't need.
       // (Sentence Build moved up to sit beside School — see above.)
-      ...(mine ? [] : [{ id: 'colors', label: 'Colors', emoji: '🎨', color: '#A855F7', img: this.iconUri('tile_colors'), onTap: () => this.setState({ screen: 'colors' }) }]),
       // Numbers is its own home tile; the calculator stays inside School.
-      ...(mine ? [] : [{ id: 'numbers', label: 'Numbers', emoji: '\u{1F522}', color: '#3B82F6', img: this.iconUri('tile_numbers'), onTap: () => this.setState({ screen: 'numbers', numFrom: 'board' }) }]),
       // Time lives inside Calendar on Evan's board — they are the same
       // question asked two ways.
-      ...(mine ? [] : [{ id: 'clock', label: 'Time', emoji: '🕒', color: '#EC4899', img: this.iconUri('tile_clock'), onTap: () => this.setState({ screen: 'clock' }) }]),
       { id: 'calendar', label: 'Calendar', emoji: '📅', color: mine ? '#4F46E5' : '#D946EF', ...(mine ? { img: null } : { img: this.iconUri('tile_calendar') }), onTap: () => this.setState({ screen: 'calendar', calOffset: 0 }) },
       { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: this.iconUri('houses_tile') } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
-      { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      // Houses sit first inside Places on buyer phones (Frank, 2 Sep 2026).
+      ...(mine ? [{ id: 'houses', label: 'Houses', emoji: '🏠', color: '#0D9488', img: this.iconUri('houses_tile'), onTap: () => this.setState({ screen: 'houses' }) }] : []),
+      // My Choice lives inside Feelings on buyer phones (Frank, 2 Sep 2026).
+      ...(mine ? [{ id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', img: null, onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) }] : []),
       // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
       // the rest of them rather than taking a tile of its own.
       ...(mine ? [] : [{ id: 'regulate', label: 'Overstimmed', emoji: '😵\u200D\uD83D\uDCAB', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()) }]),
@@ -6788,6 +6800,12 @@ class Component extends DCLogic {
 
   // Frank's layout, in the pairs he wrote them. Used both by the rev 12
   // migration and by a phone that has no saved order yet.
+  // Frank's template home order, 2 Sep 2026, in the pairs he wrote them:
+  //   Family/Food, School/Sentence Build, Fun/Watch, Morning/Night,
+  //   Bathroom/Hurt, Friends/Feelings, Places/Calendar.
+  templateHomeOrder() {
+    return ['family','food','school','sentbuild','fun','watch','morning','night','bathroom','hurtbody','friends','feelings','places','calendar'];
+  }
   evanHomeOrder() {
     return ['family','food','school','sentbuild','feelings','bathroom','fun','watch','morning','night','houses','places','hurtbody','hurt','calendar','choice'];
   }
@@ -6795,8 +6813,8 @@ class Component extends DCLogic {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));
     let all = this.homeBaseTiles().concat(custom);
     let order = this.data().homeOrder;
-    if ((!order || !order.length) && this.isEvanProfile()) {
-      const want = this.evanHomeOrder();
+    if (!order || !order.length) {
+      const want = this.isEvanProfile() ? this.evanHomeOrder() : this.templateHomeOrder();
       order = want.concat(all.map((t) => t.id).filter((id) => want.indexOf(id) < 0));
     }
     if (order && order.length) {
@@ -7550,6 +7568,7 @@ class Component extends DCLogic {
       hurts: this.hurts().map((i) => this.mapHurt(i)).concat(this.customsFor('hurt')),
       isHurt: s.screen === 'hurt',
       openHurt: () => this.setState({ screen: 'hurt', hurtFlow: null }),
+      hurtBack: () => this.setState({ screen: s.hurtFrom === 'feelings' ? 'feelings' : 'board', hurtFrom: null }),
       // The drawn figure is taller than the old one, so it gets more width.
       bodyBoxW: this.isEvanProfile() ? '300px' : 'min(300px, 82%)',
       bodyFaceEl: React.createElement('img', {
@@ -7570,7 +7589,12 @@ class Component extends DCLogic {
       hurtSummary: (s.hurtFlow && s.hurtFlow.summary) || '',
       replayHurt: () => { if (this.state.hurtFlow && this.state.hurtFlow.summary) this.speak(this.state.hurtFlow.summary); },
       closeHurtFlow: () => this.setState({ hurtFlow: null, screen: 'hurt' }),
-      placesList: this.places().map((p) => this.mapPlace(p)).concat(this.customsFor('places')),
+      placesList: (this.isEvanProfile() ? [] : this.houses().map((h) => ({
+        // Frank, 2 Sep 2026: the houses are the first tiles inside Places.
+        label: h.label, editable: false,
+        imgEl: React.createElement('img', { src: this.iconUri(h.icon), alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' } }),
+        onTap: () => this.setState({ screen: 'houserooms', houseId: h.id, houseFrom: 'places' }),
+      }))).concat(this.places().map((p) => this.mapPlace(p))).concat(this.customsFor('places')),
       isPlaces: s.screen === 'places',
       openPlaces: () => this.setState({ screen: 'places' }),
       peopleList: this.activePeopleList(),
@@ -7959,7 +7983,7 @@ class Component extends DCLogic {
           onTap: () => this.setState({ screen: 'houserooms', houseId: h.id }) };
       }),
       isHouseRooms: s.screen === 'houserooms',
-      backToHouses: () => this.setState({ screen: 'houses' }),
+      backToHouses: () => this.setState({ screen: s.houseFrom === 'places' ? 'places' : 'houses', houseFrom: null }),
       houseTitle: this.houseById(s.houseId).label,
       houseColor: this.houseById(s.houseId).color,
       houseRooms: (() => {
@@ -7992,7 +8016,7 @@ class Component extends DCLogic {
       calNext: () => this.setState({ calOffset: (this.state.calOffset || 0) + 1 }),
       calToday: () => this.setState({ calOffset: 0 }),
 
-      calShowTime: this.isEvanProfile(),
+      calShowTime: true,
       openClockFromCal: () => this.setState({ screen: 'clock', clockFrom: 'calendar' }),
       clockBack: () => this.setState({ screen: s.clockFrom === 'calendar' ? 'calendar' : 'board' }),
       isClock: s.screen === 'clock',
@@ -8015,7 +8039,13 @@ class Component extends DCLogic {
       isFeelings: s.screen === 'feelings',
       isMorning: s.screen === 'morning',
       nightList: this.nightList().concat(this.customsFor('night')),
-      feelingsList: this.feelingsList().concat(this.customsFor('feelings')).concat(this.isEvanProfile() ? [{
+      feelingsList: this.feelingsList().concat(this.customsFor('feelings')).concat(this.isEvanProfile() ? [] : [
+        // Frank's order, 2 Sep 2026: Health and My Choice live here, last, on buyer phones.
+        { label: 'Health', emoji: '➕', hasSlot: false, noSlot: true, hasImg: true, showEmoji: false, imgEl: this.picEl(this.iconUri('tile_hurt'), 16),
+          onTap: () => this.setState({ screen: 'hurt', hurtFlow: null, hurtFrom: 'feelings' }) },
+        { label: 'My Choice', emoji: '✋', hasSlot: false, noSlot: true, hasImg: true, showEmoji: false, imgEl: this.picEl(this.iconUri('tile_choice'), 16),
+          onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      ]).concat(this.isEvanProfile() ? [{
         label: "I'm overstimmed", emoji: '😵\u200D\uD83D\uDCAB',
         hasSlot: false, hasImg: false, imgEl: null, noSlot: true, showEmoji: true,
         onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()),
@@ -8025,7 +8055,7 @@ class Component extends DCLogic {
       // Evan's board: no Medicine button (he asked for it gone), and Hurt is a
       // home tile of its own now, so it doesn't need a row in here too.
       showMedicine: false,
-      showHurtBar: !this.isEvanProfile(),
+      showHurtBar: false,
       sickTitle: this.isEvanProfile() ? "I'm Sick" : 'Health',
       sickHeading: this.isEvanProfile() ? 'Tap how you feel' : 'Sick — tap how you feel',
       openMedicine: () => this.openPhraseChooser('Medicine', '💊', this.medicineItems()),
