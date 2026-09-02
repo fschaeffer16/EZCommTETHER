@@ -12,7 +12,7 @@ correct rather than append when something changes.
 |---|---|---|
 | `ezvoxa.com` | The brand and website. Everything printed or shared points here. | Being connected to Vercel today (was parked at GoDaddy, `13.248.243.5` / `76.223.105.230`) |
 | `www.ezvoxa.com` | Same site; apex redirects to www per Vercel's recommendation | Added together with the apex |
-| `myezvoice.com` | Second name Frank bought so a misheard name still finds him. **Redirects to ezvoxa.com — never a second brand** (RELEASE.md) | Not yet connected; add to the same Vercel project as a redirect after ezvoxa.com works |
+| `myezvoice.com` | Second name Frank bought so a misheard name still finds him. **Redirects to ezvoxa.com — never a second brand** (RELEASE.md) | **CONNECTED 2 Sep 2026** — Frank pointed it (A @ 216.150.1.1, www CNAME), DNS verified resolving to Vercel. A session told him it wasn't connected AFTER he did this, because nobody wrote it here. That failure is why this file exists. Update it in the same commit as the work, every time. |
 | `app.ezvoxa.com` | Customer app, `release` lane only | Waits until a release is cut (RELEASE.md) |
 
 Email: `frank@ezvoxa.com` forwards to Frank's Gmail via ImprovMX (records
@@ -69,6 +69,27 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - Premium (auto-renewing, store billing): natural voice, cloud texting,
   voice notes, Family Sync. Lapse = graceful downgrade, never silence.
 - **The emergency button never gates on payment. Hard rule.**
+
+## Frank's rulings, 2 Sep 2026 (after sessions contradicted each other)
+
+- **The feature is named "SOS Family Alert"** everywhere: app, website,
+  store listings, documents. The template's red bar now says it.
+- **SOS Family Alert is FREE, FINAL, no more debate.** It is never part of
+  the subscription, even though the cloud send costs Twilio money like the
+  paid texts do. The cost is absorbed; abuse is handled with rate limiting,
+  not a paywall. Any session that suggests making it paid is contradicting
+  a settled decision — do not reopen it.
+- **What premium texting and voice notes actually are** (do not confuse
+  them with SOS, they share plumbing and nothing else):
+  - *Cloud texting*: the user sends pre-written texts to family members
+    whose phone numbers a parent loaded.
+  - *Voice notes*: family members on the same app send voice recordings TO
+    the user's phone.
+- **Backup & Restore ships. Not optional.** Built 2 Sep in demo.html
+  (Settings card: backup to a file via share sheet or download, restore
+  with confirm + rescue copy).
+- **Hurt is its own button on the Home Screen** on buyer phones, exactly
+  like Evan's board — not buried inside Health. Done 2 Sep (layoutRev 18).
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
 - **PRICING IS NOT CONFIRMED. Frank, 1 Sep 2026: "remove the pricing. I

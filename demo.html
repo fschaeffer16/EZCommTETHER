@@ -2951,7 +2951,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <div onClick="{{ openSos }}" style="position:absolute;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 6px);background:#E23B2E;border-radius:16px;padding:6px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.45);" style-active="transform:scale(.98)">
       <div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;overflow:hidden;">{{ sosBadgeEl }}</div>
       <div style="flex:1;min-width:0;display:flex;align-items:baseline;gap:7px;overflow:hidden;">
-        <span style="font-size:16px;font-weight:800;color:#fff;line-height:1.1;white-space:nowrap;">Emergency</span>
+        <span style="font-size:16px;font-weight:800;color:#fff;line-height:1.1;white-space:nowrap;">SOS Family Alert</span>
         <span style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ sosHint }}</span>
       </div>
       <div style="font-size:22px;color:rgba(255,255,255,.9);line-height:1;">›</div>
@@ -2962,7 +2962,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div style="position:absolute;inset:0;background:#FCEDEA;display:flex;flex-direction:column;">
         <div style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 22px 10px;">
           <div style="font-size:58px;text-align:center;margin-top:6px;">🆘</div>
-          <div style="font-size:26px;font-weight:800;text-align:center;margin-top:4px;color:#1A1714;">Send emergency SOS?</div>
+          <div style="font-size:26px;font-weight:800;text-align:center;margin-top:4px;color:#1A1714;">Send the SOS Family Alert?</div>
           <div style="font-size:15px;color:#9A7068;text-align:center;margin-top:6px;font-weight:600;">This sends your message to your whole family right now.</div>
           <div style="font-size:12.5px;color:#B08A82;text-align:center;margin-top:4px;font-weight:600;">EZvoxa alerts your family. It is not a substitute for calling 911.</div>
           <div style="background:#fff;border-radius:20px;padding:16px 18px;margin-top:20px;box-shadow:0 4px 16px rgba(226,59,46,.1);border:1.5px solid #F2C7C0;">
@@ -3507,6 +3507,22 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div style="margin-top:11px;font-size:12px;font-weight:600;color:var(--sub,#8C857A);line-height:1.45;">Auto-renews until cancelled in your store account settings. <span onClick="{{ planOpenPrivacy }}" style="color:#3B82F6;cursor:pointer;text-decoration:underline;">Privacy Policy</span> &middot; <span onClick="{{ planOpenTerms }}" style="color:#3B82F6;cursor:pointer;text-decoration:underline;">Terms of Use</span></div>
           </div>
           </sc-if>
+          </sc-if>
+
+          <!-- Backup & Restore. Everything personal is on this phone; this is
+               how a family keeps it safe and moves it to a new phone. -->
+          <div onClick="{{ setTog_backup }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">💾</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Backup &amp; Restore</span>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_backup }}</span>
+          </div>
+          <sc-if value="{{ setOpen_backup }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;line-height:1.45;margin-bottom:12px;">Every button, photo, and setting lives on this phone. <b>Backup</b> saves it all into one file you keep. <b>Restore</b> loads that file here or on a new phone.</div>
+            <button onClick="{{ doBackup }}" style="width:100%;background:#3B82F6;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Save a backup file</button>
+            <button onClick="{{ doRestore }}" style="width:100%;margin-top:9px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Restore from a backup</button>
+            <div style="margin-top:11px;font-size:12px;font-weight:600;color:var(--sub,#8C857A);line-height:1.45;">Restore replaces this phone&rsquo;s setup with what is in the file, after you confirm.</div>
+          </div>
           </sc-if>
 
           <!-- Family Sync is our single-family system; a template/buyer phone
@@ -4464,6 +4480,76 @@ class Component extends DCLogic {
     if (this._planWatched) return;
     const b = window.__EZ_BILLING;
     if (b && b.onChange) { this._planWatched = true; try { b.onChange(() => this.setState({})); } catch (e) {} }
+  }
+
+  // ── Backup & Restore (Frank's order, 2 Sep 2026: this ships) ────────────
+  // Everything personal lives in this phone's storage under the tether_ and
+  // ezcomm. keys. Backup writes all of it into one file the family keeps;
+  // Restore loads that file on this phone or a new one. Before a restore
+  // overwrites anything, the current setup is stashed as a rescue copy.
+  ezOwnKeys() {
+    const out = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && (k.indexOf('tether_') === 0 || k.indexOf('ezcomm.') === 0)) out[k] = localStorage.getItem(k);
+    }
+    return out;
+  }
+  ezBackup() {
+    try {
+      const payload = { app: 'EZvoxa', kind: 'backup', build: this.APP_BUILD(), at: new Date().toISOString(), keys: this.ezOwnKeys() };
+      const text = JSON.stringify(payload);
+      const name = 'ezvoxa-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      // The share sheet is the path that works inside the store apps
+      // (WKWebView cannot download); the browser gets a plain download.
+      try {
+        const file = new File([text], name, { type: 'application/json' });
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], title: 'EZvoxa backup' }).catch(() => {});
+          return;
+        }
+      } catch (e) { /* File or share unsupported: fall through */ }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+      a.download = name;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { try { URL.revokeObjectURL(a.href); document.body.removeChild(a); } catch (e) {} }, 800);
+    } catch (e) { alert('Could not make the backup. Nothing on this phone was changed.'); }
+  }
+  ezRestorePick() {
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'application/json,.json';
+    inp.onchange = () => {
+      const f = inp.files && inp.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => this.ezRestore(String(r.result || ''));
+      r.readAsText(f);
+    };
+    inp.click();
+  }
+  ezRestore(text) {
+    let p = null;
+    try { p = JSON.parse(text); } catch (e) {}
+    if (!p || p.app !== 'EZvoxa' || p.kind !== 'backup' || !p.keys || typeof p.keys !== 'object') {
+      alert('That file is not an EZvoxa backup. Nothing was changed.');
+      return;
+    }
+    const when = p.at ? new Date(p.at).toLocaleDateString('en-US') : 'an unknown date';
+    if (!confirm('Replace this phone’s setup with the backup from ' + when + '?')) return;
+    // Rescue copy first, so a wrong restore is never the end of a board.
+    // If the stash itself fails (storage full), the restore still proceeds:
+    // the person is holding the backup file, which is its own safety net.
+    try { localStorage.setItem('ezvoxa_rescue', JSON.stringify({ at: new Date().toISOString(), keys: this.ezOwnKeys() })); } catch (e) {}
+    let wrote = 0;
+    Object.keys(p.keys).forEach((k) => {
+      if ((k.indexOf('tether_') === 0 || k.indexOf('ezcomm.') === 0) && typeof p.keys[k] === 'string') {
+        try { localStorage.setItem(k, p.keys[k]); wrote++; } catch (e) {}
+      }
+    });
+    if (!wrote) { alert('The backup file had nothing to restore. Nothing was changed.'); return; }
+    location.reload();
   }
 
   speak(t) {
@@ -5971,7 +6057,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 17) return false;
+    if (rev >= 18) return false;
 
     // Rev 17 (template only): Sentence Build moves up beside School. A fresh
     // demo already gets this from the tile order; this catches a demo phone
@@ -6145,7 +6231,18 @@ class Component extends DCLogic {
       d.homeOrder = want.concat(rest);
     }
 
-    d.layoutRev = 17;
+    // Rev 18: the Hurt body map becomes its own home tile on buyer phones
+    // too (Frank, 2 Sep 2026). A saved layout gets it slotted in before
+    // Health, or the new default is invisible on any phone that has one.
+    if (rev < 18 && d.profile !== 'evan' && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      if (d.homeOrder.indexOf('hurtbody') < 0) {
+        const at = d.homeOrder.indexOf('hurt');
+        if (at < 0) d.homeOrder.push('hurtbody');
+        else d.homeOrder.splice(at, 0, 'hurtbody');
+      }
+    }
+
+    d.layoutRev = 18;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6166,7 +6263,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.01.2'; }
+  APP_BUILD() { return '2026.09.02.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6199,7 +6296,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 17 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 18 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6532,8 +6629,9 @@ class Component extends DCLogic {
       { id: 'family', label: 'Family', emoji: '👪', color: mine ? '#F2920E' : '#3B82F6', ...(mine ? { img: 'assets/family.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_family') }), onTap: () => this.setState({ screen: 'family' }) },
       { id: 'food', label: 'Food', emoji: '🍽️', color: mine ? '#F59E0B' : '#F59E0B', ...(mine ? { img: 'assets/food_scene.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_food') }), onTap: () => this.setState({ screen: 'food' }) },
       // Hurt is its own home tile — pointing at where it hurts should never be
-      // two taps deep behind anything.
-      ...(mine ? [{ id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', img: this.iconUri('hurt_tile'), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) }] : []),
+      // two taps deep behind anything. Frank made it explicit 2 Sep 2026:
+      // buyer phones get it on the home screen too, not buried inside Health.
+      { id: 'hurtbody', label: 'Hurt', emoji: '\u{1F9CD}', color: '#E23B2E', img: this.iconUri('hurt_tile'), onTap: () => this.setState({ screen: 'hurtbody', hurtFlow: null }) },
       { id: 'school', label: 'School', emoji: '🎒', color: mine ? '#0EA5E9' : '#0EA5E9', ...(mine ? { img: 'assets/school.jpg', pos: 'center 30%' } : { img: this.iconUri('tile_school') }), onTap: () => this.setState({ screen: 'school' }) },
       // Sentence Build sits right beside School on the template — building a
       // sentence is close kin to schoolwork, and the pairing reads naturally
@@ -7765,7 +7863,7 @@ class Component extends DCLogic {
       ...(() => {
         const open = s.setOpen || '';
         const out = {};
-        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password', 'plan'].forEach((k) => {
+        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password', 'plan', 'backup'].forEach((k) => {
           out['setOpen_' + k] = open === k;
           out['setChev_' + k] = open === k ? '▲' : '▼';
           out['setTog_' + k] = () => this.setState({ setOpen: open === k ? '' : k });
@@ -7783,10 +7881,12 @@ class Component extends DCLogic {
       planStatusLabel: this.ezPremium() ? 'Subscription active' : 'Not subscribed',
       planStatusDetail: this.ezPremium()
         ? 'The natural voice is on. Thank you for supporting EZvoxa.'
-        : 'The talker and the Emergency button always work, with or without a subscription. Subscribing adds the natural voice.',
+        : 'The talker and the SOS Family Alert button always work, with or without a subscription. Subscribing adds the natural voice.',
       planMsg: s.planMsg || '',
       planBusy: !!s.planBusy,
       planNotBusy: !s.planBusy,
+      doBackup: () => this.ezBackup(),
+      doRestore: () => this.ezRestorePick(),
       planSubscribe: () => this.planAction('purchase'),
       planRestore: () => this.planAction('restore'),
       planManage: () => { try { const b = window.__EZ_BILLING; if (b && b.manage) b.manage(); } catch (e) {} },

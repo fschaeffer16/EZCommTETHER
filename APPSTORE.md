@@ -42,8 +42,8 @@ deploy lanes changes.
   - `native/billing.js` implements the bridge with RevenueCat
     (`@revenuecat/purchases-capacitor`, installed on both platforms). It
     fails open: if billing can't initialize, the app is simply unlocked.
-  - **The Emergency button reads none of this. Hard rule, enforced in code
-    comments at every layer.**
+  - **The SOS Family Alert button reads none of this. Hard rule, enforced in
+    code comments at every layer.**
 - **Codemagic** (`codemagic.yaml`): iOS workflow (signs, TestFlight) and
   Android workflow (signs, Play internal track). Both carry the
   `EZ_BILLING` switch, off by default.
@@ -101,7 +101,7 @@ Review notes to paste into App Store Connect (avoids the two questions
 reviewers always ask):
 > EZvoxa is an AAC (augmentative and alternative communication) app for
 > nonverbal teenagers and adults. No account is needed; every feature is
-> usable immediately. The Emergency button in this build is a demonstration:
+> usable immediately. The SOS Family Alert button in this build is a demonstration:
 > it shows the alert flow but sends nothing. Location is requested only at
 > the moment an alert would be sent. The app is fully functional offline.
 
@@ -147,27 +147,30 @@ likes about pricing; the app may not point at it. The Subscription card
 already complies. Anything Frank writes for the site is fine; nothing about
 web pricing goes into demo.html.
 
-## The decision Frank owes: SOS for customers
+## SOS Family Alert for customers (payment question SETTLED 2 Sep 2026)
 
-On our phones SOS really alerts the family through our server. On a
-customer's phone it is a demonstration, because the server only knows OUR
-family's numbers. Before we can honestly market "the emergency button
-always works" to customers, one of these has to be built:
+**Frank's ruling, final: SOS Family Alert is free, always, on every tier.
+It is never part of the subscription, even though the cloud send costs
+Twilio money like the paid texts do. The cost is absorbed; abuse is
+handled with rate limiting, not a paywall. Do not reopen this.**
 
-- **Recommended for v1.1**: on-device SOS. The alert opens Messages
-  prefilled with the alert text and a location link, addressed to the
-  contacts the parent typed into the app. No server, no account, works for
-  every customer, free forever, and honest. One press short of fully
-  automatic (the customer taps send).
-- **Later, as a premium feature**: cloud SOS like ours (sends by itself,
-  works when the phone is locked to the app) — needs per-family server
-  config, authentication, and rate limiting. Real engineering; do not rush
-  it.
+What still has to be BUILT before we can market it to customers: on our
+phones the alert really sends through our server; on a customer's phone it
+is a demonstration, because the server only knows our family's numbers.
+The build path, both stages free to the customer:
 
-Until one exists, listings must describe the emergency flow honestly as a
-demonstration, or not feature it. My recommendation: build on-device SOS
-before v1 ships, so the flagship claim is true on day one. Say the word and
-I build it.
+- **v1.1, on-device**: the alert opens Messages prefilled with the alert
+  text and a location link, addressed to the contacts the parent typed
+  into the app. No server, no account, works for every customer, honest.
+  One press short of fully automatic (the customer taps send).
+- **Later, cloud**: sends by itself like ours, works when the phone is
+  locked to the app. Needs per-family server config, authentication, and
+  rate limiting. Real engineering; do not rush it, and do not charge for
+  it when it lands.
+
+Until one exists, listings must describe the alert flow honestly as a
+demonstration, or not feature it. Recommendation: build the on-device
+version before v1 ships, so the flagship claim is true on day one.
 
 ## Pushing updates
 
@@ -188,7 +191,7 @@ I build it.
       launch scale — today the shared endpoint would give free users the
       natural voice; acceptable for TestFlight, not for scale.
 - [ ] Play feature graphic 1024x500 + iPad screenshots if we ship iPad.
-- [ ] Backup/restore before any paid launch (RELEASE.md gate).
+- [x] Backup & Restore — built 2 Sep (Settings card in demo.html).
 - [ ] Push notifications for family voice notes (Guideline 4.2 "native
       feel" bonus; needs a plugin pass).
 
