@@ -186,6 +186,20 @@ version before v1 ships, so the flagship claim is true on day one.
 
 ## Still to do — code (I own these)
 
+- [ ] **Attach PrivacyInfo.xcprivacy to the Xcode target** (review 2 Sep: the
+      file exists but the project does not reference it; add it to the pbxproj,
+      no Xcode UI in this plan).
+- [ ] **Native Backup & Restore path** (review 2 Sep): WKWebView cannot download
+      and Android WebView has no share sheet, so the web backup button does
+      nothing in store builds. Use @capacitor/filesystem + @capacitor/share in
+      native builds; file-picker restore already works on both.
+- [ ] `ITSAppUsesNonExemptEncryption = false` in Info.plist (HTTPS only), or
+      every TestFlight upload waits on the export-compliance question.
+- [ ] One version number for both stores (MARKETING_VERSION and Android
+      versionName are hand-edited today); stamp both from one file at build.
+- [ ] Purpose strings: say SOS Family Alert, no dashes (wording to Frank first).
+- [ ] Pin `xcode:` in codemagic.yaml after the first green build.
+
 - [ ] On-device SOS for customers (awaiting Frank's go, above).
 - [ ] `api/speak`: an app token or entitlement check server-side before
       launch scale — today the shared endpoint would give free users the
