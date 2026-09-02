@@ -120,6 +120,15 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   leave the app") — replacement wording drafted in chat 1 Sep, awaiting
   Frank's go-ahead. Fix before a district tech person reads it.
 
+- **WEBSITE_BRIEF.md is the master brief for the public website** (2 Sep
+  2026): Frank's uploaded brief, corrected to match the rulings above and
+  the verified state of the app. Any session doing website work reads it
+  first. The Word copy Frank hands to builders is generated from it.
+- **Internal .md files were publicly served by Vercel** (found 2 Sep:
+  ezvoxa.com/LEDGER.md returned 200 to anyone). vercel.json now redirects
+  every .md, .yaml, and .docx path to /home. Never commit anything to this
+  repo that must stay private even with that block: the repo deploys.
+
 ## Pages and names
 
 - `hearhim.html` is titled **"EZ's Voice"** (Frank's preference, 1 Sep).
