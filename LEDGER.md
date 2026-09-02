@@ -117,6 +117,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   (`EZvoxa Privacy Policy DRAFT.docx`, generated from privacy.html with
   the SOS Family Alert name and the subscription and backup lines added;
   privacy.html carries the same). Awaiting his wording.
+- **The website walkthrough shows real screens** (Frank, 2 Sep: a walkthrough
+  that says "show me" must show the actual app). Each of the eight steps in
+  the Watch how it works film has its own template screenshot
+  (`walk-*.jpg`, taken from the real app at phone size). SOS Family Alert
+  name applied in the letter, the film, EZ's Voice's phone, and the app's
+  confirm button (no dash).
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

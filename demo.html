@@ -2983,7 +2983,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </div>
         </div>
         <div style="flex:none;padding:12px 22px 30px;background:#FCEDEA;border-top:1px solid #F2C7C0;box-shadow:0 -6px 20px rgba(226,59,46,.08);">
-          <button onClick="{{ sendSos }}" style="width:100%;box-sizing:border-box;background:#E23B2E;color:#fff;border:none;border-radius:18px;padding:21px;font-size:21px;font-weight:800;cursor:pointer;box-shadow:0 10px 26px rgba(226,59,46,.36);" style-active="transform:scale(.98)">Yes — send SOS now</button>
+          <button onClick="{{ sendSos }}" style="width:100%;box-sizing:border-box;background:#E23B2E;color:#fff;border:none;border-radius:18px;padding:21px;font-size:21px;font-weight:800;cursor:pointer;box-shadow:0 10px 26px rgba(226,59,46,.36);" style-active="transform:scale(.98)">Yes, send the SOS Family Alert</button>
           <button onClick="{{ cancelSos }}" style="width:100%;box-sizing:border-box;background:transparent;border:none;color:#9A7068;font-size:18px;font-weight:700;padding:16px;margin-top:4px;cursor:pointer;">Cancel</button>
         </div>
       </div>
@@ -6274,7 +6274,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.4'; }
+  APP_BUILD() { return '2026.09.02.5'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

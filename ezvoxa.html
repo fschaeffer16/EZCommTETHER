@@ -139,7 +139,7 @@
     </figure>
     <p>A four-thousand-dollar board taught him that words exist. Then he grew up, and a sentence like <i>I’m tired, can I go to bed</i> cost a minute of menus. He stopped paying. He wasn’t failing the device. The device was pricing him out of his own voice.</p>
     <p>I didn’t design what came next. He walked me to it. When a board was wrong, he ignored it. When it was right, he used it without being asked. Then he took my phone, opened the app himself, and told me what he wanted to watch. Unprompted. Sixteen years. That had never happened.</p>
-    <p>EZvoxa is that talker. Phrase-first, on the phone in his pocket. His photos. His people. Hurt, so nobody has to guess. School, with the faces in the building. Family — I love you, I miss you, a birthday text. Family Alert is two taps to the people we choose. It is not 911. It is not a medical device. It is him, being heard.</p>
+    <p>EZvoxa is that talker. Phrase-first, on the phone in his pocket. His photos. His people. Hurt, so nobody has to guess. School, with the faces in the building. Family — I love you, I miss you, a birthday text. SOS Family Alert is two taps to the people we choose. It is not 911. It is not a medical device. It is him, being heard.</p>
     <p>It is not for sale yet. If you want the day it is, leave your email. If you want to see what he taught me, watch. If you want the whole story, it’s already written.</p>
   </div>
 
@@ -171,7 +171,7 @@
 <div class="film" id="film">
   <button class="x" id="close" aria-label="Close">×</button>
   <div class="stage">
-    <img id="still" src="shot-home.jpg" alt="" style="width:100%;border-radius:16px">
+    <img id="still" src="walk-home.jpg" alt="The screen this step describes" style="width:100%;border-radius:16px">
     <div>
       <p id="stept" style="font-size:22px;line-height:1.35;margin:0 0 16px;font-weight:700"></p>
       <div style="display:flex;gap:10px">
@@ -183,15 +183,17 @@
 </div>
 <script>
 (function(){
+  // One real screenshot of the template per step, so the picture is the
+  // screen the caption is talking about.
   var STEPS = [
-    "This is his home. The pictures are the buttons.",
-    "Hurt is on the home screen. He points to where it hurts.",
-    "School is the people in the building. Their faces. Their names.",
-    "Phrases first. Then a sentence bar. Then a speller. Phrase-first is not phrase-only.",
-    "Family is I love you, I miss you, a birthday text.",
-    "Family Alert is two taps to the people loaded in the app. Not 911.",
-    "You put their photos, their phrases, their people. Nothing generic survives.",
-    "He didn’t need a better device. He needed one that would grow with him."
+    { t: "This is his home. The pictures are the buttons.", img: "walk-home.jpg" },
+    { t: "Hurt is on the home screen. He points to where it hurts.", img: "walk-hurt.jpg" },
+    { t: "School is the people in the building. Their faces. Their names.", img: "walk-school.jpg" },
+    { t: "Phrases first. Then a sentence bar. Then a speller. Phrase-first is not phrase-only.", img: "walk-sentence.jpg" },
+    { t: "Family is I love you, I miss you, a birthday text.", img: "walk-family.jpg" },
+    { t: "SOS Family Alert is two taps to the people loaded in the app. Not 911.", img: "walk-sos.jpg" },
+    { t: "You put their photos, their phrases, their people. Nothing generic survives.", img: "walk-settings.jpg" },
+    { t: "He didn’t need a better device. He needed one that would grow with him.", img: "walk-home.jpg" }
   ];
   var i = 0, film = document.getElementById("film");
   function speak(t){
@@ -204,8 +206,9 @@
   }
   function show(n){
     i = n;
-    document.getElementById("stept").textContent = STEPS[i];
-    speak(STEPS[i]);
+    document.getElementById("stept").textContent = STEPS[i].t;
+    document.getElementById("still").src = STEPS[i].img;
+    speak(STEPS[i].t);
   }
   function open(){ film.classList.add("on"); show(0); }
   function close(){ film.classList.remove("on"); try{ speechSynthesis.cancel(); }catch(e){} }
