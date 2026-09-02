@@ -98,6 +98,22 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   replaced with generic art by native/build.js in every store build.
   OWED: a full audit of tether-icons.js for any other likeness art —
   extend EVAN_LIKENESS_KEYS in native/build.js with whatever it finds.
+- **Frank is supplying the template's Hurt tile art. WAIT for it.** The
+  neon body-map crop on it now (2 Sep) is only there because his son's
+  face had to come off immediately; it is not approved art. When his art
+  arrives: strip the supplied frame, keep the glyph, rebuild the box to
+  match the set (CLAUDE.md rule).
+- **The template's home tile order is Frank's decision, not Claude's.**
+  Claude placed Hurt in row two (before School) on 2 Sep by copying Evan's
+  board; Frank called that out. The position is provisional until he
+  gives the order he wants. Template home order today: Family, Food,
+  Hurt, School, Sentence Build, Friends, Morning, Fun, Watch, Night,
+  Bathroom, Health, Feelings, Colors, Numbers, Time, Calendar, Places,
+  Houses, My Choice. Do not rearrange without his written order.
+- **Visible changes need Frank's go first** (his rule 2 Sep, now in
+  CLAUDE.md): art, icons, wording, names, layouts, tile order, features
+  appearing on screen. Invisible fixes and work he asked for ship as
+  before.
 - No Claude/AI assistant in the app; no web pages in the app (only `tel:`,
   `sms:`, and Call 911 handoffs). Keep it that way — it is a selling point.
 - **PRICING IS NOT CONFIRMED. Frank, 1 Sep 2026: "remove the pricing. I

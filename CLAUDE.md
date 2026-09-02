@@ -44,9 +44,17 @@ program for low-income/disability families.
   own phones haven't already been running. Merging to `main` does **not** reach a customer.
 - **Vercel deploys `main`.** Merging to `main` puts code on **all three phones** — Evan's,
   Frank's, and Raniyah's — within minutes. All three are production; there is no "staging" phone.
-- **Ship to `main` by default.** Frank's standing instruction: anything I build for him should
-  reach all three phones. Work on a branch, then merge it — don't leave finished work sitting on
-  a branch waiting for approval, and don't make him ask why the change didn't show up.
+- **Ship to `main` by default — but Frank approves anything VISIBLE first (his rule, 2 Sep
+  2026).** The August "ship by default" instruction covers work he asked for and invisible
+  fixes: bug fixes, broken-deploy repair, security closures, backend hardening. It does NOT
+  cover choices that change what a user sees or what the product says: artwork, icons,
+  wording, names, layouts, features appearing on screen. For those, show him (screenshot or
+  draft), get his go, then ship. When he says he will supply something (art, wording), WAIT
+  for it — do not improvise a stand-in beyond removing something harmful.
+- **Nothing of Evan goes in the template/product. Ever. No exceptions, no asking.** Not his
+  likeness, his photos, his avatar art, his board contents, or his private details. Frank had
+  to catch this twice on 2 Sep. The packaging step strips known likeness art; the rule is
+  broader than the strip list.
 - Because there's no preview step, **I verify before merging**: syntax-check the logic block,
   check `sc-if`/`sc-for` balance, and confirm the change survives saved localStorage state (see
   below). A broken deploy means Evan can't talk.
