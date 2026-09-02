@@ -93,7 +93,8 @@ fs.writeFileSync(path.join(www, 'index.html'), html);
 // customer binary, the same rule as the family photos. Their data is
 // replaced with a blank pixel so the globals still resolve if some code path
 // asks for them (the template never renders these keys; it has its own
-// neon versions). Audited 2 Sep 2026 across all 253 icons.
+// neon versions). Audited 2 Sep 2026 across all 253 icons; brand logos
+// added the same day on Frank's call.
 {
   const EVAN_LIKENESS_KEYS = [
     // the avatar (sick-day art, sleep, the McDonald's picture, the school pages)
@@ -101,6 +102,16 @@ fs.writeFileSync(path.join(www, 'index.html'), html);
     'rest', 'sleep', 'hamburger', 'abc_evan', 'numbers_evan',
     // photographs of the family's actual homes
     'houses_tile', 'houses_tile_alt', 'house_dad', 'house_mom',
+    // real trademarks (Frank, 2 Sep 2026: blank them too; Apple 5.2.1). They
+    // are Evan's real preferences on his own board and never the template's.
+    'salt_vinegar_chips', 'hot_fries', 'naked', 'gatorade_red', 'gatorade_orange', 'gatorade_blue',
+    'ginger_ale', 'hawaiian_punch', 'coke', 'pastrami', 'pastrami_tub', 'doritos_ranch',
+    'soft_pretzel', 'pretzel_sticks', 'sp_mlb', 'sp_nba', 'sp_nfl', 'sp_espn', 'sp_raw',
+    'sp_smackdown', 'sp_wwe',
+    // NOT yet in the list: rest_mcdonalds, rest_outback, mc_burger, mc_nuggets,
+    // mc_fries, mc_punch. The template's own Food board draws the McDonald's
+    // and Outback tiles, so blanking them breaks a real screen. Frank decides
+    // whether those boards keep the chain names with generic art or go.
   ];
   let icons = fs.readFileSync(path.join(root, 'tether-icons.js'), 'utf8');
   // a 1x1 transparent PNG: blank if ever drawn, never a wrong picture

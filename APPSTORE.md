@@ -217,13 +217,17 @@ version before v1 ships, so the flagship claim is true on day one.
       (hurt_tile, headache, sore_throat, cold, cough, fever, stomachache,
       rest, sleep, hamburger, abc_evan, numbers_evan) and photographs of the
       family's homes (houses_tile, houses_tile_alt, house_dad, house_mom).
-- [ ] **Decision for Frank: brand logos in the icon file.** The set carries
-      real trademarks (McDonald's, Outback, Doritos, Lay's, Fritos, Coke,
-      Gatorade, Canada Dry, Hawaiian Punch, Hillshire, MLB, NBA, NFL, ESPN,
-      WWE). They are Evan's real preferences on his board and the template
-      never renders them, but they ship inside the binary. Apple 5.2.1
-      (intellectual property) is a rejection risk if a reviewer finds them.
-      Recommendation: add them to the strip list for store builds.
+- [x] Brand logos blanked in store builds too (Frank's call, 2 Sep): 21 more
+      keys (Lay's, Fritos, Naked, Gatorade, Canada Dry, Hawaiian Punch, Coke,
+      Hillshire, Doritos, SuperPretzel, Rold Gold, MLB, NBA, NFL, ESPN, WWE,
+      Raw, SmackDown). 37 keys blanked in all; a scan of every template board
+      confirms none of them is ever drawn.
+- [ ] **Decision for Frank: the McDonald's and Outback boards.** The template's
+      own Food board carries a McDonald's tile and an Outback tile with the
+      chains' logos (rest_mcdonalds, rest_outback) and branded item art inside
+      (mc_burger, mc_nuggets, mc_fries, mc_punch). Blanking those breaks a
+      real screen, so they are held back from the strip list until he
+      decides: keep the chain names with generic neon art, or drop the boards.
 
 ## Still to do — Frank
 
