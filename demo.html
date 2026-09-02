@@ -4998,24 +4998,63 @@ class Component extends DCLogic {
   // Every item is its own button — he orders one thing at a time, the way
   // anybody does.
   restaurants() {
+    // Buyer phones: generic places, no chain names or logos (Frank, 2 Sep
+    // 2026). Families rename the buttons to the places they actually go.
+    if (!this.isEvanProfile()) return [
+      { id: 'burgers', label: 'Fast Food Hamburgers', say: 'fast food hamburgers', emoji: '🍔', color: '#DA291C', icon: 'food_hamburger' },
+      { id: 'steak', label: 'Steak Place', say: 'the steak place', emoji: '🥩', color: '#7A1E12', icon: 'hunger_hungry' },
+      { id: 'italian', label: 'Italian Place', say: 'the Italian place', emoji: '🍝', color: '#B91C1C', icon: 'food_pizza' },
+      { id: 'chinese', label: 'Chinese Place', say: 'the Chinese place', emoji: '🥡', color: '#C8102E' },
+      { id: 'chicken', label: 'Fried Chicken Place', say: 'the fried chicken place', emoji: '🍗', color: '#F58220', icon: 'food_chicken' },
+    ];
     return [
-      // Chain names stay (a kid really wants to say McDonald's); the logo art is
-      // Evan's board only. The template draws generic neon food (Frank, 2 Sep 2026).
-      { id: 'mcdonalds', label: "McDonald's", say: "McDonald's", emoji: '🍟', color: '#DA291C', icon: this.isEvanProfile() ? 'rest_mcdonalds' : 'food_hamburger' },
-      { id: 'outback', label: 'Outback', say: 'Outback', emoji: '🥩', color: '#7A1E12', icon: this.isEvanProfile() ? 'rest_outback' : 'hunger_hungry' },
+      { id: 'mcdonalds', label: "McDonald's", say: "McDonald's", emoji: '🍟', color: '#DA291C', icon: 'rest_mcdonalds' },
+      { id: 'outback', label: 'Outback', say: 'Outback', emoji: '🥩', color: '#7A1E12', icon: 'rest_outback' },
       { id: 'chinese', label: 'Chinese Food', say: 'Chinese food', emoji: '🥡', color: '#C8102E' },
       { id: 'popeyes', label: 'Popeyes', say: "Popeyes", emoji: '🍗', color: '#F58220' },
     ];
   }
   restaurantItems(id) {
-    // Branded item art is Evan's; buyer phones get the generic icon instead.
-    const t = (evan, generic) => (this.isEvanProfile() ? evan : generic);
+    if (!this.isEvanProfile()) {
+      const T = {
+        burgers: [
+          { label: 'Hamburger', icon: 'food_hamburger', say: 'a hamburger' },
+          { label: 'Chicken Nuggets', icon: 'food_chicken', say: 'chicken nuggets' },
+          { label: 'French Fries', icon: 'ob_fries', say: 'french fries' },
+          { label: 'Soda', icon: 'drink_soda', say: 'a soda' },
+        ],
+        steak: [
+          { label: 'Steak', sub: 'medium', icon: 'ob_sirloin', say: 'a steak, medium' },
+          { label: 'Blooming Onion', icon: 'bloomin_onion', say: 'a blooming onion' },
+          { label: 'French Fries', icon: 'ob_fries', say: 'french fries' },
+          { label: 'Strawberry Lemonade', icon: 'strawberry_lemonade', say: 'a strawberry lemonade' },
+          { label: 'Soda', icon: 'drink_soda', say: 'a soda' },
+        ],
+        italian: [
+          { label: 'Pizza', icon: 'food_pizza', say: 'pizza' },
+          { label: 'Spaghetti', icon: 'food_spaghetti', say: 'spaghetti' },
+          { label: 'Ravioli', icon: 'ravioli', say: 'ravioli' },
+          { label: 'Garlic Bread', emoji: '🍞', say: 'garlic bread' },
+        ],
+        chinese: [
+          { label: 'Fried Rice', icon: 'pork_fried_rice', say: 'fried rice' },
+          { label: 'Chicken', emoji: '🍗', say: 'chicken' },
+          { label: 'Egg Roll', emoji: '🥟', say: 'an egg roll' },
+        ],
+        chicken: [
+          { label: 'Chicken Tenders', icon: 'chicken_fingers', say: 'chicken tenders' },
+          { label: 'French Fries', icon: 'french_fries', say: 'french fries' },
+          { label: 'Soda', icon: 'drink_soda', say: 'a soda' },
+        ],
+      };
+      return T[id] || [];
+    }
     const M = {
       mcdonalds: [
-        { label: 'Double Hamburger', sub: 'extra pickles', icon: t('mc_burger', 'food_hamburger'), say: 'a double hamburger with extra pickles' },
-        { label: 'Chicken Nuggets', icon: t('mc_nuggets', 'food_chicken'), say: 'chicken nuggets' },
-        { label: 'Large French Fries', icon: t('mc_fries', 'ob_fries'), say: 'large french fries' },
-        { label: 'Frozen Hawaiian Punch', icon: t('mc_punch', 'drink_soda'), say: 'a frozen Hawaiian Punch' },
+        { label: 'Double Hamburger', sub: 'extra pickles', icon: 'mc_burger', say: 'a double hamburger with extra pickles' },
+        { label: 'Chicken Nuggets', icon: 'mc_nuggets', say: 'chicken nuggets' },
+        { label: 'Large French Fries', icon: 'mc_fries', say: 'large french fries' },
+        { label: 'Frozen Hawaiian Punch', icon: 'mc_punch', say: 'a frozen Hawaiian Punch' },
       ],
       outback: [
         { label: 'Outback Sirloin', sub: '8 oz, medium rare', icon: 'ob_sirloin', say: 'the eight ounce Outback sirloin, medium rare' },
@@ -5023,7 +5062,7 @@ class Component extends DCLogic {
         { label: 'French Fries', icon: 'ob_fries', say: 'french fries' },
         { label: 'Fried Onions', emoji: '🧅', say: 'fried onions' },
         { label: 'Strawberry Lemonade', icon: 'strawberry_lemonade', say: 'a strawberry lemonade' },
-        { label: 'Coke', icon: t('coke', 'drink_soda'), say: 'a Coke' },
+        { label: 'Coke', icon: 'coke', say: 'a Coke' },
       ],
       chinese: [
         { label: 'Pork Fried Rice', icon: 'pork_fried_rice', say: 'pork fried rice' },
@@ -5033,7 +5072,7 @@ class Component extends DCLogic {
       popeyes: [
         { label: 'Chicken Tenders', icon: 'chicken_fingers', say: 'chicken tenders' },
         { label: 'French Fries', icon: 'french_fries', say: 'french fries' },
-        { label: 'Coke', icon: t('coke', 'drink_soda'), say: 'a Coke' },
+        { label: 'Coke', icon: 'coke', say: 'a Coke' },
       ],
     };
     return M[id] || [];
