@@ -14,6 +14,17 @@
   `;
   document.head.appendChild(brandStyle);
 
+  // Some private family hero media is stored as base64 text so it can ship
+  // through the same GitHub/Vercel pipeline without altering the original photo.
+  document.querySelectorAll('img[data-base64-src]').forEach(async img=>{
+    try{
+      const r=await fetch(img.dataset.base64Src,{cache:'force-cache'});
+      if(!r.ok) return;
+      const b64=(await r.text()).trim();
+      if(b64) img.src='data:image/webp;base64,'+b64;
+    }catch(_){/* keep transparent fallback */}
+  });
+
   const menu=document.querySelector('.menu-btn'), nav=document.querySelector('.mainnav');
   if(menu&&nav) menu.addEventListener('click',()=>nav.classList.toggle('open'));
   const rail=document.querySelector('.rail'), railBtn=document.querySelector('.mobile-rail-trigger');
