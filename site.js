@@ -25,6 +25,21 @@
     }catch(_){/* keep transparent fallback */}
   });
 
+  // Larger private media can be split into several text chunks. Join them in
+  // the browser so the original image is preserved without recompression.
+  document.querySelectorAll('img[data-base64-parts]').forEach(async img=>{
+    try{
+      const parts=img.dataset.base64Parts.split(',').map(s=>s.trim()).filter(Boolean);
+      const texts=await Promise.all(parts.map(async p=>{
+        const r=await fetch(p,{cache:'force-cache'});
+        if(!r.ok) throw new Error('missing media part');
+        return (await r.text()).trim();
+      }));
+      const b64=texts.join('');
+      if(b64) img.src='data:image/webp;base64,'+b64;
+    }catch(_){/* keep transparent fallback */}
+  });
+
   const menu=document.querySelector('.menu-btn'), nav=document.querySelector('.mainnav');
   if(menu&&nav) menu.addEventListener('click',()=>nav.classList.toggle('open'));
   const rail=document.querySelector('.rail'), railBtn=document.querySelector('.mobile-rail-trigger');
