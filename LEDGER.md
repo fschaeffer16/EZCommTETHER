@@ -159,6 +159,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   works: host-scoped REDIRECTS of "/" to "/home" plus one rewrite of
   /home to ezvoxa.html. Do not change vercel.json's root routing without
   reading this. A bare ezvoxa.com/ URL needs Edge Middleware, not rewrites.
+- **Board anchor (Frank's design, 2 Sep 2026, both apps):** inside every
+  child board the top is the same Yes / Home / No row as the home screen,
+  with the quick strip under it a little smaller (five across). The old
+  Home / Help / Done bar is gone. Settings and the SOS screens keep their
+  own headers. Template build 2026.09.02.8, Evan's 2026.09.02.1.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
