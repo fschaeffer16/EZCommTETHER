@@ -149,6 +149,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   touches the site files (ezvoxa.html, site.css, site.js, home-hero.css,
   site-assets/, the story/app/families/journal/join pages) without him.
   This session's lane stays the app, the store build, and the documents.
+- **VERCEL ROUTING ORDER, learned three times now: headers, then redirects,
+  then the filesystem, then rewrites.** index.html (Evan's app) exists at
+  the root, so a REWRITE of "/" can never serve the website; the file wins
+  and ezvoxa.com opens Evan's app. It happened with Claude's first attempt
+  (1 Sep, Frank: "the FREAKING TEMPLATE APP"), with ChatGPT the night of
+  1 Sep, and with a website session's "canonical root" commit (8cefb45,
+  2 Sep) that also added /home -> / redirects, a loop. The only thing that
+  works: host-scoped REDIRECTS of "/" to "/home" plus one rewrite of
+  /home to ezvoxa.html. Do not change vercel.json's root routing without
+  reading this. A bare ezvoxa.com/ URL needs Edge Middleware, not rewrites.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
