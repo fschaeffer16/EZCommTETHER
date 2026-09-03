@@ -228,6 +228,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   so all four hunger chips and all six drinks are his art. Still owed on
   Food: Cereal, Eggs, Cookie, Chips, Pretzels, Crackers. Builds
   2026.09.03.5.
+- **Frank's Sports, Streaming and Cold art, 3 Sep 2026:** Sports and
+  Streaming replaced the drawn Watch tiles on the template (keys
+  watch_sports, watch_streaming; his pictures carry no word, so the tile
+  writes it under the picture in the tile's colour, the old Tablet
+  treatment). Cold replaced the drawn strip tile in both apps: his glyph
+  set inside the strip's own box with the word under it (qn_cold), glyph
+  alone for the tablet pills (qng_cold). Placeholders still drawn: Hot,
+  Mall, Grocery Store. Builds 2026.09.03.6.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
