@@ -67,9 +67,10 @@ took its spot. Health and My Choice are the last two tiles inside Feelings; Home
 Home Two are the first two tiles inside Places; Colors, Numbers and the Calculator are
 inside School; Time is inside Calendar.
 
-**Evan's home order (`evanHomeOrder()`, layoutRev 17):** Family, Food / School, Sentence
-Build / Feelings, Bathroom / Places, TV / Morning, Night / Hurt (body map), I'm Sick /
-Calendar, My Choice. Fourteen tiles. Fun and Houses folded into Places on 3 Sep 2026.
+**Evan's home order (`evanHomeOrder()`, layoutRev 18):** Family, Food / School, Sentence
+Build / Places, TV / Feelings, Bathroom / Morning, Night / Hurt (body map), I'm Sick /
+Calendar, My Choice. Fourteen tiles. Fun and Houses folded into Places on 3 Sep 2026;
+Places / TV moved above Feelings / Bathroom the same day.
 
 ### Where Evan reaches the tiles he does NOT have on home
 Evan's home is intentionally leaner; these live one level in:

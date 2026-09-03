@@ -5955,7 +5955,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 17) return false;
+    if (rev >= 18) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -5973,7 +5973,8 @@ class Component extends DCLogic {
     // homeOrder would push it to the very bottom of the grid, so slot it in
     // next to Places instead — and leave the rest of his order alone, since
     // wiping homeOrder here would undo any arranging done since rev 3.
-    if (rev >= 3 && Array.isArray(d.homeOrder) && d.homeOrder.length && d.homeOrder.indexOf('houses') < 0) {
+    // Retired at rev 17: the Houses tile left the home screen on 3 Sep 2026.
+    if (rev >= 3 && rev < 17 && Array.isArray(d.homeOrder) && d.homeOrder.length && d.homeOrder.indexOf('houses') < 0) {
       const at = d.homeOrder.indexOf('places');
       if (at < 0) d.homeOrder.push('houses');
       else d.homeOrder.splice(at + 1, 0, 'houses');
@@ -6128,7 +6129,19 @@ class Component extends DCLogic {
       d.homeOrder.splice(slot >= 0 ? slot : d.homeOrder.length, 0, 'places');
     }
 
-    d.layoutRev = 17;
+    // Rev 18: Places / TV row above Feelings / Bathroom (Frank, 3 Sep 2026).
+    // Only the two pairs swap; everything else stays where the phone had it.
+    if (rev < 18 && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const f = d.homeOrder.indexOf('feelings');
+      const pl = d.homeOrder.indexOf('places');
+      if (f >= 0 && pl > f) {
+        const movers = d.homeOrder.filter((id) => id === 'places' || id === 'watch');
+        d.homeOrder = d.homeOrder.filter((id) => id !== 'places' && id !== 'watch');
+        d.homeOrder.splice(d.homeOrder.indexOf('feelings'), 0, ...movers);
+      }
+    }
+
+    d.layoutRev = 18;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6149,7 +6162,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.1'; }
+  APP_BUILD() { return '2026.09.03.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6182,7 +6195,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 17 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 18 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6682,9 +6695,10 @@ class Component extends DCLogic {
   // Frank's layout, in the pairs he wrote them. Used both by the rev 12
   // migration and by a phone that has no saved order yet.
   // 3 Sep 2026: Fun and Houses folded into Places, and Places took Fun's
-  // spot, so every pair holds.
+  // spot, so every pair holds. Later that day: Places / TV moved above
+  // Feelings / Bathroom (Frank).
   evanHomeOrder() {
-    return ['family','food','school','sentbuild','feelings','bathroom','places','watch','morning','night','hurtbody','hurt','calendar','choice'];
+    return ['family','food','school','sentbuild','places','watch','feelings','bathroom','morning','night','hurtbody','hurt','calendar','choice'];
   }
   homeTiles() {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));

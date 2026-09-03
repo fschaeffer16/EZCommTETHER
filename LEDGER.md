@@ -186,6 +186,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   placeholders) in both apps; in Evan's, Movies is the template's neon
   icon because he has no photo for it. Replace all three when Frank
   supplies pictures. Template build 2026.09.03.1, Evan's 2026.09.03.1.
+- **Evan's home, 3 Sep 2026 (later):** Places / TV row above Feelings /
+  Bathroom. Order is now Family, Food / School, Sentence Build / Places,
+  TV / Feelings, Bathroom / Morning, Night / Hurt, I'm Sick / Calendar,
+  My Choice. Layout rev 18 swaps the two rows on a saved phone. Evan's
+  build 2026.09.03.2.
 - **Template art audit, 3 Sep 2026 (Frank asked for every picture that
   does not fit the neon look).** Crawled all 35 template screens: 172
   distinct pictures, 89 do not match. Sheets sent to Frank. The groups:
