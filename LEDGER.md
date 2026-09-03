@@ -50,8 +50,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   customers is later, premium, needs per-family backend + auth.
 - Store listings/subscription copy promise ONLY the natural voice as
   premium until per-family texting/voice-notes/sync exist for customers.
-- **privacy.html**: drafted from the api/ code, live but unlinked, marked
-  DRAFT. Not the policy until Frank approves the wording.
+- **privacy.html: APPROVED by Frank 2 Sep 2026 ("The wording is fine").**
+  In effect, dated 2 September 2026, live at ezvoxa.com/privacy.html and
+  linked from the site footer. This is the URL for both store listings.
 
 ## Trial program (decided 31 Aug 2026)
 
@@ -140,6 +141,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   McDonald's and Outback restaurant tiles and their item art. Decision
   owed by Frank: keep those boards with the chain names and generic neon
   art (recommended), or drop them from the template.
+- **The website is Claude Design's lane (Frank, 2 Sep 2026).** The night of
+  1 Sep, ChatGPT deployed the app in place of the website (the exact
+  failure WEBSITE_BRIEF.md warns about: never deploy a partial tree, never
+  overwrite the HTML apps) and lost its work; Frank undid it by hand and
+  handed the website design to Claude Design. No other tool or session
+  touches the site files (ezvoxa.html, site.css, site.js, home-hero.css,
+  site-assets/, the story/app/families/journal/join pages) without him.
+  This session's lane stays the app, the store build, and the documents.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

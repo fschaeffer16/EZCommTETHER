@@ -84,8 +84,8 @@ Listing needs from Frank:
   512 icon (`native/play-icon-512.png`) and a 1024x500 feature graphic
   (I can generate it from the icon art when you say go).
 - Description: I draft, you approve. No prices in it.
-- **privacy.html must be approved and live before submission** (both stores
-  require the URL). It is drafted; your call on the wording.
+- **Privacy policy: approved by Frank 2 Sep 2026 and live** at
+  https://ezvoxa.com/privacy.html (the URL both store forms ask for).
 - Support URL and marketing URL: `ezvoxa.com`.
 - Age rating questionnaires: everything "none" (no violence, no user
   content, no web browsing, no data collection). EZvoxa is NOT a Kids
@@ -233,7 +233,7 @@ version before v1 ships, so the flagship claim is true on day one.
 
 - [ ] Thursday/Friday: Apple $99, Play $25, Codemagic signup (order of
       operations above).
-- [ ] Approve privacy.html wording (blocks every submission).
+- [x] Privacy policy wording approved 2 Sep 2026; live at ezvoxa.com/privacy.html.
 - [ ] Confirm pricing (blocks the subscription build only).
 - [ ] Decide customer SOS (blocks honest emergency marketing).
 - [ ] Screenshots from your phone when the TestFlight build lands.
