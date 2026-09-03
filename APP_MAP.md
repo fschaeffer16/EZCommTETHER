@@ -40,7 +40,7 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | family | Family | ✓ | ✓ | board `family` (people) |
 | food | Food | ✓ | ✓ | board `food` |
 | hurtbody | Hurt | ✓ | ✓ | board `hurtbody` (body map) |
-| hurt | I'm Sick / Health | ✓ | — (inside Feelings) | board `hurt` |
+| hurt | I'm Sick / Health | — (symptoms sit under the body map on `hurtbody`) | — (inside Feelings) | board `hurt` (template only) |
 | school | School | ✓ | ✓ | board `school` (hub) |
 | friends | Friends | — | ✓ | board `family` (friends people) |
 | morning | Morning | ✓ | ✓ | board `morning` |
@@ -53,7 +53,7 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | calendar | Calendar | ✓ | ✓ | board `calendar` |
 | places | Places | ✓ | ✓ | board `places` |
 | houses | Houses | — (first tiles inside Places) | — (first tiles inside Places) | board `houserooms` (the `houses` screen is no longer reachable) |
-| choice | My Choice | ✓ | — (inside Feelings) | **phrase chooser** |
+| choice | My Choice | — (inside Feelings) | — (inside Feelings) | **phrase chooser** |
 | regulate | Overstimmed | — | ✓ | **phrase chooser** |
 | colors | Colors | — | — (inside School) | board `colors` |
 | numbers | Numbers | — | — (inside School) | board `numbers` |
@@ -67,10 +67,11 @@ took its spot. Health and My Choice are the last two tiles inside Feelings; Home
 Home Two are the first two tiles inside Places; Colors, Numbers and the Calculator are
 inside School; Time is inside Calendar.
 
-**Evan's home order (`evanHomeOrder()`, layoutRev 18):** Family, Food / School, Sentence
-Build / Places, TV / Feelings, Bathroom / Morning, Night / Hurt (body map), I'm Sick /
-Calendar, My Choice. Fourteen tiles. Fun and Houses folded into Places on 3 Sep 2026;
-Places / TV moved above Feelings / Bathroom the same day.
+**Evan's home order (`evanHomeOrder()`, layoutRev 19):** Family, Food / School, Sentence
+Build / Places, TV / Feelings, Bathroom / Morning, Night / Hurt, Calendar. Twelve tiles.
+3 Sep 2026: Fun and Houses folded into Places; Places / TV moved above Feelings / Bathroom;
+I'm Sick folded into the Hurt board (body map first, symptoms under it, back goes home);
+My Choice moved inside Feelings after Overstimmed.
 
 ### Where Evan reaches the tiles he does NOT have on home
 Evan's home is intentionally leaner; these live one level in:
@@ -132,8 +133,10 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   Mall and Grocery Store are drawn in the app until Frank supplies art.
 - **houserooms** — a house's rooms, with the "In every house" strip (bathroom /
   kitchen / living room / outside) at the top. The old **houses** screen is unreachable.
-- **hurt** — "I'm Sick" symptom board. **hurtbody** — neon body map
-  (head/neck/chest/belly, both arms/hands/legs/feet). Evan uses hurtbody.
+- **hurtbody** — Evan's one Hurt board: the neon body map (head/neck/chest/belly, both
+  arms/hands/legs/feet) with the I'm Sick symptoms under it; back arrow goes home.
+  **hurt** — the template's Health symptom board (inside Feelings). In Evan's app the
+  `hurt` screen is no longer reachable.
 - **calendar** — month grid + inline live **Time** (tap → **clock**).
 - **morning**, **night**, **feelings**, **colors**, **numbers**, **clock** —
   standalone boards. (**fun** still exists as a screen but nothing opens it.)

@@ -3400,8 +3400,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isHurtBody }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ openHurt }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:#E23B2E;">Where does it hurt?</div>
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#E23B2E;flex:1;min-width:0;">Hurt</div>
+          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 30px;">
           <div style="font-size:14px;color:var(--sub,#8C857A);font-weight:700;text-align:center;margin:4px 0 12px;">Tap the part of the body that hurts</div>
@@ -3409,6 +3410,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             {{ bodyFaceEl }}
             <sc-for list="{{ bodyParts }}" as="b" hint-placeholder-count="12">
               <div onClick="{{ b.onTap }}" style="{{ b.styleObj }}" style-active="background:rgba(255,255,255,0.22)"></div>
+            </sc-for>
+          </div>
+          <!-- Hurt and I'm Sick are one board (Frank, 3 Sep 2026): the body map
+               first, then the symptoms he used to reach from a second tile. -->
+          <div style="font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 10px;">{{ sickHeading }}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+            <sc-for list="{{ hurts }}" as="item" hint-placeholder-count="0">
+              <div onClick="{{ item.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;" style-active="transform:scale(.94)">
+                {{ item.iconEl }}
+                <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.1;">{{ item.label }}</span>
+              </div>
             </sc-for>
           </div>
         </div>
@@ -5953,7 +5965,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 18) return false;
+    if (rev >= 19) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -6139,7 +6151,13 @@ class Component extends DCLogic {
       }
     }
 
-    d.layoutRev = 18;
+    // Rev 19: I'm Sick folds into the Hurt board and My Choice into
+    // Feelings (Frank, 3 Sep 2026). Both leave the home order.
+    if (rev < 19 && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      d.homeOrder = d.homeOrder.filter((id) => id !== 'hurt' && id !== 'choice');
+    }
+
+    d.layoutRev = 19;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6160,7 +6178,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.8'; }
+  APP_BUILD() { return '2026.09.03.9'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6193,7 +6211,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 18 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 19 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6551,7 +6569,7 @@ class Component extends DCLogic {
       { id: 'watch', label: mine ? 'TV' : 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
       { id: 'night', label: 'Night', emoji: '🌙', color: mine ? '#4F46E5' : '#6366F1', ...(mine ? { img: 'assets/night.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_night') }), onTap: () => this.setState({ screen: 'night' }) },
       { id: 'bathroom', label: 'Bathroom', emoji: '🚻', color: mine ? '#1F9E6E' : '#22B6F0', ...(mine ? { img: 'assets/bathroom.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_bathroom') }), onTap: () => this.openPhraseChooser('Bathroom', '🚻', this.bathroomItems()) },
-      { id: 'hurt', label: mine ? "I'm Sick" : 'Health', emoji: '➕', color: mine ? '#E23B2E' : '#E23B2E', ...(mine ? { img: this.iconUri('headache'), contain: true } : { img: this.iconUri('tile_hurt') }), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) },
+      ...(mine ? [] : [{ id: 'hurt', label: mine ? "I'm Sick" : 'Health', emoji: '➕', color: mine ? '#E23B2E' : '#E23B2E', ...(mine ? { img: this.iconUri('headache'), contain: true } : { img: this.iconUri('tile_hurt') }), onTap: () => this.setState({ screen: 'hurt', hurtFlow: null }) }]),
       { id: 'feelings', label: 'Feelings', emoji: '😊', color: mine ? '#7A5CFF' : '#FB7185', ...(mine ? { img: 'assets/feelings.jpg', pos: 'center 38%' } : { img: this.iconUri('tile_feelings') }), onTap: () => this.setState({ screen: 'feelings' }) },
       // The Friends phrases, reachable without going through School and without
       // needing anyone saved — they're for talking to a kid, not a contact.
@@ -6573,7 +6591,8 @@ class Component extends DCLogic {
       { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
+      // Evan's My Choice lives inside Feelings (Frank, 3 Sep 2026).
+      ...(mine ? [] : [{ id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) }]),
       // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
       // the rest of them rather than taking a tile of its own.
       ...(mine ? [] : [{ id: 'regulate', label: 'Overstimmed', emoji: '😵\u200D\uD83D\uDCAB', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()) }]),
@@ -6695,8 +6714,10 @@ class Component extends DCLogic {
   // 3 Sep 2026: Fun and Houses folded into Places, and Places took Fun's
   // spot, so every pair holds. Later that day: Places / TV moved above
   // Feelings / Bathroom (Frank).
+  // Then I'm Sick folded into Hurt and My Choice into Feelings, so home
+  // is twelve tiles.
   evanHomeOrder() {
-    return ['family','food','school','sentbuild','places','watch','feelings','bathroom','morning','night','hurtbody','hurt','calendar','choice'];
+    return ['family','food','school','sentbuild','places','watch','feelings','bathroom','morning','night','hurtbody','calendar'];
   }
   homeTiles() {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));
@@ -7923,6 +7944,11 @@ class Component extends DCLogic {
         label: "I'm overstimmed", emoji: '😵\u200D\uD83D\uDCAB',
         hasSlot: false, hasImg: false, imgEl: null, noSlot: true, showEmoji: true,
         onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()),
+      }, {
+        // My Choice moved in from the home screen (Frank, 3 Sep 2026).
+        label: 'My Choice', emoji: '✋',
+        hasSlot: false, hasImg: false, imgEl: null, noSlot: true, showEmoji: true,
+        onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()),
       }] : []),
       morningList: this.morningList().concat(this.customsFor('morning')),
       // Medicine is Evan's — a bought phone doesn't start with a medicine button.
