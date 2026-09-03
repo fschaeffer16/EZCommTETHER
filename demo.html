@@ -4275,6 +4275,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:393,&quot;height&quot;:852},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;sosMessage&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;HELP! I NEED HELP! Please come now.&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+// Hot and Cold quick tiles, drawn in the set's neon style until Frank supplies art.
+const HOT_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDk2IEMgMzAwIDE1MCwgMzUwIDE5MCwgMzUwIDI2MCBDIDM1MCAzMjAsIDMxMCAzNzIsIDI1NiAzNzIgQyAyMDIgMzcyLCAxNjIgMzIwLCAxNjIgMjYwIEMgMTYyIDIyMCwgMTgwIDE5MCwgMTk2IDE3NiBDIDE5NiAyMTQsIDIxNCAyMzYsIDIzNiAyNDAgQyAyMjYgMjAwLCAyMzYgMTQwLCAyNTYgOTYgWiIvPjxwYXRoIGQ9Ik0yNTYgMzcyIEMgMjMyIDM3MiwgMjE0IDM1MCwgMjE0IDMyNiBDIDIxNCAzMDAsIDIzNiAyODYsIDI0NiAyNzAgQyAyNjIgMjkwLCAyOTggMzAwLCAyOTggMzMwIEMgMjk4IDM1NCwgMjgwIDM3MiwgMjU2IDM3MiBaIi8+PC9nPgo8dGV4dCB4PSIyNTYiIHk9IjQ1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ii1hcHBsZS1zeXN0ZW0sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPkhvdDwvdGV4dD4KPC9zdmc+';
+const COLD_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDg4IFYgMzg0Ii8+PHBhdGggZD0iTTEyOCAxNjIgTCAzODQgMzEwIi8+PHBhdGggZD0iTTEyOCAzMTAgTCAzODQgMTYyIi8+PHBhdGggZD0iTTI1NiA4OCBMIDIyNiAxMTggTTI1NiA4OCBMIDI4NiAxMTggTTI1NiAzODQgTCAyMjYgMzU0IE0yNTYgMzg0IEwgMjg2IDM1NCIvPjxwYXRoIGQ9Ik0xMjggMTYyIEwgMTcwIDE1OCBNMTI4IDE2MiBMIDEzNCAyMDQgTTM4NCAzMTAgTCAzNDIgMzE0IE0zODQgMzEwIEwgMzc4IDI2OCIvPjxwYXRoIGQ9Ik0xMjggMzEwIEwgMTM0IDI2OCBNMTI4IDMxMCBMIDE3MCAzMTQgTTM4NCAxNjIgTCAzNzggMjA0IE0zODQgMTYyIEwgMzQyIDE1OCIvPjwvZz4KPHRleHQgeD0iMjU2IiB5PSI0NTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5Db2xkPC90ZXh0Pgo8L3N2Zz4=';
+
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -6339,7 +6343,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.8'; }
+  APP_BUILD() { return '2026.09.02.9'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7545,23 +7549,24 @@ class Component extends DCLogic {
       sosHint: s.wide ? 'Tap to send an SOS to my trusted contacts.' : 'Tap to send an SOS to everyone',
       // The 10 neon quick tiles under Yes/Home/No. Each is a full image
       // (box + picture + caption baked in), so the grid renders the image only.
+      // Frank's order, 2 Sep 2026, Hot and Cold added at the end.
       neonTiles: [
         { label: 'Help', img: this.iconUri('qn_help'), gl: this.iconUri('qng_help'), c: '#FFAB07', onTap: () => this.speak('I need help.') },
-        // Sits beside Help on purpose. Needing help and having a question are
-        // the two things he has to be able to say without hunting for them.
         { label: 'Question', img: this.iconUri('qn_question'), gl: this.iconUri('qng_question'), c: '#7516E3', onTap: () => this.speak('I have a question.') },
-        { label: 'Good', img: this.iconUri('qn_good'), gl: this.iconUri('qng_good'), c: '#18C901', onTap: () => this.speak('Good.') },
-        { label: 'Bad', img: this.iconUri('qn_bad'), gl: this.iconUri('qng_bad'), c: '#F51802', onTap: () => this.speak('Bad.') },
         { label: 'Restroom', img: this.iconUri('qn_restroom'), gl: this.iconUri('qng_restroom'), c: '#054AFF', onTap: () => this.speak('I need to use the bathroom.') },
         { label: 'Thank you', img: this.iconUri('qn_thankyou'), gl: this.iconUri('qng_thankyou'), c: '#ED0660', onTap: () => this.speak('Thank you.') },
         { label: 'Good morning', img: this.iconUri('qn_goodmorning'), gl: this.iconUri('qng_goodmorning'), c: '#F57A01', onTap: () => this.speak('Good morning!') },
         { label: 'Hi', img: this.iconUri('qn_hi'), gl: this.iconUri('qng_hi'), c: '#FEA419', onTap: () => this.speak('Hello!') },
         { label: 'Bye', img: this.iconUri('qn_bye'), gl: this.iconUri('qng_bye'), c: '#F9D35D', onTap: () => this.speak('Goodbye!') },
         { label: 'I Love You', img: this.iconUri('qn_iloveyou'), gl: this.iconUri('qng_iloveyou'), c: '#FCBA3E', onTap: () => this.speak('I love you.') },
-        { label: 'More', img: this.iconUri('qn_more'), gl: this.iconUri('qng_more'), c: '#FBA000', onTap: () => this.speak('More.') },
+        { label: 'Good', img: this.iconUri('qn_good'), gl: this.iconUri('qng_good'), c: '#18C901', onTap: () => this.speak('Good.') },
+        { label: 'Bad', img: this.iconUri('qn_bad'), gl: this.iconUri('qng_bad'), c: '#F51802', onTap: () => this.speak('Bad.') },
         { label: 'Now', img: this.iconUri('qn_now'), gl: this.iconUri('qng_now'), c: '#1AFE83', onTap: () => this.speak('Now.') },
         { label: 'Later', img: this.iconUri('qn_later'), gl: this.iconUri('qng_later'), c: '#FBAD0B', onTap: () => this.speak('Later.') },
+        { label: 'More', img: this.iconUri('qn_more'), gl: this.iconUri('qng_more'), c: '#FBA000', onTap: () => this.speak('More.') },
         { label: 'Done', img: this.iconUri('qn_done'), gl: this.iconUri('qng_done'), c: '#FFE300', onTap: () => this.speak("I'm done.") },
+        { label: 'Hot', img: HOT_TILE, gl: HOT_TILE, c: '#FF5A1F', onTap: () => this.speak("I'm hot.") },
+        { label: 'Cold', img: COLD_TILE, gl: COLD_TILE, c: '#3FC4FF', onTap: () => this.speak("I'm cold.") },
       ].map((q) => ({ ...q, glow: this.glowFrom(q.c) })),
       sayFamily: () => this.speak('Family'),
       goHome: () => { this.setState({ screen: 'board', chooser: null, unlockFor: null }); const el = this.boardScrollRef.current; if (el) el.scrollTop = 0; },
