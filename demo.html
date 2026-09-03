@@ -3230,18 +3230,31 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </div>
             </div>
           </sc-if>
+          <!-- Buyer phones (Frank, 3 Sep 2026): four tiles, TV, Movies, Sports,
+               Streaming. Each says the two lines. No posters ship; a family's
+               own shows are custom buttons that appear under the tile they
+               picked when adding them. -->
           <sc-if value="{{ watchCategories }}" hint-placeholder-val="{{ false }}">
-            <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:0 2px 4px;">Pick one, then add your own shows behind it.</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <sc-for list="{{ watchTiles }}" as="w" hint-placeholder-count="4">
                 <div onClick="{{ w.onTap }}" style="position:relative;aspect-ratio:1;border:3px solid {{ w.color }};border-radius:20px;overflow:hidden;background:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-active="transform:scale(.96)">
                   {{ w.faceEl }}
-                  <sc-if value="{{ w.hasCaption }}" hint-placeholder-val="{{ false }}">
-                    <span style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:24px;font-weight:800;color:{{ w.color }};text-shadow:0 0 9px {{ w.color }};letter-spacing:.01em;">{{ w.label }}</span>
-                  </sc-if>
                 </div>
               </sc-for>
             </div>
+            <sc-for list="{{ watchGroups }}" as="sec" hint-placeholder-count="0">
+              <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ sec.color }};margin:4px 2px 0;">{{ sec.title }}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <sc-for list="{{ sec.items }}" as="b" hint-placeholder-count="0">
+                  <div onClick="{{ b.onTap }}" style="display:flex;flex-direction:column;gap:7px;cursor:pointer;" style-active="transform:scale(.96)">
+                    <div style="position:relative;width:100%;aspect-ratio:4/3;border:3px solid {{ sec.color }};border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(20,16,12,.08);background:var(--slot,#F0EDE7);">
+                      {{ b.imgEl }}
+                    </div>
+                    <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ b.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
           </sc-if>
         </div>
       </div>
@@ -4294,6 +4307,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 const HOT_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDk2IEMgMzAwIDE1MCwgMzUwIDE5MCwgMzUwIDI2MCBDIDM1MCAzMjAsIDMxMCAzNzIsIDI1NiAzNzIgQyAyMDIgMzcyLCAxNjIgMzIwLCAxNjIgMjYwIEMgMTYyIDIyMCwgMTgwIDE5MCwgMTk2IDE3NiBDIDE5NiAyMTQsIDIxNCAyMzYsIDIzNiAyNDAgQyAyMjYgMjAwLCAyMzYgMTQwLCAyNTYgOTYgWiIvPjxwYXRoIGQ9Ik0yNTYgMzcyIEMgMjMyIDM3MiwgMjE0IDM1MCwgMjE0IDMyNiBDIDIxNCAzMDAsIDIzNiAyODYsIDI0NiAyNzAgQyAyNjIgMjkwLCAyOTggMzAwLCAyOTggMzMwIEMgMjk4IDM1NCwgMjgwIDM3MiwgMjU2IDM3MiBaIi8+PC9nPgo8dGV4dCB4PSIyNTYiIHk9IjQ1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ii1hcHBsZS1zeXN0ZW0sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPkhvdDwvdGV4dD4KPC9zdmc+';
 const MALL_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjM0ZDNEZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTExMCA0MzAgViAxOTAgSCA1NzMgViA0MzAgWiIvPjxwYXRoIGQ9Ik0xMTAgMzAwIEggNTczIi8+PHBhdGggZD0iTTE1MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTI0MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTM4MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTQ3MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHoiLz48cGF0aCBkPSJNMTUwIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiBNNDczIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiIvPjxwYXRoIGQ9Ik0yOTYgNDMwIFYgMzQwIEggMzg3IFYgNDMwIE0zNDEgMzQwIFYgNDMwIi8+PC9nPjxnIHN0cm9rZT0iI0ZGM0ZBOCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik0yNzAgMzQwIEggNDEzIEwgNDAwIDMxNiBIIDI4MyBaIi8+PHBhdGggZD0iTTMwMCAzMTYgViAzNDAgTTM0MSAzMTYgViAzNDAgTTM4MiAzMTYgViAzNDAiLz48L2c+PGcgc3Ryb2tlPSIjQjI2QkZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTI1MCAxOTAgViAxMjAgSCA0MzMgViAxOTAiLz48L2c+PHRleHQgeD0iMzQxIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjRkZEMjNGIiBmaWx0ZXI9InVybCgjZykiPk1BTEw8L3RleHQ+PGcgc3Ryb2tlPSIjRkZEMjNGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTU5MCA0MzAgViAzNjAgSCA2NjAgViA0MzAgWiBNNjEwIDM2MCBDIDYxMCAzMzAsIDY0MCAzMzAsIDY0MCAzNjAiLz48L2c+PGcgc3Ryb2tlPSIjMThDOTAxIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTYwIDQzMCBIIDYyMyBNNTAgNDMwIEMgNDAgNDAwLCA2MCAzODUsIDgwIDQwMCBDIDk1IDM4MCwgMTEwIDQwMCwgMTAwIDQzMCIvPjwvZz48L3N2Zz4=';
 const GROCERY_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjRkY4QTFGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTEyMCAxMTAgSCAxODAgTCAyMzAgMzMwIEggNTIwIEwgNTcwIDE5MCBIIDIwNSIvPjxwYXRoIGQ9Ik0yNDUgMjYyIEggNTQ1IE0yOTAgMTkwIFYgMzMwIE0zNzUgMTkwIFYgMzMwIE00NjAgMTkwIFYgMzMwIi8+PHBhdGggZD0iTTIzMCAzMzAgTCAyMTAgMzgwIEggNTIwIi8+PGNpcmNsZSBjeD0iMjcwIiBjeT0iNDE1IiByPSIyNCIvPjxjaXJjbGUgY3g9IjQ4MCIgY3k9IjQxNSIgcj0iMjQiLz48L2c+PGcgc3Ryb2tlPSIjRjUxODAyIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMTUwIiByPSIzNCIvPjxwYXRoIGQ9Ik0zMDAgMTE2IEMgMzAwIDEwMCwgMzEyIDkyLCAzMjAgOTAiLz48L2c+PGcgc3Ryb2tlPSIjRkZFMzAwIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTM2MCAxNzAgQyAzODAgMTIwLCA0NDAgMTAwLCA0ODAgMTE4IEMgNDUwIDEzMCwgNDEwIDE2MCwgMzg1IDE3NiBaIi8+PC9nPjxnIHN0cm9rZT0iIzE4QzkwMSIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik01MDAgMTcyIEMgNTIwIDE1MCwgNTYwIDE1MCwgNTgwIDE2OCBDIDU2MCAxNzgsIDUzMCAxODIsIDUwMCAxNzIgWiIvPjxwYXRoIGQ9Ik01NDAgMTYwIFYgMTIwIi8+PC9nPjwvc3ZnPg==';
+const SPORTS_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjMjJDNTVFIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjExIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjAwIiByPSIxMTgiLz48cGF0aCBkPSJNMjU2IDExOCBMIDI5NiAxNTAgTCAyODIgMTk2IEwgMjMwIDE5NiBMIDIxNiAxNTAgWiIvPjxwYXRoIGQ9Ik0yNTYgMTE4IFYgODIgTTI5NiAxNTAgTCAzNDAgMTMyIE0yODIgMTk2IEwgMzE4IDIzNiBNMjMwIDE5NiBMIDE5NCAyMzYgTTIxNiAxNTAgTCAxNzIgMTMyIi8+PHBhdGggZD0iTTM0MCAxMzIgQyAzNjIgMTYwLCAzNzIgMjAwLCAzNjYgMjM2IE0zMTggMjM2IEMgMzAwIDI2MiwgMjY4IDI3NiwgMjM2IDI3MCBNMTk0IDIzNiBDIDE3MiAyMjIsIDE1MiAxOTAsIDE1MCAxNjAgTTE3MiAxMzIgQyAxOTYgMTA2LCAyMjYgOTIsIDI1NiA4MiIvPjwvZz48dGV4dCB4PSIyNTYiIHk9IjQyMCIgZm9udC1zaXplPSI4OCIgZmlsbD0iIzIyQzU1RSIgZm9udC1mYW1pbHk9Ii1hcHBsZS1zeXN0ZW0sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbHRlcj0idXJsKCNnKSI+U3BvcnRzPC90ZXh0Pjwvc3ZnPg==';
+const STREAMING_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjRjU5RTBCIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjExIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHJlY3QgeD0iNzYiIHk9Ijk2IiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjIzNiIgcng9IjI4Ii8+PHBhdGggZD0iTTIyNiAxNjAgTCAzMTQgMjE0IEwgMjI2IDI2OCBaIi8+PC9nPjxnIHN0cm9rZT0iIzNGQzRGRiIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik0zMzggMTE4IEMgMzYwIDEwMCwgMzkyIDEwMCwgNDE0IDExOCBNMzU2IDE0MCBDIDM3MiAxMjgsIDM5MiAxMjgsIDQwOCAxNDAiLz48L2c+PHRleHQgeD0iMjU2IiB5PSI0MzAiIGZvbnQtc2l6ZT0iNzYiIGZpbGw9IiNGNTlFMEIiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWx0ZXI9InVybCgjZykiPlN0cmVhbWluZzwvdGV4dD48L3N2Zz4=';
 const COLD_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDg4IFYgMzg0Ii8+PHBhdGggZD0iTTEyOCAxNjIgTCAzODQgMzEwIi8+PHBhdGggZD0iTTEyOCAzMTAgTCAzODQgMTYyIi8+PHBhdGggZD0iTTI1NiA4OCBMIDIyNiAxMTggTTI1NiA4OCBMIDI4NiAxMTggTTI1NiAzODQgTCAyMjYgMzU0IE0yNTYgMzg0IEwgMjg2IDM1NCIvPjxwYXRoIGQ9Ik0xMjggMTYyIEwgMTcwIDE1OCBNMTI4IDE2MiBMIDEzNCAyMDQgTTM4NCAzMTAgTCAzNDIgMzE0IE0zODQgMzEwIEwgMzc4IDI2OCIvPjxwYXRoIGQ9Ik0xMjggMzEwIEwgMTM0IDI2OCBNMTI4IDMxMCBMIDE3MCAzMTQgTTM4NCAxNjIgTCAzNzggMjA0IE0zODQgMTYyIEwgMzQyIDE1OCIvPjwvZz4KPHRleHQgeD0iMjU2IiB5PSI0NTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5Db2xkPC90ZXh0Pgo8L3N2Zz4=';
 
 class Component extends DCLogic {
@@ -6388,7 +6403,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.1'; }
+  APP_BUILD() { return '2026.09.03.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7000,6 +7015,7 @@ class Component extends DCLogic {
     }
     if (section === 'fun') return { ...b, label: b.label || 'Button', onTap, sceneEl: img ? this.sceneEl(img) : this.emojiScene(emoji) };
     if (section === 'places') return { ...b, label: b.label || 'Button', onTap, imgEl: img ? this.sceneEl(img) : this.emojiScene(emoji) };
+    if (section.indexOf('watch:') === 0) return { ...b, label: b.label || 'Button', onTap, imgEl: img ? this.sceneEl(img) : this.emojiScene(emoji) };
     if (section === 'hurt') return { ...b, label: b.label || 'Button', onTap, iconEl: img ? this.picEl(img, 16) : React.createElement('span', { style: { fontSize: 66, lineHeight: 1 } }, emoji) };
     if (section === 'night' || section === 'feelings') return { ...b, label: b.label || 'Button', onTap, hasImg: !!img, imgEl: img ? React.createElement('img', { src: img, style: { width: '100%', aspectRatio: '1', borderRadius: 16, objectFit: 'cover', display: 'block' } }) : null, hasSlot: false, noSlot: !img, showEmoji: !img, emoji };
     return { ...b, label: b.label || 'Button', onTap, hasSub: false, hasIcon: !!img, noIcon: !img, emoji, iconEl: img ? this.picEl(img, '50%') : null };
@@ -7395,7 +7411,7 @@ class Component extends DCLogic {
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
   isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Places — Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Places — Fun', 'watch:tv': 'Watch: TV', 'watch:movies': 'Watch: Movies', 'watch:sports': 'Watch: Sports', 'watch:streaming': 'Watch: Streaming', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
   // Core-word board for building sentences. Organised by part of speech —
   // the whole premise of an AAC board — with the Modified Fitzgerald colour
@@ -7896,18 +7912,24 @@ class Component extends DCLogic {
       watchBranded: this.isEvanProfile(),
       watchCategories: !this.isEvanProfile(),
       watchTiles: [
-        { id: 'tv', label: 'TV', color: '#2F8BFF', icon: 'watch_tv' },
-        { id: 'movies', label: 'Movies', color: '#EC4899', icon: 'watch_movies' },
-        { id: 'tablet', label: 'Tablet', color: '#22C55E', icon: 'watch_tablet', needsLabel: true },
-        { id: 'internet', label: 'Internet', color: '#F59E0B', icon: 'watch_internet' },
+        { id: 'tv', label: 'TV', color: '#2F8BFF', src: this.iconUri('watch_tv'), q: 'Can I watch TV?', s: 'I want to watch TV.' },
+        { id: 'movies', label: 'Movies', color: '#EC4899', src: this.iconUri('watch_movies'), q: 'Can I watch a movie?', s: 'I want to watch a movie.' },
+        // Sports and Streaming are drawn in the app until Frank supplies art.
+        { id: 'sports', label: 'Sports', color: '#22C55E', src: SPORTS_TILE, q: 'Can I watch sports?', s: 'I want to watch sports.' },
+        { id: 'streaming', label: 'Streaming', color: '#F59E0B', src: STREAMING_TILE, q: 'Can I watch my shows?', s: 'I want to watch my shows.' },
       ].map((w) => ({
         ...w,
-        // Three of the four carry their word inside the drawing. The tablet does
-        // not, so it gives up a little height and the tile writes the word.
-        faceEl: React.createElement('img', { src: this.iconUri(w.icon), alt: w.label, style: { width: '100%', height: w.needsLabel ? '76%' : '100%', marginBottom: w.needsLabel ? '13%' : 0, objectFit: 'contain' } }),
-        hasCaption: !!w.needsLabel,
-        onTap: () => this.setState({ screen: 'netflix' }),
+        // All four carry their word inside the drawing.
+        faceEl: React.createElement('img', { src: w.src, alt: w.label, style: { width: '100%', height: '100%', objectFit: 'contain' } }),
+        onTap: () => this.setState({ chooser: { label: w.label, noIcon: true, emoji: '📺', options: [
+          { glyph: '🙋', txt: w.q, say: w.q, color: '#3B82F6' },
+          { glyph: '💬', txt: w.s, say: w.s, color: '#1F9E6E' },
+        ].map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } }),
       })),
+      // The family's own shows, under the tile they picked when adding them.
+      watchGroups: this.isEvanProfile() ? [] : [
+        ['tv', 'TV', '#2F8BFF'], ['movies', 'Movies', '#EC4899'], ['sports', 'Sports', '#22C55E'], ['streaming', 'Streaming', '#F59E0B'],
+      ].map(([id, title, color]) => ({ title, color, items: this.customsFor('watch:' + id) })).filter((g) => g.items.length),
       openNetflix: () => { this.speak('Netflix'); this.setState({ screen: 'netflix' }); },
       openDisney: () => { this.speak('Disney Plus'); this.setState({ screen: 'disney' }); },
       openSports: () => { this.speak('Sports'); this.setState({ screen: 'sports' }); },
@@ -8244,7 +8266,7 @@ class Component extends DCLogic {
       nbAddPhrase: () => this.nbAddPhrase(),
       // School and Friends were missing entirely, so a buyer had no way to add
       // their child's actual teacher, aide, therapist or friend.
-      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:speech', 'school:bus', 'friends', 'food', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
+      nbSections: ['home', 'family', 'school:teachers', 'school:office', 'school:speech', 'school:bus', 'friends', 'food', 'watch:tv', 'watch:movies', 'watch:sports', 'watch:streaming', 'fun', 'night', 'feelings', 'places', 'hurt', 'housecommon', 'housedad', 'housemom'].map((sec) => ({ value: sec, label: this.sectionLabel(sec) })),
       nbOnSection: (e) => { this.nb().section = e.target.value; },
       addButton: () => this.addCustomButton(),
       nbErr: s.nbErr || '',

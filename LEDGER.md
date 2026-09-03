@@ -202,10 +202,18 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Stuffy Nose and Ice Pack on Health (watercolor); Bathroom, Kitchen and
   Living Room chips in the house rooms (3D cartoon); the Time button on
   Calendar (clock emoji); and the four drawn placeholders (Mall, Grocery
-  Store, Hot, Cold). **Store risk: native/build.js blanks the sports
-  logos and brand keys but NOT the Netflix and Disney posters, so the
-  store build ships 41 real posters.** Recommend neon replacements for
-  the Watch board before submission; Frank decides the art.
+  Store, Hot, Cold). Correction, same day: the store build never carried
+  the posters, because native/build.js replaces tether-photos.js with an
+  empty stub; only the web demo showed them.
+- **Template Watch board (Frank's go, 3 Sep 2026):** four tiles, TV,
+  Movies, Sports, Streaming. Each opens the two-line chooser (Can I watch
+  TV? / I want to watch TV.). Tablet and Internet tiles gone, and the
+  Netflix, Disney and sports boards are no longer reachable on a buyer
+  phone, so no posters or logos show anywhere in the template. A family
+  adds its own shows with the edit wheel under Watch: TV / Movies /
+  Sports / Streaming and they appear under that tile. Sports and
+  Streaming tiles are drawn placeholders; art owed from Frank. Evan's
+  TV board unchanged. Template build 2026.09.03.2.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

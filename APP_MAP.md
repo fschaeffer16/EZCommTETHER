@@ -117,8 +117,12 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   else.** It used to sit on the School board as well, which meant two tiles,
   two different pictures, one board. Removed from School 28 Aug 2026; `abcBack`
   returns to this menu.
-- **watch** — TV/Watch. Sub-boards: **netflix**, **disney**, **sports**
-  (plus tv / tablet / movies / internet tiles).
+- **watch** — Evan: TV, with sub-boards **netflix**, **disney**, **sports** (his real
+  shows). Template (3 Sep 2026): four tiles, TV, Movies, Sports, Streaming, each a
+  two-line chooser; no posters, no sub-boards. A family's own shows are custom buttons
+  in sections `watch:tv` / `watch:movies` / `watch:sports` / `watch:streaming` and show
+  under that tile's heading. Sports and Streaming art is drawn in the app until Frank
+  supplies pictures.
 - **places** — one board, three sections (Frank, 3 Sep 2026): **Homes** (the two
   houses → **houserooms**, back arrow returns to Places), **Fun** (Pool, Beach, Park,
   Movies, Bike Ride, Trampoline, Soccer Field, Dogs, plus any custom Fun buttons) and
