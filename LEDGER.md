@@ -243,6 +243,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   apps. Nothing drawn by Claude remains in either app. Still photo
   renders on Food: Cereal, Eggs, Cookie, Chips, Pretzels, Crackers.
   Builds 2026.09.03.7.
+- **Anchor under a phrase chooser (Frank, 3 Sep 2026, both apps):** the
+  Bathroom / My Choice / greeting sheets used to slide up over the whole
+  screen and hide the Yes / Home / No row. The sheet now lives inside
+  the content region, so the anchor and the quick strip stay on screen
+  and usable while a sheet is open. Builds 2026.09.03.8.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
