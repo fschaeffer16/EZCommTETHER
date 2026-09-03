@@ -236,6 +236,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   set inside the strip's own box with the word under it (qn_cold), glyph
   alone for the tablet pills (qng_cold). Placeholders still drawn: Hot,
   Mall, Grocery Store. Builds 2026.09.03.6.
+- **Frank's Hot, Mall and Grocery Store art, 3 Sep 2026:** the last
+  three drawn placeholders are gone. Hot sits in the strip's box like
+  Cold (qn_hot, qng_hot); Mall and Grocery Store are Places scene tiles
+  (place_mall, place_grocery, 683x512 like the rest of the set), both
+  apps. Nothing drawn by Claude remains in either app. Still photo
+  renders on Food: Cereal, Eggs, Cookie, Chips, Pretzels, Crackers.
+  Builds 2026.09.03.7.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

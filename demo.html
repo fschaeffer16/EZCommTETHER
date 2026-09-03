@@ -4307,9 +4307,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:393,&quot;height&quot;:852},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;sosMessage&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;HELP! I NEED HELP! Please come now.&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 // Hot and Cold quick tiles, drawn in the set's neon style until Frank supplies art.
-const HOT_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDk2IEMgMzAwIDE1MCwgMzUwIDE5MCwgMzUwIDI2MCBDIDM1MCAzMjAsIDMxMCAzNzIsIDI1NiAzNzIgQyAyMDIgMzcyLCAxNjIgMzIwLCAxNjIgMjYwIEMgMTYyIDIyMCwgMTgwIDE5MCwgMTk2IDE3NiBDIDE5NiAyMTQsIDIxNCAyMzYsIDIzNiAyNDAgQyAyMjYgMjAwLCAyMzYgMTQwLCAyNTYgOTYgWiIvPjxwYXRoIGQ9Ik0yNTYgMzcyIEMgMjMyIDM3MiwgMjE0IDM1MCwgMjE0IDMyNiBDIDIxNCAzMDAsIDIzNiAyODYsIDI0NiAyNzAgQyAyNjIgMjkwLCAyOTggMzAwLCAyOTggMzMwIEMgMjk4IDM1NCwgMjgwIDM3MiwgMjU2IDM3MiBaIi8+PC9nPgo8dGV4dCB4PSIyNTYiIHk9IjQ1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ii1hcHBsZS1zeXN0ZW0sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPkhvdDwvdGV4dD4KPC9zdmc+';
-const MALL_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjM0ZDNEZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTExMCA0MzAgViAxOTAgSCA1NzMgViA0MzAgWiIvPjxwYXRoIGQ9Ik0xMTAgMzAwIEggNTczIi8+PHBhdGggZD0iTTE1MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTI0MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTM4MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTQ3MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHoiLz48cGF0aCBkPSJNMTUwIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiBNNDczIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiIvPjxwYXRoIGQ9Ik0yOTYgNDMwIFYgMzQwIEggMzg3IFYgNDMwIE0zNDEgMzQwIFYgNDMwIi8+PC9nPjxnIHN0cm9rZT0iI0ZGM0ZBOCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik0yNzAgMzQwIEggNDEzIEwgNDAwIDMxNiBIIDI4MyBaIi8+PHBhdGggZD0iTTMwMCAzMTYgViAzNDAgTTM0MSAzMTYgViAzNDAgTTM4MiAzMTYgViAzNDAiLz48L2c+PGcgc3Ryb2tlPSIjQjI2QkZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTI1MCAxOTAgViAxMjAgSCA0MzMgViAxOTAiLz48L2c+PHRleHQgeD0iMzQxIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjRkZEMjNGIiBmaWx0ZXI9InVybCgjZykiPk1BTEw8L3RleHQ+PGcgc3Ryb2tlPSIjRkZEMjNGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTU5MCA0MzAgViAzNjAgSCA2NjAgViA0MzAgWiBNNjEwIDM2MCBDIDYxMCAzMzAsIDY0MCAzMzAsIDY0MCAzNjAiLz48L2c+PGcgc3Ryb2tlPSIjMThDOTAxIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTYwIDQzMCBIIDYyMyBNNTAgNDMwIEMgNDAgNDAwLCA2MCAzODUsIDgwIDQwMCBDIDk1IDM4MCwgMTEwIDQwMCwgMTAwIDQzMCIvPjwvZz48L3N2Zz4=';
-const GROCERY_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjRkY4QTFGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTEyMCAxMTAgSCAxODAgTCAyMzAgMzMwIEggNTIwIEwgNTcwIDE5MCBIIDIwNSIvPjxwYXRoIGQ9Ik0yNDUgMjYyIEggNTQ1IE0yOTAgMTkwIFYgMzMwIE0zNzUgMTkwIFYgMzMwIE00NjAgMTkwIFYgMzMwIi8+PHBhdGggZD0iTTIzMCAzMzAgTCAyMTAgMzgwIEggNTIwIi8+PGNpcmNsZSBjeD0iMjcwIiBjeT0iNDE1IiByPSIyNCIvPjxjaXJjbGUgY3g9IjQ4MCIgY3k9IjQxNSIgcj0iMjQiLz48L2c+PGcgc3Ryb2tlPSIjRjUxODAyIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMTUwIiByPSIzNCIvPjxwYXRoIGQ9Ik0zMDAgMTE2IEMgMzAwIDEwMCwgMzEyIDkyLCAzMjAgOTAiLz48L2c+PGcgc3Ryb2tlPSIjRkZFMzAwIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTM2MCAxNzAgQyAzODAgMTIwLCA0NDAgMTAwLCA0ODAgMTE4IEMgNDUwIDEzMCwgNDEwIDE2MCwgMzg1IDE3NiBaIi8+PC9nPjxnIHN0cm9rZT0iIzE4QzkwMSIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik01MDAgMTcyIEMgNTIwIDE1MCwgNTYwIDE1MCwgNTgwIDE2OCBDIDU2MCAxNzgsIDUzMCAxODIsIDUwMCAxNzIgWiIvPjxwYXRoIGQ9Ik01NDAgMTYwIFYgMTIwIi8+PC9nPjwvc3ZnPg==';
 
 class Component extends DCLogic {
   constructor(props) {
@@ -5422,8 +5419,8 @@ class Component extends DCLogic {
       { sect: 'fun', key: 'soccer_field', label: 'Soccer Field', q: 'Can we go to the soccer field?', s: 'I want to go to the soccer field.' },
       { sect: 'fun', key: 'dogs', label: 'Dogs', art: 'fun_dogs', q: 'Can I play with the dog?', s: 'I want to play with the dog.' },
       { key: 'doctor', label: "Doctor's Office", q: 'Do I have to go to the doctor?', s: 'I need to go to the doctor.' },
-      { key: 'mall', label: 'Mall', art: MALL_TILE, q: 'Can we go to the mall?', s: 'I want to go to the mall.' },
-      { key: 'grocery', label: 'Grocery Store', art: GROCERY_TILE, q: 'Can we go to the grocery store?', s: 'I want to go to the grocery store.' },
+      { key: 'mall', label: 'Mall', art: 'place_mall', q: 'Can we go to the mall?', s: 'I want to go to the mall.' },
+      { key: 'grocery', label: 'Grocery Store', art: 'place_grocery', q: 'Can we go to the grocery store?', s: 'I want to go to the grocery store.' },
       { key: 'store', label: 'Store', q: 'Can we go to the store?', s: 'I want to go to the store.' },
       { key: 'haircut', label: 'Haircut', q: 'Can I get a haircut?', s: 'I want to get a haircut.' },
       { key: 'hospital', label: 'Hospital', q: 'Do I have to go to the hospital?', s: 'I need to go to the hospital.' },
@@ -5456,8 +5453,7 @@ class Component extends DCLogic {
 
   mapPlace(p) {
     // p.art names the picture when it is not the plain place_<key> icon: a
-    // photo path, a data URI (Mall and Grocery Store are drawn in the app
-    // until Frank supplies art), or another icon key.
+    // photo path, a data URI, or another icon key.
     const art = p.art || null;
     const src = art
       ? ((art.indexOf('data:') === 0 || art.indexOf('assets/') === 0) ? art : this.iconUri(art))
@@ -6403,7 +6399,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.6'; }
+  APP_BUILD() { return '2026.09.03.7'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7627,7 +7623,7 @@ class Component extends DCLogic {
         { label: 'Later', img: this.iconUri('qn_later'), gl: this.iconUri('qng_later'), c: '#FBAD0B', onTap: () => this.speak('Later.') },
         { label: 'More', img: this.iconUri('qn_more'), gl: this.iconUri('qng_more'), c: '#FBA000', onTap: () => this.speak('More.') },
         { label: 'Done', img: this.iconUri('qn_done'), gl: this.iconUri('qng_done'), c: '#FFE300', onTap: () => this.speak("I'm done.") },
-        { label: 'Hot', img: HOT_TILE, gl: HOT_TILE, c: '#FF5A1F', onTap: () => this.speak("I'm hot.") },
+        { label: 'Hot', img: this.iconUri('qn_hot'), gl: this.iconUri('qng_hot'), c: '#FF5A1F', onTap: () => this.speak("I'm hot.") },
         { label: 'Cold', img: this.iconUri('qn_cold'), gl: this.iconUri('qng_cold'), c: '#3FC4FF', onTap: () => this.speak("I'm cold.") },
       ].map((q) => ({ ...q, glow: this.glowFrom(q.c) })),
       sayFamily: () => this.speak('Family'),
