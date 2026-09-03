@@ -45,14 +45,14 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | friends | Friends | — | ✓ | board `family` (friends people) |
 | morning | Morning | ✓ | ✓ | board `morning` |
 | night | Night | ✓ | ✓ | board `night` |
-| fun | Fun | ✓ | ✓ | board `fun` |
+| fun | Fun | — (Fun section inside Places) | — (Fun section inside Places) | board `fun` (no longer reachable) |
 | watch | TV (Evan) / Watch | ✓ | ✓ | board `watch` |
 | feelings | Feelings | ✓ | ✓ | board `feelings` |
 | bathroom | Bathroom | ✓ | ✓ | **phrase chooser** |
 | sentbuild | Sentence Build | ✓ | ✓ | board `buildmenu` (chooser) |
 | calendar | Calendar | ✓ | ✓ | board `calendar` |
 | places | Places | ✓ | ✓ | board `places` |
-| houses | Houses | ✓ | — (first tiles inside Places) | board `houses` / `houserooms` |
+| houses | Houses | — (first tiles inside Places) | — (first tiles inside Places) | board `houserooms` (the `houses` screen is no longer reachable) |
 | choice | My Choice | ✓ | — (inside Feelings) | **phrase chooser** |
 | regulate | Overstimmed | — | ✓ | **phrase chooser** |
 | colors | Colors | — | — (inside School) | board `colors` |
@@ -60,11 +60,16 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | clock | Time | — | — (inside Calendar) | board `clock` |
 
 
-**Template home order (Frank, 2 Sep 2026, `templateHomeOrder()`, layoutRev 19):**
-Family, Food / School, Sentence Build / Fun, Watch / Morning, Night / Bathroom, Hurt /
-Friends, Feelings / Places, Calendar. Fourteen tiles. Health and My Choice are the last
-two tiles inside Feelings; Home One and Home Two are the first two tiles inside Places;
-Colors, Numbers and the Calculator are inside School; Time is inside Calendar.
+**Template home order (Frank, 2 and 3 Sep 2026, `templateHomeOrder()`, layoutRev 20):**
+Family, Food / School, Sentence Build / Places, Watch / Morning, Night / Bathroom, Hurt /
+Friends, Feelings / Calendar. Thirteen tiles. Fun folded into Places on 3 Sep and Places
+took its spot. Health and My Choice are the last two tiles inside Feelings; Home One and
+Home Two are the first two tiles inside Places; Colors, Numbers and the Calculator are
+inside School; Time is inside Calendar.
+
+**Evan's home order (`evanHomeOrder()`, layoutRev 17):** Family, Food / School, Sentence
+Build / Feelings, Bathroom / Places, TV / Morning, Night / Hurt (body map), I'm Sick /
+Calendar, My Choice. Fourteen tiles. Fun and Houses folded into Places on 3 Sep 2026.
 
 ### Where Evan reaches the tiles he does NOT have on home
 Evan's home is intentionally leaner; these live one level in:
@@ -113,12 +118,20 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   returns to this menu.
 - **watch** — TV/Watch. Sub-boards: **netflix**, **disney**, **sports**
   (plus tv / tablet / movies / internet tiles).
-- **houses** — Houses → **houserooms** (bathroom / kitchen / living room / outside).
+- **places** — one board, three sections (Frank, 3 Sep 2026): **Homes** (the two
+  houses → **houserooms**, back arrow returns to Places), **Fun** (Pool, Beach, Park,
+  Movies, Bike Ride, Trampoline, Soccer Field, Dogs, plus any custom Fun buttons) and
+  **Places** (Doctor's Office, Mall, Grocery Store, Store, Haircut, then Hospital / Car /
+  Home in the template or Mom's Car / Dad's Truck in Evan's). Every tile opens the
+  two-line chooser (the question, the statement); Pool adds the pool noodle lines.
+  Mall and Grocery Store are drawn in the app until Frank supplies art.
+- **houserooms** — a house's rooms, with the "In every house" strip (bathroom /
+  kitchen / living room / outside) at the top. The old **houses** screen is unreachable.
 - **hurt** — "I'm Sick" symptom board. **hurtbody** — neon body map
   (head/neck/chest/belly, both arms/hands/legs/feet). Evan uses hurtbody.
 - **calendar** — month grid + inline live **Time** (tap → **clock**).
-- **morning**, **night**, **fun**, **feelings**, **places**, **colors**,
-  **numbers**, **clock** — standalone boards.
+- **morning**, **night**, **feelings**, **colors**, **numbers**, **clock** —
+  standalone boards. (**fun** still exists as a screen but nothing opens it.)
 - **settings** — gear (⚙️) on the home header; family setup, phone role, Sync.
 - **sos** / **sosSent** — Emergency. Reached from the red SOS bar, which is
   **anchored flush to the very bottom** of the content region (full-width,

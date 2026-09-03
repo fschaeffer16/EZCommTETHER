@@ -164,6 +164,28 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   with the quick strip under it a little smaller (five across). The old
   Home / Help / Done bar is gone. Settings and the SOS screens keep their
   own headers. Template build 2026.09.02.8, Evan's 2026.09.02.1.
+- **Quick strip order (Frank, 3 Sep 2026, both apps):** Help, Question,
+  Restroom, Thank you, Good morning, Hello, Bye, I Love You, Good, Bad,
+  Now, Later, More, Done, Hot, Cold. I Love You stays (leaving it out was
+  an oversight, his words). Hot and Cold are drawn in the app in the set's
+  neon style; swap in Frank's art when he sends it.
+- **Fun and Places are one board (Frank, 3 Sep 2026, both apps).** The
+  Fun tile is gone from home; Places took its spot so his pairs hold
+  (template: Places / Watch, Calendar closes the board alone, 13 tiles;
+  Evan: Places / TV, 14 tiles, Houses gone from home too). Inside Places,
+  three sections in his order: Homes (the two houses), Fun (Pool, Beach,
+  Park, Movies, Bike Ride, Trampoline, Soccer Field, Dogs), then Places
+  (Doctor's Office, Mall, Grocery Store, Store, Haircut, Hospital, Car,
+  Home; Evan's has Mom's Car and Dad's Truck instead of Hospital, Car,
+  Home). A house tile opens its room board with the "In every house"
+  strip (bathroom, kitchen, living room, outside) at the top, so nothing
+  from the old Houses screen was lost. Buttons a family added to Fun show
+  under the Fun heading. Layout rev 20 (template) / 17 (Evan) move a saved
+  home order without dropping custom tiles.
+  **Art owed:** Mall and Grocery Store are drawn in the app (neon
+  placeholders) in both apps; in Evan's, Movies is the template's neon
+  icon because he has no photo for it. Replace all three when Frank
+  supplies pictures. Template build 2026.09.03.1, Evan's 2026.09.03.1.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

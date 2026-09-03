@@ -3376,16 +3376,22 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <sc-for list="{{ placesList }}" as="place" hint-placeholder-count="0">
-              <div onClick="{{ place.onTap }}" style="display:flex;flex-direction:column;gap:7px;cursor:pointer;" style-active="transform:scale(.96)">
-                <div style="position:relative;width:100%;aspect-ratio:4/3;border:3px solid #14B8A6;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(20,16,12,.08);background:var(--slot,#F0EDE7);">
-                  {{ place.imgEl }}
+          <!-- One Places board (Frank, 3 Sep 2026): the homes first, then the
+               fun places, then everywhere else. Fun used to be its own home
+               tile with the same pool, beach and trampoline on it. -->
+          <sc-for list="{{ placesSections }}" as="sec" hint-placeholder-count="3">
+            <div style="font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:{{ sec.color }};margin:2px 2px 9px;">{{ sec.title }}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+              <sc-for list="{{ sec.items }}" as="place" hint-placeholder-count="0">
+                <div onClick="{{ place.onTap }}" style="display:flex;flex-direction:column;gap:7px;cursor:pointer;" style-active="transform:scale(.96)">
+                  <div style="position:relative;width:100%;aspect-ratio:4/3;border:3px solid {{ sec.color }};border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(20,16,12,.08);background:var(--slot,#F0EDE7);">
+                    {{ place.imgEl }}
+                  </div>
+                  <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ place.label }}</span>
                 </div>
-                <span style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);text-align:center;line-height:1.15;">{{ place.label }}</span>
-              </div>
-            </sc-for>
-          </div>
+              </sc-for>
+            </div>
+          </sc-for>
         </div>
       </div>
     </sc-if>
@@ -3805,6 +3811,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:{{ houseColor }};flex:1;min-width:0;">{{ houseTitle }}</div>
           <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
+        <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;padding:0 18px 8px;flex:none;">In every house</div>
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 12px;flex:none;-webkit-overflow-scrolling:touch;">
+          <sc-for list="{{ houseCommon }}" as="r" hint-placeholder-count="4">
+            <div onClick="{{ r.onTap }}" style="flex:none;display:flex;align-items:center;gap:6px;background:var(--card,#fff);border:2.5px solid {{ houseColor }};border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.94)">
+              <sc-if value="{{ r.noIcon }}" hint-placeholder-val="{{ true }}"><span style="font-size:20px;line-height:1;">{{ r.emoji }}</span></sc-if>{{ r.iconEl }}
+              <span style="font-size:16px;font-weight:800;color:var(--ink,#1A1714);white-space:nowrap;">{{ r.label }}</span>
+            </div>
+          </sc-for>
+        </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="font-size:13px;color:var(--sub,#8C857A);font-weight:600;line-height:1.4;margin:2px 2px 14px;">Tap a room — it will say it out loud.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -4222,6 +4237,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:393,&quot;height&quot;:852},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;sosMessage&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;HELP! It's Evan. I can't wake up Dad. I NEED HELP!&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 // Hot and Cold quick tiles, drawn in the set's neon style until Frank supplies art.
 const HOT_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjVBMUYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDk2IEMgMzAwIDE1MCwgMzUwIDE5MCwgMzUwIDI2MCBDIDM1MCAzMjAsIDMxMCAzNzIsIDI1NiAzNzIgQyAyMDIgMzcyLCAxNjIgMzIwLCAxNjIgMjYwIEMgMTYyIDIyMCwgMTgwIDE5MCwgMTk2IDE3NiBDIDE5NiAyMTQsIDIxNCAyMzYsIDIzNiAyNDAgQyAyMjYgMjAwLCAyMzYgMTQwLCAyNTYgOTYgWiIvPjxwYXRoIGQ9Ik0yNTYgMzcyIEMgMjMyIDM3MiwgMjE0IDM1MCwgMjE0IDMyNiBDIDIxNCAzMDAsIDIzNiAyODYsIDI0NiAyNzAgQyAyNjIgMjkwLCAyOTggMzAwLCAyOTggMzMwIEMgMjk4IDM1NCwgMjgwIDM3MiwgMjU2IDM3MiBaIi8+PC9nPgo8dGV4dCB4PSIyNTYiIHk9IjQ1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ii1hcHBsZS1zeXN0ZW0sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPkhvdDwvdGV4dD4KPC9zdmc+';
+const MALL_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjM0ZDNEZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTExMCA0MzAgViAxOTAgSCA1NzMgViA0MzAgWiIvPjxwYXRoIGQ9Ik0xMTAgMzAwIEggNTczIi8+PHBhdGggZD0iTTE1MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTI0MCAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTM4MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHogTTQ3MyAyMzAgaCA2MCB2IDQ1IGggLTYwIHoiLz48cGF0aCBkPSJNMTUwIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiBNNDczIDM0MCBoIDYwIHYgNTAgaCAtNjAgeiIvPjxwYXRoIGQ9Ik0yOTYgNDMwIFYgMzQwIEggMzg3IFYgNDMwIE0zNDEgMzQwIFYgNDMwIi8+PC9nPjxnIHN0cm9rZT0iI0ZGM0ZBOCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik0yNzAgMzQwIEggNDEzIEwgNDAwIDMxNiBIIDI4MyBaIi8+PHBhdGggZD0iTTMwMCAzMTYgViAzNDAgTTM0MSAzMTYgViAzNDAgTTM4MiAzMTYgViAzNDAiLz48L2c+PGcgc3Ryb2tlPSIjQjI2QkZGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTI1MCAxOTAgViAxMjAgSCA0MzMgViAxOTAiLz48L2c+PHRleHQgeD0iMzQxIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjRkZEMjNGIiBmaWx0ZXI9InVybCgjZykiPk1BTEw8L3RleHQ+PGcgc3Ryb2tlPSIjRkZEMjNGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTU5MCA0MzAgViAzNjAgSCA2NjAgViA0MzAgWiBNNjEwIDM2MCBDIDYxMCAzMzAsIDY0MCAzMzAsIDY0MCAzNjAiLz48L2c+PGcgc3Ryb2tlPSIjMThDOTAxIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTYwIDQzMCBIIDYyMyBNNTAgNDMwIEMgNDAgNDAwLCA2MCAzODUsIDgwIDQwMCBDIDk1IDM4MCwgMTEwIDQwMCwgMTAwIDQzMCIvPjwvZz48L3N2Zz4=';
+const GROCERY_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODMgNTEyIj48ZGVmcz48ZmlsdGVyIGlkPSJnIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI2IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI2ODMiIGhlaWdodD0iNTEyIiBmaWxsPSIjMDAwIi8+PGcgc3Ryb2tlPSIjRkY4QTFGIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTEyMCAxMTAgSCAxODAgTCAyMzAgMzMwIEggNTIwIEwgNTcwIDE5MCBIIDIwNSIvPjxwYXRoIGQ9Ik0yNDUgMjYyIEggNTQ1IE0yOTAgMTkwIFYgMzMwIE0zNzUgMTkwIFYgMzMwIE00NjAgMTkwIFYgMzMwIi8+PHBhdGggZD0iTTIzMCAzMzAgTCAyMTAgMzgwIEggNTIwIi8+PGNpcmNsZSBjeD0iMjcwIiBjeT0iNDE1IiByPSIyNCIvPjxjaXJjbGUgY3g9IjQ4MCIgY3k9IjQxNSIgcj0iMjQiLz48L2c+PGcgc3Ryb2tlPSIjRjUxODAyIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMTUwIiByPSIzNCIvPjxwYXRoIGQ9Ik0zMDAgMTE2IEMgMzAwIDEwMCwgMzEyIDkyLCAzMjAgOTAiLz48L2c+PGcgc3Ryb2tlPSIjRkZFMzAwIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnKSI+PHBhdGggZD0iTTM2MCAxNzAgQyAzODAgMTIwLCA0NDAgMTAwLCA0ODAgMTE4IEMgNDUwIDEzMCwgNDEwIDE2MCwgMzg1IDE3NiBaIi8+PC9nPjxnIHN0cm9rZT0iIzE4QzkwMSIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWx0ZXI9InVybCgjZykiPjxwYXRoIGQ9Ik01MDAgMTcyIEMgNTIwIDE1MCwgNTYwIDE1MCwgNTgwIDE2OCBDIDU2MCAxNzgsIDUzMCAxODIsIDUwMCAxNzIgWiIvPjxwYXRoIGQ9Ik01NDAgMTYwIFYgMTIwIi8+PC9nPjwvc3ZnPg==';
 const COLD_TILE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+PGZpbHRlciBpZD0iZyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAiLz4KPHJlY3QgeD0iMTgiIHk9IjE4IiB3aWR0aD0iNDc2IiBoZWlnaHQ9IjQ3NiIgcng9IjY0IiBmaWxsPSIjMDUwNTA3IiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTIiIGZpbHRlcj0idXJsKCNnKSIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMzRkM0RkYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2cpIj48cGF0aCBkPSJNMjU2IDg4IFYgMzg0Ii8+PHBhdGggZD0iTTEyOCAxNjIgTCAzODQgMzEwIi8+PHBhdGggZD0iTTEyOCAzMTAgTCAzODQgMTYyIi8+PHBhdGggZD0iTTI1NiA4OCBMIDIyNiAxMTggTTI1NiA4OCBMIDI4NiAxMTggTTI1NiAzODQgTCAyMjYgMzU0IE0yNTYgMzg0IEwgMjg2IDM1NCIvPjxwYXRoIGQ9Ik0xMjggMTYyIEwgMTcwIDE1OCBNMTI4IDE2MiBMIDEzNCAyMDQgTTM4NCAzMTAgTCAzNDIgMzE0IE0zODQgMzEwIEwgMzc4IDI2OCIvPjxwYXRoIGQ9Ik0xMjggMzEwIEwgMTM0IDI2OCBNMTI4IDMxMCBMIDE3MCAzMTQgTTM4NCAxNjIgTCAzNzggMjA0IE0zODQgMTYyIEwgMzQyIDE1OCIvPjwvZz4KPHRleHQgeD0iMjU2IiB5PSI0NTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5Db2xkPC90ZXh0Pgo8L3N2Zz4=';
 
 class Component extends DCLogic {
@@ -5173,12 +5190,29 @@ class Component extends DCLogic {
       { key: 'home', label: 'Home', q: 'Can we go home?', s: 'I want to go home.' },
       { key: 'car', label: 'Car', q: 'Can we go in the car?', s: 'I want to go in the car.' },
     ];
+    // Frank, 3 Sep 2026: Fun and Places are one board. sect: 'fun' items are
+    // the outings (their pictures are his Fun scenes); the rest are errands.
+    // Dad's and Mom's house come first from houses(). Mall, Grocery Store and
+    // Movies have no photo of their own yet, so they use drawn art for now.
     return [
-      { key: 'haircut', label: 'Haircut', q: 'Can I get a haircut?', s: 'I want to get a haircut.' },
+      { sect: 'fun', key: 'pool', label: 'Pool', art: 'assets/fun/pool.jpg', q: 'Can I go to the pool?', s: 'I wanna go to the pool.', extra: [
+        { glyph: '🛟', txt: 'Can I have a pool noodle?', say: 'Can I have a pool noodle?', color: '#0EA5E9' },
+        { glyph: '🛟', txt: 'I want a pool noodle.', say: 'I want a pool noodle.', color: '#7A5CFF' },
+      ]},
+      { sect: 'fun', key: 'beach', label: 'Beach', art: 'assets/fun/beach.jpg', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
+      { sect: 'fun', key: 'park', label: 'Park', art: 'assets/places/playground.jpg', q: 'Can we go to the park?', s: 'I wanna go to the park.' },
+      { sect: 'fun', key: 'movies', label: 'Movies', art: 'place_movie_theater', q: 'Can we go to the movies?', s: 'I wanna go to the movies.' },
+      { sect: 'fun', key: 'bike_ride', label: 'Bike Ride', art: 'assets/fun/bicycle.jpg', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
+      { sect: 'fun', key: 'trampoline', label: 'Trampoline', art: 'assets/fun/trampoline.jpg', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
+      { sect: 'fun', key: 'soccer_field', label: 'Soccer Field', q: 'Can I play soccer?', s: 'I wanna play soccer.' },
+      { sect: 'fun', key: 'dogs', label: 'Dogs', art: 'assets/fun/dogs.jpg', q: 'Can I play with the dog?', s: 'I wanna play with the dog.' },
+      { key: 'doctor', label: "Doctor's Office", q: 'Do I have to go to the doctor?', s: 'I need to go to the doctor.' },
+      { key: 'mall', label: 'Mall', art: MALL_TILE, q: 'Can we go to the mall?', s: 'I want to go to the mall.' },
+      { key: 'grocery', label: 'Grocery Store', art: GROCERY_TILE, q: 'Can we go to the grocery store?', s: 'I want to go to the grocery store.' },
       { key: 'store', label: 'Store', q: 'Can we go to the store?', s: 'I want to go to the store.' },
+      { key: 'haircut', label: 'Haircut', q: 'Can I get a haircut?', s: 'I want to get a haircut.' },
       { key: 'moms_car', label: "Mom's Car", q: "Can we go in Mom's car?", s: "I want to go in Mom's car." },
       { key: 'dads_truck', label: "Dad's Truck", q: "Can we go in Dad's truck?", s: "I want to go in Dad's truck." },
-      { key: 'doctor', label: "Doctor's Office", q: 'Do I have to go to the doctor?', s: 'I need to go to the doctor.' },
     ];
   }
 
@@ -5198,14 +5232,22 @@ class Component extends DCLogic {
   }
 
   mapPlace(p) {
-    const src = this.isEvanProfile() ? ('assets/places/' + p.key + '.jpg') : this.iconUri('place_' + p.key);
+    // p.art names the picture when it is not the plain place_<key> icon: a
+    // photo path, a data URI (Mall and Grocery Store are drawn in the app
+    // until Frank supplies art), or another icon key.
+    const art = p.art || null;
+    const src = art
+      ? ((art.indexOf('data:') === 0 || art.indexOf('assets/') === 0) ? art : this.iconUri(art))
+      : (this.isEvanProfile() ? ('assets/places/' + p.key + '.jpg') : this.iconUri('place_' + p.key));
     const key = this.ovKey('places', p.label);
     const label = this.effLabel(key, p.label);
     const ovCover = this.ovCoverEl(key);
-    const options = [
+    let options = [
       { glyph: '🙋', txt: p.q, say: p.q, color: '#3B82F6' },
       { glyph: '💬', txt: p.s, say: p.s, color: '#1F9E6E' },
     ];
+    // Some places have their own things to ask for once he's there.
+    if (p.extra) options = options.concat(p.extra);
     const normalTap = () => this.setState({ chooser: { label, noIcon: true, emoji: '📍', options: options.map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } });
     return {
       ...p,
@@ -5913,7 +5955,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 16) return false;
+    if (rev >= 17) return false;
 
     if (rev < 3) {
       d.homeOrder = null; // fall back to the new default order in homeBaseTiles()
@@ -6076,7 +6118,17 @@ class Component extends DCLogic {
       d.homeOrder = want.concat(rest);
     }
 
-    d.layoutRev = 16;
+    // Rev 17: Fun and Houses fold into Places (Frank, 3 Sep 2026). Places
+    // moves up into Fun's spot so the pairs he wrote stay pairs.
+    if (rev < 17 && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      const keep = (id) => id !== 'fun' && id !== 'places' && id !== 'houses';
+      const at = d.homeOrder.indexOf('fun') >= 0 ? d.homeOrder.indexOf('fun') : d.homeOrder.indexOf('places');
+      const slot = at >= 0 ? d.homeOrder.slice(0, at).filter(keep).length : -1;
+      d.homeOrder = d.homeOrder.filter(keep);
+      d.homeOrder.splice(slot >= 0 ? slot : d.homeOrder.length, 0, 'places');
+    }
+
+    d.layoutRev = 17;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6097,7 +6149,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.02.2'; }
+  APP_BUILD() { return '2026.09.03.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6130,7 +6182,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 16 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 17 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6483,7 +6535,6 @@ class Component extends DCLogic {
       // Evan's home screen is the one he already knows and doesn't gain a tile.
       ...(mine ? [] : [{ id: 'friends', label: 'Friends', emoji: '👫', color: '#14B8A6', img: this.iconUri('tile_friends'), onTap: () => this.setState({ screen: 'friends' }) }]),
       { id: 'morning', label: 'Morning', emoji: '🌅', color: mine ? '#FB7185' : '#F97316', ...(mine ? { img: 'assets/morning.jpg', pos: 'center 40%' } : { img: this.iconUri('tile_morning') }), onTap: () => this.setState({ screen: 'morning' }) },
-      { id: 'fun', label: 'Fun', emoji: '🤸', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/fun.jpg', pos: 'center 35%' } : { img: this.iconUri('tile_fun') }), onTap: () => this.setState({ screen: 'fun' }) },
       // Evan's board calls it TV — his word. The template keeps "Watch",
       // because its version holds a TV category inside it.
       { id: 'watch', label: mine ? 'TV' : 'Watch', emoji: '📺', color: mine ? '#3B82F6' : '#A855F7', ...(mine ? { img: 'assets/watch_scene.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_watch') }), onTap: () => this.setState({ screen: 'watch' }) },
@@ -6511,7 +6562,6 @@ class Component extends DCLogic {
       { id: 'places', label: 'Places', emoji: '📍', color: mine ? '#14B8A6' : '#EC4899', ...(mine ? { img: 'assets/places/beach.jpg', pos: 'center 45%' } : { img: this.iconUri('tile_places') }), onTap: () => this.setState({ screen: 'places' }) },
       // Dad's house and Mom's house, and the rooms in each — "my room" means
       // the right room. Sits next to Places because both answer "where".
-      { id: 'houses', label: 'Houses', emoji: '🏠', color: mine ? '#0D9488' : '#3B82F6', ...(mine ? { img: this.iconUri('houses_tile') } : { img: this.iconUri('tile_houses') }), onTap: () => this.setState({ screen: 'houses' }) },
       { id: 'choice', label: 'My Choice', emoji: '✋', color: mine ? '#EF4444' : '#EC4899', ...(mine ? { img: null } : { img: this.iconUri('tile_choice') }), onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
       // the rest of them rather than taking a tile of its own.
@@ -6631,8 +6681,10 @@ class Component extends DCLogic {
 
   // Frank's layout, in the pairs he wrote them. Used both by the rev 12
   // migration and by a phone that has no saved order yet.
+  // 3 Sep 2026: Fun and Houses folded into Places, and Places took Fun's
+  // spot, so every pair holds.
   evanHomeOrder() {
-    return ['family','food','school','sentbuild','feelings','bathroom','fun','watch','morning','night','houses','places','hurtbody','hurt','calendar','choice'];
+    return ['family','food','school','sentbuild','feelings','bathroom','places','watch','morning','night','hurtbody','hurt','calendar','choice'];
   }
   homeTiles() {
     const custom = this.data().buttons.filter((b) => b.section === 'home').map((b) => ({ id: b.id, label: b.label || 'Button', emoji: b.emoji || '⭐', color: b.color || '#7A5CFF', img: b.image || null, onTap: this.customTap(b) }));
@@ -7105,7 +7157,7 @@ class Component extends DCLogic {
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
   isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Places — Fun', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
   // Core-word board for building sentences. Organised by part of speech —
   // the whole premise of an AAC board — with the Modified Fitzgerald colour
@@ -7415,7 +7467,24 @@ class Component extends DCLogic {
       hurtSummary: (s.hurtFlow && s.hurtFlow.summary) || '',
       replayHurt: () => { if (this.state.hurtFlow && this.state.hurtFlow.summary) this.speak(this.state.hurtFlow.summary); },
       closeHurtFlow: () => this.setState({ hurtFlow: null, screen: 'hurt' }),
-      placesList: this.places().map((p) => this.mapPlace(p)).concat(this.customsFor('places')),
+      // One Places board, three sections (Frank, 3 Sep 2026): the homes, the
+      // fun places, then everywhere else. Buttons a family added to Fun
+      // keep showing, under Fun.
+      placesSections: (() => {
+        const homes = this.houses().map((h) => ({
+          label: h.label, editable: false,
+          imgEl: this.isEvanProfile() ? this.sceneEl('assets/places/' + (h.id === 'dad' ? 'dads_house' : 'moms_house') + '.jpg') : React.createElement('img', { src: this.iconUri(h.icon), alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' } }),
+          onTap: () => this.setState({ screen: 'houserooms', houseId: h.id, houseFrom: 'places' }),
+        }));
+        const all = this.places().map((p) => this.mapPlace(p));
+        const fun = all.filter((p) => p.sect === 'fun').concat(this.customsFor('fun').map((b) => ({ ...b, imgEl: b.sceneEl })));
+        const rest = all.filter((p) => p.sect !== 'fun').concat(this.customsFor('places'));
+        return [
+          { title: 'Homes', color: '#14B8A6', items: homes },
+          { title: 'Fun', color: '#EC4899', items: fun },
+          { title: 'Places', color: '#3B82F6', items: rest },
+        ].filter((sec) => sec.items.length);
+      })(),
       isPlaces: s.screen === 'places',
       openPlaces: () => this.setState({ screen: 'places' }),
       peopleList: this.activePeopleList(),
@@ -7782,7 +7851,7 @@ class Component extends DCLogic {
           onTap: () => this.setState({ screen: 'houserooms', houseId: h.id }) };
       }),
       isHouseRooms: s.screen === 'houserooms',
-      backToHouses: () => this.setState({ screen: 'houses' }),
+      backToHouses: () => this.setState({ screen: s.houseFrom === 'places' ? 'places' : 'houses', houseFrom: null }),
       houseTitle: this.houseById(s.houseId).label,
       houseColor: this.houseById(s.houseId).color,
       houseRooms: (() => {
