@@ -186,6 +186,21 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   placeholders) in both apps; in Evan's, Movies is the template's neon
   icon because he has no photo for it. Replace all three when Frank
   supplies pictures. Template build 2026.09.03.1, Evan's 2026.09.03.1.
+- **Template art audit, 3 Sep 2026 (Frank asked for every picture that
+  does not fit the neon look).** Crawled all 35 template screens: 172
+  distinct pictures, 89 do not match. Sheets sent to Frank. The groups:
+  Food board photo renders (Thirsty/Full/Snack chips, the six drinks,
+  Hamburger, Sandwich, Soup, Cereal, Eggs, Cookie, Chips, Pretzels,
+  Crackers); every restaurant menu item (photos, cartoons, four bare
+  emoji: Chinese Place tile, Garlic Bread, Chicken, Egg Roll); the Watch
+  board's 28 Netflix posters, 13 Disney posters and 8 sports logos;
+  Stuffy Nose and Ice Pack on Health (watercolor); Bathroom, Kitchen and
+  Living Room chips in the house rooms (3D cartoon); the Time button on
+  Calendar (clock emoji); and the four drawn placeholders (Mall, Grocery
+  Store, Hot, Cold). **Store risk: native/build.js blanks the sports
+  logos and brand keys but NOT the Netflix and Disney posters, so the
+  store build ships 41 real posters.** Recommend neon replacements for
+  the Watch board before submission; Frank decides the art.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
