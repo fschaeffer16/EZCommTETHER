@@ -214,6 +214,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Sports / Streaming and they appear under that tile. Sports and
   Streaming tiles are drawn placeholders; art owed from Frank. Evan's
   TV board unchanged. Template build 2026.09.03.2.
+- **Frank's neon food art, 3 Sep 2026:** Orange Juice, Sandwich, Soup,
+  Hamburger, Lemonade replaced the photo renders (keys drink_orange,
+  food_sandwich, food_soup, hamburger_plain, drink_lemonade; 384px JPEG
+  from his 1254px originals). Still photo renders on the Food board:
+  Water, Milk, Apple Juice, Soda, Cereal, Eggs, Cookie, Chips, Pretzels,
+  Crackers, and the Thirsty / Full / Snack chips. Builds 2026.09.03.3.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
