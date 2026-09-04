@@ -4154,17 +4154,23 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
          Yes / Home / No row and the quick strip, so the anchor stays on
          screen and usable while a sheet is open (Frank, 3 Sep 2026). -->
     <sc-if value="{{ hasChooser }}" hint-placeholder-val="{{ false }}">
-      <div onClick="{{ closeChooser }}" style="position:absolute;inset:0;z-index:60;background:rgba(20,16,12,.45);display:flex;flex-direction:column;justify-content:flex-end;">
-        <div onClick="{{ sheetGuard }}" style="background:var(--bg,#FBFAF7);border-radius:28px 28px 0 0;padding:12px 14px 16px;box-shadow:0 -10px 40px rgba(0,0,0,.3);max-height:calc(100% - 8px);display:flex;flex-direction:column;">
-          <div style="width:40px;height:5px;border-radius:3px;background:var(--hint,#C9C2B8);margin:0 auto 8px;"></div>
-          <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;">
+      <!-- A phrase screen opens like every other board (Frank, 4 Sep 2026):
+           the back button in the header, the phrases under it, no sheet and
+           no Cancel. -->
+      <div style="position:absolute;inset:0;z-index:60;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
+            <div onClick="{{ closeChooser }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);flex:none;" style-active="transform:scale(.9)">‹</div>
             {{ chooser.iconEl }}
             <sc-if value="{{ chooser.noIcon }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:34px;line-height:1;">{{ chooser.emoji }}</span>
+              <span style="font-size:30px;line-height:1;flex:none;">{{ chooser.emoji }}</span>
             </sc-if>
-            <span style="font-size:21px;font-weight:800;color:var(--ink,#1A1714);text-align:center;">{{ chooser.label }}</span>
-            <sc-if value="{{ chooser.avatarHint }}" hint-placeholder-val=""><span style="font-size:12px;font-weight:700;color:var(--sub,#8C857A);text-align:center;">👆 {{ chooser.avatarHint }}</span></sc-if>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);line-height:1.1;">{{ chooser.label }}</div>
+              <sc-if value="{{ chooser.avatarHint }}" hint-placeholder-val=""><div style="font-size:12px;font-weight:700;color:var(--sub,#8C857A);margin-top:2px;">👆 {{ chooser.avatarHint }}</div></sc-if>
+            </div>
           </div>
+          <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:4px 18px 20px;">
           <!-- Two-up cards: the picture is four times the size it was in the rows,
                which is what a child who cannot read is actually navigating by.
                Both apps draw them this way. The rows below are still used where
@@ -4196,7 +4202,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <sc-if value="{{ chooser.editPerson }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ chooser.editPerson }}" style="width:100%;margin-top:14px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:18px;">⚙️</span>Edit this person</button>
           </sc-if>
-          <button onClick="{{ closeChooser }}" style="width:100%;background:transparent;color:var(--sub,#8C857A);font-size:16px;font-weight:700;padding:10px;margin-top:8px;cursor:pointer;{{ cancelCss }}">Cancel</button>
+          </div>
         </div>
       </div>
     </sc-if>
@@ -6224,7 +6230,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.2'; }
+  APP_BUILD() { return '2026.09.04.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

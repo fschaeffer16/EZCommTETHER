@@ -401,6 +401,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   school cyan to purple; initials sit in a neon ring of the person's
   colour, photos get the same ring and glow. The tablet rail keeps its
   old buttons for now. Template build 2026.09.04.3, Evan's 2026.09.04.2.
+- **Phrase screens open like boards (Frank, 4 Sep 2026, both apps).**
+  Bathroom, My Choice, a person's messages, a place's two lines and every
+  other phrase chooser used to slide up as a sheet with a Cancel button.
+  They now fill the content area under the anchor with the same header
+  as every board: the back button, the picture, the name. No sheet, no
+  Cancel. The body map question flow still uses its own sheet. Template
+  build 2026.09.04.4, Evan's 2026.09.04.3.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
