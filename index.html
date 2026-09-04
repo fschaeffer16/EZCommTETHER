@@ -4587,9 +4587,9 @@ class Component extends DCLogic {
       // Overstimmed used to be one button that opened these twelve as a
       // sheet. Frank, 3 Sep 2026: they are all feelings, so they sit on the
       // board like the rest.
-      { label: "It's too loud", emoji: '🔊', say: "It's too loud." },
-      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', say: 'This is too much.' },
-      { label: 'I need space', emoji: '↔️', say: 'I need space.' },
+      { label: "It's too loud", emoji: '🔊', icon: 'reg_loud', neon: true, say: "It's too loud." },
+      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', icon: 'reg_too_much', neon: true, say: 'This is too much.' },
+      { label: 'I need space', emoji: '↔️', icon: 'reg_space', neon: true, say: 'I need space.' },
       { label: 'I need it quiet', emoji: '🤫', icon: 'reg_quiet', neon: true, say: 'I need it quiet.' },
       { label: 'I need a break', emoji: '⏸️', icon: 'reg_break', neon: true, say: 'I need a break.' },
       { label: 'I want to leave', emoji: '🚪', icon: 'reg_leave', neon: true, say: 'I want to leave.' },
@@ -4611,9 +4611,9 @@ class Component extends DCLogic {
       // Overstimmed used to be one button that opened these twelve as a
       // sheet. Frank, 3 Sep 2026: they are all feelings, so they sit on the
       // board like the rest.
-      { label: "It's too loud", emoji: '🔊', say: "It's too loud." },
-      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', icon: 'face_overstimmed', neon: true, say: 'This is too much.' },
-      { label: 'I need space', emoji: '↔️', say: 'I need space.' },
+      { label: "It's too loud", emoji: '🔊', icon: 'reg_loud', neon: true, say: "It's too loud." },
+      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', icon: 'reg_too_much', neon: true, say: 'This is too much.' },
+      { label: 'I need space', emoji: '↔️', icon: 'reg_space', neon: true, say: 'I need space.' },
       { label: 'I need it quiet', emoji: '🤫', icon: 'reg_quiet', neon: true, say: 'I need it quiet.' },
       { label: 'I need a break', emoji: '⏸️', icon: 'reg_break', neon: true, say: 'I need a break.' },
       { label: 'I want to leave', emoji: '🚪', icon: 'reg_leave', neon: true, say: 'I want to leave.' },
@@ -6212,7 +6212,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.16'; }
+  APP_BUILD() { return '2026.09.03.17'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

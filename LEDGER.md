@@ -306,6 +306,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   reg_break). Still emoji: It's too loud, I need space, and This is too
   much on the template. Template build 2026.09.03.12, Evan's
   2026.09.03.16.
+  Then I need space, It's too loud and This is too much arrived
+  (reg_space, reg_loud, reg_too_much; This is too much now uses the bin
+  in Evan's app too, the dizzy face key face_overstimmed is unused). All
+  twelve Overstimmed phrases are his art in both apps. Template build
+  2026.09.03.13, Evan's 2026.09.03.17.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
