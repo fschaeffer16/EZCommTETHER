@@ -323,6 +323,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Hurt board. Evan's Feelings board has no headings yet (not asked).
   Template build 2026.09.03.15. Apple enrollment instructions delivered
   as EZvoxa Apple Developer Enrollment.docx.
+- **Evan's Hurt board, 3 Sep 2026:** Frank's Cough replaced the last old
+  painting, and two new items joined after Cold: Sinuses (My sinuses
+  hurt.) and Runny Nose (My nose is running.), keys ev_sinuses and
+  ev_runny_nose, Evan-only and on the store strip list. Nine sick
+  pictures on his board, all his art. Evan's build 2026.09.03.19.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

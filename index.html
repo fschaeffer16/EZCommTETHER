@@ -4963,6 +4963,9 @@ class Component extends DCLogic {
       { label: 'Headache', icon: 'headache', s: 'My head hurts.' },
       { label: 'Sore Throat', icon: 'sore_throat', s: 'My throat hurts.' },
       { label: 'Cold', icon: 'cold', s: 'I have a cold.' },
+      // Frank's pictures of Evan, 3 Sep 2026 (ev_ keys never reach a buyer phone).
+      { label: 'Sinuses', icon: 'ev_sinuses', s: 'My sinuses hurt.' },
+      { label: 'Runny Nose', icon: 'ev_runny_nose', s: 'My nose is running.' },
       { label: 'Cough', icon: 'cough', s: 'I have a cough.' },
       { label: 'Fever', icon: 'fever', s: 'I feel hot. I might have a fever.' },
       { label: 'Stomachache', icon: 'stomachache', s: 'My stomach hurts.' },
@@ -6206,7 +6209,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.18'; }
+  APP_BUILD() { return '2026.09.03.19'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
