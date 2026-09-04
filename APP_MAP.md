@@ -54,7 +54,7 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | places | Places | ✓ | ✓ | board `places` |
 | houses | Houses | — (first tiles inside Places) | — (first tiles inside Places) | board `houserooms` (the `houses` screen is no longer reachable) |
 | choice | My Choice | — (inside Feelings) | — (inside Feelings) | **phrase chooser** |
-| regulate | Overstimmed | — | ✓ | **phrase chooser** |
+| regulate | Overstimmed | — | — | gone 3 Sep 2026; its twelve phrases are tiles on the Feelings board in both apps |
 | colors | Colors | — | — (inside School) | board `colors` |
 | numbers | Numbers | — | — (inside School) | board `numbers` |
 | clock | Time | — | — (inside Calendar) | board `clock` |

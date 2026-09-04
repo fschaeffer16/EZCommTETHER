@@ -4764,6 +4764,21 @@ class Component extends DCLogic {
       { label: "I'm frustrated", emoji: '😤', icon: 'feel_frustrated', say: "I'm frustrated." },
       { label: "I'm tired", emoji: '😴', icon: 'feel_tired', phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
       { label: "I don't feel good", emoji: '🤢', icon: 'feel_unwell', say: "I don't feel good." },
+      // Overstimmed used to be one button that opened these twelve as a
+      // sheet. Frank, 3 Sep 2026: they are all feelings, so they sit on the
+      // board like the rest.
+      { label: "It's too loud", emoji: '🔊', say: "It's too loud." },
+      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', say: 'This is too much.' },
+      { label: 'I need space', emoji: '↔️', say: 'I need space.' },
+      { label: 'I need it quiet', emoji: '🤫', say: 'I need it quiet.' },
+      { label: 'I need a break', emoji: '⏸️', say: 'I need a break.' },
+      { label: 'I want to leave', emoji: '🚪', say: 'I want to leave.' },
+      { label: "I'm okay", emoji: '👍', say: "I'm okay." },
+      { label: "I'm not okay", emoji: '👎', say: "I'm not okay." },
+      { label: 'I have no energy', emoji: '🔋', say: 'I have no energy.' },
+      { label: 'I need to lie down', emoji: '🛏️', say: 'I need to lie down.' },
+      { label: 'Please slow down', emoji: '🐢', say: 'Please slow down.' },
+      { label: 'I need to move', emoji: '🏃', say: 'I need to move.' },
     ].map((b) => this.mapRoutine(b, 'feelings'));
     return [
       { label: "I'm happy", emoji: '😊', say: "I'm happy." },
@@ -4772,6 +4787,21 @@ class Component extends DCLogic {
       { label: "I'm frustrated", emoji: '😤', say: "I'm frustrated." },
       { label: "I'm tired", emoji: '😴', phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
       { label: "I don't feel good", emoji: '🤢', say: "I don't feel good." },
+      // Overstimmed used to be one button that opened these twelve as a
+      // sheet. Frank, 3 Sep 2026: they are all feelings, so they sit on the
+      // board like the rest.
+      { label: "It's too loud", emoji: '🔊', say: "It's too loud." },
+      { label: 'This is too much', emoji: '😵\u200D\uD83D\uDCAB', say: 'This is too much.' },
+      { label: 'I need space', emoji: '↔️', say: 'I need space.' },
+      { label: 'I need it quiet', emoji: '🤫', say: 'I need it quiet.' },
+      { label: 'I need a break', emoji: '⏸️', say: 'I need a break.' },
+      { label: 'I want to leave', emoji: '🚪', say: 'I want to leave.' },
+      { label: "I'm okay", emoji: '👍', say: "I'm okay." },
+      { label: "I'm not okay", emoji: '👎', say: "I'm not okay." },
+      { label: 'I have no energy', emoji: '🔋', say: 'I have no energy.' },
+      { label: 'I need to lie down', emoji: '🛏️', say: 'I need to lie down.' },
+      { label: 'Please slow down', emoji: '🐢', say: 'Please slow down.' },
+      { label: 'I need to move', emoji: '🏃', say: 'I need to move.' },
     ].map((b) => this.mapRoutine(b, 'feelings'));
   }
 
@@ -6174,7 +6204,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 20) return false;
+    if (rev >= 21) return false;
 
     // Rev 17 (template only): Sentence Build moves up beside School. A fresh
     // demo already gets this from the tile order; this catches a demo phone
@@ -6381,7 +6411,13 @@ class Component extends DCLogic {
       d.homeOrder.splice(slot >= 0 ? slot : d.homeOrder.length, 0, 'places');
     }
 
-    d.layoutRev = 20;
+    // Rev 21: the Overstimmed tile is gone from home; its phrases are
+    // Feelings tiles now (Frank, 3 Sep 2026).
+    if (rev < 21 && Array.isArray(d.homeOrder) && d.homeOrder.length) {
+      d.homeOrder = d.homeOrder.filter((id) => id !== 'regulate');
+    }
+
+    d.layoutRev = 21;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6402,7 +6438,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.8'; }
+  APP_BUILD() { return '2026.09.03.9'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6435,7 +6471,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 20 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 21 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6814,7 +6850,6 @@ class Component extends DCLogic {
       ...(mine ? [{ id: 'choice', label: 'My Choice', emoji: '✋', color: '#EF4444', img: null, onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) }] : []),
       // Overstimmed is a feeling, so on Evan's board it sits in Feelings with
       // the rest of them rather than taking a tile of its own.
-      ...(mine ? [] : [{ id: 'regulate', label: 'Overstimmed', emoji: '😵\u200D\uD83D\uDCAB', color: '#8B5CF6', img: this.iconUri('tile_regulate'), onTap: () => this.openPhraseChooser('Overstimmed', '😵\u200D\uD83D\uDCAB', this.regulationItems()) }]),
     ];
   }
 

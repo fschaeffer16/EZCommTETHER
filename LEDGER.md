@@ -265,6 +265,17 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   face_frustrated): all seven Feelings faces on Evan's board are his art.
   Only the My Choice hand is still an emoji there. Evan's build
   2026.09.03.11.
+- **Overstimmed dissolved into Feelings (Frank, 3 Sep 2026, both apps).**
+  Its twelve phrases (It's too loud, This is too much, I need space, I
+  need it quiet, I need a break, I want to leave, I'm okay, I'm not okay,
+  I have no energy, I need to lie down, Please slow down, I need to move)
+  are ordinary Feelings tiles now, one tap each. The Overstimmed button
+  is gone from Evan's Feelings board and from the template's home screen,
+  where it had been trailing after Calendar as a 14th tile nobody
+  ordered (layout rev 21 removes it from saved orders). Art: This is too
+  much uses Frank's dizzy face in Evan's app; the other eleven are emoji
+  in both apps until he sends neon. Template build 2026.09.03.9, Evan's
+  2026.09.03.12.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
