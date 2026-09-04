@@ -347,6 +347,10 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **Frank's neon Crackers, Eggs and Pretzels, 3 Sep 2026** (snack_crackers,
   food_eggs, snack_pretzels). Left as photo renders on Food: Cereal,
   Cookie, Chips. Template build 2026.09.03.19, Evan's 2026.09.03.22.
+- **Frank's neon Cookie, Chips and Cereal, 3 Sep 2026.** Every picture on
+  the Food board is now neon; the restaurant menus are the last photo
+  pictures in the template. Template build 2026.09.03.20, Evan's
+  2026.09.03.23.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
