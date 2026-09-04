@@ -99,6 +99,7 @@ fs.writeFileSync(path.join(www, 'index.html'), html);
   const EVAN_LIKENESS_KEYS = [
     // the avatar (sick-day art, sleep, the McDonald's picture, the school pages)
     'hurt_tile', 'headache', 'sore_throat', 'cold', 'cough', 'fever', 'stomachache',
+    'ev_stuffy_nose', 'ev_ice_pack',
     'rest', 'sleep', 'hamburger', 'abc_evan', 'numbers_evan',
     // photographs of the family's actual homes
     'houses_tile', 'houses_tile_alt', 'house_dad', 'house_mom',

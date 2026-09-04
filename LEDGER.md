@@ -283,6 +283,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   gone, the Health board is unreachable, and the Hurt board's back arrow
   goes home. Custom buttons a family added under Sick show with them.
   Template build 2026.09.03.10.
+- **Frank's pictures of Evan for the Hurt board, 3 Sep 2026:** the Hurt
+  home tile (hurt_tile), Stomachache, Rest, and new Evan-only keys
+  ev_stuffy_nose and ev_ice_pack (the shared stuffy_nose / ice_pack keys
+  stay watercolor for the template). All five are cutouts with
+  transparent backgrounds; three arrived with a checkerboard baked in
+  and were keyed out. The two new keys are on the store build's
+  likeness strip list. Evan's build 2026.09.03.13.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
