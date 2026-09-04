@@ -290,6 +290,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   transparent backgrounds; three arrived with a checkerboard baked in
   and were keyed out. The two new keys are on the store build's
   likeness strip list. Evan's build 2026.09.03.13.
+  Then Headache, Fever, Sore Throat and Cold arrived (keys headache,
+  fever, sore_throat, cold, all Evan-only and already on the strip list).
+  Only Cough is still the older painting. Evan's build 2026.09.03.14.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
