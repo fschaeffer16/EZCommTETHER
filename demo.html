@@ -3940,9 +3940,9 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <!-- Neon calendar (Frank's design, 3 Sep 2026): black cards, one glowing
                outline each, the time in a digital face. -->
           <div onClick="{{ openClockFromCal }}" style="margin:0 18px 12px;flex:none;display:flex;cursor:pointer;" style-active="transform:scale(.97)">
-            <span style="display:flex;width:100%;align-items:center;justify-content:center;gap:16px;background:#050507;border:3px solid #3FC4FF;border-radius:24px;padding:14px 20px;box-shadow:0 0 14px rgba(63,196,255,.55);">
-              <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#3FC4FF" stroke-width="3.5" stroke-linecap="round" style="flex:none;filter:drop-shadow(0 0 5px rgba(63,196,255,.9));"><circle cx="24" cy="24" r="19"/><path d="M24 12 V 24 H 33"/></svg>
-              <span style="font-size:44px;font-weight:800;color:#fff;line-height:1;letter-spacing:.02em;text-shadow:0 0 10px rgba(63,196,255,.95),0 0 22px rgba(63,196,255,.6);font-variant-numeric:tabular-nums;">{{ clockFace }}</span>
+            <span style="display:flex;width:100%;min-width:0;align-items:center;justify-content:center;gap:12px;background:#050507;border:3px solid #3FC4FF;border-radius:24px;padding:12px 16px;box-shadow:0 0 14px rgba(63,196,255,.55);">
+              <svg width="36" height="36" viewBox="0 0 48 48" fill="none" stroke="#3FC4FF" stroke-width="3.5" stroke-linecap="round" style="flex:none;filter:drop-shadow(0 0 5px rgba(63,196,255,.9));"><circle cx="24" cy="24" r="19"/><path d="M24 12 V 24 H 33"/></svg>
+              <span style="font-size:34px;font-weight:800;color:#fff;line-height:1;letter-spacing:.01em;white-space:nowrap;text-shadow:0 0 10px rgba(63,196,255,.95),0 0 22px rgba(63,196,255,.6);font-variant-numeric:tabular-nums;">{{ clockFace }}</span>
             </span>
           </div>
         </sc-if>
@@ -6457,7 +6457,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.20'; }
+  APP_BUILD() { return '2026.09.03.21'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
