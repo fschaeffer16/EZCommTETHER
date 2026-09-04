@@ -383,6 +383,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   parent's phone to Evan's are a separate feature (the voice note
   screen and api/voice) and are untouched; Call 911 stays on the SOS
   screen. Template build 2026.09.04.2, Evan's 2026.09.04.1.
+- **Twilio registration (4 Sep 2026):** Twilio is holding the number for
+  carrier registration (toll-free verification or A2P 10DLC, depending
+  on the number). Frank called it ridiculous; it is required and one
+  time. Answers written for him in EZvoxa Twilio Registration.docx:
+  EZ Voice LLC, ezvoxa.com, person-to-family use case, real message
+  samples from api/sos.js and api/text.js, opt-in by the parent adding
+  a number in the app, smallest volume bucket. Recommended, not yet
+  built: a consent line under the phone field, an EZvoxa: prefix on
+  sent texts, and an SMS page on ezvoxa.com. Status: pending Frank's
+  submission.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
