@@ -6230,7 +6230,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.3'; }
+  APP_BUILD() { return '2026.09.04.4'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7472,8 +7472,10 @@ class Component extends DCLogic {
       // slim bar the moment a board opens. On a tablet the rail is permanent,
       // so the toolbar is too: Yes, No and Help never go away behind a board,
       // and there is no Back to press because nothing was ever covered.
-      showTopStack: !s.wide && (s.screen === 'board' || s.screen === 'sos' || s.screen === 'sosSent'),
-      inBoard: !s.wide && s.screen !== 'board' && s.screen !== 'sos' && s.screen !== 'sosSent' && s.screen !== 'settings',
+      // A phrase screen open on the home board is a board too (Frank, 4 Sep
+      // 2026): the home header gives way to the compact anchor.
+      showTopStack: (!s.wide && (s.screen === 'board' || s.screen === 'sos' || s.screen === 'sosSent')) && !s.chooser,
+      inBoard: !s.wide && ((s.screen !== 'board' && s.screen !== 'sos' && s.screen !== 'sosSent' && s.screen !== 'settings') || (s.screen === 'board' && !!s.chooser)),
       wideTop: !!s.wide && s.screen !== 'sos' && s.screen !== 'sosSent',
       // Home on a tablet is not a second copy of the rail. The rail is the
       // navigation, so the main pane gives the words he reaches for most, at

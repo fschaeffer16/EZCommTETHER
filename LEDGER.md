@@ -408,6 +408,10 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   as every board: the back button, the picture, the name. No sheet, no
   Cancel. The body map question flow still uses its own sheet. Template
   build 2026.09.04.4, Evan's 2026.09.04.3.
+  Then: a phrase screen opened from the home board (Bathroom) also swaps
+  the home header for the compact anchor, exactly as a board does, so
+  the format is one and the same. Template build 2026.09.04.5, Evan's
+  2026.09.04.4.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
