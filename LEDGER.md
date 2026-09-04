@@ -368,6 +368,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   don't know (keys hurt_fell, hurt_ran_into, hurt_got_hit,
   hurt_dont_know). The other three questions are still text buttons
   until art comes. Template build 2026.09.03.24, Evan's 2026.09.03.27.
+  Then, per Frank's mockup: the answer reads I fell down, and the
+  pictures fill the cards (up to 150px). Template build 2026.09.03.25,
+  Evan's 2026.09.03.28.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

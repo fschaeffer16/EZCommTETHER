@@ -3438,7 +3438,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                      answers go two across; plain ones stay a column. -->
                 <div style="display:grid;grid-template-columns:repeat({{ hurtOptCols }},1fr);gap:10px;">
                   <sc-for list="{{ hurtOpts }}" as="o" hint-placeholder-count="4">
-                    <button onClick="{{ o.onTap }}" style="width:100%;background:var(--card,#fff);border:2px solid #E23B2E;color:var(--ink,#1A1714);border-radius:16px;padding:12px 8px;font-size:16px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;line-height:1.15;" style-active="transform:scale(.98)">
+                    <button onClick="{{ o.onTap }}" style="width:100%;background:var(--card,#fff);border:2px solid #E23B2E;color:var(--ink,#1A1714);border-radius:18px;padding:10px 8px 12px;font-size:18px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;line-height:1.15;" style-active="transform:scale(.98)">
                       <sc-if value="{{ o.hasPic }}" hint-placeholder-val="{{ false }}">{{ o.picEl }}</sc-if>
                       <span>{{ o.txt }}</span>
                     </button>
@@ -6222,7 +6222,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.27'; }
+  APP_BUILD() { return '2026.09.03.28'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6935,7 +6935,7 @@ class Component extends DCLogic {
   }
   hurtQuestions() {
     return [
-      { q: 'How did you get hurt?', opts: ["I don't know", 'I got hit', 'I fell', 'I ran into something'] },
+      { q: 'How did you get hurt?', opts: ["I don't know", 'I got hit', 'I fell down', 'I ran into something'] },
       { q: 'How bad does it hurt?', opts: ['Bad', 'Really bad', 'I need help'] },
       { q: 'When does it hurt?', opts: ['All the time', 'When I stand', 'When I sit', 'When I lay down'] },
       { q: 'When did it start?', opts: ['Just now', 'This morning', 'Yesterday', "I don't know"] },
@@ -7543,10 +7543,10 @@ class Component extends DCLogic {
       hurtStepNum: s.hurtFlow ? (s.hurtFlow.step + 1) : 1,
       hurtQ: (s.hurtFlow && !s.hurtFlow.done) ? this.hurtQuestions()[s.hurtFlow.step].q : '',
       hurtOpts: (s.hurtFlow && !s.hurtFlow.done) ? this.hurtQuestions()[s.hurtFlow.step].opts.map((o) => {
-        const pics = { "I don't know": 'hurt_dont_know', 'I got hit': 'hurt_got_hit', 'I fell': 'hurt_fell', 'I ran into something': 'hurt_ran_into' };
+        const pics = { "I don't know": 'hurt_dont_know', 'I got hit': 'hurt_got_hit', 'I fell down': 'hurt_fell', 'I ran into something': 'hurt_ran_into' };
         const icon = s.hurtFlow.step === 0 ? pics[o] : null;
         return { txt: o, onTap: () => this.answerHurt(o), hasPic: !!icon,
-          picEl: icon ? React.createElement('img', { src: this.iconUri(icon), alt: '', style: { width: 84, height: 84, objectFit: 'contain', mixBlendMode: 'screen', display: 'block' } }) : null };
+          picEl: icon ? React.createElement('img', { src: this.iconUri(icon), alt: '', style: { width: '100%', maxWidth: 150, aspectRatio: '1', objectFit: 'contain', mixBlendMode: 'screen', display: 'block' } }) : null };
       }) : [],
       hurtOptCols: (s.hurtFlow && !s.hurtFlow.done && s.hurtFlow.step === 0) ? 2 : 1,
       hurtSummary: (s.hurtFlow && s.hurtFlow.summary) || '',
