@@ -335,6 +335,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   header, so Bathroom (9) and My Choice (12) show every phrase without
   scrolling on a 430 by 900 phone; two-line choosers stay two across.
   Template build 2026.09.03.16, Evan's 2026.09.03.20.
+- **Template Calendar shows the live digital time (Frank, 3 Sep 2026)**
+  in the same blue pill as Evan's, instead of a Time tile with a clock
+  emoji. Tapping it still opens the clock. Template build 2026.09.03.17.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

@@ -3934,9 +3934,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:#4F46E5;flex:1;min-width:0;">Calendar</div>
         </div>
         <sc-if value="{{ calShowTime }}" hint-placeholder-val="{{ false }}">
-          <div onClick="{{ openClockFromCal }}" style="margin:0 18px 12px;flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" style-active="transform:scale(.96)">
-            <span style="width:124px;aspect-ratio:1;border-radius:20px;background:#0EA5E9;font-size:60px;line-height:1;display:flex;align-items:center;justify-content:center;">🕒</span>
-            <span style="font-size:17px;font-weight:800;color:var(--ink,#1A1714);">Time</span>
+          <!-- The actual current time, shown right here instead of a button that
+               opens a clock (Frank, 3 Sep 2026: same as Evan's). Still tappable:
+               tapping opens the clock, which speaks the time. -->
+          <div onClick="{{ openClockFromCal }}" style="margin:0 18px 14px;flex:none;display:flex;justify-content:center;cursor:pointer;" style-active="transform:scale(.97)">
+            <span style="display:inline-flex;align-items:center;gap:12px;background:#0EA5E9;border-radius:18px;padding:12px 22px;box-shadow:inset 0 2px 0 rgba(255,255,255,.28),0 4px 12px rgba(14,165,233,.32);">
+              <span style="font-size:32px;line-height:1;">🕒</span>
+              <span style="font-size:40px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.01em;text-shadow:0 1px 2px rgba(0,0,0,.2);font-variant-numeric:tabular-nums;">{{ clockFace }}</span>
+            </span>
           </div>
         </sc-if>
         <div onClick="{{ sayToday }}" style="margin:0 18px 10px;flex:none;background:linear-gradient(135deg,#4F46E5,#7A5CFF);border-radius:16px;padding:13px 16px;cursor:pointer;box-shadow:0 5px 15px rgba(79,70,229,.3);" style-active="transform:scale(.98)">
@@ -4432,7 +4437,7 @@ class Component extends DCLogic {
     // Keep the clock face honest while it's on screen, and let the birthday
     // banner appear on its own if the app is left open past midnight.
     setInterval(() => {
-      if (this.state.screen === 'clock' || this.isBirthday() !== this._wasBirthday) {
+      if (this.state.screen === 'clock' || this.state.screen === 'calendar' || this.isBirthday() !== this._wasBirthday) {
         this._wasBirthday = this.isBirthday();
         this.forceUpdate();
       }
@@ -6448,7 +6453,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.16'; }
+  APP_BUILD() { return '2026.09.03.17'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
