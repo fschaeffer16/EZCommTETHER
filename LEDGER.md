@@ -344,6 +344,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   are black with a faint purple outline and today is filled purple with a
   cyan glow; Back to this month is a purple outline button. All CSS, no
   images. Template build 2026.09.03.18, Evan's 2026.09.03.21.
+- **Frank's neon Crackers, Eggs and Pretzels, 3 Sep 2026** (snack_crackers,
+  food_eggs, snack_pretzels). Left as photo renders on Food: Cereal,
+  Cookie, Chips. Template build 2026.09.03.19, Evan's 2026.09.03.22.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
