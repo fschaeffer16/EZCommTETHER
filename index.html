@@ -4948,9 +4948,8 @@ class Component extends DCLogic {
   }
 
   hurts() {
-    // Seven of Evan's nine symptom pictures are paintings of him, so a phone
-    // somebody bought gets the neon set instead. Stuffy Nose and Ice Pack are
-    // a tissue box and an ice bag — no face, nothing to replace.
+    // Evan's symptom pictures are of him, so a phone somebody bought gets
+    // the neon set instead. Two items were dropped 3 Sep 2026 (Frank).
     if (!this.isEvanProfile()) return [
       { label: 'Headache', icon: 'sym_headache', s: 'My head hurts.' },
       { label: 'Sore Throat', icon: 'sym_sore_throat', s: 'My throat hurts.' },
@@ -4958,8 +4957,6 @@ class Component extends DCLogic {
       { label: 'Cough', icon: 'sym_cough', s: 'I have a cough.' },
       { label: 'Fever', icon: 'sym_fever', s: 'I feel hot. I might have a fever.' },
       { label: 'Stomachache', icon: 'sym_stomachache', s: 'My stomach hurts.' },
-      { label: 'Stuffy Nose', icon: 'stuffy_nose', s: 'My nose is stuffy.' },
-      { label: 'Ice Pack', icon: 'ice_pack', s: 'I need an ice pack.' },
       { label: 'Rest', icon: 'sym_rest', s: 'I need to lie down and rest.' },
     ];
     return [
@@ -4969,9 +4966,6 @@ class Component extends DCLogic {
       { label: 'Cough', icon: 'cough', s: 'I have a cough.' },
       { label: 'Fever', icon: 'fever', s: 'I feel hot. I might have a fever.' },
       { label: 'Stomachache', icon: 'stomachache', s: 'My stomach hurts.' },
-      // Frank's pictures of Evan, 3 Sep 2026 (ev_ keys never reach a buyer phone).
-      { label: 'Stuffy Nose', icon: 'ev_stuffy_nose', s: 'My nose is stuffy.' },
-      { label: 'Ice Pack', icon: 'ev_ice_pack', s: 'I need an ice pack.' },
       { label: 'Rest', icon: 'rest', s: 'I need to lie down and rest.' },
     ];
   }
@@ -6212,7 +6206,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.17'; }
+  APP_BUILD() { return '2026.09.03.18'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

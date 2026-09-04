@@ -63,7 +63,7 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 **Template home order (Frank, 2 and 3 Sep 2026, `templateHomeOrder()`, layoutRev 20):**
 Family, Food / School, Sentence Build / Places, Watch / Morning, Night / Bathroom, Hurt /
 Friends, Feelings / Calendar. Thirteen tiles. Fun folded into Places on 3 Sep and Places
-took its spot. Inside Feelings: the six feeling faces, the nine sick faces (Frank's 2 Sep
+took its spot. Inside Feelings: the six feeling faces, the seven sick faces (Frank's 2 Sep
 note "put health icons inside feelings" meant the faces, not a Health button), the twelve
 Overstimmed phrases, then My Choice last. Home One and Home Two are the first two tiles
 inside Places; Colors, Numbers and the Calculator are inside School; Time is inside Calendar.

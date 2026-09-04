@@ -311,6 +311,10 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   in Evan's app too, the dizzy face key face_overstimmed is unused). All
   twelve Overstimmed phrases are his art in both apps. Template build
   2026.09.03.13, Evan's 2026.09.03.17.
+- **Stuffy Nose and Ice Pack removed from both apps (Frank, 3 Sep 2026).**
+  Seven sick pictures remain: Headache, Sore Throat, Cold, Cough, Fever,
+  Stomachache, Rest. The four icon keys are gone from tether-icons.js.
+  Template build 2026.09.03.14, Evan's 2026.09.03.18.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
