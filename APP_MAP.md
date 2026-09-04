@@ -40,7 +40,7 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 | family | Family | ✓ | ✓ | board `family` (people) |
 | food | Food | ✓ | ✓ | board `food` |
 | hurtbody | Hurt | ✓ | ✓ | board `hurtbody` (body map) |
-| hurt | I'm Sick / Health | — (symptoms sit under the body map on `hurtbody`) | — (inside Feelings) | board `hurt` (template only) |
+| hurt | I'm Sick / Health | — (symptoms sit under the body map on `hurtbody`) | — (the nine sick faces are tiles on the Feelings board) | board `hurt` (no longer reachable in either app) |
 | school | School | ✓ | ✓ | board `school` (hub) |
 | friends | Friends | — | ✓ | board `family` (friends people) |
 | morning | Morning | ✓ | ✓ | board `morning` |
@@ -63,9 +63,10 @@ below covers both apps; "Evan" = the `mine:true` rendering, "Template" =
 **Template home order (Frank, 2 and 3 Sep 2026, `templateHomeOrder()`, layoutRev 20):**
 Family, Food / School, Sentence Build / Places, Watch / Morning, Night / Bathroom, Hurt /
 Friends, Feelings / Calendar. Thirteen tiles. Fun folded into Places on 3 Sep and Places
-took its spot. Health and My Choice are the last two tiles inside Feelings; Home One and
-Home Two are the first two tiles inside Places; Colors, Numbers and the Calculator are
-inside School; Time is inside Calendar.
+took its spot. Inside Feelings: the six feeling faces, the nine sick faces (Frank's 2 Sep
+note "put health icons inside feelings" meant the faces, not a Health button), the twelve
+Overstimmed phrases, then My Choice last. Home One and Home Two are the first two tiles
+inside Places; Colors, Numbers and the Calculator are inside School; Time is inside Calendar.
 
 **Evan's home order (`evanHomeOrder()`, layoutRev 19):** Family, Food / School, Sentence
 Build / Places, TV / Feelings, Bathroom / Morning, Night / Hurt, Calendar. Twelve tiles.

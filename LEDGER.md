@@ -276,6 +276,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   much uses Frank's dizzy face in Evan's app; the other eleven are emoji
   in both apps until he sends neon. Template build 2026.09.03.9, Evan's
   2026.09.03.12.
+- **Template Feelings: the sick faces, not a Health button (Frank, 3 Sep
+  2026).** His 2 Sep note "put health icons inside feelings" meant the
+  nine sick faces themselves. They are Feelings tiles now, after the six
+  feeling faces and before the Overstimmed phrases; the Health tile is
+  gone, the Health board is unreachable, and the Hurt board's back arrow
+  goes home. Custom buttons a family added under Sick show with them.
+  Template build 2026.09.03.10.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

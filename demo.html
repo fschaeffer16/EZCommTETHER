@@ -3427,8 +3427,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isHurtBody }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ openHurt }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
-          <div style="font-size:24px;font-weight:800;color:#E23B2E;">Where does it hurt?</div>
+          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div style="font-size:24px;font-weight:800;color:#E23B2E;">Hurt</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 30px;">
           <div style="font-size:14px;color:var(--sub,#8C857A);font-weight:700;text-align:center;margin:4px 0 12px;">Tap the part of the body that hurts</div>
@@ -4764,6 +4764,9 @@ class Component extends DCLogic {
       { label: "I'm frustrated", emoji: '😤', icon: 'feel_frustrated', say: "I'm frustrated." },
       { label: "I'm tired", emoji: '😴', icon: 'feel_tired', phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
       { label: "I don't feel good", emoji: '🤢', icon: 'feel_unwell', say: "I don't feel good." },
+      // The sick faces are feelings too (Frank, 2 Sep 2026, clarified 3 Sep):
+      // they sit here, not behind a Health button.
+      ...this.hurts().map((h) => ({ label: h.label, emoji: '🤒', icon: h.icon, say: h.s })),
       // Overstimmed used to be one button that opened these twelve as a
       // sheet. Frank, 3 Sep 2026: they are all feelings, so they sit on the
       // board like the rest.
@@ -6438,7 +6441,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.9'; }
+  APP_BUILD() { return '2026.09.03.10'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7445,7 +7448,7 @@ class Component extends DCLogic {
   }
   fmtSync() { const t = this.data().lastSync; if (!t) return 'Never synced'; const s = Math.round((Date.now() - t) / 1000); if (s < 60) return 'Last synced just now'; if (s < 3600) return 'Last synced ' + Math.round(s / 60) + ' min ago'; return 'Last synced ' + new Date(t).toLocaleString(); }
   isPeopleSection(sec) { return sec === 'friends' || String(sec).slice(0, 7) === 'school:'; }
-  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Places — Fun', 'watch:tv': 'Watch: TV', 'watch:movies': 'Watch: Movies', 'watch:sports': 'Watch: Sports', 'watch:streaming': 'Watch: Streaming', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Hurt / Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
+  sectionLabel(sec) { const m = { home: 'Home board', family: 'Family', food: 'Food', fun: 'Places — Fun', 'watch:tv': 'Watch: TV', 'watch:movies': 'Watch: Movies', 'watch:sports': 'Watch: Sports', 'watch:streaming': 'Watch: Streaming', night: 'Night', feelings: 'Feelings', places: 'Places', hurt: 'Feelings — Sick', housecommon: 'Houses — every house', housedad: "Houses — Dad's house", housemom: "Houses — Mom's house", friends: 'Friends', 'school:teachers': 'School — Teachers', 'school:office': 'School — Office Staff', 'school:aides': 'School — Aides', 'school:speech': 'School — Speech/OT', 'school:bus': 'School — Bus Driver' }; return m[sec] || sec; }
 
   // Core-word board for building sentences. Organised by part of speech —
   // the whole premise of an AAC board — with the Modified Fitzgerald colour
@@ -8227,9 +8230,9 @@ class Component extends DCLogic {
       isMorning: s.screen === 'morning',
       nightList: this.nightList().concat(this.customsFor('night')),
       feelingsList: this.feelingsList().concat(this.customsFor('feelings')).concat(this.isEvanProfile() ? [] : [
-        // Frank's order, 2 Sep 2026: Health and My Choice live here, last, on buyer phones.
-        { label: 'Health', emoji: '➕', hasSlot: false, noSlot: true, hasImg: true, showEmoji: false, imgEl: this.picEl(this.iconUri('tile_hurt'), 16),
-          onTap: () => this.setState({ screen: 'hurt', hurtFlow: null, hurtFrom: 'feelings' }) },
+        // Frank's order, 2 Sep 2026: My Choice lives here, last, on buyer phones.
+        // Buttons a family added under Sick show with the sick faces.
+        ...this.customsFor('hurt').map((b) => ({ ...b, hasSlot: false, noSlot: true, hasImg: !!b.image, showEmoji: !b.image, imgEl: b.image ? this.picEl(b.image, 16) : null })),
         { label: 'My Choice', emoji: '✋', hasSlot: false, noSlot: true, hasImg: true, showEmoji: false, imgEl: this.picEl(this.iconUri('tile_choice'), 16),
           onTap: () => this.openPhraseChooser('My Choice', '✋', this.refusalItems()) },
       ]).concat(this.isEvanProfile() ? [{
