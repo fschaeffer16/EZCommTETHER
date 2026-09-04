@@ -371,6 +371,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Then, per Frank's mockup: the answer reads I fell down, and the
   pictures fill the cards (up to 150px). Template build 2026.09.03.25,
   Evan's 2026.09.03.28.
+- **Template starter Dad has a fictional number, +1 555 555 0100 (Frank, 4 Sep
+  2026).** The Text buttons and the phone line on the Family card only
+  show when a person has a number, so the demo and every new phone now
+  show the texting feature without a real number. 555-01XX numbers are
+  reserved for fiction and never ring anyone. Layout rev 22 sets it on
+  existing template phones. Template build 2026.09.04.1.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

@@ -6232,7 +6232,7 @@ class Component extends DCLogic {
     const rev = d.layoutRev || 0;
     // Raise this with every new step below, or the step never runs on the very
     // phones it was written for — they are all sitting on the previous rev.
-    if (rev >= 21) return false;
+    if (rev >= 22) return false;
 
     // Rev 17 (template only): Sentence Build moves up beside School. A fresh
     // demo already gets this from the tile order; this catches a demo phone
@@ -6445,7 +6445,14 @@ class Component extends DCLogic {
       d.homeOrder = d.homeOrder.filter((id) => id !== 'regulate');
     }
 
-    d.layoutRev = 21;
+    // Rev 22: the starter Dad gets the fictional 555 number on template phones
+    // (Frank, 4 Sep 2026), replacing whatever was typed while testing.
+    if (rev < 22 && d.profile !== 'evan' && Array.isArray(d.family)) {
+      const dad = d.family.find((p) => p && p.id === 'dad');
+      if (dad) dad.phone = '+15555550100';
+    }
+
+    d.layoutRev = 22;
     return true;
   }
   // One-time setup for a phone that belongs to this family. A fresh install
@@ -6466,7 +6473,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.25'; }
+  APP_BUILD() { return '2026.09.04.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6499,7 +6506,7 @@ class Component extends DCLogic {
     // new phone, a re-install. Only the demo address starts without a profile.
     // What actually protects the SOS, the texting and the voice messages is the
     // family password on the server, not which board the app decides to draw.
-    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 21 };
+    if (!d) d = { password: '1234', family: this.baseFamily(), buttons: [], homeOrder: null, lastSync: null, profile: this.isTemplateMode() ? null : 'evan', layoutRev: 22 };
     if (!d.buttons) d.buttons = [];
     if (!d.password) d.password = '1234';
     if (!d.school) d.school = this.baseSchool();
@@ -6521,7 +6528,9 @@ class Component extends DCLogic {
     return [
       { id: 'mom', name: 'Mom', ring: '#E5533D', tint: '#F6E2DC', alert: true },
       { id: 'brother', name: 'Brother', ring: '#1F9E6E', tint: '#D8F0E5' },
-      { id: 'dad', name: 'Dad', ring: '#2F6BFF', tint: '#DDE7FF', alert: true },
+      // Dad carries a fictional 555 number (Frank, 4 Sep 2026) so a new phone
+      // and the demo show the Text buttons without anyone typing a real one.
+      { id: 'dad', name: 'Dad', ring: '#2F6BFF', tint: '#DDE7FF', alert: true, phone: '+15555550100' },
       { id: 'sister', name: 'Sister', ring: '#DB2777', tint: '#FBD5EA' },
       { id: 'grandma', name: 'Grandma', ring: '#9333EA', tint: '#EDD9FB' },
       { id: 'grandpa', name: 'Grandpa', ring: '#0EA5E9', tint: '#D5EEFB' },
