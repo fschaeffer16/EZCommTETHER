@@ -257,6 +257,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Hurt, Calendar. Layout rev 19 drops the two ids from a saved order.
   Template untouched (its Hurt tile still hands back to the Health board;
   recommended the same fix there). Evan's build 2026.09.03.9.
+- **Frank's neon faces for Evan's Feelings, 3 Sep 2026:** I'm angry, I'm
+  tired, I don't feel good, I'm overstimmed (keys face_angry, face_tired,
+  face_unwell, face_overstimmed). Glossy filled-face style, different
+  from the template's outline feel_* set, so the template keeps its own.
+  Evan's happy, sad and frustrated are still emoji until his art comes.
+  Evan's build 2026.09.03.10.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
