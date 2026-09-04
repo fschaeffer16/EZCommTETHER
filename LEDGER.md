@@ -393,6 +393,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   built: a consent line under the phone field, an EZvoxa: prefix on
   sent texts, and an SMS page on ezvoxa.com. Status: pending Frank's
   submission.
+- **Neon anchor and contact cards (Frank's designs, 4 Sep 2026, both
+  apps):** Yes and No are black pills with a green and a red neon
+  outline, Home is a black circle with a cyan ring and a drawn house.
+  People cards (Family, Friends, School) are black with one gradient
+  outline per board: family pink to orange, friends purple to blue,
+  school cyan to purple; initials sit in a neon ring of the person's
+  colour, photos get the same ring and glow. The tablet rail keeps its
+  old buttons for now. Template build 2026.09.04.3, Evan's 2026.09.04.2.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
