@@ -293,6 +293,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Then Headache, Fever, Sore Throat and Cold arrived (keys headache,
   fever, sore_throat, cold, all Evan-only and already on the strip list).
   Only Cough is still the older painting. Evan's build 2026.09.03.14.
+- **Frank's neon art for four Overstimmed phrases, 3 Sep 2026, both apps:**
+  I need to move (reg_move), I have no energy (reg_no_energy), I need to
+  lie down (reg_lie_down), Please slow down (reg_slow_down). He also sent
+  a second running shoe with a Nike swoosh on it; not used, it is a
+  trademark. Still emoji: It's too loud, I need space, I need it quiet,
+  I need a break, I want to leave, I'm okay, I'm not okay, and This is
+  too much on the template (Evan's uses his dizzy face). Template build
+  2026.09.03.11, Evan's 2026.09.03.15.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

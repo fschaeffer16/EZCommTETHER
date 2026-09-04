@@ -4778,10 +4778,10 @@ class Component extends DCLogic {
       { label: 'I want to leave', emoji: '🚪', say: 'I want to leave.' },
       { label: "I'm okay", emoji: '👍', say: "I'm okay." },
       { label: "I'm not okay", emoji: '👎', say: "I'm not okay." },
-      { label: 'I have no energy', emoji: '🔋', say: 'I have no energy.' },
-      { label: 'I need to lie down', emoji: '🛏️', say: 'I need to lie down.' },
-      { label: 'Please slow down', emoji: '🐢', say: 'Please slow down.' },
-      { label: 'I need to move', emoji: '🏃', say: 'I need to move.' },
+      { label: 'I have no energy', emoji: '🔋', icon: 'reg_no_energy', neon: true, say: 'I have no energy.' },
+      { label: 'I need to lie down', emoji: '🛏️', icon: 'reg_lie_down', neon: true, say: 'I need to lie down.' },
+      { label: 'Please slow down', emoji: '🐢', icon: 'reg_slow_down', neon: true, say: 'Please slow down.' },
+      { label: 'I need to move', emoji: '🏃', icon: 'reg_move', neon: true, say: 'I need to move.' },
     ].map((b) => this.mapRoutine(b, 'feelings'));
     return [
       { label: "I'm happy", emoji: '😊', say: "I'm happy." },
@@ -4801,10 +4801,10 @@ class Component extends DCLogic {
       { label: 'I want to leave', emoji: '🚪', say: 'I want to leave.' },
       { label: "I'm okay", emoji: '👍', say: "I'm okay." },
       { label: "I'm not okay", emoji: '👎', say: "I'm not okay." },
-      { label: 'I have no energy', emoji: '🔋', say: 'I have no energy.' },
-      { label: 'I need to lie down', emoji: '🛏️', say: 'I need to lie down.' },
-      { label: 'Please slow down', emoji: '🐢', say: 'Please slow down.' },
-      { label: 'I need to move', emoji: '🏃', say: 'I need to move.' },
+      { label: 'I have no energy', emoji: '🔋', icon: 'reg_no_energy', neon: true, say: 'I have no energy.' },
+      { label: 'I need to lie down', emoji: '🛏️', icon: 'reg_lie_down', neon: true, say: 'I need to lie down.' },
+      { label: 'Please slow down', emoji: '🐢', icon: 'reg_slow_down', neon: true, say: 'Please slow down.' },
+      { label: 'I need to move', emoji: '🏃', icon: 'reg_move', neon: true, say: 'I need to move.' },
     ].map((b) => this.mapRoutine(b, 'feelings'));
   }
 
@@ -6441,7 +6441,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.10'; }
+  APP_BUILD() { return '2026.09.03.11'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
