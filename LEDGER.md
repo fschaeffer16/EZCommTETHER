@@ -362,6 +362,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   rounded strokes with AM/PM at the same size, which Orbitron matches
   and a true segment font does not. DSEG removed; licence file is now
   FONT-LICENSE.txt. Template build 2026.09.03.23, Evan's 2026.09.03.26.
+- **Body map answers with pictures (Frank's art, 3 Sep 2026, both apps):**
+  the first question after tapping a body part, How did you get hurt?,
+  shows four picture cards: I fell, I ran into something, I got hit, I
+  don't know (keys hurt_fell, hurt_ran_into, hurt_got_hit,
+  hurt_dont_know). The other three questions are still text buttons
+  until art comes. Template build 2026.09.03.24, Evan's 2026.09.03.27.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

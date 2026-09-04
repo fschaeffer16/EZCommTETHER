@@ -3433,9 +3433,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <sc-if value="{{ hurtFlowActive }}" hint-placeholder-val="{{ true }}">
                 <div style="font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#E23B2E;text-align:center;">{{ hurtPartLabel }} · step {{ hurtStepNum }} of 4</div>
                 <div style="font-size:23px;font-weight:800;text-align:center;margin:8px 0 16px;color:var(--ink,#1A1714);">{{ hurtQ }}</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
+                <!-- The first answer set carries Frank's neon pictures (3 Sep 2026):
+                     a fall, a bump into something, a hit, a shrug. Picture
+                     answers go two across; plain ones stay a column. -->
+                <div style="display:grid;grid-template-columns:repeat({{ hurtOptCols }},1fr);gap:10px;">
                   <sc-for list="{{ hurtOpts }}" as="o" hint-placeholder-count="4">
-                    <button onClick="{{ o.onTap }}" style="width:100%;background:var(--card,#fff);border:2px solid #E23B2E;color:var(--ink,#1A1714);border-radius:16px;padding:16px;font-size:18px;font-weight:800;cursor:pointer;" style-active="transform:scale(.98)">{{ o.txt }}</button>
+                    <button onClick="{{ o.onTap }}" style="width:100%;background:var(--card,#fff);border:2px solid #E23B2E;color:var(--ink,#1A1714);border-radius:16px;padding:12px 8px;font-size:16px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;line-height:1.15;" style-active="transform:scale(.98)">
+                      <sc-if value="{{ o.hasPic }}" hint-placeholder-val="{{ false }}">{{ o.picEl }}</sc-if>
+                      <span>{{ o.txt }}</span>
+                    </button>
                   </sc-for>
                 </div>
                 <button onClick="{{ closeHurtFlow }}" style="margin-top:12px;width:100%;background:transparent;border:none;color:var(--sub,#8C857A);font-size:16px;font-weight:700;padding:12px;cursor:pointer;" style-active="transform:scale(.98)">Cancel</button>
@@ -6216,7 +6222,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.26'; }
+  APP_BUILD() { return '2026.09.03.27'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7536,7 +7542,13 @@ class Component extends DCLogic {
       hurtPartLabel: s.hurtFlow ? s.hurtFlow.part : '',
       hurtStepNum: s.hurtFlow ? (s.hurtFlow.step + 1) : 1,
       hurtQ: (s.hurtFlow && !s.hurtFlow.done) ? this.hurtQuestions()[s.hurtFlow.step].q : '',
-      hurtOpts: (s.hurtFlow && !s.hurtFlow.done) ? this.hurtQuestions()[s.hurtFlow.step].opts.map((o) => ({ txt: o, onTap: () => this.answerHurt(o) })) : [],
+      hurtOpts: (s.hurtFlow && !s.hurtFlow.done) ? this.hurtQuestions()[s.hurtFlow.step].opts.map((o) => {
+        const pics = { "I don't know": 'hurt_dont_know', 'I got hit': 'hurt_got_hit', 'I fell': 'hurt_fell', 'I ran into something': 'hurt_ran_into' };
+        const icon = s.hurtFlow.step === 0 ? pics[o] : null;
+        return { txt: o, onTap: () => this.answerHurt(o), hasPic: !!icon,
+          picEl: icon ? React.createElement('img', { src: this.iconUri(icon), alt: '', style: { width: 84, height: 84, objectFit: 'contain', mixBlendMode: 'screen', display: 'block' } }) : null };
+      }) : [],
+      hurtOptCols: (s.hurtFlow && !s.hurtFlow.done && s.hurtFlow.step === 0) ? 2 : 1,
       hurtSummary: (s.hurtFlow && s.hurtFlow.summary) || '',
       replayHurt: () => { if (this.state.hurtFlow && this.state.hurtFlow.summary) this.speak(this.state.hurtFlow.summary); },
       closeHurtFlow: () => this.setState({ hurtFlow: null, screen: 'hurt' }),
