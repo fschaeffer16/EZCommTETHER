@@ -357,6 +357,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   as base64 in each app (about 11 KB) so it works offline. Licence copied
   to DSEG-LICENSE.txt at the repo root, as the OFL requires. Template
   build 2026.09.03.22, Evan's 2026.09.03.25.
+  Same night, swapped to Orbitron Bold (Matt McInerney, SIL OFL 1.1,
+  about 9 KB) after Frank re-sent his mockup: his digits are continuous
+  rounded strokes with AM/PM at the same size, which Orbitron matches
+  and a true segment font does not. DSEG removed; licence file is now
+  FONT-LICENSE.txt. Template build 2026.09.03.23, Evan's 2026.09.03.26.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
