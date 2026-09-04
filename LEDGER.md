@@ -315,6 +315,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Seven sick pictures remain: Headache, Sore Throat, Cold, Cough, Fever,
   Stomachache, Rest. The four icon keys are gone from tether-icons.js.
   Template build 2026.09.03.14, Evan's 2026.09.03.18.
+- **Template Feelings and Hurt settled (Frank, 3 Sep 2026):** the seven
+  sick faces moved back under the body map on the Hurt board, same as
+  Evan's, and Feelings got three headings so it reads in chunks:
+  Feelings (six faces, plus anything a family adds), Too Much (the twelve
+  overstimmed phrases), More (My Choice). Custom Sick buttons show on the
+  Hurt board. Evan's Feelings board has no headings yet (not asked).
+  Template build 2026.09.03.15. Apple enrollment instructions delivered
+  as EZvoxa Apple Developer Enrollment.docx.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
