@@ -328,6 +328,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   hurt.) and Runny Nose (My nose is running.), keys ev_sinuses and
   ev_runny_nose, Evan-only and on the store strip list. Nine sick
   pictures on his board, all his art. Evan's build 2026.09.03.19.
+- **Phrase sheets fit under the anchor (Frank, 3 Sep 2026, both apps).**
+  Once the sheets moved under the Yes / Home / No row they had less
+  room and Bathroom showed two of nine phrases. Sheets with more than
+  four phrases now go three across with smaller pictures and a tighter
+  header, so Bathroom (9) and My Choice (12) show every phrase without
+  scrolling on a 430 by 900 phone; two-line choosers stay two across.
+  Template build 2026.09.03.16, Evan's 2026.09.03.20.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
