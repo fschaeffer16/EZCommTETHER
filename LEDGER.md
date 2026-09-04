@@ -301,6 +301,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   I need a break, I want to leave, I'm okay, I'm not okay, and This is
   too much on the template (Evan's uses his dizzy face). Template build
   2026.09.03.11, Evan's 2026.09.03.15.
+  Then I'm okay, I'm not okay, I need it quiet, I want to leave and I
+  need a break arrived (reg_okay, reg_not_okay, reg_quiet, reg_leave,
+  reg_break). Still emoji: It's too loud, I need space, and This is too
+  much on the template. Template build 2026.09.03.12, Evan's
+  2026.09.03.16.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
