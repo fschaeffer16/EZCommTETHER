@@ -4241,13 +4241,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
             <div onClick="{{ closeChooser }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);flex:none;" style-active="transform:scale(.9)">‹</div>
             {{ chooser.iconEl }}
-            <sc-if value="{{ chooser.noIcon }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:30px;line-height:1;flex:none;">{{ chooser.emoji }}</span>
-            </sc-if>
             <div style="flex:1;min-width:0;">
               <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);line-height:1.1;">{{ chooser.label }}</div>
               <sc-if value="{{ chooser.avatarHint }}" hint-placeholder-val=""><div style="font-size:12px;font-weight:700;color:var(--sub,#8C857A);margin-top:2px;">👆 {{ chooser.avatarHint }}</div></sc-if>
             </div>
+            <div onClick="{{ chooserEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
           </div>
           <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:4px 18px 20px;">
           <!-- Two-up cards: the picture is four times the size it was in the rows,
@@ -4278,9 +4276,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </sc-if>
           <!-- No Call button: the person using this cannot speak into a phone
                (Frank, 4 Sep 2026). Texting stays; Call 911 lives on the SOS screen. -->
-          <sc-if value="{{ chooser.editPerson }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ chooser.editPerson }}" style="width:100%;margin-top:14px;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:18px;">⚙️</span>Edit this person</button>
-          </sc-if>
           </div>
         </div>
       </div>
@@ -6481,7 +6476,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.5'; }
+  APP_BUILD() { return '2026.09.04.6'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -8045,6 +8040,9 @@ class Component extends DCLogic {
       gearDisney: () => this.sectionGear('disney'),
       gearSports: () => this.sectionGear('sports'),
       gearEdit: () => this.sectionGear('section'),
+      // The Edit pill on a phrase screen: a person's screen edits that person,
+      // any other opens the usual edit gate.
+      chooserEdit: () => { const c = this.state.chooser; if (c && c.editPerson) c.editPerson(); else this.sectionGear('section'); },
       showEditSheet: !!s.editSheet,
       editSheetKey: s.editSheetKey || 'none',
       edLabel: this._ed ? this._ed.label : '',

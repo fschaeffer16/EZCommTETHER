@@ -412,6 +412,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   the home header for the compact anchor, exactly as a board does, so
   the format is one and the same. Template build 2026.09.04.5, Evan's
   2026.09.04.4.
+  And the header matches a board's to the letter: back button, title,
+  Edit pill on the right (a person's screen edits that person). Template
+  build 2026.09.04.6, Evan's 2026.09.04.5.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
