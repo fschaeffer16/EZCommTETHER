@@ -338,6 +338,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **Template Calendar shows the live digital time (Frank, 3 Sep 2026)**
   in the same blue pill as Evan's, instead of a Time tile with a clock
   emoji. Tapping it still opens the clock. Template build 2026.09.03.17.
+- **Neon Calendar (Frank's design, 3 Sep 2026, both apps):** black cards
+  with one glowing outline each. The time pill is cyan with a digital
+  face and a drawn clock; Today and the month card are purple; day cells
+  are black with a faint purple outline and today is filled purple with a
+  cyan glow; Back to this month is a purple outline button. All CSS, no
+  images. Template build 2026.09.03.18, Evan's 2026.09.03.21.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
