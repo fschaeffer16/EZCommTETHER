@@ -261,8 +261,10 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   tired, I don't feel good, I'm overstimmed (keys face_angry, face_tired,
   face_unwell, face_overstimmed). Glossy filled-face style, different
   from the template's outline feel_* set, so the template keeps its own.
-  Evan's happy, sad and frustrated are still emoji until his art comes.
-  Evan's build 2026.09.03.10.
+  Then happy, sad and frustrated arrived (face_happy, face_sad,
+  face_frustrated): all seven Feelings faces on Evan's board are his art.
+  Only the My Choice hand is still an emoji there. Evan's build
+  2026.09.03.11.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

@@ -4585,13 +4585,12 @@ class Component extends DCLogic {
       { label: "I'm tired", emoji: '😴', icon: 'feel_tired', phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
       { label: "I don't feel good", emoji: '🤢', icon: 'feel_unwell', say: "I don't feel good." },
     ].map((b) => this.mapRoutine(b, 'feelings'));
-    // Frank's neon faces (3 Sep 2026) where he has sent them; the rest are
-    // still emoji until his art arrives.
+    // Frank's neon faces, 3 Sep 2026.
     return [
-      { label: "I'm happy", emoji: '😊', say: "I'm happy." },
-      { label: "I'm sad", emoji: '😢', say: "I'm sad." },
+      { label: "I'm happy", emoji: '😊', icon: 'face_happy', neon: true, say: "I'm happy." },
+      { label: "I'm sad", emoji: '😢', icon: 'face_sad', neon: true, say: "I'm sad." },
       { label: "I'm angry", emoji: '😠', icon: 'face_angry', neon: true, say: "I'm angry." },
-      { label: "I'm frustrated", emoji: '😤', say: "I'm frustrated." },
+      { label: "I'm frustrated", emoji: '😤', icon: 'face_frustrated', neon: true, say: "I'm frustrated." },
       { label: "I'm tired", emoji: '😴', icon: 'face_tired', neon: true, phrases: ["I'm tired, can we take a break?", "I'm tired, I want a break.", "I'm tired, can I go lay down?", "I'm tired, can I go to my room?"] },
       { label: "I don't feel good", emoji: '🤢', icon: 'face_unwell', neon: true, say: "I don't feel good." },
     ].map((b) => this.mapRoutine(b, 'feelings'));
@@ -6182,7 +6181,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.03.10'; }
+  APP_BUILD() { return '2026.09.03.11'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
