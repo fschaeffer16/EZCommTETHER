@@ -377,6 +377,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   show the texting feature without a real number. 555-01XX numbers are
   reserved for fiction and never ring anyone. Layout rev 22 sets it on
   existing template phones. Template build 2026.09.04.1.
+- **No Call button on a person's sheet (Frank, 4 Sep 2026, both apps).**
+  A nonverbal user cannot speak into a phone, and Evan's phone is locked
+  anyway. Texting a pre-written line stays; voice messages from a
+  parent's phone to Evan's are a separate feature (the voice note
+  screen and api/voice) and are untouched; Call 911 stays on the SOS
+  screen. Template build 2026.09.04.2, Evan's 2026.09.04.1.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change
