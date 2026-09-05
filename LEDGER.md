@@ -507,6 +507,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   (his words, 1 Sep). Nothing automated goes out until he approves the
   text.** Draft offered 1 Sep; send via the SendGrid sender the SOS email
   already uses.
+- **Website design approved by Frank, 4 Sep 2026** (Claude Design's lane).
+  He is writing and editing the copy himself over the weekend of 5 to 6
+  Sep. His wording is the master once he has edited a page; fold it into
+  every other surface, never the reverse. No price on the site until he
+  confirms one.
 - **ezvoxa.com went live 1 Sep 2026** (A @ 216.150.1.1, CNAME www per
   Vercel's card; GoDaddy keeps the ImprovMX email records). The root of
   ezvoxa.com / myezvoice.com serves the website (`ezvoxa.html`) via
