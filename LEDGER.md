@@ -27,7 +27,7 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Developer Enrollment.docx, then Agreements, Tax, and Banking with this
   account and the W-9, then the Small Business Program. Google Play ($25)
   the same week. Twilio registration answers are in EZvoxa Twilio
-  Registration.docx; Frank handles it 5 Sep.
+  Registration.docx; Frank resubmitted on 4 Sep with those answers; no rejection by that evening.
 - **D-U-N-S number: arrived 1 Sep 2026** (email from D&B — Frank keeps it;
   the legal-name spelling in that email is the one to copy everywhere).
 - **Apple Developer Program**: enrolling as Organization, $99/yr, when money
