@@ -52,6 +52,8 @@
       return;
     }
     window.__EZ_BUYER = buyerHost || buyerLink || !!window.__EZ_FORCE_TEMPLATE;
+    // Our own testing of the Family Code on the web: open once with ?family=1.
+    if (/[?&]family=1\b/.test(location.search)) localStorage.setItem('ezcomm.familyBeta', '1');
   } catch (e) { window.__EZ_BUYER = false; }
   try {
     // Anyone who is not Evan gets the EZvoxa mark: the demo link, and every
@@ -3023,6 +3025,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="width:88px;height:88px;border-radius:50%;background:#6366F1;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:44px;line-height:1;">👀</span></div>
           <div style="font-size:25px;font-weight:800;margin-top:20px;color:var(--ink,#1A1714);">This is a demonstration</div>
           <div style="font-size:16px;color:var(--sub,#8C857A);margin-top:8px;font-weight:600;line-height:1.4;">On a real phone this sends a text and an email to everyone in the family, with a map link showing exactly where they are.<br/><b>Nothing was sent.</b></div>
+          <sc-if value="{{ sosDemoNote }}" hint-placeholder-val=""><div style="font-size:14px;color:#3253A8;margin-top:10px;font-weight:700;line-height:1.4;">{{ sosDemoNote }}</div></sc-if>
         </sc-if>
         <sc-if value="{{ sosPending }}" hint-placeholder-val="{{ false }}">
           <div style="width:88px;height:88px;border-radius:50%;background:#F2920E;display:flex;align-items:center;justify-content:center;animation:pop .45s ease both;box-shadow:0 12px 30px rgba(242,146,14,.32);"><span style="color:#fff;font-size:48px;line-height:1;">!</span></div>
@@ -3511,6 +3514,80 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
 
+          <!-- Family Code: the one setup step a family that bought the app has
+               to do. One code links every phone; see api/home.js. -->
+          <sc-if value="{{ showFamilyCard }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ setTog_family }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
+            <span style="font-size:20px;flex:none;">🔗</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Family Code</span>
+            <sc-if value="{{ famHas }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:800;color:#1F8A5B;flex:none;">Linked</span></sc-if>
+            <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_family }}</span>
+          </div>
+          <sc-if value="{{ setOpen_family }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
+            <sc-if value="{{ famNone }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;line-height:1.45;margin-bottom:12px;">One code links every phone in your family: {{ talkerName }}'s and each parent's. Boards, people and phone numbers you save reach the other phones. Parents can send voice messages. Texts and the emergency alert go to the people you list.</div>
+              <div style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);margin-bottom:8px;">Whose phone is this?</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <sc-for list="{{ famRoles }}" as="r" hint-placeholder-count="2">
+                  <div onClick="{{ r.onTap }}" style="text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" style-active="transform:scale(.96)">{{ r.label }}</div>
+                </sc-for>
+              </div>
+              <button onClick="{{ famCreate }}" style="width:100%;margin-top:12px;background:#4F46E5;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(79,70,229,.26);font-family:inherit;" style-active="transform:scale(.98)">Create our Family Code</button>
+              <div style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);margin:16px 0 8px;">Already have a code?</div>
+              <div style="display:flex;gap:8px;">
+                <input onInput="{{ onFamCodeInput }}" placeholder="EZ-XXXX-XXXX" autocapitalize="characters" autocomplete="off" spellcheck="false" style="flex:1;min-width:0;box-sizing:border-box;padding:12px 13px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:17px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink,#1A1714);background:var(--bg,#FBFAF7);font-family:inherit;" />
+                <button onClick="{{ famJoin }}" style="flex:none;background:#1F9E6E;color:#fff;border:none;border-radius:12px;padding:0 18px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.97)">Join</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ famHas }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;line-height:1.45;">Type this code into Settings on every other phone in your family. Keep it private: anyone who has it can see your boards and people.</div>
+              <div style="margin:12px 0 8px;text-align:center;font-size:30px;font-weight:800;letter-spacing:.12em;color:var(--ink,#1A1714);font-family:ui-monospace,Menlo,Consolas,monospace;">{{ famCode }}</div>
+              <button onClick="{{ famCopy }}" style="width:100%;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Copy code</button>
+              <div style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);margin:16px 0 8px;">This phone is</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <sc-for list="{{ famRoles }}" as="r" hint-placeholder-count="2">
+                  <div onClick="{{ r.onTap }}" style="text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" style-active="transform:scale(.96)">{{ r.label }}</div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ famIsParent }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;line-height:1.45;margin:12px 0 6px;">Your name, so {{ talkerName }} hears who a voice message is from.</div>
+                <input defaultValue="{{ famName }}" onInput="{{ onFamName }}" placeholder="Mom, Dad, Grandma" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:700;color:var(--ink,#1A1714);background:var(--bg,#FBFAF7);font-family:inherit;" />
+              </sc-if>
+              <sc-if value="{{ famDevicesKnown }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);margin:16px 0 6px;">Phones in this family</div>
+                <sc-for list="{{ famDevices }}" as="d" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:center;gap:8px;padding:7px 2px;font-size:14px;font-weight:700;color:var(--ink,#1A1714);border-bottom:1px solid var(--slot,#EDEAE3);"><span style="flex:1;min-width:0;">{{ d.label }}</span><sc-if value="{{ d.isMe }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:800;color:#4F46E5;">this phone</span></sc-if></div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ famNoConfirm }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;gap:8px;margin-top:16px;">
+                  <button onClick="{{ famAskRegen }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">New code</button>
+                  <button onClick="{{ famAskLeave }}" style="flex:1;background:transparent;color:#C0473A;border:1.5px solid #E8C4BF;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;" style-active="transform:scale(.98)">Leave family</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ famConfirmRegen }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px;background:#FFF4E5;border:1.5px solid #F5D9A8;border-radius:14px;padding:12px;font-size:13px;font-weight:700;color:#7A4B00;line-height:1.4;">A new code moves everything to the new code and retires this one. Every other phone will have to join again.</div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                  <button onClick="{{ famRegen }}" style="flex:1;background:#F2920E;color:#fff;border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;">Yes, new code</button>
+                  <button onClick="{{ famCancel }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;">Cancel</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ famConfirmLeave }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px;background:#FDECEA;border:1.5px solid #F2C4BF;border-radius:14px;padding:12px;font-size:13px;font-weight:700;color:#8A2B22;line-height:1.4;">This phone stops sharing with the family. Its boards stay on the phone. Texts, voice messages and the emergency alert stop working here until it joins a family again.</div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                  <button onClick="{{ famLeave }}" style="flex:1;background:#C0473A;color:#fff;border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;">Yes, leave</button>
+                  <button onClick="{{ famCancel }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;">Cancel</button>
+                </div>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ famBusy }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--sub,#8C857A);">Working…</div></sc-if>
+            <sc-if value="{{ famErr }}" hint-placeholder-val=""><div style="margin-top:10px;font-size:13px;font-weight:700;color:#C0473A;line-height:1.4;">{{ famErr }}</div></sc-if>
+            <sc-if value="{{ famMsg }}" hint-placeholder-val=""><div style="margin-top:10px;font-size:13px;font-weight:700;color:#1F8A5B;line-height:1.4;">{{ famMsg }}</div></sc-if>
+          </div>
+          </sc-if>
+          </sc-if>
+
 <sc-if value="{{ showPhoneRole }}" hint-placeholder-val="{{ false }}">
                     <div onClick="{{ setTog_phone }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
             <span style="font-size:20px;flex:none;">📱</span>
@@ -3627,7 +3704,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 <input defaultValue="{{ p.email }}" onChange="{{ p.onEmail }}" placeholder="Email" style="grid-column:1/3;box-sizing:border-box;padding:10px 11px;border:1.5px solid var(--slot,#E6E1D8);border-radius:11px;font-size:14px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
                 <input defaultValue="{{ p.address }}" onChange="{{ p.onAddr }}" placeholder="Address" style="grid-column:1/3;box-sizing:border-box;padding:10px 11px;border:1.5px solid var(--slot,#E6E1D8);border-radius:11px;font-size:14px;font-weight:600;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;" />
               </div>
-              <button onClick="{{ p.remove }}" style="margin-top:8px;background:transparent;border:none;color:#C0473A;font-size:13px;font-weight:800;cursor:pointer;padding:4px 2px;">Remove</button>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+                <div onClick="{{ p.toggleAlert }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <sc-if value="{{ p.alertOn }}" hint-placeholder-val="{{ true }}"><span style="width:22px;height:22px;border-radius:7px;background:#E23B2E;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;">✓</span></sc-if>
+                  <sc-if value="{{ p.alertOff }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:22px;border-radius:7px;border:2px solid var(--slot,#D8D2C8);box-sizing:border-box;"></span></sc-if>
+                  <span style="font-size:13px;font-weight:800;color:var(--ink,#1A1714);">Gets the emergency alert</span>
+                </div>
+                <button onClick="{{ p.remove }}" style="background:transparent;border:none;color:#C0473A;font-size:13px;font-weight:800;cursor:pointer;padding:4px 2px;">Remove</button>
+              </div>
             </div>
           </sc-for>
           <button onClick="{{ addFamily }}" style="width:100%;background:var(--card,#fff);border:2px dashed #B7CBF5;color:#3B82F6;border-radius:16px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.98)">+ Add Person</button>
@@ -3839,7 +3923,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:#7A5CFF;flex:1;min-width:0;">Voice message</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
-            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Send Evan a voice message</div>
+            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub,#8C857A);margin:22px 2px 12px;">Send {{ talkerName }} a voice message</div>
             <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
               <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:12px;line-height:1.4;">{{ recHint }}</div>
 
@@ -3856,7 +3940,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                   <button onClick="{{ recPlay }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">▶︎ Play</button>
                   <button onClick="{{ recAgain }}" style="flex:1;background:var(--slot,#F0EDE7);color:var(--ink,#1A1714);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-active="transform:scale(.97)">↺ Re-record</button>
                 </div>
-                <button onClick="{{ recSend }}" style="width:100%;margin-top:9px;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)">Send to Evan</button>
+                <button onClick="{{ recSend }}" style="width:100%;margin-top:9px;background:#1F9E6E;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(31,158,110,.26);" style-active="transform:scale(.98)">Send to {{ talkerName }}</button>
                 <button onClick="{{ recCancel }}" style="width:100%;margin-top:8px;background:transparent;color:var(--sub,#8C857A);border:none;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
               </sc-if>
 
@@ -4042,8 +4126,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <div onClick="{{ openVoiceNote }}" style="margin-bottom:16px;background:linear-gradient(135deg,#7A5CFF,#4F46E5);border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 6px 18px rgba(79,70,229,.3);" style-active="transform:scale(.98)">
               <span style="font-size:30px;line-height:1;flex:none;">🎙️</span>
               <div style="flex:1;min-width:0;">
-                <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.15;">Send Evan a voice message</div>
-                <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,.82);margin-top:2px;">He'll hear it in your voice</div>
+                <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.15;">Send {{ talkerName }} a voice message</div>
+                <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,.82);margin-top:2px;">{{ talkerName }} will hear it in your voice</div>
               </div>
               <span style="font-size:22px;color:rgba(255,255,255,.9);flex:none;">›</span>
             </div>
@@ -5729,6 +5813,7 @@ class Component extends DCLogic {
   // The name a clip is signed with. Falls back to the stored role id, then to
   // "Family", so a note is never delivered unattributed.
   voiceSenderName() {
+    if (this.isTemplateMode()) return this.familyName() || 'Family';
     const r = this.deviceRole();
     const hit = this.voiceSenders().find((p) => p.id === r);
     if (hit) return hit.name;
@@ -5745,6 +5830,109 @@ class Component extends DCLogic {
     try { localStorage.setItem(this.ROLE_KEY(), r); } catch (e) {}
     this.setState({ recMsg: '' });
   }
+
+  // ---- Family Code: a buyer's phones, linked (Frank, 4 Sep 2026) ----
+  // One code (EZ-XXXX-XXXX, from api/home.js) links every phone in a family.
+  // The code lives in this phone's store. Which phone this is, the talker's
+  // or a parent's, and a parent's name stay in localStorage like deviceRole,
+  // because they must never sync from one phone to another.
+  familyCode() { return String(this.data().familyCode || ''); }
+  hasFamily() { return this.isTemplateMode() && !!this.familyCode(); }
+  // Offered in the store app, and on the web only to a phone opened once with
+  // ?family=1 (our own testing). demo.html is public; a card that let any
+  // visitor create families would fill the store with junk.
+  familyAvailable() {
+    if (!this.isTemplateMode()) return false;
+    try { const cap = window.Capacitor; if (cap && typeof cap.isNativePlatform === 'function' && cap.isNativePlatform()) return true; } catch (e) {}
+    try { return localStorage.getItem('ezcomm.familyBeta') === '1'; } catch (e) { return false; }
+  }
+  familyRole() { try { return localStorage.getItem('ezcomm.familyRole.template') === 'parent' ? 'parent' : 'user'; } catch (e) { return 'user'; } }
+  setFamilyRole(r) {
+    try { localStorage.setItem('ezcomm.familyRole.template', r === 'parent' ? 'parent' : 'user'); } catch (e) {}
+    // A phone already in a family tells the server what it is now.
+    if (this.hasFamily()) this.famCall('join', {}, 'This phone is now ' + this.phoneLabel(this.familyRole()) + '.');
+    else this.setState({ famMsg: '', famErr: '' });
+  }
+  familyName() { try { return String(localStorage.getItem('ezcomm.familyName.template') || '').slice(0, 24); } catch (e) { return ''; } }
+  setFamilyName(v) { try { localStorage.setItem('ezcomm.familyName.template', String(v || '').slice(0, 24)); } catch (e) {} }
+  deviceId() {
+    try {
+      let id = localStorage.getItem('ezcomm.deviceId');
+      if (!id) { id = 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); localStorage.setItem('ezcomm.deviceId', id); }
+      return id;
+    } catch (e) { return 'd' + Date.now().toString(36); }
+  }
+  // Is this the phone that talks: Evan's, or the buyer's child's? Every other
+  // phone is a parent's, which records and edits.
+  isTalkerPhone() { return this.isTemplateMode() ? this.familyRole() === 'user' : this.deviceRole() === 'evan'; }
+  // May this phone send real things: a text, an alert, a voice message? One
+  // of ours, or a buyer's phone that has joined a family. Anything else is a
+  // demonstration and nothing leaves the phone.
+  liveLink() { return this.hasFamily() || (!this.isTemplateMode() && this.isEvanProfile()); }
+  // What identifies the family to the server: the code, or our password.
+  authBody() { return this.hasFamily() ? { code: this.familyCode() } : { password: this.data().password }; }
+  // The name texts and alerts go out under.
+  talkerName() { return this.isTemplateMode() ? this.ownerName() : 'Evan'; }
+  phoneLabel(role) { return role === 'user' ? (this.talkerName() + "'s phone") : "Parent's phone"; }
+  famErrMsg(j) {
+    const e = j && j.error;
+    if (e === 'bad_code') return "That doesn't look like a Family Code. It has 8 letters and numbers, like EZ-7K3P-9QM2.";
+    if (e === 'unknown_family') return 'No family has that code. Check it and try again.';
+    if (e === 'family_full') return 'That family already has 12 phones.';
+    if (e === 'not_in_family') return "This phone isn't in that family any more. Join again with the code.";
+    if (e === 'storage_not_configured') return 'Family sharing is not switched on for this server yet.';
+    return "Couldn't reach the server. Check the internet and try again.";
+  }
+  // One round trip to api/home. Every call carries who this phone is.
+  async famCall(action, extra, okMsg) {
+    this.setState({ famBusy: true, famErr: '', famMsg: '', famConfirm: '' });
+    let j = null;
+    try {
+      const body = { action, code: this.familyCode(), deviceId: this.deviceId(), role: this.familyRole(), name: this.phoneLabel(this.familyRole()), ...extra };
+      const r = await fetch('/api/home', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      j = await r.json().catch(() => null);
+    } catch (e) { j = null; }
+    if (!j || !j.ok) { this.setState({ famBusy: false, famErr: this.famErrMsg(j) }); return null; }
+    const fam = j.family || {};
+    if (action === 'leave') { delete this.data().familyCode; }
+    else if (fam.code) { this.data().familyCode = fam.code; }
+    this.saveStore();
+    this.setState({ famBusy: false, famMsg: okMsg || '', famDevices: action === 'leave' ? [] : (fam.devices || []) });
+    return fam;
+  }
+  async famCreate() {
+    const fam = await this.famCall('create', {}, 'Your Family Code is ready. Type it into each other phone.');
+    // The first phone's boards and people become the family's.
+    if (fam) this.shareToCloud();
+  }
+  async famJoin() {
+    const code = String(this._famCodeInput || '').trim();
+    if (!code) { this.setState({ famErr: 'Type the Family Code first.' }); return; }
+    const fam = await this.famCall('join', { code }, 'Joined. Pulling in the family\u2019s boards\u2026');
+    if (!fam) return;
+    // Pull the family's boards and people straight down, so a joined phone
+    // never has to find Sync.
+    try {
+      const r = await fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'load', code: fam.code }) });
+      const j = await r.json().catch(() => null);
+      if (j && j.ok && j.settings) { this.applySync(j.settings); this.data().lastSync = Date.now(); this.saveStore(); }
+      this.setState({ famMsg: (j && j.ok && j.settings) ? 'Joined. This phone now has the family\u2019s boards.' : 'Joined. Nothing has been saved by the family yet.' });
+    } catch (e) { this.setState({ famMsg: 'Joined. Tap Sync later to pull in the family\u2019s boards.' }); }
+  }
+  famRefresh() {
+    if (!this.hasFamily() || this.state.famBusy) return;
+    this.famCall('info', {}, '');
+  }
+  famCopy() {
+    const code = this.familyCode();
+    const done = () => this.setState({ famMsg: 'Copied. Paste it into Settings on the other phone.', famErr: '' });
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(code).then(done, () => this.setState({ famMsg: 'Write it down: ' + code })); return; }
+    } catch (e) {}
+    this.setState({ famMsg: 'Write it down: ' + code });
+  }
+  famRegen() { this.famCall('regen', {}, 'New code. Every other phone has to join again with it.'); }
+  famLeave() { this.famCall('leave', {}, 'This phone left the family. Its boards stay on the phone.'); }
 
   recStop() {
     const m = this._rec;
@@ -5799,7 +5987,7 @@ class Component extends DCLogic {
     if (!this._recData) return;
     // The other direction of the same hole: without this, somebody on the demo
     // could push audio that plays out loud on Evan's phone.
-    if (this.isTemplateMode() || !this.isEvanProfile()) {
+    if (!this.liveLink()) {
       this.setState({ recPhase: 'idle', recMsg: 'This is a demonstration — nothing was sent.', recBad: false });
       return;
     }
@@ -5809,12 +5997,13 @@ class Component extends DCLogic {
       const r = await fetch('/api/voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'send', password: this.data().password, from: who, audio: this._recData, mime: this._recMime }),
+        body: JSON.stringify({ action: 'send', ...this.authBody(), from: who, audio: this._recData, mime: this._recMime }),
       });
       const j = await r.json().catch(() => null);
-      if (j && j.ok) this.recReset('Sent to Evan ✓', false);
+      if (j && j.ok) this.recReset('Sent to ' + this.talkerName() + ' ✓', false);
       else if (j && j.error === 'too_long') this.recReset('That was too long — keep it under 30 seconds.', true);
       else if (j && j.error === 'bad_password') this.recReset("The family password on this phone doesn't match the server.", true);
+      else if (j && j.error === 'unknown_family') this.recReset("This phone's Family Code is no longer valid. Open Settings and join again.", true);
       else this.recReset("Couldn't send. Check the connection and try again.", true);
     } catch (e) {
       this.recReset("Couldn't send. Check the connection and try again.", true);
@@ -5906,32 +6095,36 @@ class Component extends DCLogic {
   async pollVoice() {
     // Gated on the phone, not the address. These are real recordings of Evan's
     // mother and father; on the demo link they were playing to strangers.
-    if (this.isTemplateMode() || !this.isEvanProfile()) return;
-    if (this.deviceRole() !== 'evan' || this.state.note) return;
+    if (!this.liveLink()) return;
+    if (!this.isTalkerPhone() || this.state.note) return;
+    // A buyer's phone keeps its own marker, so a browser that has opened both
+    // apps never mixes the two mailboxes up.
+    const NOTE_KEY = 'ezcomm.lastNote' + (this.isTemplateMode() ? '.template' : '');
+    const PRIMED_KEY = 'ezcomm.notesPrimed' + (this.isTemplateMode() ? '.template' : '');
     let since = '';
     let primed = true;
     try {
-      since = localStorage.getItem('ezcomm.lastNote') || '';
+      since = localStorage.getItem(NOTE_KEY) || '';
       // A phone that has never seen a message — set up fresh, or storage
       // cleared — has no marker, so the server hands back the whole history and
       // every old recording plays as if it had just arrived. Catch up quietly
       // first: walk the backlog storing ids without playing any of it, and only
       // start playing once there is nothing left to catch up on. A phone that
       // already has a marker is up to date and is left alone.
-      if (!since) primed = localStorage.getItem('ezcomm.notesPrimed') === '1';
+      if (!since) primed = localStorage.getItem(PRIMED_KEY) === '1';
     } catch (e) {}
     try {
       const r = await fetch('/api/voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'poll', password: this.data().password, since }),
+        body: JSON.stringify({ action: 'poll', ...this.authBody(), since }),
       });
       const j = await r.json().catch(() => null);
       if (!j || !j.ok || !j.note) {
-        if (!primed) { try { localStorage.setItem('ezcomm.notesPrimed', '1'); } catch (e) {} }
+        if (!primed) { try { localStorage.setItem(PRIMED_KEY, '1'); } catch (e) {} }
         return;
       }
-      try { localStorage.setItem('ezcomm.lastNote', j.note.id); } catch (e) {}
+      try { localStorage.setItem(NOTE_KEY, j.note.id); } catch (e) {}
       if (!primed) return;
       // A voice note is live conversation. One that has sat on the server for
       // more than a few minutes is history — a stale marker or a wiped phone
@@ -6159,7 +6352,7 @@ class Component extends DCLogic {
   // The message is prefixed with "From Evan:" so, since texts currently go out
   // from a parent's phone number, the recipient knows it's from Evan.
   textPerson(p, message) {
-    if (this.isTemplateMode() || !this.isEvanProfile()) {
+    if (!this.liveLink()) {
       this.birthdayReceipt('This is a demonstration', '👀', 'On a real phone this sends the message as a text. Nothing was sent.', '#6366F1');
       this.setState({ chooser: null });
       return;
@@ -6173,10 +6366,10 @@ class Component extends DCLogic {
     const handoff = () => { this.setState({ chooser: null }); this.textHandoff(p, message); };
     try {
       this.birthdayReceipt('Sending to ' + nm + '…', '📨', message, '#8C857A');
-      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ to: (p && p.id) || '', message }) })
+      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.textBody(p, message)) })
         .then((r) => r.json().catch(() => null))
         .then((j) => {
-          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From Evan: ' + message), '#2F9E44');
+          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From ' + this.talkerName() + ': ' + message), '#2F9E44');
           else handoff();
         })
         .catch(handoff);
@@ -6201,10 +6394,18 @@ class Component extends DCLogic {
     }
   }
 
+  // What a text carries: the person id (never a number), the words, and on a
+  // buyer's phone the Family Code and the child's name for the "From" line.
+  textBody(p, message) {
+    const body = { to: (p && p.id) || '', message };
+    if (this.hasFamily()) { body.code = this.familyCode(); body.child = this.talkerName(); }
+    return body;
+  }
   textHandoff(p, message) {
     const num = ((p && p.phone) || '').replace(/[^0-9+]/g, '');
     const words = String(message || '').trim();
-    const full = /^from evan:/i.test(words) ? words : ('From Evan: ' + words);
+    const who = this.talkerName();
+    const full = new RegExp('^from\\s+' + who.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*:', 'i').test(words) ? words : ('From ' + who + ': ' + words);
     const body = encodeURIComponent(full);
     const href = num ? ('sms:' + num + '&body=' + body) : ('sms:&body=' + body);
     try {
@@ -6498,7 +6699,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.7'; }
+  APP_BUILD() { return '2026.09.05.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7359,10 +7560,10 @@ class Component extends DCLogic {
     // the normal hand-off so the message still gets out.
     const handoff = () => { this.setState({ chooser: null }); this.textHandoff(p, message); };
     try {
-      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ to: p.id, message }) })
+      fetch('/api/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.textBody(p, message)) })
         .then((r) => r.json().catch(() => null))
         .then((j) => {
-          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From Evan: ' + message), '#2F9E44');
+          if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From ' + this.talkerName() + ': ' + message), '#2F9E44');
           else handoff();
         })
         .catch(handoff);
@@ -7434,15 +7635,15 @@ class Component extends DCLogic {
   // Best-effort: push current settings to the family cloud using the saved
   // family password, so an edit made here reaches other phones on their next Sync.
   shareToCloud() {
-    const pw = this.data().password || '';
     try {
-      fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'save', password: pw, settings: this.exportForSync() }) }).catch(() => {});
+      fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'save', ...this.authBody(), settings: this.exportForSync() }) }).catch(() => {});
     } catch (e) {}
   }
   cloudSaveMsg(j) {
     const e = j && j.error;
     if (e === 'storage_not_configured') return 'Saved on this phone (family Sync isn’t set up yet).';
     if (e === 'bad_password') return 'Saved here, but the server’s family password didn’t match.';
+    if (e === 'unknown_family') return 'Saved here. This phone’s Family Code is no longer valid; open Family Code and join again.';
     if (e === 'too_large') return 'Saved here; too large to share (remove some custom photos).';
     return 'Saved on this phone (family sharing unavailable right now).';
   }
@@ -7467,7 +7668,7 @@ class Component extends DCLogic {
     let done = false;
     const finish = (msg) => { if (done) return; done = true; this.setState({ shareMsg: msg }); clearTimeout(this._sh); this._sh = setTimeout(() => this.setState({ shareMsg: '' }), 4500); };
     try {
-      fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'save', password: pw, settings: this.exportForSync() }) })
+      fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'save', ...this.authBody(), settings: this.exportForSync() }) })
         .then((r) => r.json().catch(() => ({}))).then((j) => finish(j && j.ok ? '✓ Shared with family' : this.cloudSaveMsg(j)))
         .catch(() => finish('Saved on this phone (family sharing offline).'));
     } catch (e) { finish('Saved on this phone.'); }
@@ -7485,13 +7686,17 @@ class Component extends DCLogic {
     const e = j && j.error;
     if (e === 'storage_not_configured') return 'Family Sync isn’t set up yet (see SETUP).';
     if (e === 'bad_password') return 'Wrong family password.';
+    if (e === 'unknown_family') return 'This phone’s Family Code is no longer valid. Open Family Code and join again.';
     return 'Sync failed. Please try again.';
   }
   doSync() {
     const pw = (this._syncPw || this._pwSession || '');
     if (!pw) { this.setState({ syncErr: 'Enter the family password.' }); return; }
+    // With a Family Code the password is this phone's own lock, checked here;
+    // the server knows the family by its code.
+    if (this.hasFamily() && pw !== this.data().password) { this.setState({ syncErr: 'Wrong family password.' }); return; }
     this.setState({ syncErr: '', syncing: true });
-    fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'load', password: pw }) })
+    fetch('/api/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'load', ...(this.hasFamily() ? { code: this.familyCode() } : { password: pw }) }) })
       .then((r) => r.json().catch(() => ({}))).then((j) => {
         if (j && j.ok && j.settings) {
           this.applySync(j.settings);
@@ -8163,14 +8368,45 @@ class Component extends DCLogic {
       ...(() => {
         const open = s.setOpen || '';
         const out = {};
-        ['phone', 'sync', 'people', 'arrange', 'buttons', 'password', 'plan', 'backup'].forEach((k) => {
+        ['family', 'phone', 'sync', 'people', 'arrange', 'buttons', 'password', 'plan', 'backup'].forEach((k) => {
           out['setOpen_' + k] = open === k;
           out['setChev_' + k] = open === k ? '▲' : '▼';
-          out['setTog_' + k] = () => this.setState({ setOpen: open === k ? '' : k });
+          out['setTog_' + k] = () => { this.setState({ setOpen: open === k ? '' : k }); if (k === 'family' && open !== k) this.famRefresh(); };
         });
         return out;
       })(),
-      showFamilySync: !this.isTemplateMode(),
+      showFamilySync: !this.isTemplateMode() || this.hasFamily(),
+
+      // Family Code card (template phones). See familyAvailable().
+      showFamilyCard: this.familyAvailable(),
+      famNone: !this.hasFamily(),
+      famHas: this.hasFamily(),
+      famCode: this.familyCode(),
+      famBusy: !!s.famBusy,
+      famErr: s.famErr || '',
+      famMsg: s.famMsg || '',
+      famIsParent: this.familyRole() === 'parent',
+      famName: this.familyName(),
+      onFamName: (e) => this.setFamilyName(e.target.value),
+      famDevices: (s.famDevices || []).map((d) => ({ label: d.name || this.phoneLabel(d.role), role: d.role === 'user' ? 'talks' : 'parent', isMe: d.id === this.deviceId() })),
+      famDevicesKnown: (s.famDevices || []).length > 0,
+      famRoles: [['user', this.phoneLabel('user')], ['parent', this.phoneLabel('parent')]].map(([v, label]) => {
+        const on = this.familyRole() === v;
+        return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setFamilyRole(v) };
+      }),
+      onFamCodeInput: (e) => { this._famCodeInput = e.target.value; },
+      famCreate: () => this.famCreate(),
+      famJoin: () => this.famJoin(),
+      famCopy: () => this.famCopy(),
+      famAskRegen: () => this.setState({ famConfirm: 'regen', famMsg: '', famErr: '' }),
+      famAskLeave: () => this.setState({ famConfirm: 'leave', famMsg: '', famErr: '' }),
+      famCancel: () => this.setState({ famConfirm: '' }),
+      famConfirmRegen: s.famConfirm === 'regen',
+      famConfirmLeave: s.famConfirm === 'leave',
+      famNoConfirm: !s.famConfirm,
+      famRegen: () => this.famRegen(),
+      famLeave: () => this.famLeave(),
+      talkerName: this.talkerName(),
 
       // Subscription card — exists only when a store build's billing bridge
       // is present (ezBillingUi). Prices are never written here: the store's
@@ -8201,14 +8437,12 @@ class Component extends DCLogic {
       closeApp: () => this.setState({ started: false, screen: 'board', chooser: null }),
 
       showPhoneRole: this.isEvanProfile(),
-      canRecord: this.isEvanProfile() && this.deviceRole() !== 'evan',
+      canRecord: this.liveLink() && !this.isTalkerPhone(),
       // The entrance sits on Family, where you already go to reach a person.
-      canVoiceHere: this.isEvanProfile() && this.deviceRole() !== 'evan' && s.screen === 'family',
+      canVoiceHere: this.liveLink() && !this.isTalkerPhone() && s.screen === 'family',
       isVoiceNote: s.screen === 'voicenote',
       openVoiceNote: () => this.recReset('', false) || this.setState({ screen: 'voicenote' }),
-      recHint: this.deviceRole() === 'mom'
-        ? "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send."
-        : "Record a message and Evan will hear it in your voice. Listen back before you send — nothing goes to him until you tap Send.",
+      recHint: 'Record a message and ' + this.talkerName() + ' will hear it in your voice. Listen back before you send — nothing is sent until you tap Send.',
       recIdle: (s.recPhase || 'idle') === 'idle',
       recRecording: s.recPhase === 'recording',
       recReview: s.recPhase === 'review',
@@ -8379,6 +8613,9 @@ class Component extends DCLogic {
         onPhone: (e) => { p.phone = e.target.value; },
         onEmail: (e) => { p.email = e.target.value; },
         onBday: (e) => { p.birthdate = e.target.value; },
+        alertOn: !!p.alert,
+        alertOff: !p.alert,
+        toggleAlert: () => { p.alert = !p.alert; this.forceUpdate(); },
         onPhoto: (e) => this.setPersonPhoto(p, e.target.files && e.target.files[0]),
         moveUp: () => this.moveFamily(i, -1),
         moveDown: () => this.moveFamily(i, 1),
@@ -8446,7 +8683,14 @@ class Component extends DCLogic {
           return { name: p.name, ring: p.ring || '#8C857A', initial: String(p.name || '?').trim().charAt(0).toUpperCase(), hasPhoto: has, noPhoto: !has, avatarEl: has ? this.personAvatar(p, 52) : null };
         });
       })(),
-      famNames: 'Dad, Mom, Chris & Matt',
+      famNames: (() => {
+        const all = this.data().family || [];
+        const names = (all.filter((p) => p.alert).length ? all.filter((p) => p.alert) : all).map((p) => String(p.name || '').trim()).filter(Boolean);
+        if (!names.length) return 'your family';
+        if (names.length === 1) return names[0];
+        return names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
+      })(),
+      sosDemoNote: this.familyAvailable() && !this.hasFamily() ? 'To make it real, open Settings and set up your Family Code.' : '',
       sosText: this.sosMessage(),
       isSos: s.screen === 'sos',
       // The template's siren is drawn; Evan's stays the plain symbol he knows.
@@ -8465,7 +8709,7 @@ class Component extends DCLogic {
         // live alarm that rings Frank's and Raniyah's phones with a location.
         // Only a phone stamped as one of theirs can raise a real alert.
         // (When licensing exists this becomes "licensed", not "is Evan's".)
-        if (this.isTemplateMode() || !this.isEvanProfile()) {
+        if (!this.liveLink()) {
           this.setState({ screen: 'sosSent', sosStatus: 'demo' });
           clearTimeout(this._t);
           this._t = setTimeout(() => this.setState({ screen: 'board' }), 4200);
@@ -8491,7 +8735,7 @@ class Component extends DCLogic {
             fetch('/api/sos', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ message: msg, child: 'Evan', ts: new Date().toISOString(), location: location || null }),
+              body: JSON.stringify({ message: msg, child: this.talkerName(), ...(this.hasFamily() ? { code: this.familyCode() } : {}), ts: new Date().toISOString(), location: location || null }),
             }).then((r) => r.json().catch(() => null)).then((j) => finish(j)).catch(() => finish(null));
           } catch (e) { finish(null); }
         };

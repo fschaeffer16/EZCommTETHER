@@ -405,7 +405,37 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   built: a consent line under the phone field, an EZvoxa: prefix on
   sent texts, and an SMS page on ezvoxa.com. Status: pending Frank's
   submission.
-- **Family Code design for buyers (proposed 4 Sep 2026, awaiting Frank):**
+- **Family Code BUILT for v1 (5 Sep 2026). Frank, 4 Sep: "No. V1 has to
+  have this. We sell customization as a big part of this."** Server:
+  `api/home.js` (create, join, info, leave, regen; code EZ-XXXX-XXXX, no
+  I L O 0 1; up to 12 phones; keys `fam:CODE`, `fam:CODE:settings`,
+  `fam:CODE:voice`). `settings.js`, `voice.js`, `text.js`, `sos.js` take a
+  `code` instead of the password; without one they behave exactly as
+  before for our three phones. A family's texts and alerts use the
+  numbers a parent typed into the people list (`normPhone` adds +1 to a
+  bare US number); the alert goes to people with the alert check on,
+  skips fictional 555 placeholders, and never carries our medical note.
+  Client (demo.html only, build 2026.09.05.1): Family Code card first in
+  Settings, shown in the store app and on a web phone opened once with
+  `?family=1` (the public demo page cannot create families); role per
+  phone (user's or parent's) and a parent's name in localStorage, never
+  synced; code in the phone's store. Joining pulls the family's boards
+  at once; creating pushes the first phone's boards. Sync, Save, voice,
+  text and SOS all carry the code and stop being demonstrations once a
+  phone is in a family. Decisions I made without asking, for Frank to
+  overrule: the "Gets the emergency alert" check on each person in the
+  people card (there was no way to choose who is alerted); the card's
+  wording; the fictional-number skip; the beta flag. Verified with the
+  handlers under fake KV and Twilio and a two-phone Playwright run
+  (create, join, pull, voice, text, SOS, regen, unlinked phone stays a
+  demo). Also fixed in passing: the template's SOS "sent" screen named
+  Evan's brothers ("Dad, Mom, Chris & Matt"); it now lists the family's
+  own alert people. Still owed: a QR for the code, the subscription
+  attaching to the family rather than the phone, and a check that
+  `allowBrowser` in text.js and sos.js accepts the store app's WebView
+  origin (capacitor://localhost); if it does not, texting and SOS would
+  get 403 from the native app. Test on the first TestFlight build.
+- **Family Code design for buyers (proposed 4 Sep 2026, built 5 Sep, see above):**
   today Family Sync, voice messages and texting are wired for one family
   only (one KV key, one FAMILY_SYNC_PASSWORD, Evan's directory in env).
   A buyer needs a family of their own: the first phone set up creates a

@@ -15,12 +15,15 @@
 // Required env vars (the same ones Family Sync already uses):
 //   KV_REST_API_URL / KV_REST_API_TOKEN   Vercel KV (Upstash) store
 //   FAMILY_SYNC_PASSWORD                  shared family password; guards read + write
+// A buyer's family sends a Family Code (api/home.js) instead of the password;
+// its clips live under fam:CODE:voice, never mixed with ours.
 // Optional:
 //   ALLOWED_ORIGIN                        e.g. https://ez-comm-tether.vercel.app
 
 const KEY = 'ezcomm:voicenotes';
 const MAX_NOTES = 20;              // keep a short history; oldest fall off
 const MAX_BYTES = 700000;          // ~700KB of base64 — roughly 30s of small audio
+const { normCode } = require('./home.js');
 
 function kvEnv() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -39,8 +42,8 @@ async function kvCommand(cmd) {
   return r.json();
 }
 
-async function readNotes() {
-  const j = await kvCommand(['GET', KEY]);
+async function readNotes(key) {
+  const j = await kvCommand(['GET', key]);
   if (!j || !j.result) return [];
   try { const p = JSON.parse(j.result); return Array.isArray(p) ? p : []; } catch (e) { return []; }
 }
@@ -51,7 +54,7 @@ module.exports = async (req, res) => {
 
   // Health check — says whether voice notes are usable without exposing anything.
   if (req.method === 'GET') {
-    return res.status(200).json({ ok: true, configured: Boolean(url && token && pwSet) });
+    return res.status(200).json({ ok: true, configured: Boolean(url && token) });
   }
 
   if (req.method !== 'POST') {
@@ -65,7 +68,7 @@ module.exports = async (req, res) => {
     if (origin && origin !== allowed) return res.status(403).json({ ok: false, error: 'forbidden_origin' });
   }
 
-  if (!url || !token || !pwSet) {
+  if (!url || !token) {
     return res.status(200).json({ ok: false, error: 'storage_not_configured' });
   }
 
@@ -73,8 +76,20 @@ module.exports = async (req, res) => {
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   body = body || {};
 
-  if (String(body.password || '') !== String(process.env.FAMILY_SYNC_PASSWORD)) {
-    return res.status(200).json({ ok: false, error: 'bad_password' });
+  // A Family Code picks that family's mailbox; without one this is our family,
+  // guarded by the password.
+  let key = KEY;
+  const code = normCode(body.code);
+  if (code) {
+    let fam = null;
+    try { const j = await kvCommand(['GET', 'fam:' + code]); fam = j && j.result; } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
+    if (!fam) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    key = 'fam:' + code + ':voice';
+  } else {
+    if (!pwSet) return res.status(200).json({ ok: false, error: 'storage_not_configured' });
+    if (String(body.password || '') !== String(process.env.FAMILY_SYNC_PASSWORD)) {
+      return res.status(200).json({ ok: false, error: 'bad_password' });
+    }
   }
 
   try {
@@ -84,17 +99,17 @@ module.exports = async (req, res) => {
       const from = String(body.from || 'Family').slice(0, 24);
       if (!audio) return res.status(200).json({ ok: false, error: 'no_audio' });
       if (audio.length > MAX_BYTES) return res.status(200).json({ ok: false, error: 'too_long' });
-      const notes = await readNotes();
+      const notes = await readNotes(key);
       notes.push({ id: 'v' + Date.now(), from, audio, mime: String(body.mime || 'audio/mp4').slice(0, 40), at: Date.now() });
       while (notes.length > MAX_NOTES) notes.shift();
-      await kvCommand(['SET', KEY, JSON.stringify(notes)]);
+      await kvCommand(['SET', key, JSON.stringify(notes)]);
       return res.status(200).json({ ok: true, id: notes[notes.length - 1].id });
     }
 
     // Evan's phone asks what's arrived since it last looked. `since` is the id
     // it already played, so a clip is never played at him twice.
     if (body.action === 'poll') {
-      const notes = await readNotes();
+      const notes = await readNotes(key);
       const since = String(body.since || '');
       const idx = since ? notes.findIndex((n) => n.id === since) : -1;
       const fresh = notes.slice(idx + 1);
@@ -104,7 +119,7 @@ module.exports = async (req, res) => {
 
     // Just the ids, so a phone can tell if anything is new without pulling audio.
     if (body.action === 'list') {
-      const notes = await readNotes();
+      const notes = await readNotes(key);
       return res.status(200).json({ ok: true, notes: notes.map((n) => ({ id: n.id, from: n.from, at: n.at })) });
     }
 

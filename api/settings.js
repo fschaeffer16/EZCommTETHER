@@ -17,6 +17,9 @@
 //   ALLOWED_ORIGIN                         your site origin, e.g. https://ez-comm-tether.vercel.app
 
 const KEY = 'ezcomm:family-settings';
+// A buyer's family (Frank, 4 Sep 2026): the same sync, keyed by a Family Code
+// from api/home.js instead of our one password. The code is the secret.
+const { normCode } = require('./home.js');
 
 function kvEnv() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -56,7 +59,7 @@ module.exports = async (req, res) => {
     if (origin && origin !== allowed) return res.status(403).json({ ok: false, error: 'forbidden_origin' });
   }
 
-  if (!url || !token || !pwSet) {
+  if (!url || !token) {
     return res.status(200).json({ ok: false, error: 'storage_not_configured' });
   }
 
@@ -64,20 +67,31 @@ module.exports = async (req, res) => {
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   body = body || {};
 
-  // The family password guards both reading and writing the shared settings.
-  if (String(body.password || '') !== String(process.env.FAMILY_SYNC_PASSWORD)) {
-    return res.status(200).json({ ok: false, error: 'bad_password' });
+  // With a Family Code the store is that family's; without one it is ours,
+  // guarded by the family password.
+  let key = KEY;
+  const code = normCode(body.code);
+  if (code) {
+    let fam = null;
+    try { const j = await kvCommand(['GET', 'fam:' + code]); fam = j && j.result; } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
+    if (!fam) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    key = 'fam:' + code + ':settings';
+  } else {
+    if (!pwSet) return res.status(200).json({ ok: false, error: 'storage_not_configured' });
+    if (String(body.password || '') !== String(process.env.FAMILY_SYNC_PASSWORD)) {
+      return res.status(200).json({ ok: false, error: 'bad_password' });
+    }
   }
 
   try {
     if (body.action === 'save') {
       const value = JSON.stringify({ settings: body.settings || {}, savedAt: Date.now() });
       if (value.length > 900000) return res.status(200).json({ ok: false, error: 'too_large' });
-      await kvCommand(['SET', KEY, value]);
+      await kvCommand(['SET', key, value]);
       return res.status(200).json({ ok: true, savedAt: Date.now() });
     }
     if (body.action === 'load') {
-      const j = await kvCommand(['GET', KEY]);
+      const j = await kvCommand(['GET', key]);
       const raw = j && j.result;
       if (!raw) return res.status(200).json({ ok: true, settings: null });
       let parsed = null; try { parsed = JSON.parse(raw); } catch (e) {}

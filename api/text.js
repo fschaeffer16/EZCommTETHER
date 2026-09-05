@@ -9,6 +9,11 @@
 // PHONE NUMBERS NEVER SHIP IN THE APP. The app sends only a person id ("mom");
 // the number is looked up here from the FAMILY_DIRECTORY environment variable.
 //
+// A buyer's family (Frank, 4 Sep 2026) sends its Family Code (api/home.js) and
+// the person id; the number comes from that family's own synced settings
+// (fam:CODE:settings), which a parent typed into the app and saved. Their
+// child's name comes with the request, so the text reads "From Mia:".
+//
 // Required env vars (Vercel -> Project -> Settings -> Environment Variables):
 //   TWILIO_ACCOUNT_SID   Twilio Account SID (starts "AC...")
 //   TWILIO_AUTH_TOKEN    Twilio Auth Token
@@ -35,15 +40,47 @@ function allowBrowser(req) {
   return ok(origin) || ok(referer);
 }
 
+const { normCode, normPhone } = require('./home.js');
+
 const CHILD = () => String(process.env.CHILD_NAME || 'Evan').trim() || 'Evan';
+const cleanName = (v) => String(v || '').replace(/[^A-Za-z0-9 .'-]/g, '').trim().slice(0, 24);
 
 function directory() {
   try { return JSON.parse(process.env.FAMILY_DIRECTORY || '{}') || {}; } catch (e) { return {}; }
 }
 
+function kvEnv() {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  return { url, token };
+}
+async function kvGetJson(key) {
+  const { url, token } = kvEnv();
+  if (!url || !token) return null;
+  const r = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(['GET', key]) });
+  if (!r.ok) throw new Error('kv_http_' + r.status);
+  const j = await r.json();
+  if (!j || !j.result) return null;
+  try { return JSON.parse(j.result); } catch (e) { return null; }
+}
+// Everyone a buyer's family has saved, keyed by person id, with the phone a
+// parent typed in. Returns null when the code is not a family we know.
+async function familyPeople(code) {
+  if (!(await kvGetJson('fam:' + code))) return null;
+  const saved = await kvGetJson('fam:' + code + ':settings');
+  const s = (saved && saved.settings) || {};
+  const out = {};
+  for (const group of ['family', 'school', 'friends']) {
+    for (const p of (Array.isArray(s[group]) ? s[group] : [])) {
+      if (p && p.id) out[String(p.id).toLowerCase()] = p;
+    }
+  }
+  return out;
+}
+
 // "From Evan: Happy Birthday Mom! I love you!" — added once, never doubled up.
-function buildBody(message) {
-  const child = CHILD();
+function buildBody(message, childName) {
+  const child = childName || CHILD();
   const words = String(message || '').trim();
   const re = new RegExp('^from\\s+' + child.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*:', 'i');
   return re.test(words) ? words : `From ${child}: ${words}`;
@@ -107,11 +144,22 @@ module.exports = async (req, res) => {
     return res.status(500).json({ ok: false, error: 'sms_not_configured' });
   }
 
-  const person = directory()[id];
-  const phone = person && person.phone ? String(person.phone).trim() : '';
+  let person = null;
+  let childName = '';
+  const code = normCode(payload.code);
+  if (code) {
+    let people = null;
+    try { people = await familyPeople(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
+    if (!people) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    person = people[id];
+    childName = cleanName(payload.child);
+  } else {
+    person = directory()[id];
+  }
+  const phone = person && person.phone ? (code ? normPhone(person.phone) : String(person.phone).trim()) : '';
   if (!phone) return res.status(404).json({ ok: false, error: 'no_number_for_person' });
 
-  const body = buildBody(message);
+  const body = buildBody(message, childName);
   const r = await sendSms(phone, body).catch((e) => ({ accepted: false, sid: null, status: 'failed', detail: String((e && e.message) || e) }));
 
   // Poll briefly so we can tell Evan it truly went out, not just that Twilio took it.

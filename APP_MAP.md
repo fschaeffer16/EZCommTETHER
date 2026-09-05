@@ -143,6 +143,12 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 - **morning**, **night**, **feelings**, **colors**, **numbers**, **clock** —
   standalone boards. (**fun** still exists as a screen but nothing opens it.)
 - **settings** — gear (⚙️) on the home header; family setup, phone role, Sync.
+  Template only: a **Family Code** card (first card, store builds and web
+  phones opened once with `?family=1`): create a code, or join with one,
+  pick whose phone this is (the user's or a parent's), copy the code, list
+  the family's phones, new code, leave. The people card carries a "Gets
+  the emergency alert" check per person (both apps' markup, template's
+  SOS and voice use it).
 - **sos** / **sosSent** — Emergency. Reached from the red SOS bar, which is
   **anchored flush to the very bottom** of the content region (full-width,
   top-rounded, `bottom:0`, safe-area-bottom padding) rather than floating as a

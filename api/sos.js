@@ -5,6 +5,10 @@
 // SendGrid), including Evan's live location as a Google Maps link when his
 // phone shares it.
 //
+// A buyer's family (Frank, 4 Sep 2026) sends its Family Code (api/home.js).
+// Its recipients are the people marked "alert" in that family's own synced
+// settings (fam:CODE:settings); SOS_SMS_TO and the medical note are ours only.
+//
 // SECRETS NEVER LIVE IN THE APP. They are read from environment variables that
 // you set in the Vercel dashboard (see SETUP.md). The app itself is public, so
 // nothing sensitive — phone numbers, API keys — is ever shipped to the browser.
@@ -39,6 +43,45 @@ function allowBrowser(req) {
 }
 
 const list = (v) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
+const { normCode, normPhone } = require('./home.js');
+const cleanName = (v) => String(v || '').replace(/[^A-Za-z0-9 .'-]/g, '').trim().slice(0, 24);
+
+function kvEnv() {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  return { url, token };
+}
+async function kvGetJson(key) {
+  const { url, token } = kvEnv();
+  if (!url || !token) return null;
+  const r = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(['GET', key]) });
+  if (!r.ok) throw new Error('kv_http_' + r.status);
+  const j = await r.json();
+  if (!j || !j.result) return null;
+  try { return JSON.parse(j.result); } catch (e) { return null; }
+}
+// Who a buyer's family wants alerted: every saved person with "alert" on and a
+// phone (and an email, for the backup). Null when the code is not a family we know.
+async function familyContacts(code) {
+  if (!(await kvGetJson('fam:' + code))) return null;
+  const saved = await kvGetJson('fam:' + code + ':settings');
+  const s = (saved && saved.settings) || {};
+  const sms = [], email = [];
+  for (const group of ['family', 'school', 'friends']) {
+    for (const p of (Array.isArray(s[group]) ? s[group] : [])) {
+      if (!p || !p.alert) continue;
+      const phone = normPhone(p.phone);
+      // The starter people ship with a 555 placeholder so the texting screen
+      // has something to show. An alert never goes to a number that cannot
+      // exist; it would only slow the real ones down.
+      if (/^\+1(555\d{7}|\d{3}55501\d{2})$/.test(phone)) continue;
+      const mail = String(p.email || '').trim();
+      if (phone && sms.indexOf(phone) < 0) sms.push(phone);
+      if (mail && mail.indexOf('@') > 0 && email.indexOf(mail) < 0) email.push(mail);
+    }
+  }
+  return { sms, email };
+}
 
 function buildText(payload) {
   const child = payload.child || 'Evan';
@@ -142,18 +185,33 @@ module.exports = async (req, res) => {
   if (typeof payload === 'string') { try { payload = JSON.parse(payload); } catch (e) { payload = {}; } }
   payload = payload || {};
 
-  const smsTo = list(process.env.SOS_SMS_TO);
-  const emailTo = list(process.env.SOS_EMAIL_TO);
+  let smsTo = list(process.env.SOS_SMS_TO);
+  let emailTo = list(process.env.SOS_EMAIL_TO);
+  const code = normCode(payload.code);
+  if (code) {
+    let contacts = null;
+    try { contacts = await familyContacts(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
+    if (!contacts) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    smsTo = contacts.sms;
+    emailTo = contacts.email;
+    payload.child = cleanName(payload.child) || 'Your child';
+  }
   const isTest = Boolean(payload.test);
   let text = (isTest ? '[TEST — please ignore] ' : '') + buildText(payload);
   // Private medical note for responders — stored only in the server env var
   // SOS_MEDICAL_NOTE, never in the public app. Included in both text and email.
-  const medical = String(process.env.SOS_MEDICAL_NOTE || '').trim();
+  // Ours only: a buyer's family never sees it.
+  const medical = code ? '' : String(process.env.SOS_MEDICAL_NOTE || '').trim();
   if (medical) text += `\n\nMedical: ${medical}`;
 
   const smsConfigured = Boolean(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM);
-  if (!smsConfigured || !smsTo.length) {
+  if (!smsConfigured) {
     return res.status(500).json({ ok: false, error: 'sms_not_configured' });
+  }
+  // A family with nobody marked to alert: tell the app plainly so a parent
+  // can fix it in Settings, instead of a silent nothing.
+  if (!smsTo.length) {
+    return res.status(code ? 200 : 500).json({ ok: false, error: code ? 'no_recipients' : 'sms_not_configured' });
   }
 
   const emailResult = await sendEmail(emailTo, `EMERGENCY: ${payload.child || 'Evan'} needs help`, text).catch(() => ({ ok: false }));

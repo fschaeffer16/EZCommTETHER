@@ -134,6 +134,17 @@ names, phone/email/address/birthday, buttons, wording, and arrangement.)*
 > Keep the in-app family password and `FAMILY_SYNC_PASSWORD` the same. If you
 > change one, change the other, or sharing will stop matching.
 
+**Families who bought EZvoxa** do not use the password path. Their phones
+share a **Family Code** (Settings → Family Code: create one on the first
+phone, type it into the others). The code needs only the KV store above; no
+password variable and no `FAMILY_DIRECTORY`. Everything for that family is
+stored under its code: boards and people (`fam:CODE:settings`), voice
+messages (`fam:CODE:voice`), and the phones in it (`fam:CODE`). Texts and
+the emergency alert go to the numbers a parent typed into the people list,
+so the server never holds a customer's number outside their own family's
+settings. A parent can issue a new code at any time; the old one stops
+working and every other phone joins again.
+
 ---
 
 ## Part H — Permanent phone numbers (so they never disappear) · ~5 min

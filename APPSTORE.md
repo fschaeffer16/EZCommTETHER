@@ -128,10 +128,14 @@ Then, in order:
    purchases works on a reinstall.
 
 What the subscription gates today: the natural voice. Cloud texting, voice
-notes, and Family Sync are gated in principle but are demonstrations in the
-template until the per-family backend exists, so the store listing and the
-subscription description must promise only what is real: **the natural
-voice**. Widen the promise as features land.
+messages, Family Sync and the SOS alert are real for a buyer's family once
+its phones share a **Family Code** (Settings, first card; built 5 Sep 2026,
+see `api/home.js`). They are still demonstrations on a phone that has not
+joined a family. The store listing may promise: the talker, the natural
+voice (subscription), and, with a Family Code, shared boards across the
+family's phones, voice messages from a parent, texting the people you list,
+and the emergency alert to the people you mark. The Emergency button never
+gates on payment.
 
 ### Selling on the website (Frank's lane, one hard rule)
 
