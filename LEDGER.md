@@ -507,6 +507,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   (his words, 1 Sep). Nothing automated goes out until he approves the
   text.** Draft offered 1 Sep; send via the SendGrid sender the SOS email
   already uses.
+- **Early reactions (Frank, 4 Sep 2026):** strangers overhearing him show
+  the app at Evan's school, Evan's teachers surprised by his academic
+  progress and engagement, and a bank employee he had never met. These
+  are people outside the family reacting to the app in use, not to the
+  story. Worth collecting as quotes for the Professionals page and the
+  school pitch, with each person's permission.
 - **Website design approved by Frank, 4 Sep 2026** (Claude Design's lane).
   He is writing and editing the copy himself over the weekend of 5 to 6
   Sep. His wording is the master once he has edited a page; fold it into
