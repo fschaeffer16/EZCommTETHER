@@ -405,6 +405,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   built: a consent line under the phone field, an EZvoxa: prefix on
   sent texts, and an SMS page on ezvoxa.com. Status: pending Frank's
   submission.
+- **Family Code design for buyers (proposed 4 Sep 2026, awaiting Frank):**
+  today Family Sync, voice messages and texting are wired for one family
+  only (one KV key, one FAMILY_SYNC_PASSWORD, Evan's directory in env).
+  A buyer needs a family of their own: the first phone set up creates a
+  Family Code, every other phone joins by entering or scanning it and
+  picks its role (the user's phone, or a parent's), and the server keeps
+  that family's settings, voice messages and contacts under the code.
+  The purchase attaches to the family, not the phone, so joined phones
+  share it. Evan's family becomes one family like any other. Build after
+  the first TestFlight, before the subscription switches on.
 - **How store money reaches the business account (verified 4 Sep 2026,
   Apple and Google help pages):** the customer pays the store, the store
   keeps its commission and pays the rest by bank transfer to the account
