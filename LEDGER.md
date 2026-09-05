@@ -22,6 +22,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 ## Business status
 
 - **EZ Voice LLC** exists, Florida, with an EIN. Frank is sole owner/signer.
+- **Business bank account opened 4 Sep 2026.** Frank enrolls in the Apple
+  Developer Program (Organization, $99) on 5 Sep, following EZvoxa Apple
+  Developer Enrollment.docx, then Agreements, Tax, and Banking with this
+  account and the W-9, then the Small Business Program. Google Play ($25)
+  the same week. Twilio registration answers are in EZvoxa Twilio
+  Registration.docx; Frank handles it 5 Sep.
 - **D-U-N-S number: arrived 1 Sep 2026** (email from D&B — Frank keeps it;
   the legal-name spelling in that email is the one to copy everywhere).
 - **Apple Developer Program**: enrolling as Organization, $99/yr, when money
