@@ -432,6 +432,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   And the header matches a board's to the letter: back button, title,
   Edit pill on the right (a person's screen edits that person). Template
   build 2026.09.04.6, Evan's 2026.09.04.5.
+- **Sports under Watch, template (Frank's art, 4 Sep 2026):** the Sports
+  tile opens a picture board of Football, Basketball, Baseball, Soccer and
+  Wrestling (keys sport_*); a sport opens its two lines (Can I watch
+  football? / I want to watch football.) and back returns to the list.
+  Chooser card pictures went a size up at the same time. Evan's own
+  Sports board is untouched. Template build 2026.09.04.7.
 - **Frank approves a change BEFORE it is made** (his rule 2 Sep, now in
   CLAUDE.md). Shipping to main stays the default and is not the issue.
   The issue was deciding what to change without him: describe the change

@@ -5514,6 +5514,28 @@ class Component extends DCLogic {
     return React.createElement('img', { src, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' } });
   }
 
+  // Sports under Watch (Frank's art, 4 Sep 2026): pick the sport by picture,
+  // then the two lines. Back from a sport returns to the sports list.
+  sportsList() {
+    return [
+      { label: 'Football', icon: 'sport_football', color: '#FF8A1F' },
+      { label: 'Basketball', icon: 'sport_basketball', color: '#3FC4FF' },
+      { label: 'Baseball', icon: 'sport_baseball', color: '#EF4444' },
+      { label: 'Soccer', icon: 'sport_soccer', color: '#22C55E' },
+      { label: 'Wrestling', icon: 'sport_wrestling', color: '#F59E0B' },
+    ];
+  }
+  openSports() {
+    const two = (sp) => [
+      { glyph: '🙋', txt: 'Can I watch ' + sp.label.toLowerCase() + '?', say: 'Can I watch ' + sp.label.toLowerCase() + '?', color: '#3B82F6' },
+      { glyph: '💬', txt: 'I want to watch ' + sp.label.toLowerCase() + '.', say: 'I want to watch ' + sp.label.toLowerCase() + '.', color: '#1F9E6E' },
+    ].map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } }));
+    this.setState({ chooser: { label: 'Sports', noIcon: true, emoji: '🏆', options: this.sportsList().map((sp) => ({
+      glyph: '🏆', icon: sp.icon, txt: sp.label, say: sp.label, color: sp.color,
+      onTap: () => this.setState({ chooser: { label: sp.label, noIcon: true, emoji: '🏆', onBack: () => this.openSports(), options: two(sp) } }),
+    })) } });
+  }
+
   mapPlace(p) {
     // p.art names the picture when it is not the plain place_<key> icon: a
     // photo path, a data URI, or another icon key.
@@ -6476,7 +6498,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.6'; }
+  APP_BUILD() { return '2026.09.04.7'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -8012,10 +8034,10 @@ class Component extends DCLogic {
         // give up a little height and the tile writes the word.
         faceEl: React.createElement('img', { src: w.src, alt: w.label, style: { width: '100%', height: w.needsLabel ? '76%' : '100%', marginBottom: w.needsLabel ? '13%' : 0, objectFit: 'contain' } }),
         hasCaption: !!w.needsLabel,
-        onTap: () => this.setState({ chooser: { label: w.label, noIcon: true, emoji: '📺', options: [
+        onTap: () => (w.id === 'sports' ? this.openSports() : this.setState({ chooser: { label: w.label, noIcon: true, emoji: '📺', options: [
           { glyph: '🙋', txt: w.q, say: w.q, color: '#3B82F6' },
           { glyph: '💬', txt: w.s, say: w.s, color: '#1F9E6E' },
-        ].map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } }),
+        ].map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } })),
       })),
       // The family's own shows, under the tile they picked when adding them.
       watchGroups: this.isEvanProfile() ? [] : [
@@ -8104,12 +8126,12 @@ class Component extends DCLogic {
         // screen blending so an icon drawn on black shows no box on the card;
         // the transparent glyphs are unaffected by it
         bigGlyphEl: o.icon && this.iconUri(o.icon)
-          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: cols === 3 ? 50 : 58, height: cols === 3 ? 50 : 58, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
+          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: cols === 3 ? 66 : 78, height: cols === 3 ? 66 : 78, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
           : React.createElement('span', { style: { fontSize: cols === 3 ? 42 : 52, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
       }))),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },
       cancelCss: 'border:1.5px solid rgba(255,255,255,.18);border-radius:16px;',
-      closeChooser: () => this.setState({ chooser: null }),
+      closeChooser: () => { const c = this.state.chooser; if (c && c.onBack) c.onBack(); else this.setState({ chooser: null }); },
       sheetGuard: (e) => e.stopPropagation(),
       tiles: this.tiles(),
       isNight: s.screen === 'night',
