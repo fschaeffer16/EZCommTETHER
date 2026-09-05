@@ -22,6 +22,12 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 ## Business status
 
 - **EZ Voice LLC** exists, Florida, with an EIN. Frank is sole owner/signer.
+- **Apple Developer Program enrollment submitted 4 Sep 2026, 4:05 PM**, as
+  Organization, through the Apple Developer app on Frank's iPhone.
+  Enrollment ID FA22WL2678. Identity verified in the app; work email
+  frank@ezvoxa.com. Apple reviews the organization first (phone call
+  expected) and emails a link to pay the $99 after approval. Not paid
+  yet, by design.
 - **Business bank account opened 4 Sep 2026.** Frank enrolls in the Apple
   Developer Program (Organization, $99) on 5 Sep, following EZvoxa Apple
   Developer Enrollment.docx, then Agreements, Tax, and Banking with this
