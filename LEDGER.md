@@ -393,6 +393,17 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   built: a consent line under the phone field, an EZvoxa: prefix on
   sent texts, and an SMS page on ezvoxa.com. Status: pending Frank's
   submission.
+- **How store money reaches the business account (verified 4 Sep 2026,
+  Apple and Google help pages):** the customer pays the store, the store
+  keeps its commission and pays the rest by bank transfer to the account
+  entered in App Store Connect (Agreements, Tax, and Banking) or the Play
+  payments profile. Apple pays within 45 days of the end of its fiscal
+  month, once proceeds pass its minimum threshold (40 USD for most
+  accounts). Apple's Small Business Program cuts the commission from 30%
+  to 15% under 1M USD a year and needs a one-time enrolment in App Store
+  Connect after the Paid Apps agreement. Google Play charges 15% on the
+  first 1M USD a year (needs the account group enrolment) and pays
+  monthly. Enrol in both reduced tiers before the first sale.
 - **Neon anchor and contact cards (Frank's designs, 4 Sep 2026, both
   apps):** Yes and No are black pills with a green and a red neon
   outline, Home is a black circle with a cyan ring and a drawn house.
