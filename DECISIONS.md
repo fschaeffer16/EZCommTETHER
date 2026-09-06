@@ -35,6 +35,13 @@ a dated line saying it was reversed. Dates are the day it happened.
    action per step, what to click, what to copy, where to paste it. If a
    step's screen labels come from memory rather than from the site itself,
    the step says so.
+8. **When I lack access that Frank can grant, I say so and give him the
+   way to grant it** (Frank, 6 Sep 2026): the link, then the steps, the
+   same way as rule 7. This covers sites blocked by the environment,
+   GitHub repositories or permissions, and any account or service I can
+   see exists but cannot reach. Never work around a missing access
+   silently, and never ask for a password; access is granted, not
+   shared.
 
 ## MUST DO (open items, newest first)
 
@@ -87,6 +94,11 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **6 Sep 2026. Missing access** (Frank): "if you don't have access to
+  something that I can give you access to let me know how." Rule 8. As of
+  today GitHub access is complete for this repository (read, push, and
+  the GitHub tools); the only gaps are the blocked sites listed in the
+  network item above.
 - **6 Sep 2026. Directions for blocked sites** (Frank): always a link or
   search words, then step by step. Rule 7. Applied the same day to the
   root certificate step in the Apple document and the Twilio reply step

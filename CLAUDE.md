@@ -35,6 +35,9 @@ program for low-income/disability families.
   the exact link, or the exact search words if there is no link I can verify; then one action
   per step: what to click, what to copy, where to paste it. Screen labels that come from memory
   rather than the site itself are marked as such.
+- **When I lack access Frank can grant, say so and give him the way to grant it (Frank, 6 Sep
+  2026):** a blocked site, a GitHub repository or permission, an account I can see but cannot
+  reach. Link, then steps. Never work around missing access silently; never ask for a password.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.
