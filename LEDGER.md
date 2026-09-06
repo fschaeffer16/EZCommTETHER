@@ -571,6 +571,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   texted you cannot read a reply here. To answer them, open the EZvoxa
   app and send a voice message."). Frank's confirmation, same day:
   texting is one way; voice messages are the way back.
+  Frank, 5 Sep 2026, art: neon pair for the template's TV phrases (a
+  raised hand with a set for "Can I watch TV?", a speech bubble with a
+  set for "I want to watch TV."), keys ask_tv / want_tv, wired as chooser
+  icons on the TV tile. Movies, Sports and Streaming still show the
+  emoji until their art arrives. Measured the chooser picture at 78px on
+  a two-across card (under the 96px floor); two-across chooser pictures
+  now take the card width, 170 x 108 max; three-across stays 66px.
   The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
