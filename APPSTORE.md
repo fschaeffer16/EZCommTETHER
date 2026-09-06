@@ -137,9 +137,10 @@ Then, in order:
    sandbox, voice falls back on expiry everywhere; Restore purchases works
    on a reinstall; a phone that joins the family after the purchase is
    premium at once.
-7. **Switch the texting gate on**: set `PLAN_ENFORCE=1` in Vercel. Until
-   then everyday texting works for every family, paid or not, so nothing
-   changes for a customer before pricing is confirmed. SOS Family Alert
+7. Everyday texting is locked from day one (Frank, 5 Sep 2026): a family
+   texts only while its plan is active, from the store or from a hardship
+   grant. There is no switch. To test texting on a family before the
+   store products exist, grant it a plan (SETUP.md, Part I). SOS Family Alert
    never reads the plan; it is throttled per family instead (10 alerts in
    ten minutes, `api/sos.js`).
 

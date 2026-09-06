@@ -151,7 +151,11 @@ optional until it switches on:
 | Name | Value |
 |---|---|
 | `RC_WEBHOOK_SECRET` | the Authorization header value you set on RevenueCat's webhook to `/api/plan` |
-| `PLAN_ENFORCE` | `1` to make everyday texting require the family's subscription; unset, everyone can text |
+
+Everyday texting requires an active plan from the first day. To test it on
+a family before the store products exist, grant that family a plan: POST to
+`/api/home` with `{"action":"grant","code":"EZ-XXXX-XXXX","deviceId":"any","admin":"<FAMILY_SYNC_PASSWORD>","months":1}`.
+`"action":"revoke"` takes it back.
 
 ---
 

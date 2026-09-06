@@ -152,10 +152,11 @@ module.exports = async (req, res) => {
     let found = null;
     try { found = await familyPeople(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
     if (!found) return res.status(200).json({ ok: false, error: 'unknown_family' });
-    // Everyday texting is part of the subscription. The gate is off until
-    // the subscription is switched on (PLAN_ENFORCE=1), so nothing changes
-    // for a family before pricing is confirmed. SOS never has this check.
-    if (process.env.PLAN_ENFORCE === '1' && !planActive(found.fam)) {
+    // Everyday texting is part of the subscription (Frank, 5 Sep 2026:
+    // locked from day one, no switch). A family texts only while its plan
+    // is active, from the store or from a hardship grant. SOS never has
+    // this check.
+    if (!planActive(found.fam)) {
       return res.status(200).json({ ok: false, error: 'needs_plan' });
     }
     person = found.people[id];

@@ -521,8 +521,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   BILLING_ISSUE keep it until the expiry the store gave; a running
   hardship grant is never overridden by a store event. `home.js` gained
   `grant`/`revoke` (our family password as `admin`), and regen keeps the
-  billing id and plan. `text.js` refuses with `needs_plan` ONLY when
-  `PLAN_ENFORCE=1` (off until pricing is confirmed). `sos.js` never reads
+  billing id and plan. `text.js` refuses with `needs_plan` whenever the
+  family's plan is not active; locked from day one, no switch (Frank,
+  5 Sep: "They should NOT be able to text until you flip the switch";
+  the first version had it backwards and shipped open, fixed the same
+  night). `sos.js` never reads
   the plan; a code family is limited to 10 alerts per ten minutes (Frank's
   2 Sep ruling: rate limit, not paywall); a broken counter never blocks an
   alert; ours is unlimited. Client: `native/billing.js` gained
@@ -547,8 +550,13 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Authorization header value (check RevenueCat's webhooks page before
   step 4 in APPSTORE.md) and the exact event type names (from RevenueCat's
   "Event Types and Fields" page; confirm before switch-on). Still owed:
-  RevenueCat account, products, `RC_WEBHOOK_SECRET`, sandbox test, then
-  `PLAN_ENFORCE=1` once pricing is confirmed. The claim that the paid-app Family Sharing checkbox
+  RevenueCat account, products, `RC_WEBHOOK_SECRET`, sandbox test. Frank,
+  5 Sep: he does not know what RevenueCat is; it was chosen by a session
+  on 1 Sep and I have not checked that he approved it. Explained to him as
+  the middleman between the app and both stores; his call whether it
+  stays. Open question for Frank: the 1 Sep principles also list voice
+  messages and Family Sync as premium; only texting is gated today.
+  The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
   monthly cost of the natural voice (measure from our logs and Eleven
