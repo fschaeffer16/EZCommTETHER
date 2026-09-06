@@ -27,7 +27,10 @@ program for low-income/disability families.
 - **Sources must be legitimate entities: the company's own documentation or pricing page,
   a government body, a standards body, a court.** Never forums, blogs, chats, community
   threads, or "explainer" sites, even when they quote the real source; go to the real source.
-  If the real source cannot be opened from here, say so and label the claim unverified.
+  The one exception (Frank, 6 Sep 2026): a support chat that is specifically from the entity
+  being researched (Apple Support, Google Support) counts as that entity. A community thread
+  on the entity's own site does not. If the real source cannot be opened from here, say so
+  and label the claim unverified.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.

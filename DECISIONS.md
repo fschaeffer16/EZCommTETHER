@@ -11,10 +11,14 @@ a dated line saying it was reversed. Dates are the day it happened.
 ## The rules (in force always)
 
 1. **No guessing. No assuming.** If I have not checked it, I say "not
-   checked" and check it, or I do not say it. Sources are the company's own
-   documentation or a government body, never forums, blogs or chats. If a
-   page cannot be opened from this machine, I say so and label the claim
-   unverified, then ask Frank to open it and paste what it says.
+   checked" and check it, or I do not say it. Information comes from a
+   legitimate source: the company's own documentation, or a government
+   body. No forums, no blogs, no chats. The one exception (Frank, 6 Sep
+   2026): a support chat that is specifically from the entity being
+   researched, such as Apple Support or Google Support, counts as that
+   entity speaking. A community thread on that entity's own site does
+   not. If a page cannot be opened from this machine, I say so and label
+   the claim unverified, then ask Frank to open it and paste what it says.
 2. **No execution of a build without Frank's approval.** I describe the
    change first: what, where, why, and a picture if it is visual. I wait
    for his go. "Let's do it", "go", or "build it" is a go; a question, a
@@ -56,6 +60,9 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **6 Sep 2026. Sourcing, refined by Frank:** no chats, unless it is a
+  support chat from the specific entity being researched (Apple, Google,
+  or whoever it is). Rule 1 updated.
 - **6 Sep 2026.** This file exists. Rules 1 and 2 above are its first two
   lines by Frank's order.
 - **5 Sep 2026. Go direct with Apple and Google. No RevenueCat.** Frank:
