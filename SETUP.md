@@ -31,6 +31,12 @@ inside the app. It all lives privately in Vercel's settings.
    Pick one that can send **SMS**. Write it down in the form `+1XXXXXXXXXX`.
 4. To text numbers freely (not just trial-verified ones), add ~$20 of credit:
    **Billing → Add funds**. Texts cost under a cent each.
+5. Point replies at the app, so someone who texts back gets told to use a
+   voice message instead of being ignored: **Phone Numbers → your number →
+   Messaging → "A message comes in"**: choose **Webhook**, paste
+   `https://YOUR-URL/api/inbound`, method **HTTP POST**, Save. Each auto
+   reply costs one outbound text at Twilio's rate; a sender gets at most
+   one per hour.
 
 > Trial tip: before you add funds, Twilio only texts numbers you've "verified."
 > You can verify your family's numbers under **Phone Numbers → Verified Caller

@@ -5955,15 +5955,14 @@ class Component extends DCLogic {
       if (b && b.identify) b.identify(this.hasFamily() ? (this.data().familyRcId || null) : null);
     } catch (e) {}
   }
-  // The family's plan as this phone last heard it. The expiry the store gave
-  // is honored with three days of slack, so a phone that cannot reach us for
-  // a while keeps what its family paid for; past that it waits for a fresh
-  // answer.
+  // The family's plan as this phone last heard it, refreshed every time the
+  // app opens. It ends on the expiry date the store gave, no slack (Frank,
+  // 5 Sep 2026).
   familyPlanActive() {
     const p = this.data().familyPlan;
     if (!p || !p.active) return false;
     if (!p.expiresAt) return true;
-    return p.expiresAt + 3 * 86400000 > Date.now();
+    return p.expiresAt > Date.now();
   }
   async famCreate() {
     const fam = await this.famCall('create', {}, 'Your Family Code is ready. Type it into each other phone.');
@@ -6765,7 +6764,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.05.2'; }
+  APP_BUILD() { return '2026.09.05.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

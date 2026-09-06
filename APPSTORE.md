@@ -111,7 +111,15 @@ Blocked on: **pricing confirmed by Frank** (LEDGER rule: no price is
 published anywhere until then) and **the customer-SOS decision** (below).
 Then, in order:
 
-1. **RevenueCat account** (free tier covers us far past launch): create the
+**Frank, 5 Sep 2026: RevenueCat is NOT approved.** It was never discussed
+with him; it will cost money as revenue grows, and he will not approve it
+until its price is read from RevenueCat's own pricing page and put in front
+of him. The billing bridge and the plan webhook are written against it and
+stay dormant. The alternative is writing against Apple's StoreKit and
+Google Play Billing directly, with each store's own server notifications
+feeding `api/plan.js` instead. Nothing below happens until he decides.
+
+1. **RevenueCat account** (its pricing is NOT verified; see above): create the
    project, add the Apple app and the Google app, create entitlement
    **`premium`**, offering **`default`** with the packages.
 2. **App Store Connect**: Subscriptions → create group "EZvoxa Premium" →

@@ -556,6 +556,21 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   the middleman between the app and both stores; his call whether it
   stays. Open question for Frank: the 1 Sep principles also list voice
   messages and Family Sync as premium; only texting is gated today.
+  Frank, later on 5 Sep: "We never discussed Revenue Cat. I know nothing
+  about it." NOT APPROVED. It will cost money as revenue grows; he will
+  not approve it until its price is read from RevenueCat's own pricing
+  page (this machine cannot open it) and shown to him. The alternative
+  (Apple StoreKit and Google Play Billing directly, with each store's
+  server notifications feeding api/plan.js) stays open. Same day, on his
+  order: the three-day slack on the phone's copy of the plan is REMOVED
+  (the plan ends on the store's expiry date; the phone refreshes at every
+  open, and the voice, texting and voice messages all run through our
+  server anyway); an auto reply to inbound texts is BUILT (api/inbound.js,
+  one per sender per hour, never to carrier keywords, wording is mine and
+  his to change: "This EZvoxa number only sends messages. The person who
+  texted you cannot read a reply here. To answer them, open the EZvoxa
+  app and send a voice message."). Frank's confirmation, same day:
+  texting is one way; voice messages are the way back.
   The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
