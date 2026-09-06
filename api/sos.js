@@ -51,14 +51,28 @@ function kvEnv() {
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   return { url, token };
 }
-async function kvGetJson(key) {
+async function kvCmd(cmd) {
   const { url, token } = kvEnv();
   if (!url || !token) return null;
-  const r = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(['GET', key]) });
+  const r = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(cmd) });
   if (!r.ok) throw new Error('kv_http_' + r.status);
-  const j = await r.json();
+  return r.json();
+}
+async function kvGetJson(key) {
+  const j = await kvCmd(['GET', key]);
   if (!j || !j.result) return null;
   try { return JSON.parse(j.result); } catch (e) { return null; }
+}
+// The alert is free and never checks the plan (Frank, 2 Sep 2026). Abuse is
+// handled with a limit, not a paywall: a family may raise it 10 times in
+// ten minutes, which is far more than a real emergency needs and far less
+// than a stuck button or a prank can do. Ours (no code) is not limited.
+const SOS_BURST = 10, SOS_WINDOW_S = 600;
+async function overLimit(code) {
+  const j = await kvCmd(['INCR', 'sos:rate:' + code]);
+  const n = j && typeof j.result === 'number' ? j.result : 0;
+  if (n === 1) await kvCmd(['EXPIRE', 'sos:rate:' + code, SOS_WINDOW_S]);
+  return n > SOS_BURST;
 }
 // Who a buyer's family wants alerted: every saved person with "alert" on and a
 // phone (and an email, for the backup). Null when the code is not a family we know.
@@ -192,6 +206,9 @@ module.exports = async (req, res) => {
     let contacts = null;
     try { contacts = await familyContacts(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
     if (!contacts) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    let limited = false;
+    try { limited = await overLimit(code); } catch (e) { limited = false; }   // a broken counter never blocks an alert
+    if (limited) return res.status(429).json({ ok: false, error: 'too_many' });
     smsTo = contacts.sms;
     emailTo = contacts.email;
     payload.child = cleanName(payload.child) || 'Your child';

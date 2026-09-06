@@ -14,6 +14,12 @@
 //   restore(done)   restores prior purchases (Apple requires this button).
 //   manage()        opens the store's subscription management screen.
 //   onChange(fn)    called whenever entitlement state changes.
+//   identify(id)    tells the store SDK which family this phone belongs to
+//                   (the family's hidden billing id from api/home.js), or
+//                   null when the phone leaves its family. A subscription
+//                   bought on any phone in the family is then honored on
+//                   every phone that identifies with the same id, which is
+//                   RevenueCat's documented behavior for custom App User IDs.
 //
 // Backed by RevenueCat (@revenuecat/purchases-capacitor), which fronts both
 // StoreKit and Google Play Billing with one entitlement model, and can later
@@ -37,7 +43,9 @@
     restore: function (done) { if (done) done('not_ready'); },
     manage: function () {},
     onChange: function (fn) { if (typeof fn === 'function') listeners.push(fn); },
+    identify: function (id) { wantId = id || null; wantSet = true; if (ready) pushIdentity(); },
   };
+  var wantId = null, wantSet = false, ready = false, haveId = null, pushIdentity = function () {};
   window.__EZ_BILLING = B;
 
   function emit() {
@@ -67,6 +75,16 @@
       } catch (e) {}
     }
 
+    // Log the SDK in as the family (or out of it). Runs once the SDK is up,
+    // and again whenever the app changes its mind (join, leave, new family).
+    pushIdentity = function () {
+      if (!wantSet || wantId === haveId) return;
+      var id = wantId;
+      var p = id ? P.logIn({ appUserID: id }) : P.logOut();
+      p.then(function (r) { haveId = id; apply(r && r.customerInfo); emit(); })
+       .catch(function () { /* keep whatever the SDK had; try again next launch */ });
+    };
+
     P.configure({ apiKey: key })
       .then(function () {
         try {
@@ -77,6 +95,8 @@
       .then(function (r) {
         apply(r && r.customerInfo);
         B.configured = true;
+        ready = true;
+        pushIdentity();
         emit();
       })
       .catch(function () { /* stay unconfigured = unlocked */ });

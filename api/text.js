@@ -40,7 +40,7 @@ function allowBrowser(req) {
   return ok(origin) || ok(referer);
 }
 
-const { normCode, normPhone } = require('./home.js');
+const { normCode, normPhone, planActive } = require('./home.js');
 
 const CHILD = () => String(process.env.CHILD_NAME || 'Evan').trim() || 'Evan';
 const cleanName = (v) => String(v || '').replace(/[^A-Za-z0-9 .'-]/g, '').trim().slice(0, 24);
@@ -66,7 +66,8 @@ async function kvGetJson(key) {
 // Everyone a buyer's family has saved, keyed by person id, with the phone a
 // parent typed in. Returns null when the code is not a family we know.
 async function familyPeople(code) {
-  if (!(await kvGetJson('fam:' + code))) return null;
+  const fam = await kvGetJson('fam:' + code);
+  if (!fam) return null;
   const saved = await kvGetJson('fam:' + code + ':settings');
   const s = (saved && saved.settings) || {};
   const out = {};
@@ -75,7 +76,7 @@ async function familyPeople(code) {
       if (p && p.id) out[String(p.id).toLowerCase()] = p;
     }
   }
-  return out;
+  return { people: out, fam };
 }
 
 // "From Evan: Happy Birthday Mom! I love you!" — added once, never doubled up.
@@ -148,10 +149,16 @@ module.exports = async (req, res) => {
   let childName = '';
   const code = normCode(payload.code);
   if (code) {
-    let people = null;
-    try { people = await familyPeople(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
-    if (!people) return res.status(200).json({ ok: false, error: 'unknown_family' });
-    person = people[id];
+    let found = null;
+    try { found = await familyPeople(code); } catch (e) { return res.status(502).json({ ok: false, error: 'storage_error' }); }
+    if (!found) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    // Everyday texting is part of the subscription. The gate is off until
+    // the subscription is switched on (PLAN_ENFORCE=1), so nothing changes
+    // for a family before pricing is confirmed. SOS never has this check.
+    if (process.env.PLAN_ENFORCE === '1' && !planActive(found.fam)) {
+      return res.status(200).json({ ok: false, error: 'needs_plan' });
+    }
+    person = found.people[id];
     childName = cleanName(payload.child);
   } else {
     person = directory()[id];

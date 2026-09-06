@@ -508,7 +508,47 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   and for hardship families. Which of the two the app reads first is a
   build decision for when Frank gives the go.
   All four items Frank was asked to open on 5 Sep are now verified
-  from the source. The claim that the paid-app Family Sharing checkbox
+  from the source.
+- **Plan on the family BUILT (Frank: "Go ahead and build it", 5 Sep
+  2026). Template build 2026.09.05.2.** Server: every family record now
+  carries a hidden billing id (`rcId`, a random UUID, backfilled for
+  families made earlier) with an index `rc:RCID` → code, and a `plan`
+  {active, source store|manual, expiresAt, ...}. New `api/plan.js` is the
+  RevenueCat webhook: rejects everything unless `RC_WEBHOOK_SECRET` is set
+  and matches the Authorization header; INITIAL_PURCHASE, RENEWAL,
+  UNCANCELLATION, PRODUCT_CHANGE, NON_RENEWING_PURCHASE, TRANSFER make the
+  plan active; EXPIRATION and SUBSCRIPTION_PAUSED end it; CANCELLATION and
+  BILLING_ISSUE keep it until the expiry the store gave; a running
+  hardship grant is never overridden by a store event. `home.js` gained
+  `grant`/`revoke` (our family password as `admin`), and regen keeps the
+  billing id and plan. `text.js` refuses with `needs_plan` ONLY when
+  `PLAN_ENFORCE=1` (off until pricing is confirmed). `sos.js` never reads
+  the plan; a code family is limited to 10 alerts per ten minutes (Frank's
+  2 Sep ruling: rate limit, not paywall); a broken counter never blocks an
+  alert; ours is unlimited. Client: `native/billing.js` gained
+  `identify(id)` (logs the store SDK in as the family, out on leave; the
+  installed @revenuecat/purchases-capacitor 13.4.2 exposes
+  `logIn({appUserID})` and `logOut()`); demo.html stores `familyRcId` and
+  `familyPlan` with the code, refreshes the plan quietly at app open and
+  after a purchase, `ezPremium()` is true when the family's plan is active
+  (three days of slack past the store's expiry), the Subscription card
+  says "Subscription active for your family" when the family paid and
+  this phone's store did not, and a refused text shows "Texting is part of
+  the subscription" instead of handing off to Messages. The subscribe
+  button is on every native phone (Apple 3.1.3). Verified with the handler
+  harness (webhook auth, purchase, expiry, renewal, cancellation, regen,
+  grant, revoke, text gate on/off, SOS throttle, backfill) and a browser
+  run with a fake store bridge (identify at boot and on create/join/leave,
+  premium follows the family, joined phone premium at once, expiry
+  reaches every phone, gate receipt). Decisions I made inside the task,
+  for Frank to overrule: the 10-per-ten-minutes SOS limit; three days of
+  slack; the card and receipt wording; the webhook event mapping. NOT
+  verified from the source: that RevenueCat's webhook settings offer an
+  Authorization header value (check RevenueCat's webhooks page before
+  step 4 in APPSTORE.md) and the exact event type names (from RevenueCat's
+  "Event Types and Fields" page; confirm before switch-on). Still owed:
+  RevenueCat account, products, `RC_WEBHOOK_SECRET`, sandbox test, then
+  `PLAN_ENFORCE=1` once pricing is confirmed. The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
   monthly cost of the natural voice (measure from our logs and Eleven

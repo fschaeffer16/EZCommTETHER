@@ -5,7 +5,9 @@
 // Family Code (EZ-XXXX-XXXX); every other phone joins with it and says what it
 // is: the user's phone, or a parent's. Everything for that family lives under
 // the code in the same key-value store Family Sync already uses:
-//   fam:CODE            who is in it (devices and their roles)
+//   fam:CODE            who is in it (devices and their roles), its hidden
+//                       billing id (rcId) and its plan (see api/plan.js)
+//   rc:RCID             the code that billing id belongs to
 //   fam:CODE:settings   the synced boards, people and numbers (settings.js)
 //   fam:CODE:voice      voice messages waiting for the user's phone (voice.js)
 // text.js and sos.js read the numbers from fam:CODE:settings, so a phone
@@ -64,6 +66,24 @@ function normPhone(v) {
   if (digits.length === 11 && digits[0] === '1') return '+' + digits;
   return digits.length > 11 ? '+' + digits : '';
 }
+// The subscription is filed under a hidden random id, never under the code:
+// RevenueCat's own rule is that a customer id must not be guessable, and a
+// hidden id survives a code change, so a new code never loses the plan.
+function newRcId() { return crypto.randomUUID(); }
+// Is the family's plan good right now? Store plans carry the expiry the
+// store reported; a missed webhook is covered by a day of slack. A plan we
+// granted ourselves (hardship) has no store behind it and runs to its date.
+const DAY = 86400000;
+function planActive(fam) {
+  const p = fam && fam.plan;
+  if (!p || !p.active) return false;
+  if (!p.expiresAt) return true;
+  return p.expiresAt + (p.source === 'manual' ? 0 : DAY) > Date.now();
+}
+function planSummary(fam) {
+  const p = (fam && fam.plan) || null;
+  return { active: planActive(fam), expiresAt: p ? p.expiresAt || null : null, source: p ? p.source || null : null, updatedAt: p ? p.updatedAt || null : null };
+}
 const ROLES = ['user', 'parent'];
 function cleanDevice(body) {
   const id = String(body.deviceId || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 48);
@@ -72,7 +92,16 @@ function cleanDevice(body) {
   return id ? { id, role, name } : null;
 }
 function publicFamily(code, fam) {
-  return { code, createdAt: fam.createdAt, devices: (fam.devices || []).map((d) => ({ id: d.id, role: d.role, name: d.name, at: d.at })) };
+  return { code, createdAt: fam.createdAt, rcId: fam.rcId || null, plan: planSummary(fam), devices: (fam.devices || []).map((d) => ({ id: d.id, role: d.role, name: d.name, at: d.at })) };
+}
+// Families made before billing existed get their hidden id the first time
+// they are read.
+async function ensureRcId(code, fam) {
+  if (fam.rcId) return fam;
+  fam.rcId = newRcId();
+  await kvCommand(['SET', 'rc:' + fam.rcId, code]);
+  await kvCommand(['SET', 'fam:' + code, JSON.stringify(fam)]);
+  return fam;
 }
 
 module.exports = async (req, res) => {
@@ -96,15 +125,17 @@ module.exports = async (req, res) => {
       let code = newCode();
       // A collision is astronomically unlikely; check once anyway.
       if (await kvGetJson('fam:' + code)) code = newCode();
-      const fam = { createdAt: Date.now(), devices: [{ ...dev, at: Date.now() }] };
+      const fam = { createdAt: Date.now(), rcId: newRcId(), plan: null, devices: [{ ...dev, at: Date.now() }] };
+      await kvCommand(['SET', 'rc:' + fam.rcId, code]);
       await kvCommand(['SET', 'fam:' + code, JSON.stringify(fam)]);
       return res.status(200).json({ ok: true, family: publicFamily(code, fam) });
     }
 
     const code = normCode(body.code);
     if (!code) return res.status(200).json({ ok: false, error: 'bad_code' });
-    const fam = await kvGetJson('fam:' + code);
+    let fam = await kvGetJson('fam:' + code);
     if (!fam) return res.status(200).json({ ok: false, error: 'unknown_family' });
+    fam = await ensureRcId(code, fam);
 
     if (action === 'join') {
       if (!dev) return res.status(400).json({ ok: false, error: 'missing_device' });
@@ -133,14 +164,29 @@ module.exports = async (req, res) => {
       if (!me) return res.status(200).json({ ok: false, error: 'not_in_family' });
       let next = newCode();
       if (await kvGetJson('fam:' + next)) next = newCode();
-      const moved = { createdAt: fam.createdAt, devices: [{ ...me, at: Date.now() }] };
+      const moved = { createdAt: fam.createdAt, rcId: fam.rcId, plan: fam.plan || null, devices: [{ ...me, at: Date.now() }] };
       await kvCommand(['SET', 'fam:' + next, JSON.stringify(moved)]);
+      await kvCommand(['SET', 'rc:' + fam.rcId, next]);
       for (const suffix of [':settings', ':voice']) {
         const j = await kvCommand(['GET', 'fam:' + code + suffix]);
         if (j && j.result) await kvCommand(['SET', 'fam:' + next + suffix, j.result]);
       }
       await kvCommand(['DEL', 'fam:' + code, 'fam:' + code + ':settings', 'fam:' + code + ':voice']);
       return res.status(200).json({ ok: true, family: publicFamily(next, moved) });
+    }
+    // Hardship program: we mark a family paid ourselves, for a number of
+    // months (0 = no end). Ours only: guarded by our own family password.
+    if (action === 'grant' || action === 'revoke') {
+      const admin = process.env.FAMILY_SYNC_PASSWORD;
+      if (!admin || String(body.admin || '') !== String(admin)) return res.status(403).json({ ok: false, error: 'forbidden' });
+      if (action === 'grant') {
+        const months = Math.max(0, Math.min(120, parseInt(body.months, 10) || 0));
+        fam.plan = { active: true, source: 'manual', expiresAt: months ? Date.now() + months * 30 * DAY : null, note: String(body.note || '').slice(0, 80), updatedAt: Date.now() };
+      } else {
+        fam.plan = { active: false, source: 'manual', expiresAt: null, updatedAt: Date.now() };
+      }
+      await kvCommand(['SET', 'fam:' + code, JSON.stringify(fam)]);
+      return res.status(200).json({ ok: true, family: publicFamily(code, fam) });
     }
     return res.status(400).json({ ok: false, error: 'bad_action' });
   } catch (e) {
@@ -150,3 +196,5 @@ module.exports = async (req, res) => {
 
 module.exports.normCode = normCode;
 module.exports.normPhone = normPhone;
+module.exports.planActive = planActive;
+module.exports.planSummary = planSummary;

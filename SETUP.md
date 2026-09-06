@@ -145,6 +145,14 @@ so the server never holds a customer's number outside their own family's
 settings. A parent can issue a new code at any time; the old one stops
 working and every other phone joins again.
 
+Two more variables belong to the subscription (see APPSTORE.md), both
+optional until it switches on:
+
+| Name | Value |
+|---|---|
+| `RC_WEBHOOK_SECRET` | the Authorization header value you set on RevenueCat's webhook to `/api/plan` |
+| `PLAN_ENFORCE` | `1` to make everyday texting require the family's subscription; unset, everyone can text |
+
 ---
 
 ## Part H — Permanent phone numbers (so they never disappear) · ~5 min

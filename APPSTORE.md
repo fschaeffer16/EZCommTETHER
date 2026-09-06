@@ -120,12 +120,34 @@ Then, in order:
    Fill the subscription's own privacy/terms fields. Attach the
    subscription to the app version you submit.
 3. **Play Console**: Monetize → Subscriptions → same products, same ids.
-4. **Codemagic**: set `EZ_BILLING: "1"` and the RevenueCat public SDK keys
+4. **RevenueCat webhook** (built 5 Sep 2026, `api/plan.js`): in the
+   RevenueCat project, Integrations → Webhooks → add
+   `https://app.ezvoxa.com/api/plan`, and set its Authorization header
+   value to a long random secret. Put the same secret in Vercel as
+   `RC_WEBHOOK_SECRET`. Without the env var the endpoint accepts nothing.
+   This is what files a purchase under the family: the app logs the store
+   SDK in with the family's hidden billing id (from `api/home.js`), the
+   webhook writes the plan onto the family record, and every phone in the
+   family reads it from there. Apple ID and Android or iPhone never matter.
+5. **Codemagic**: set `EZ_BILLING: "1"` and the RevenueCat public SDK keys
    (`EZ_RC_KEY_IOS`, `EZ_RC_KEY_ANDROID`) in the workflow vars, build,
    submit as an update. Apple reviews the IAP with it.
-5. Test the whole loop in TestFlight sandbox before release: subscribe,
-   natural voice on; cancel in sandbox, voice falls back on expiry; Restore
-   purchases works on a reinstall.
+6. Test the whole loop in TestFlight sandbox before release: subscribe on
+   one phone, natural voice on for every phone in the family; cancel in
+   sandbox, voice falls back on expiry everywhere; Restore purchases works
+   on a reinstall; a phone that joins the family after the purchase is
+   premium at once.
+7. **Switch the texting gate on**: set `PLAN_ENFORCE=1` in Vercel. Until
+   then everyday texting works for every family, paid or not, so nothing
+   changes for a customer before pricing is confirmed. SOS Family Alert
+   never reads the plan; it is throttled per family instead (10 alerts in
+   ten minutes, `api/sos.js`).
+
+**Hardship program**: we mark a family paid ourselves, no store involved.
+POST to `/api/home` with `{"action":"grant","code":"EZ-…","deviceId":"admin",
+"admin":"<our family password>","months":12,"note":"…"}` (`months: 0` means
+no end date; `action: "revoke"` ends it). The store's own events never
+override a grant that is still running.
 
 What the subscription gates today: the natural voice. Cloud texting, voice
 messages, Family Sync and the SOS alert are real for a buyer's family once

@@ -4552,6 +4552,10 @@ class Component extends DCLogic {
       try { this.unlockNoteAudio(); } catch (e) {}
     };
     document.addEventListener('pointerdown', unlock, true);
+    // A phone in a family tells the store SDK so, and asks the server for the
+    // family's plan. Nothing on screen waits for either.
+    try { this.billingIdentify(); } catch (e) {}
+    setTimeout(() => { try { this.famSyncPlan(); } catch (e) {} }, 2500);
     // Watch for a voice message from a parent. Only Evan's phone does this, and
     // only while the app is actually on screen.
     setTimeout(() => { try { this.pollVoice(); } catch (e) {} }, 4000);
@@ -4619,9 +4623,19 @@ class Component extends DCLogic {
   // the worst failure mode here is generosity.
   // THE EMERGENCY BUTTON IS NEVER CHECKED AGAINST THIS. Hard rule.
   ezPremium() {
+    // A family that paid (or that we granted) is premium on every phone in
+    // it, whatever the store on this particular phone knows.
+    if (this.familyPlanActive()) return true;
     const b = window.__EZ_BILLING;
     if (!b || !b.configured) return true;
     return !!b.premium;
+  }
+  // Premium because of the family, not because this phone's store account
+  // bought it: the card words it that way, and Manage still works only on
+  // the phone that bought it (RevenueCat's rule).
+  familyPaidHere() {
+    const b = window.__EZ_BILLING;
+    return this.familyPlanActive() && !(b && b.premium);
   }
   ezBillingUi() { const b = window.__EZ_BILLING; return !!(b && b.configured); }
   // purchase/restore go through the store's own sheets; this only reflects
@@ -4637,6 +4651,9 @@ class Component extends DCLogic {
           planBusy: false,
           planMsg: err ? (kind === 'restore' ? 'Nothing to restore on this account.' : 'The purchase did not go through. Nothing was charged beyond what the store shows.') : '',
         });
+        // The store tells our server a few seconds later; pick up the
+        // family's copy so the other phones' state and this one agree.
+        if (!err) { setTimeout(() => this.famSyncPlan(), 4000); setTimeout(() => this.famSyncPlan(), 20000); }
       });
     } catch (e) { this.setState({ planBusy: false }); }
   }
@@ -5894,11 +5911,59 @@ class Component extends DCLogic {
     } catch (e) { j = null; }
     if (!j || !j.ok) { this.setState({ famBusy: false, famErr: this.famErrMsg(j) }); return null; }
     const fam = j.family || {};
-    if (action === 'leave') { delete this.data().familyCode; }
-    else if (fam.code) { this.data().familyCode = fam.code; }
-    this.saveStore();
+    if (action === 'leave') { this.forgetFamily(); }
+    else if (fam.code) { this.rememberFamily(fam); }
     this.setState({ famBusy: false, famMsg: okMsg || '', famDevices: action === 'leave' ? [] : (fam.devices || []) });
     return fam;
+  }
+  // What the server said about the family, kept on this phone: the code,
+  // the hidden billing id, and the plan as of when we last heard.
+  rememberFamily(fam) {
+    const d = this.data();
+    d.familyCode = fam.code;
+    if (fam.rcId) d.familyRcId = fam.rcId;
+    if (fam.plan) d.familyPlan = { ...fam.plan, fetchedAt: Date.now() };
+    this.saveStore();
+    this.billingIdentify();
+  }
+  forgetFamily() {
+    const d = this.data();
+    delete d.familyCode; delete d.familyRcId; delete d.familyPlan;
+    this.saveStore();
+    this.billingIdentify();
+  }
+  // Quiet refresh of the plan (app open, and after a purchase): no messages,
+  // no spinner, nothing changes on screen unless the plan did.
+  famSyncPlan() {
+    if (!this.hasFamily()) return;
+    try {
+      fetch('/api/home', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'info', code: this.familyCode(), deviceId: this.deviceId(), role: this.familyRole() }) })
+        .then((r) => r.json().catch(() => null))
+        .then((j) => {
+          if (!j || !j.ok || !j.family) return;
+          const was = this.familyPlanActive();
+          this.rememberFamily(j.family);
+          if (was !== this.familyPlanActive()) this.forceUpdate();
+        }).catch(() => {});
+    } catch (e) {}
+  }
+  // The store SDK is told which family this phone is in, so a subscription
+  // bought on any phone in the family counts on this one too.
+  billingIdentify() {
+    try {
+      const b = window.__EZ_BILLING;
+      if (b && b.identify) b.identify(this.hasFamily() ? (this.data().familyRcId || null) : null);
+    } catch (e) {}
+  }
+  // The family's plan as this phone last heard it. The expiry the store gave
+  // is honored with three days of slack, so a phone that cannot reach us for
+  // a while keeps what its family paid for; past that it waits for a fresh
+  // answer.
+  familyPlanActive() {
+    const p = this.data().familyPlan;
+    if (!p || !p.active) return false;
+    if (!p.expiresAt) return true;
+    return p.expiresAt + 3 * 86400000 > Date.now();
   }
   async famCreate() {
     const fam = await this.famCall('create', {}, 'Your Family Code is ready. Type it into each other phone.');
@@ -6370,6 +6435,7 @@ class Component extends DCLogic {
         .then((r) => r.json().catch(() => null))
         .then((j) => {
           if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From ' + this.talkerName() + ': ' + message), '#2F9E44');
+          else if (j && j.error === 'needs_plan') { this.setState({ chooser: null }); this.birthdayReceipt('Texting is part of the subscription', '⭐', 'Open Settings, then Subscription, on any phone in your family. Nothing was sent.', '#4F46E5'); }
           else handoff();
         })
         .catch(handoff);
@@ -6699,7 +6765,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.05.1'; }
+  APP_BUILD() { return '2026.09.05.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7564,6 +7630,7 @@ class Component extends DCLogic {
         .then((r) => r.json().catch(() => null))
         .then((j) => {
           if (j && j.ok) this.birthdayReceipt('Sent to ' + nm + ' ✓', '✅', j.sentText || ('From ' + this.talkerName() + ': ' + message), '#2F9E44');
+          else if (j && j.error === 'needs_plan') { this.setState({ chooser: null }); this.birthdayReceipt('Texting is part of the subscription', '⭐', 'Open Settings, then Subscription, on any phone in your family. Nothing was sent.', '#4F46E5'); }
           else handoff();
         })
         .catch(handoff);
@@ -8414,9 +8481,11 @@ class Component extends DCLogic {
       showPlanCard: this.ezBillingUi(),
       planActive: this.ezPremium() && this.ezBillingUi(),
       planNotActive: !this.ezPremium(),
-      planStatusLabel: this.ezPremium() ? 'Subscription active' : 'Not subscribed',
+      planStatusLabel: this.ezPremium() ? (this.familyPaidHere() ? 'Subscription active for your family' : 'Subscription active') : 'Not subscribed',
       planStatusDetail: this.ezPremium()
-        ? 'The natural voice is on. Thank you for supporting EZvoxa.'
+        ? (this.familyPaidHere()
+          ? 'Your family\u2019s subscription covers this phone. It is managed on the phone that bought it.'
+          : 'The natural voice is on. Thank you for supporting EZvoxa.')
         : 'The talker and the SOS Family Alert button always work, with or without a subscription. Subscribing adds the natural voice.',
       planMsg: s.planMsg || '',
       planBusy: !!s.planBusy,
