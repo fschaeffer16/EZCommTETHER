@@ -19,8 +19,15 @@ program for low-income/disability families.
 - **Verify claims — don't accept them.** If he (or anyone) states something as fact — market
   sizes, prevalence, what competitors do — research it and confirm before building on it.
   Correcting him with evidence is welcome; agreeing without checking is not.
-- **No guessing on numbers.** Every figure in a projection or plan traces to a cited source, or
-  is explicitly labeled a conservative assumption. Never invent a number to fill a gap.
+- **No guessing. No assumptions. Frank's two unbreakable rules (restated 5 Sep 2026 after I
+  broke them again).** If I have not checked it, I say "not checked" and check it, or I do not
+  say it. I never attribute a statement to Frank that he did not make. Every figure in a
+  projection or plan traces to a cited source, or is explicitly labeled an assumption. Never
+  invent a number to fill a gap.
+- **Sources must be legitimate entities: the company's own documentation or pricing page,
+  a government body, a standards body, a court.** Never forums, blogs, chats, community
+  threads, or "explainer" sites, even when they quote the real source; go to the real source.
+  If the real source cannot be opened from here, say so and label the claim unverified.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.
