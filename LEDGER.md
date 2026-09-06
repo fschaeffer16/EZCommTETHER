@@ -436,8 +436,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   origin (capacitor://localhost); if it does not, texting and SOS would
   get 403 from the native app. Test on the first TestFlight build.
 - **Frank's rulings on the subscription and the family, 5 Sep 2026:**
-  there are NO symbol packs and no one-time item to sell; do not use them
-  as an example again. Editing is not a parent-phone thing: any phone in
+  Frank never said anything about symbol packs; I raised them, then
+  wrongly claimed he had told me to drop them. Do not bring them up.
+  Editing is not a parent-phone thing: any phone in
   the family, the teen's included, unlocks Settings with the password and
   changes buttons, people and layout; the phone role only decides which
   phone plays voice messages and which record them. SOS Family Alert
