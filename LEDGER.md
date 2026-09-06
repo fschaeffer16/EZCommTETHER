@@ -476,12 +476,20 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   upgrade. Not a substitute for the Family Code: it only reaches Apple
   family members, not a child account outside the group or an Android
   parent, and it cannot be undone.
+  VERIFIED by Frank, 5 Sep 2026, from Twilio's US SMS pricing page,
+  pasted in full (long code, which is what we have): outbound SMS
+  $0.0083 per segment, inbound $0.0083, outbound MMS $0.022. Carrier
+  fees per outbound SMS segment on top: AT&T $0.0035, T-Mobile $0.0045,
+  Verizon $0.0045, US Cellular $0.005, all others $0.004. Leased long
+  code number $1.15 a month. Failed-message fee $0.001. "US A2P 10DLC
+  are subject to registration onboarding fees" (amount not on the page).
+  Prices "may change from time to time without notice." So one SOS text
+  of two segments to one person costs at most 2 x ($0.0083 + $0.005) =
+  $0.0266 before the 10DLC fees; a single-segment everyday text at most
+  $0.0133. The struck blog figures were close but are replaced by these.
   NOT opened from this machine (proxy blocks the sites), so UNVERIFIED
   until Frank or a later session opens the page itself: RevenueCat docs
-  on custom App User IDs and webhooks; Twilio's US SMS page (search
-  result says $0.0083 per outbound segment). Carrier fee, number rental
-  and 10DLC fee figures came from blogs and are STRUCK; get them from
-  Twilio's own page. The claim that the paid-app Family Sharing checkbox
+  on custom App User IDs and webhooks. The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
   monthly cost of the natural voice (measure from our logs and Eleven
