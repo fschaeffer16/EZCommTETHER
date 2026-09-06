@@ -5012,9 +5012,11 @@ class Component extends DCLogic {
   watchChooser(label, word, emoji, iconEl) {
     const q = 'Can I watch ' + word + '?';
     const s = 'I wanna watch ' + word + '.';
+    // Frank's neon pair (5 Sep 2026): a raised hand with a set for the
+    // question, a speech bubble with a set for the statement.
     const options = [
-      { glyph: '🙋', txt: q, say: q, color: '#3B82F6' },
-      { glyph: '💬', txt: s, say: s, color: '#1F9E6E' },
+      { glyph: '🙋', icon: 'ask_tv', txt: q, say: q, color: '#3B82F6' },
+      { glyph: '💬', icon: 'want_tv', txt: s, say: s, color: '#1F9E6E' },
     ];
     this.setState({ chooser: {
       label, emoji, iconEl: iconEl || null, hasIcon: !!iconEl, noIcon: !iconEl,
@@ -5628,8 +5630,8 @@ class Component extends DCLogic {
   }
   openSports() {
     const two = (sp) => [
-      { glyph: '🙋', txt: 'Can I watch ' + sp.label.toLowerCase() + '?', say: 'Can I watch ' + sp.label.toLowerCase() + '?', color: '#3B82F6' },
-      { glyph: '💬', txt: 'I want to watch ' + sp.label.toLowerCase() + '.', say: 'I want to watch ' + sp.label.toLowerCase() + '.', color: '#1F9E6E' },
+      { glyph: '🙋', icon: 'ask_tv', txt: 'Can I watch ' + sp.label.toLowerCase() + '?', say: 'Can I watch ' + sp.label.toLowerCase() + '?', color: '#3B82F6' },
+      { glyph: '💬', icon: 'want_tv', txt: 'I want to watch ' + sp.label.toLowerCase() + '.', say: 'I want to watch ' + sp.label.toLowerCase() + '.', color: '#1F9E6E' },
     ].map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } }));
     this.setState({ chooser: { label: 'Sports', noIcon: true, emoji: '🏆', options: this.sportsList().map((sp) => ({
       glyph: '🏆', icon: sp.icon, txt: sp.label, say: sp.label, color: sp.color,
@@ -6764,7 +6766,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.05.4'; }
+  APP_BUILD() { return '2026.09.06.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

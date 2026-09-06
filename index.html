@@ -4712,9 +4712,11 @@ class Component extends DCLogic {
   watchChooser(label, word, emoji, iconEl) {
     const q = 'Can I watch ' + word + '?';
     const s = 'I wanna watch ' + word + '.';
+    // Frank's neon pair (5 Sep 2026): a raised hand with a set for the
+    // question, a speech bubble with a set for the statement.
     const options = [
-      { glyph: '🙋', txt: q, say: q, color: '#3B82F6' },
-      { glyph: '💬', txt: s, say: s, color: '#1F9E6E' },
+      { glyph: '🙋', icon: 'ask_tv', txt: q, say: q, color: '#3B82F6' },
+      { glyph: '💬', icon: 'want_tv', txt: s, say: s, color: '#1F9E6E' },
     ];
     this.setState({ chooser: {
       label, emoji, iconEl: iconEl || null, hasIcon: !!iconEl, noIcon: !iconEl,
@@ -6225,7 +6227,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.04.5'; }
+  APP_BUILD() { return '2026.09.06.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7846,8 +7848,14 @@ class Component extends DCLogic {
         glow: this.glowFrom(o.color),
         // screen blending so an icon drawn on black shows no box on the card;
         // the transparent glyphs are unaffected by it
+        // Two across: the picture is the button, so it takes the card's width
+        // (about 150px at 430) and never drops under the 96px floor. Three
+        // across gets the 66px square the template's phrase boards use; the
+        // old 50 and 58 were under the floor.
         bigGlyphEl: o.icon && this.iconUri(o.icon)
-          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: cols === 3 ? 50 : 58, height: cols === 3 ? 50 : 58, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
+          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: cols === 3
+            ? { width: 66, height: 66, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' }
+            : { width: '100%', maxWidth: 170, height: 108, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
           : React.createElement('span', { style: { fontSize: cols === 3 ? 42 : 52, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
       }))),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },

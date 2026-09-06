@@ -94,6 +94,15 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **6 Sep 2026. The hand-and-set and bubble-and-set pictures replace the
+  emoji pair on every WATCHING pair**, both apps: every show under Watch
+  (template and Evan's), every sport (template), and the TV, Movies and
+  Streaming cards (template, done 5 Sep). Not applied to the food, places
+  and fun pairs, because the art shows a television; those keep the emoji
+  until Frank sends a hand and a bubble without the set. Evan's app's
+  chooser pictures were drawing at 50 and 58 px, under the 96 px floor;
+  now 66 px at three across and the card's width at two across, same as
+  the template. Builds 2026.09.06.1 in both apps.
 - **6 Sep 2026. Missing access** (Frank): "if you don't have access to
   something that I can give you access to let me know how." Rule 8. As of
   today GitHub access is complete for this repository (read, push, and
