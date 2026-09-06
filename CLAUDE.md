@@ -31,6 +31,10 @@ program for low-income/disability families.
   being researched (Apple Support, Google Support) counts as that entity. A community thread
   on the entity's own site does not. If the real source cannot be opened from here, say so
   and label the claim unverified.
+- **Directions for a site I cannot reach come with the way in and the steps (Frank, 6 Sep 2026):**
+  the exact link, or the exact search words if there is no link I can verify; then one action
+  per step: what to click, what to copy, where to paste it. Screen labels that come from memory
+  rather than the site itself are marked as such.
 - **Revenue always ships with unit counts.** Any financial table must show the number of buyers
   and the number of active subscribers behind the dollars, not just the dollars.
 - **Deliver documents as Word (.docx)**, not markdown — he can't open `.md` files.

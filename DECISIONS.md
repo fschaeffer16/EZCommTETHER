@@ -29,6 +29,12 @@ a dated line saying it was reversed. Dates are the day it happened.
 5. Plain punctuation in anything Frank reads. No em dashes.
 6. Documents for Frank are Word files. Anything meant to be shown lives on
    our domain, never behind Claude.
+7. **Directions that involve a site I cannot reach come with the way in
+   and the steps** (Frank, 6 Sep 2026): the exact link, or the exact words
+   to search if there is no link I can verify; then step by step, one
+   action per step, what to click, what to copy, where to paste it. If a
+   step's screen labels come from memory rather than from the site itself,
+   the step says so.
 
 ## MUST DO (open items, newest first)
 
@@ -55,11 +61,24 @@ a dated line saying it was reversed. Dates are the day it happened.
       the notification URL; the In-App Purchase key; Apple Root CA G3
       (apple.com is blocked from here); the Vercel env vars; the test
       button on sales.html; the billing build; the sandbox test. (5 Sep)
-- [ ] **Frank's side, Twilio**: point the number's "A message comes in"
-      webhook at `/api/inbound` so replies get the auto reply. (5 Sep)
+- [ ] **Frank's side, Twilio**: make replies to our number reach
+      `/api/inbound` so they get the auto reply. Link: https://console.twilio.com
+      (twilio.com is blocked from here, so the screen labels below are from
+      memory, not verified). Steps: 1. Sign in. 2. Open Phone Numbers, then
+      Manage, then Active numbers. 3. Tap our number. 4. Find the Messaging
+      section and the field for what happens when a message comes in.
+      5. Choose Webhook, paste `https://ez-comm-tether.vercel.app/api/inbound`,
+      method HTTP POST. 6. Save. 7. Text the number from your own phone; the
+      auto reply should come back within a few seconds. If the labels differ,
+      search "Twilio configure incoming message webhook phone number" on
+      twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
 
+- **6 Sep 2026. Directions for blocked sites** (Frank): always a link or
+  search words, then step by step. Rule 7. Applied the same day to the
+  root certificate step in the Apple document and the Twilio reply step
+  below.
 - **6 Sep 2026. Sourcing, refined by Frank:** no chats, unless it is a
   support chat from the specific entity being researched (Apple, Google,
   or whoever it is). Rule 1 updated.
