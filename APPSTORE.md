@@ -111,13 +111,12 @@ Blocked on: **pricing confirmed by Frank** (LEDGER rule: no price is
 published anywhere until then) and **the customer-SOS decision** (below).
 Then, in order:
 
-**Frank, 5 Sep 2026: RevenueCat is NOT approved.** It was never discussed
-with him; it will cost money as revenue grows, and he will not approve it
-until its price is read from RevenueCat's own pricing page and put in front
-of him. The billing bridge and the plan webhook are written against it and
-stay dormant. The alternative is writing against Apple's StoreKit and
-Google Play Billing directly, with each store's own server notifications
-feeding `api/plan.js` instead. Nothing below happens until he decides.
+**Frank's decision, 5 Sep 2026: go direct. RevenueCat is out.** The store
+bridge (`native/billing.js`) and the webhook receiver (`api/plan.js`) are to
+be rewritten against Apple's StoreKit and App Store Server Notifications
+first, then Google Play Billing and its Pub/Sub notifications. The
+RevenueCat steps below are kept only until that rewrite lands, so the
+dormant code still has a description; do not create a RevenueCat account.
 
 1. **RevenueCat account** (its pricing is NOT verified; see above): create the
    project, add the Apple app and the Google app, create entitlement

@@ -578,6 +578,17 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   emoji until their art arrives. Measured the chooser picture at 78px on
   a two-across card (under the 96px floor); two-across chooser pictures
   now take the card width, 170 x 108 max; three-across stays 66px.
+  **Frank's decision, 5 Sep 2026: GO DIRECT. No RevenueCat.** "I prefer
+  to go direct. I do not see the downside." Plan: Apple first (Swift
+  piece in the native shell for StoreKit purchases; api/plan.js rewritten
+  to verify Apple's signed App Store Server Notifications and update
+  fam:CODE), Android after TestFlight (Kotlin against Google Play
+  Billing; Google's notifications arrive through a Cloud Pub/Sub topic,
+  which needs Play Console and Google Cloud setup on Frank's side). Read
+  both stores' own documentation before writing either; nothing from
+  memory. native/billing.js and the RevenueCat identify() call are to be
+  replaced; the family plan record, grant/revoke, texting lock and SOS
+  throttle stay as built. Awaiting Frank's go to start the Apple side.
   The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
