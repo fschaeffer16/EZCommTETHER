@@ -460,10 +460,14 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Code on our server, and the subscribe button must exist on EVERY phone
   (withdrawn: "parents only" and "behind the password"); the code is a
   family account, not a way to sell access.
+  VERIFIED by Frank, 5 Sep 2026, from Apple Support 118412 (published
+  May 29, 2026), pasted in full: "You can have ten devices (no more than
+  five computers) associated with your Apple Account for purchases at one
+  time." A device previously associated with another account: "You might
+  need to wait up to 90 days to associate the device with a different
+  Apple Account."
   NOT opened from this machine (proxy blocks the sites), so UNVERIFIED
-  until Frank or a later session opens the page itself: Apple Support
-  118412 (search result says 10 associated devices per Apple Account,
-  max 5 computers, 90-day lock); Apple Developer news on subscription
+  until Frank or a later session opens the page itself: Apple Developer news on subscription
   Family Sharing (off by default, irreversible once on); RevenueCat docs
   on custom App User IDs and webhooks; Twilio's US SMS page (search
   result says $0.0083 per outbound segment). Carrier fee, number rental
