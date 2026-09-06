@@ -61,6 +61,18 @@ a dated line saying it was reversed. Dates are the day it happened.
       the notification URL; the In-App Purchase key; Apple Root CA G3
       (apple.com is blocked from here); the Vercel env vars; the test
       button on sales.html; the billing build; the sandbox test. (5 Sep)
+- [ ] **Frank's side, network access for this cloud environment** (asked
+      6 Sep): claude.ai/code, cloud icon above the message box, settings
+      icon on the environment, Network access = Custom, Allowed domains:
+      twilio.com, *.twilio.com, apple.com, *.apple.com, capacitorjs.com,
+      *.capacitorjs.com, with "Also include default list of common package
+      managers" ticked. Source: code.claude.com/docs/en/cloud-environments
+      (Anthropic's own page). Reason: the environment is at Trusted, an
+      allowlist only, which is why twilio.com, apple.com, support.apple.com,
+      help.apple.com and capacitorjs.com were refused on 5 Sep. When it is
+      in place: re-verify the Twilio console steps from twilio.com, fetch
+      Apple Root CA G3 from apple.com so Frank does not have to, and read
+      the App Store Connect help pages that were marked unreachable.
 - [ ] **Frank's side, Twilio**: make replies to our number reach
       `/api/inbound` so they get the auto reply. Link: https://console.twilio.com
       (twilio.com is blocked from here, so the screen labels below are from
