@@ -487,9 +487,28 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   of two segments to one person costs at most 2 x ($0.0083 + $0.005) =
   $0.0266 before the 10DLC fees; a single-segment everyday text at most
   $0.0133. The struck blog figures were close but are replaced by these.
-  NOT opened from this machine (proxy blocks the sites), so UNVERIFIED
-  until Frank or a later session opens the page itself: RevenueCat docs
-  on custom App User IDs and webhooks. The claim that the paid-app Family Sharing checkbox
+  VERIFIED by Frank, 5 Sep 2026, from RevenueCat's "Identifying
+  Customers" documentation, pasted in full: "Setting your own App User
+  ID will allow you to reference users in the RevenueCat dashboard, via
+  the API, as well as in the webhooks and other integrations." "When the
+  user logs in on multiple devices - you can honor a subscription that
+  was purchased on one device across any other platform." The ID can be
+  set at launch or later with logIn(); webhooks carry it as app_user_id.
+  "A user can only manage their subscription on the platform it was
+  purchased from." Rules from the page: IDs must be unique per user, not
+  guessable (a UUID v4 is recommended), at most 100 characters, never
+  an email, never hard-coded. Two consequences for our design: (1) do
+  NOT use the Family Code itself as the RevenueCat ID; give each family
+  a hidden random id (UUID) on its fam:CODE record and use that. It is
+  not guessable, and it survives a code regen, so the subscription
+  follows the family when the code changes. (2) RevenueCat itself will
+  honor the purchase on every phone logged in with the family's id, so
+  the plan can come straight from RevenueCat on each phone, with our
+  server's copy (from the webhook) as the source for the text endpoint
+  and for hardship families. Which of the two the app reads first is a
+  build decision for when Frank gives the go.
+  All four items Frank was asked to open on 5 Sep are now verified
+  from the source. The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family
   monthly cost of the natural voice (measure from our logs and Eleven
