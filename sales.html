@@ -1,0 +1,103 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZvoxa Sales</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  body{padding:22px 18px 60px;max-width:900px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{font-size:14px;color:#8C857A;margin:0 0 18px;line-height:1.45}
+  form{display:flex;gap:10px;margin-bottom:20px}
+  input{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
+  button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;font-size:16px;font-weight:800;padding:12px 20px;cursor:pointer}
+  button.quiet{background:#2B241C;color:#EFEAE2}
+  #msg{font-size:15px;color:#FF9A8A;min-height:22px;margin-bottom:10px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+  .card{border:1px solid #2B241C;border-radius:12px;padding:14px 15px;background:#100E0B}
+  .card .n{font-size:30px;font-weight:800;line-height:1}
+  .card .l{font-size:13px;color:#8C857A;margin-top:6px}
+  table{width:100%;border-collapse:collapse;margin-bottom:18px;font-size:14px}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #2B241C;white-space:nowrap}
+  th{color:#8C857A;font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  .wrap{overflow-x:auto}
+  .tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;background:#2B241C;color:#B0A695;margin-left:6px}
+  .tag.sb{background:#3A2A0E;color:#FFB020}
+  .note{font-size:13px;color:#8C857A;line-height:1.45;margin:6px 0 18px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+  #stamp{font-size:12.5px;color:#7A7060}
+</style>
+
+<h1>EZvoxa Sales</h1>
+<p class="sub">What the App Store has told us: new subscriptions, renewals, cancellations, expirations and refunds, as they arrive. Nothing shows without the family password.</p>
+
+<form id="f">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
+  <button type="submit">Show</button>
+</form>
+<div id="msg"></div>
+<div id="view" hidden>
+  <div class="row">
+    <span id="stamp"></span>
+    <button class="quiet" id="refresh" type="button">Refresh now</button>
+    <button class="quiet" id="test" type="button">Send an Apple test notification</button>
+  </div>
+  <div class="cards" id="cards"></div>
+  <div class="wrap"><table id="months"><thead><tr><th>Month</th><th>New</th><th>Renewals</th><th>Cancellations</th><th>Expirations</th><th>Refunds</th><th>Reported by Apple</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">"Reported by Apple" adds up the prices Apple put on each purchase, renewal and refund, before Apple's commission. Apple says not to use those figures as the record for money. The record is App Store Connect, under Payments and Financial Reports. Sandbox events are shown but never counted.</p>
+  <div class="wrap"><table id="events"><thead><tr><th>When</th><th>Event</th><th>Family</th><th>Product</th><th>Price</th><th>Runs to</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<script>
+(function () {
+  var pw = '';
+  var timer = null;
+  var msg = document.getElementById('msg');
+  function esc(x) { var s = document.createElement('span'); s.textContent = String(x == null ? '' : x); return s.innerHTML; }
+  function money(milli, cur) { if (typeof milli !== 'number' || !cur) return ''; return (milli / 1000).toLocaleString('en-US', { style: 'currency', currency: cur }); }
+  function label(e) {
+    var t = e.type, s = e.subtype;
+    var m = { SUBSCRIBED: s === 'RESUBSCRIBE' ? 'Subscribed again' : 'New subscription', DID_RENEW: s === 'BILLING_RECOVERY' ? 'Renewed after a billing retry' : 'Renewed',
+      DID_CHANGE_RENEWAL_STATUS: s === 'AUTO_RENEW_DISABLED' ? 'Cancelled (runs to the end date)' : 'Turned auto-renew back on',
+      DID_CHANGE_RENEWAL_PREF: 'Changed plan', EXPIRED: 'Expired', GRACE_PERIOD_EXPIRED: 'Grace period ended', DID_FAIL_TO_RENEW: s === 'GRACE_PERIOD' ? 'Payment failed, grace period' : 'Payment failed, retrying',
+      REFUND: 'Refunded', REFUND_REVERSED: 'Refund reversed', REVOKE: 'Access revoked', OFFER_REDEEMED: 'Offer redeemed', PRICE_INCREASE: 'Price increase notice', TEST: 'Test notification' };
+    return m[t] || (t + (s ? ' / ' + s : ''));
+  }
+  async function load() {
+    try {
+      var r = await fetch('/api/plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'dashboard', password: pw }) });
+      var j = await r.json();
+      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : ('Could not load: ' + (j.error || 'unknown')); stop(); return false; }
+      msg.textContent = '';
+      document.getElementById('view').hidden = false;
+      var now = new Date();
+      document.getElementById('stamp').textContent = 'Updated ' + now.toLocaleTimeString('en-US') + '. Refreshes every 30 seconds while this page is open.';
+      var thisMonth = (j.months || []).find(function (m) { return m.month === now.toISOString().slice(0, 7); }) || { new: 0, renewals: 0, cancellations: 0, expirations: 0, refunds: 0 };
+      var cards = [[j.active, 'Active subscriptions'], [thisMonth.new, 'New this month'], [thisMonth.renewals, 'Renewals this month'], [thisMonth.cancellations, 'Cancellations this month'], [thisMonth.expirations, 'Expirations this month'], [thisMonth.refunds, 'Refunds this month']];
+      document.getElementById('cards').innerHTML = cards.map(function (c) { return '<div class="card"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
+      document.querySelector('#months tbody').innerHTML = (j.months || []).map(function (m) {
+        var rep = Object.keys(m.reported || {}).map(function (c) { return money(m.reported[c], c); }).join(' ');
+        return '<tr><td>' + esc(m.month) + '</td><td>' + m.new + '</td><td>' + m.renewals + '</td><td>' + m.cancellations + '</td><td>' + m.expirations + '</td><td>' + m.refunds + '</td><td>' + esc(rep || '') + '</td></tr>';
+      }).join('') || '<tr><td colspan="7">Nothing yet.</td></tr>';
+      document.querySelector('#events tbody').innerHTML = (j.events || []).map(function (e) {
+        return '<tr><td>' + esc(new Date(e.at).toLocaleString('en-US')) + '</td><td>' + esc(label(e)) + (e.sandbox ? '<span class="tag sb">sandbox</span>' : '') + (e.matched === 'none' ? '<span class="tag">no family matched</span>' : '') + '</td><td>' + esc(e.code || '') + '</td><td>' + esc(e.productId || '') + '</td><td>' + esc(money(e.price, e.currency)) + '</td><td>' + esc(e.expiresAt ? new Date(e.expiresAt).toLocaleDateString('en-US') : '') + '</td></tr>';
+      }).join('') || '<tr><td colspan="6">No events yet.</td></tr>';
+      return true;
+    } catch (err) { msg.textContent = 'Could not reach the server. Try again.'; return false; }
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  document.getElementById('f').addEventListener('submit', async function (ev) {
+    ev.preventDefault(); pw = document.getElementById('pw').value; msg.textContent = 'Loading…';
+    if (await load()) { stop(); timer = setInterval(function () { if (!document.hidden) load(); }, 30000); }
+  });
+  document.getElementById('refresh').addEventListener('click', load);
+  document.getElementById('test').addEventListener('click', async function () {
+    msg.textContent = 'Asking Apple to send a test…';
+    try {
+      var r = await fetch('/api/plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'test', password: pw, env: 'sandbox' }) });
+      var j = await r.json();
+      msg.textContent = j.ok ? 'Apple accepted the request. The test event should appear below within a minute.' : ('Apple did not accept it: ' + (j.error || '') + ' ' + (j.detail || ''));
+      setTimeout(load, 8000);
+    } catch (e) { msg.textContent = 'Could not reach the server.'; }
+  });
+})();
+</script>

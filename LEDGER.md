@@ -514,7 +514,7 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   carries a hidden billing id (`rcId`, a random UUID, backfilled for
   families made earlier) with an index `rc:RCID` → code, and a `plan`
   {active, source store|manual, expiresAt, ...}. New `api/plan.js` is the
-  RevenueCat webhook: rejects everything unless `RC_WEBHOOK_SECRET` is set
+  RevenueCat webhook (since replaced by Apple direct, see below): rejected everything unless `RC_WEBHOOK_SECRET` was set
   and matches the Authorization header; INITIAL_PURCHASE, RENEWAL,
   UNCANCELLATION, PRODUCT_CHANGE, NON_RENEWING_PURCHASE, TRANSFER make the
   plan active; EXPIRATION and SUBSCRIPTION_PAUSED end it; CANCELLATION and
@@ -589,6 +589,44 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   memory. native/billing.js and the RevenueCat identify() call are to be
   replaced; the family plan record, grant/revoke, texting lock and SOS
   throttle stay as built. Awaiting Frank's go to start the Apple side.
+  **Apple direct BUILT, 5 Sep 2026 (Frank's go: "let's do it direct").**
+  Read from Apple's own documentation that day (developer.apple.com is
+  reachable from this machine; its pages have a Markdown version at the
+  same URL plus .md): App Store Server Notifications V2 (signed JWS,
+  x5c chain leaf/intermediate/root, notification types table, 200 to 206
+  is success, 40x/50x retried five times over 72 hours, sandbox sends
+  once), the appAccountToken purchase option that Apple returns in every
+  transaction, price in milliunits with Apple's warning that App Store
+  Connect is the record for money, API keys (Users and Access,
+  Integrations, In-App Purchase) and ES256 JWTs, Request a Test
+  Notification, StoreKit 2 (Product.products(for:), purchase(options:),
+  PurchaseResult, Transaction.currentEntitlements and .updates,
+  finish(), AppStore.sync() only on a tap, showManageSubscriptions).
+  Apple publishes @apple/app-store-server-library for Node (v3.1.0,
+  github.com/apple); it is now the repo's one server dependency (root
+  package.json) and does the verification: chain to the root certs we
+  supply, Apple's certificate extensions, signature, bundle id, app id
+  in production, optional OCSP. Built: api/plan.js rewritten (finds the
+  family by appAccountToken = rcId, else by originalTransactionId;
+  plan per notification type incl. grace period and refund; manual
+  grant not overridable; dedupe by notificationUUID; event log
+  events:plan; set plan:active; dashboard and test actions behind the
+  family password); native/ios/App/App/EZStorePlugin.swift (StoreKit 2,
+  registered by EZBridgeViewController, storyboard and SceneDelegate
+  point at it, pbxproj entries added); native/billing.js rewritten on
+  Capacitor.registerPlugin('EZStore'); build.js injects EZ_PRODUCT_ID;
+  codemagic.yaml vars; RevenueCat removed from package.json,
+  package-lock and Package.swift; sales.html on our domain. Verified:
+  a test chain carrying Apple's extension OIDs through Apple's library
+  (subscribe, retry dedupe, renew matched by transaction id, cancel,
+  grace period, expire, resubscribe, refund, grant kept, TEST, wrong
+  bundle refused, forged signature refused, no roots = 500); the built
+  store shell against a fake EZStore plugin (bridge configured, account
+  token = family id on purchase, premium at once, store change applied,
+  restore). NOT verified: the Swift compiles (no Xcode here; first
+  Codemagic build with EZ_BILLING=1 is the compile). NOT reachable from
+  here: apple.com (root certificate) and help.apple.com; Frank downloads
+  Apple Root CA - G3 himself (APPSTORE.md step 4). Owed: Android.
   The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family

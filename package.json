@@ -1,0 +1,8 @@
+{
+  "name": "ezcommtether",
+  "private": true,
+  "description": "Serverless functions under api/ (Vercel). The apps themselves are static files.",
+  "dependencies": {
+    "@apple/app-store-server-library": "3.1.0"
+  }
+}

@@ -151,12 +151,18 @@ so the server never holds a customer's number outside their own family's
 settings. A parent can issue a new code at any time; the old one stops
 working and every other phone joins again.
 
-Two more variables belong to the subscription (see APPSTORE.md), both
-optional until it switches on:
+These belong to the subscription (see APPSTORE.md, "Switching the
+subscription on"); all optional until it switches on:
 
 | Name | Value |
 |---|---|
-| `RC_WEBHOOK_SECRET` | the Authorization header value you set on RevenueCat's webhook to `/api/plan` |
+| `APPLE_ROOT_CERTS` | Apple Root CA - G3 from apple.com/certificateauthority, as base64 of the .cer file or as PEM text. Without it every Apple notification is answered 500 and Apple retries. |
+| `APPLE_APP_ID` | the app's numeric Apple ID from App Store Connect (required for production notifications) |
+| `APPLE_BUNDLE_ID` | `com.ezvoxa.app` (the default; only set it if the bundle id ever changes) |
+| `APPLE_IAP_KEY` | the In-App Purchase private key (.p8) from App Store Connect, pasted whole or as base64 |
+| `APPLE_IAP_KEY_ID` | that key's Key ID |
+| `APPLE_ISSUER_ID` | the Issuer ID shown on the same page |
+| `APPLE_ONLINE_CHECKS` | leave unset. `0` skips Apple's certificate revocation check, for testing only. |
 
 Everyday texting requires an active plan from the first day. To test it on
 a family before the store products exist, grant that family a plan: POST to
