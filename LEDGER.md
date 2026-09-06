@@ -440,18 +440,32 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   as an example again. Editing is not a parent-phone thing: any phone in
   the family, the teen's included, unlocks Settings with the password and
   changes buttons, people and layout; the phone role only decides which
-  phone plays voice messages and which record them. The subscribe button
-  goes behind the same password lock on every phone, not behind a role.
-  The store cannot count phones for us (one Apple ID installs on any
-  number of devices; a subscription reaches no other Apple ID unless
-  Apple Family Sharing is switched on, which is irreversible), so the
-  purchase attaches to the Family Code on our server and every joined
-  phone reads the plan from there. Priced per family, never per phone;
-  no seat limit beyond the 12-phone server cap. SOS Family Alert stays
-  free (rare by nature, cost absorbed); everyday texting is the volume
-  and sits on the subscription; the alert endpoint never checks the plan.
-  The SOS throttle is NOT built yet; build it with the subscription work.
-  Awaiting Frank's go to build the plan-on-the-family piece.
+  phone plays voice messages and which record them. SOS Family Alert
+  stays free; everyday texting sits on the subscription; the alert
+  endpoint never checks the plan. The SOS throttle is NOT built yet;
+  build it with the subscription work. Frank, same day: "you're talking
+  out of your ass making a lot of assumptions without checking first."
+  Verified after that (sources in the 5 Sep conversation): Apple allows
+  10 associated devices (max 5 computers) per Apple Account for
+  purchases, 90-day lock when a device switches accounts (Apple Support
+  118412); a subscription reaches other Apple IDs only with Apple Family
+  Sharing on, which is irreversible; RevenueCat supports our own customer
+  id (use the Family Code) and webhooks for every lifecycle event;
+  guideline 3.1.1 forbids license keys or QR codes as a way to SELL
+  digital goods, 3.1.3(b) lets a purchase made elsewhere be honored if
+  it is also sold in-app. So: the purchase attaches to the Family Code
+  on our server and every joined phone reads the plan there; the
+  subscribe button must exist on EVERY phone (withdrawn: "parents only"
+  and "behind the password"); priced per family, never per phone. Twilio
+  US SMS is $0.0083 per segment plus about $0.003 to $0.005 carrier fees,
+  $1.15/month number rental and 10DLC campaign fees; one SOS to one
+  person is under three cents. NOT verified, labeled assumptions: how
+  often families send SOS or everyday texts; the per-family monthly cost
+  of the natural voice (measure from our logs and Eleven Labs pricing
+  before the pricing session); whether the paid-app Family Sharing
+  checkbox is truly gone (forum thread only). Review risk to check: a
+  reviewer reading the code entry as a license key. Awaiting Frank's go
+  to build the plan-on-the-family piece.
 - **Family Code design for buyers (proposed 4 Sep 2026, built 5 Sep, see above):**
   today Family Sync, voice messages and texting are wired for one family
   only (one KV key, one FAMILY_SYNC_PASSWORD, Evan's directory in env).
