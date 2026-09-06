@@ -466,9 +466,18 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   time." A device previously associated with another account: "You might
   need to wait up to 90 days to associate the device with a different
   Apple Account."
+  VERIFIED by Frank, 5 Sep 2026, from Apple Developer news "Enable Family
+  Sharing for your subscriptions" (Feb 15, 2022), pasted in full: shares
+  "with up to five iCloud family members"; enabled "on a per-subscription
+  basis"; "once you enable Family Sharing for a subscription, you won't
+  be able to turn this feature off"; a developer may offer a separate
+  higher-priced subscription that includes Family Sharing next to an
+  individual one, ranked in the same subscription level so customers can
+  upgrade. Not a substitute for the Family Code: it only reaches Apple
+  family members, not a child account outside the group or an Android
+  parent, and it cannot be undone.
   NOT opened from this machine (proxy blocks the sites), so UNVERIFIED
-  until Frank or a later session opens the page itself: Apple Developer news on subscription
-  Family Sharing (off by default, irreversible once on); RevenueCat docs
+  until Frank or a later session opens the page itself: RevenueCat docs
   on custom App User IDs and webhooks; Twilio's US SMS page (search
   result says $0.0083 per outbound segment). Carrier fee, number rental
   and 10DLC fee figures came from blogs and are STRUCK; get them from
