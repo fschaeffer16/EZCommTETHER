@@ -435,6 +435,23 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   `allowBrowser` in text.js and sos.js accepts the store app's WebView
   origin (capacitor://localhost); if it does not, texting and SOS would
   get 403 from the native app. Test on the first TestFlight build.
+- **Frank's rulings on the subscription and the family, 5 Sep 2026:**
+  there are NO symbol packs and no one-time item to sell; do not use them
+  as an example again. Editing is not a parent-phone thing: any phone in
+  the family, the teen's included, unlocks Settings with the password and
+  changes buttons, people and layout; the phone role only decides which
+  phone plays voice messages and which record them. The subscribe button
+  goes behind the same password lock on every phone, not behind a role.
+  The store cannot count phones for us (one Apple ID installs on any
+  number of devices; a subscription reaches no other Apple ID unless
+  Apple Family Sharing is switched on, which is irreversible), so the
+  purchase attaches to the Family Code on our server and every joined
+  phone reads the plan from there. Priced per family, never per phone;
+  no seat limit beyond the 12-phone server cap. SOS Family Alert stays
+  free (rare by nature, cost absorbed); everyday texting is the volume
+  and sits on the subscription; the alert endpoint never checks the plan.
+  The SOS throttle is NOT built yet; build it with the subscription work.
+  Awaiting Frank's go to build the plan-on-the-family piece.
 - **Family Code design for buyers (proposed 4 Sep 2026, built 5 Sep, see above):**
   today Family Sync, voice messages and texting are wired for one family
   only (one KV key, one FAMILY_SYNC_PASSWORD, Evan's directory in env).
