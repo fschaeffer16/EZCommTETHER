@@ -103,6 +103,14 @@ a dated line saying it was reversed. Dates are the day it happened.
   chooser pictures were drawing at 50 and 58 px, under the 96 px floor;
   now 66 px at three across and the card's width at two across, same as
   the template. Builds 2026.09.06.1 in both apps.
+- **6 Sep 2026. The TV pair of pictures** (raised hand with a set for the
+  question, speech bubble with a set for the statement) goes on EVERY
+  watching pair: TV, Movies, Streaming, every sport, every show, in both
+  apps. Frank had to say it three times; the third time was "movies and
+  streaming get the same two icons as TV." Done, template build
+  2026.09.06.2. Food, places and fun pairs keep the emoji until he sends
+  art for them (the set in the picture would be wrong there); if he says
+  otherwise, use the same two.
 - **6 Sep 2026. Missing access** (Frank): "if you don't have access to
   something that I can give you access to let me know how." Rule 8. As of
   today GitHub access is complete for this repository (read, push, and

@@ -6766,7 +6766,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.06.1'; }
+  APP_BUILD() { return '2026.09.06.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -8296,20 +8296,21 @@ class Component extends DCLogic {
       watchCategories: !this.isEvanProfile(),
       watchTiles: [
         { id: 'tv', label: 'TV', color: '#2F8BFF', src: this.iconUri('watch_tv'), askIcon: 'ask_tv', wantIcon: 'want_tv', q: 'Can I watch TV?', s: 'I want to watch TV.' },
-        { id: 'movies', label: 'Movies', color: '#EC4899', src: this.iconUri('watch_movies'), q: 'Can I watch a movie?', s: 'I want to watch a movie.' },
+        { id: 'movies', label: 'Movies', color: '#EC4899', src: this.iconUri('watch_movies'), askIcon: 'ask_tv', wantIcon: 'want_tv', q: 'Can I watch a movie?', s: 'I want to watch a movie.' },
         // Frank's Sports and Streaming art (3 Sep 2026) carries no word, so
         // the tile writes it, the way Tablet used to.
         { id: 'sports', label: 'Sports', color: '#22C55E', src: this.iconUri('watch_sports'), needsLabel: true, q: 'Can I watch sports?', s: 'I want to watch sports.' },
-        { id: 'streaming', label: 'Streaming', color: '#F59E0B', src: this.iconUri('watch_streaming'), needsLabel: true, q: 'Can I watch my shows?', s: 'I want to watch my shows.' },
+        { id: 'streaming', label: 'Streaming', color: '#F59E0B', src: this.iconUri('watch_streaming'), needsLabel: true, askIcon: 'ask_tv', wantIcon: 'want_tv', q: 'Can I watch my shows?', s: 'I want to watch my shows.' },
       ].map((w) => ({
         ...w,
         // TV and Movies carry their word inside the drawing; the other two
         // give up a little height and the tile writes the word.
         faceEl: React.createElement('img', { src: w.src, alt: w.label, style: { width: '100%', height: w.needsLabel ? '76%' : '100%', marginBottom: w.needsLabel ? '13%' : 0, objectFit: 'contain' } }),
         hasCaption: !!w.needsLabel,
-        // Frank's neon pair for TV (5 Sep 2026): a raised hand with a set for
-        // the question, a speech bubble with a set for the statement. The
-        // other three still show the emoji until their art arrives.
+        // Frank's neon pair (5 Sep 2026) on TV, Movies and Streaming alike: a
+        // raised hand with a set for the question, a speech bubble with a set
+        // for the statement. Sports opens its own list, whose pairs carry the
+        // same two pictures.
         onTap: () => (w.id === 'sports' ? this.openSports() : this.setState({ chooser: { label: w.label, noIcon: true, emoji: '📺', options: [
           { glyph: '🙋', icon: w.askIcon, txt: w.q, say: w.q, color: '#3B82F6' },
           { glyph: '💬', icon: w.wantIcon, txt: w.s, say: w.s, color: '#1F9E6E' },
