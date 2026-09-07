@@ -104,6 +104,10 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **7 Sep 2026. A slip to not repeat:** I told Frank "shipping: commit and
+  push" and had run neither; the deploy never appeared and I found it
+  eleven minutes later. Rule for myself: say "pushed" only after the push
+  command has returned, and check `git status` before claiming it.
 - **7 Sep 2026. The voice is remembered on the server.** Frank: "ElevenLabs
   is using up all my credits every time Evan uses his device. When are you
   going to dub the voice so that does not happen?" No date had ever been
