@@ -164,6 +164,13 @@ subscription on"); all optional until it switches on:
 | `APPLE_ISSUER_ID` | the Issuer ID shown on the same page |
 | `APPLE_ONLINE_CHECKS` | leave unset. `0` skips Apple's certificate revocation check, for testing only. |
 
+**The voice's memory.** `api/speak.js` keeps every clip it makes in the same
+KV store, so a phrase costs ElevenLabs once and never again on any phone.
+Without the KV store the voice still works but pays every time. To speak the
+whole app into the store ahead of time, open `https://YOUR-URL/dub.html`,
+enter the family password and tap Start the dub; run it again after adding
+buttons or changing the voice.
+
 Everyday texting requires an active plan from the first day. To test it on
 a family before the store products exist, grant that family a plan: POST to
 `/api/home` with `{"action":"grant","code":"EZ-XXXX-XXXX","deviceId":"any","admin":"<FAMILY_SYNC_PASSWORD>","months":1}`.

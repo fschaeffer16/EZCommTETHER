@@ -730,6 +730,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 
 ## Pages and names
 
+- `dub.html` (7 Sep 2026): speaks every phrase in Evan's app into the
+  server's voice memory once (family password). See DECISIONS.md.
+
 - `hearhim.html` is titled **"EZ's Voice"** (Frank's preference, 1 Sep).
   URL unchanged so shared links keep working.
 - `opening-statement.html`: Frank's document, his wording is frozen; visuals

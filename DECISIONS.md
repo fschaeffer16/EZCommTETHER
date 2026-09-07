@@ -45,6 +45,16 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## MUST DO (open items, newest first)
 
+- [ ] **Frank's side, run the voice dub once** (7 Sep): open
+      https://ez-comm-tether.vercel.app/dub.html on a computer or phone,
+      type the family password, tap "Start the dub", leave the page open
+      until it says Done. It speaks every phrase in Evan's app into the
+      server's memory. Run it again after adding buttons or changing the
+      voice. Cost: the phrase list is about 990 phrases and 13,000
+      characters; the credit cost depends on the ElevenLabs plan, which I
+      cannot read from here. Frank's ElevenLabs account page shows the
+      per-character rate and remaining credits.
+
 - [ ] **First Codemagic build with EZ_BILLING=1** is the first compile of
       `native/ios/App/App/EZStorePlugin.swift`. Watch it; fix anything it
       throws. (5 Sep)
@@ -93,6 +103,27 @@ a dated line saying it was reversed. Dates are the day it happened.
       twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
+
+- **7 Sep 2026. The voice is remembered on the server.** Frank: "ElevenLabs
+  is using up all my credits every time Evan uses his device. When are you
+  going to dub the voice so that does not happen?" No date had ever been
+  promised; the design kept each clip only on the phone. Built on his go:
+  api/speak.js keeps every clip it makes in the Family Sync store, keyed
+  by voice, pace and the exact words, so a phrase costs ElevenLabs once,
+  ever, across every phone and reinstall; a dub action (family password)
+  speaks a list ahead of time; dub.html on our domain reads the phrase
+  list from Evan's app itself (dubPhrases() in index.html, walking the
+  boards' own lists: about 990 phrases). Not covered by the dub: the
+  spoken clock (a new sentence every minute) and words spelled letter by
+  letter; each still costs once when first said, then is remembered.
+  Verified with a fake store and fake ElevenLabs: first call costs,
+  repeats are free, a new voice re-makes, the dub skips stored phrases,
+  and without a store the voice still works. Not verified: why the
+  phone's own cache was not holding; Apple's documentation on that was
+  not read. Evan's build 2026.09.07.1. Note: builds stamped 2026.09.06.x
+  earlier today were made on 6 Sep local time by the commit log; the
+  calendar screenshot said Monday 7 Sep because the capture ran after
+  midnight UTC.
 
 - **6 Sep 2026. The hand-and-set and bubble-and-set pictures replace the
   emoji pair on every WATCHING pair**, both apps: every show under Watch

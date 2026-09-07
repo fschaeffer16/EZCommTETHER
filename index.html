@@ -6227,7 +6227,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.06.1'; }
+  APP_BUILD() { return '2026.09.07.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6938,6 +6938,62 @@ class Component extends DCLogic {
       { id: 'lfoot', label: 'left foot', s: { top: '92%', left: '50%', width: '15%', height: '7%', borderRadius: '12px' } },
     ];
   }
+  // Every phrase this phone can say, for dub.html: spoken into the server's
+  // memory once, so a tap never costs ElevenLabs again (Frank, 7 Sep 2026:
+  // "ElevenLabs is using up all my credits every time Evan uses his device").
+  // Walks the app's own lists, so it always matches what the boards can say.
+  // Not included: the spoken clock (a different sentence every minute) and a
+  // word spelled letter by letter; those still cost once each when first said.
+  dubPhrases() {
+    const out = new Set();
+    const add = (s) => { const v = String(s == null ? '' : s).trim(); if (v.length > 1 && v.length <= 400) out.add(v); };
+    const walk = (v, depth) => {
+      if (v == null || depth > 7) return;
+      if (Array.isArray(v)) { v.forEach((x) => walk(x, depth + 1)); return; }
+      if (typeof v !== 'object') return;
+      if (typeof v.say === 'string') add(v.say);
+      else if (typeof v.txt === 'string') add(v.txt);
+      else if (typeof v.t === 'string' && typeof v.e === 'string') add(v.t);
+      ['q', 's'].forEach((k) => { if (typeof v[k] === 'string') add(v[k]); });
+      if (Array.isArray(v.phrases)) v.phrases.forEach((ph) => add(typeof ph === 'string' ? ph : (ph && (ph.say || ph.txt))));
+      ['items', 'words', 'opts', 'rooms', 'options', 'tiles', 'people'].forEach((k) => { if (Array.isArray(v[k])) walk(v[k], depth + 1); });
+    };
+    const safe = (fn) => { try { const r = fn(); if (r !== undefined) walk(r, 0); } catch (e) {} };
+    const call = (name, ...args) => safe(() => (typeof this[name] === 'function' ? this[name](...args) : undefined));
+    ['quickNeeds', 'homeTiles', 'tiles', 'nightList', 'morningList', 'medicineItems', 'feelingsList', 'timePhrases',
+      'places', 'houses', 'friendPhrases', 'busDriverPhrases', 'staffPhrases', 'speechOtPhrases', 'frontOfficePhrases',
+      'funItems', 'evanFun', 'funList', 'sportsList', 'coreWords'].forEach((n) => call(n));
+    safe(() => Object.values(this.catChoosers()));
+    safe(() => this.hurtQuestions().map((q) => ({ say: q.q, opts: (q.opts || []).map((o) => ({ say: o })) })));
+    safe(() => this.hurtBodyParts().map((b) => ({ say: 'My ' + b.label + ' hurts.' })));
+    ['school', 'school:teachers', 'school:office', 'school:aides', 'school:speech', 'school:bus', 'friends'].forEach((k) => call('personPhrases', k, ''));
+    safe(() => (this.data().family || []).map((p) => this.personPhrases('family', p.name || '')));
+    safe(() => (this.data().school || []).map((p) => this.personPhrases(p.kind || 'school', p.name || '')));
+    // Food, drinks, snacks and menus speak in fixed patterns around the item.
+    const eat = (i) => {
+      if (!i) return;
+      const base = i.say || String(i.label || '').toLowerCase();
+      if (!base) return;
+      add('Can I have ' + base + '?'); add('I want ' + base + '.');
+      add(/^(a|an|the)\s/i.test(base) ? 'Can I have more, please?' : 'Can I have more ' + base + '?');
+    };
+    add("I'm finished."); add('Can I have more, please?');
+    ['evanFoods', 'evanDrinks', 'evanSnacks', 'starterFoods', 'starterDrinks', 'starterSnacks'].forEach((n) => { try { if (typeof this[n] === 'function') this[n]().forEach(eat); } catch (e) {} });
+    try { this.restaurants().forEach((r) => { try { this.restaurantItems(r.id).forEach(eat); } catch (e) {} }); } catch (e) {}
+    // Fun activities speak in two fixed patterns unless the item names its own.
+    try { this.fun().forEach((i) => { const base = i.say || String(i.label || '').toLowerCase(); if (!base) return; add(i.q || ('Can I ' + base + '?')); add(i.s || ('I want ' + base + '.')); }); } catch (e) {}
+    // Shows, in the two watching phrases.
+    ['netflixSlots', 'disneySlots'].forEach((n) => { try { if (typeof this[n] === 'function') this[n]().forEach((s) => { if (s && s.title) { add('Can I watch ' + s.title + '?'); add('I wanna watch ' + s.title + '.'); } }); } catch (e) {} });
+    // Words, colors, numbers.
+    try { this.extraWords().forEach((w) => add(w)); } catch (e) {}
+    try { this.colorsList().forEach((c) => add(c.label)); } catch (e) {}
+    for (let n = 1; n <= 25; n++) add(String(n));
+    // Buttons the family added, and any wording they changed.
+    safe(() => this.data().buttons || []);
+    safe(() => Object.values(this.data().overrides || {}));
+    return Array.from(out);
+  }
+
   hurtQuestions() {
     return [
       { q: 'How did you get hurt?', opts: ["I don't know", 'I got hit', 'I fell down', 'I ran into something'] },
