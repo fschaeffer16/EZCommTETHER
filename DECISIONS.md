@@ -57,7 +57,8 @@ a dated line saying it was reversed. Dates are the day it happened.
       Market Model and Business Plan.docx". Still owed: Frank's own
       conversion levels; New Zealand's age table (the other four are in);
       clinical counts beyond US inpatient rehab; special
-      education outside the US and England.
+      education outside the US and England. ALS, Parkinson's and dementia
+      settled as upside, not counted (8 Sep).
 - [ ] **Frank's side, still blocked (8 Sep):** add to the allow list
       bls.gov, *.bls.gov, cms.gov, *.cms.gov, population.un.org, *.un.org,
       acquisition.gov, *.acquisition.gov, fdlrs.org, canada.ca,
@@ -149,6 +150,19 @@ a dated line saying it was reversed. Dates are the day it happened.
       twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
+
+- **8 Sep 2026. ALS, Parkinson's and dementia stay out of the counted
+  market.** Frank pasted a search-engine summary of their prevalence and
+  said "This is the best I can do and I am fine with whatever you settle
+  on." Settled: not counted, listed as upside. Reasons: no entity
+  publishes a speech-loss count for them; the paste's figures contradict
+  WHO (1.4 million Parkinson's in the UK and 1.3 million in Australia
+  against 8.5 million worldwide); its sources are charities and a search
+  engine. The counted market stays autism plus aphasia. Also settled the
+  same day: New Zealand keeps the 85% aged-13-and-over placeholder (two
+  aggregator charts Frank sent, World Population Review and GeoRank, agree
+  with it but are not sources); the four other countries are in from
+  their own statistics offices.
 
 - **8 Sep 2026. Market model built from scratch, on Frank's ask** ("Can
   you start from scratch, looking at the app as it stands now,
