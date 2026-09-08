@@ -118,6 +118,18 @@ a dated line saying it was reversed. Dates are the day it happened.
   and counts buyers per copy, not per family; the pricing session and a
   family-shaped rebuild of the model are owed, model and document
   updated together (CLAUDE.md rule).
+- **7 Sep 2026. First business plan document.** Frank asked for "all the
+  business plan and projections we have so far." None existed in the
+  repository, ever; the only projections were the interactive model
+  (model-ezvoxa.html, last changed 15 Aug). Wrote "EZvoxa Business Plan
+  and Projections.docx" from the model's three cases (read by running the
+  page), its labeled assumptions and sources, and the decisions since.
+  Flagged under the sourcing rule: the 65% touch-reachable share and the
+  device split rest on a competitor's blog survey; the 15% subscribe and
+  35% churn on a vendor report and an aggregator; some populations on
+  Statista. The model still counts one buyer per copy; it has not been
+  rebuilt around one subscription per family. Owed: the pricing session
+  with the model and the document updated together.
 - **7 Sep 2026. A slip to not repeat:** I told Frank "shipping: commit and
   push" and had run neither; the deploy never appeared and I found it
   eleven minutes later. Rule for myself: say "pushed" only after the push
