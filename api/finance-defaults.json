@@ -209,8 +209,8 @@
       "note": "EZvoxa Pro list price per seat in Frank's document. Frank, 8 Sep 2026: EZvoxa Pro is its own App Store listing, for schools and clinicians, at the higher rate. Not confirmed."
     },
     "prices.schoolVolume": {
-      "status": "document",
-      "note": "Volume price at 20 or more seats in Frank's document, originally Apple's 50% education rule. Since Pro is sold direct (Frank, 8 Sep), Apple's rule no longer sets it; whether a volume price exists at all is Frank's call, asked and not yet answered. Working number."
+      "status": "assumption",
+      "note": "Frank, 8 Sep 2026: Pro is sold direct from our website so he can negotiate by the size of the purchase. There is no fixed volume price. $124.99 at 20 or more seats stays in the model only as a stand-in for what negotiated large orders might average; Frank sets the real number deal by deal."
     },
     "costs.storeCommission": {
       "status": "verified",

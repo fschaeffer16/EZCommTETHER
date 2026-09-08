@@ -162,9 +162,15 @@ a dated line saying it was reversed. Dates are the day it happened.
   invoice; no store commission on Pro; Pro priced level with the
   established apps for the 13-and-older market, not under them. The
   model now sells school and clinical seats direct (the store 15% is off
-  those seats). Apple's 50% education rule no longer applies to Pro, so
-  the $124.99 volume price is Frank's to keep or drop; asked, not
-  assumed; carried as a working number until he says.
+  those seats). Frank's reason, same day: "I want the ability to
+  negotiate based on the size of the purchase and I can't do that using
+  Apple. So corporate sales go thru us and our website." So Pro has no
+  fixed volume price: $249.99 list, and the price on a large order is
+  negotiated by Frank per deal. The model keeps $124.99 at 20 or more
+  seats only as a stand-in for what negotiation might average; labeled
+  so. Pro is sold from our website, which means a Pro page on
+  ezvoxa.com with a quote or purchase-order path; not built, not
+  designed, waiting on Frank.
 
 - **8 Sep 2026. EZvoxa Pro has no Family Tether. Frank: "A school would
   never need the family tether. They have privacy issues with all that

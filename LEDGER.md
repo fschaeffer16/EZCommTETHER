@@ -822,13 +822,18 @@ in the six English-first countries is NOT yet verified); CDC's cerebral
 palsy prevalence, ALS registry counts and Down syndrome adult counts
 (pages moved; not found).
 
-## EZvoxa Pro (Frank, 8 Sep 2026): its own App Store listing
+## EZvoxa Pro (Frank, 8 Sep 2026): its own listing, sold direct by EZ Voice
 
-Frank: "EZVoxaPro is its own listing. period." Schools and clinics buy a
-separate app, not the $99.99 consumer app: $249.99 list, Apple's
-education discount enabled so 20 or more copies through Apple School
-Manager cost $124.99 each (developer.apple.com/education, verified 8 Sep).
-Open: what Pro adds over the consumer app; a matching Google Play listing.
+Frank: "EZVoxaPro is its own listing. period." and, later the same day,
+"corporate sales go thru us and our website" because "I want the
+ability to negotiate based on the size of the purchase and I can't do
+that using Apple." Schools, clinics and companies buy Pro from EZ Voice
+on a purchase order or from ezvoxa.com, not through Apple School Manager
+or Google Play: $249.99 list, larger orders negotiated by Frank. No
+Family Tether in Pro. Open: what Pro adds over the consumer app; the Pro
+page and order path on ezvoxa.com; how a direct-sold app is delivered
+and unlocked on a school's iPads (AssistiveWare's pattern is a free
+store download plus a license bought direct).
 
 ## St. Lucie Public Schools purchasing rules, from the district's own documents (read 8 Sep 2026)
 
