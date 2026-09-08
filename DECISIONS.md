@@ -95,7 +95,19 @@ a dated line saying it was reversed. Dates are the day it happened.
       icon on the environment, Network access = Custom, Allowed domains:
       twilio.com, *.twilio.com, apple.com, *.apple.com, capacitorjs.com,
       *.capacitorjs.com, with "Also include default list of common package
-      managers" ticked. Source: code.claude.com/docs/en/cloud-environments
+      managers" ticked. Widened 8 Sep for the market research, after a test
+      of 42 source pages found only developer.apple.com open: add
+      google.com, *.google.com, who.int, *.who.int, cdc.gov, *.cdc.gov,
+      nih.gov, *.nih.gov, census.gov, *.census.gov, ons.gov.uk,
+      *.ons.gov.uk, statcan.gc.ca, *.statcan.gc.ca, abs.gov.au,
+      *.abs.gov.au, stats.govt.nz, *.stats.govt.nz, cso.ie, *.cso.ie,
+      asha.org, *.asha.org, ed.gov, *.ed.gov, service.gov.uk,
+      *.service.gov.uk, nhs.uk, *.nhs.uk, aihw.gov.au, *.aihw.gov.au,
+      canada.ca, *.canada.ca, ecfr.gov, *.ecfr.gov, fldoe.org, *.fldoe.org,
+      faast.org, atia.org, *.atia.org, exceptionalchildren.org,
+      *.exceptionalchildren.org, revenuecat.com, *.revenuecat.com,
+      vercel.com, *.vercel.com, codemagic.io, *.codemagic.io,
+      elevenlabs.io, *.elevenlabs.io. Source: code.claude.com/docs/en/cloud-environments
       (Anthropic's own page). Reason: the environment is at Trusted, an
       allowlist only, which is why twilio.com, apple.com, support.apple.com,
       help.apple.com and capacitorjs.com were refused on 5 Sep. When it is
