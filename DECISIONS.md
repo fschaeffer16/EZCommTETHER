@@ -118,6 +118,13 @@ a dated line saying it was reversed. Dates are the day it happened.
   and counts buyers per copy, not per family; the pricing session and a
   family-shaped rebuild of the model are owed, model and document
   updated together (CLAUDE.md rule).
+- **7 Sep 2026. RevenueCat's cost, from RevenueCat's own pricing page**
+  (Frank's screenshot): free up to $2,500 in monthly tracked revenue, then
+  1% of what is tracked. Against the model's working prices: Floor $7,528
+  over five years (1.6% of net), Mid $19,773 (1.3%), Ceiling $48,431
+  (1.0%). Read as 1% of all tracked revenue once over the line. School
+  licenses are invoiced by us, not tracked. In the plan document, sections
+  6 and 7.
 - **7 Sep 2026. RevenueCat is back on the table, by Frank:** "By the way, I
   looked into it more and I am good using RevenueCat." This reverses the
   5 Sep "go direct" decision, which stays on record below. Not yet a build
