@@ -104,6 +104,20 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **7 Sep 2026. Business plan document created.** Frank asked for "all the
+  business plan and projections we have so far." Fact: no business plan
+  document had ever existed in the repository; the only projections
+  artifact is model-ezvoxa.html (last changed 15 Aug). Wrote "EZvoxa
+  Business Plan and Projections.docx" from the model's own tables (run on
+  7 Sep: Floor $480,151, Mid $1,526,416, Ceiling $4,756,230 five-year net,
+  with unit counts), its labeled assumptions and sources, and every
+  decision since. Flagged under the 6 Sep sourcing rule: the AssistiveWare
+  blog survey, RevenueCat benchmarks, Business of Apps churn, and Statista
+  populations do not stand and must be re-sourced or relabeled. The
+  model still runs on the unconfirmed $79.99 and $12.99 working numbers
+  and counts buyers per copy, not per family; the pricing session and a
+  family-shaped rebuild of the model are owed, model and document
+  updated together (CLAUDE.md rule).
 - **7 Sep 2026. A slip to not repeat:** I told Frank "shipping: commit and
   push" and had run neither; the deploy never appeared and I found it
   eleven minutes later. Rule for myself: say "pushed" only after the push
