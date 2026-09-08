@@ -151,6 +151,19 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. EZvoxa Pro is its own App Store listing. Frank: "EZVoxaPro
+  is its own listing. period."** So the school and clinical seat is a
+  separate app from the $99.99 consumer app: its own listing, its own
+  bundle id, priced at $249.99 list with Apple's education discount
+  enabled so districts buying 20 or more copies through Apple School
+  Manager pay $124.99 (Apple's 50% rule, verified 8 Sep). The model
+  already prices seats that way; the "not settled" note on the school
+  price is closed. Not yet decided: what Pro adds over the consumer app,
+  and whether Google Play gets a matching Pro listing. Frank also said
+  the same day he likes keeping the subscription under $10 a month;
+  $99.99 one-time, $9.99 a month, $99.99 a year remain the working prices,
+  still marked not confirmed until he says "confirmed".
+
 - **8 Sep 2026. The template still carried Evan's whole dormant profile;
   cut out the same evening.** Frank: "The template app has not have any
   evan in it for weeks" and "we are this close to being able to work to

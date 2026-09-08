@@ -822,6 +822,14 @@ in the six English-first countries is NOT yet verified); CDC's cerebral
 palsy prevalence, ALS registry counts and Down syndrome adult counts
 (pages moved; not found).
 
+## EZvoxa Pro (Frank, 8 Sep 2026): its own App Store listing
+
+Frank: "EZVoxaPro is its own listing. period." Schools and clinics buy a
+separate app, not the $99.99 consumer app: $249.99 list, Apple's
+education discount enabled so 20 or more copies through Apple School
+Manager cost $124.99 each (developer.apple.com/education, verified 8 Sep).
+Open: what Pro adds over the consumer app; a matching Google Play listing.
+
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
 Apple's own store search and listing pages, so verified. One-time apps:
