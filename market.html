@@ -91,8 +91,8 @@
 
   <div class="pane" id="pane-all"><h2>All three models combined</h2><div class="cards" id="cards-all"></div><div class="wrap"><table id="tab-all"></table></div><p class="note" id="note-all"></p></div>
   <div class="pane" id="pane-talker"><h2>Consumer: one-time app buyers and the Family Tether</h2><div class="cards" id="cards-talker"></div><div class="wrap"><table id="tab-talker"></table></div><p class="note" id="note-talker"></p></div>
-  <div class="pane" id="pane-schools"><h2>School districts: seats on purchase orders</h2><div class="cards" id="cards-schools"></div><div class="wrap"><table id="tab-schools"></table></div><p class="note" id="note-schools"></p></div>
-  <div class="pane" id="pane-clinics"><h2>Clinical: speech therapy, stroke and other rehab, ALS, any loss-of-speech center</h2><div class="cards" id="cards-clinics"></div><div class="wrap"><table id="tab-clinics"></table></div><p class="note" id="note-clinics"></p></div>
+  <div class="pane" id="pane-schools"><h2>School districts: EZvoxa Pro seats on purchase orders</h2><div class="cards" id="cards-schools"></div><div class="wrap"><table id="tab-schools"></table></div><p class="note" id="note-schools"></p></div>
+  <div class="pane" id="pane-clinics"><h2>Clinical: EZvoxa Pro seats for speech therapy, stroke and other rehab, ALS, any loss-of-speech center</h2><div class="cards" id="cards-clinics"></div><div class="wrap"><table id="tab-clinics"></table></div><p class="note" id="note-clinics"></p></div>
 
   <div class="pane" id="pane-inputs">
     <h2>Conversion inputs for the selected level (Frank's to set)</h2>
@@ -173,7 +173,7 @@
       all: 'Sales is what customers pay. Gross is sales minus the direct costs of those sales (the store\'s 15%, RevenueCat, refunds, texts, voice, alerts, acquisition). Net is gross minus overhead (Vercel, the Twilio number, Apple, Google, 10DLC, Codemagic, operating expenses). Expenses is both. Units sit beside every dollar.',
       talker: 'Consumer sales are the one-time app at the working price plus the Family Tether on the average subscribers in the year. Overhead is shared out by this channel\'s share of sales. The share of market is new buyers that year over the counted market.',
       schools: 'Seats at the volume price when 20 or more institutional seats sell in the year, else list; through Apple School Manager and Google Play, so the store\'s 15% applies. A district order is ' + num(market.schools.seatsPerDistrict) + ' seats on average (assumption). Districts here is seats over that.',
-      clinics: 'Therapists\' seats, priced at the school rate (Frank, 8 Sep). Counted facilities are the US inpatient rehab facilities only; outpatient practices, ALS clinics and other countries are upside until their counts are read.'
+      clinics: 'Clinicians\' seats of EZvoxa Pro, the same listing and the same prices as schools (Frank, 8 Sep). Counted facilities are the US inpatient rehab facilities only; outpatient practices, ALS clinics and other countries are upside until their counts are read.'
     };
     document.getElementById('note-' + key).textContent = notes[key] + ' Prices and costs are the finance defaults as of ' + inputs.asOf + '; nothing is confirmed until Frank confirms it.';
   }
