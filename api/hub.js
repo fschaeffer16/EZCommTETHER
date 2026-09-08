@@ -2,6 +2,7 @@
 // The page carries prices, so it is never served as a plain file
 // (LEDGER rule, 1 Sep 2026: no EZvoxa price published until Frank confirms).
 const page = require('./hub-page.json');
+const defaults = require('./finance-defaults.json');   // the channel widget's inputs, same as finance.html
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
@@ -11,5 +12,6 @@ module.exports = async (req, res) => {
   body = body || {};
   const pw = process.env.FAMILY_SYNC_PASSWORD;
   if (!pw || String(body.password || '') !== String(pw)) return res.status(200).json({ ok: false, error: 'bad_password' });
-  return res.status(200).json({ ok: true, html: page.html });
+  const html = page.html.replace('<!--EZ_INPUTS-->', '<script>window.EZ_INPUTS = ' + JSON.stringify(defaults).replace(/</g, '\\u003c') + ';</script>');
+  return res.status(200).json({ ok: true, html });
 };

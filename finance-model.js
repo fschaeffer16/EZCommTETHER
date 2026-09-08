@@ -53,7 +53,28 @@
       const costs = storeFees + revenueCat + refunds + cloud + acquisition + y.opex;
       const net = gross - costs;
       cumulative += net;
+      // Per-channel view (8 Sep): the same numbers split by who paid.
+      // Direct costs follow the sale they belong to; overhead (fixed and
+      // operating) is shared out by each channel's share of sales.
+      const seatPrice = seats > 0 ? schoolGross / seats : 0;
+      const alertBuyers = y.buyers * a.alertsPerFamilyPerYear * c.alertCostEach;
+      const ch = {
+        talker: { units: y.buyers, sales: talkerGross, direct: talkerGross * c.storeCommission + (storeGross ? revenueCat * talkerGross / storeGross : 0) + talkerGross * c.refundRate + alertBuyers + acquisition },
+        tether: { units: round(subsAvg), sales: tetherGross, direct: tetherGross * c.storeCommission + (storeGross ? revenueCat * tetherGross / storeGross : 0) + tetherGross * c.refundRate + textCost + voiceCost + (alertCost - alertBuyers) },
+        schools: { units: districtSeats, sales: districtSeats * seatPrice, direct: districtSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : 0) },
+        clinics: { units: clinicSeats, sales: clinicSeats * seatPrice, direct: clinicSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : 0) },
+      };
+      const overhead = fixed + y.opex;
+      for (const k of Object.keys(ch)) {
+        const x = ch[k];
+        x.overhead = gross > 0 ? overhead * x.sales / gross : 0;
+        x.gross = x.sales - x.direct;
+        x.net = x.gross - x.overhead;
+        x.expenses = x.direct + x.overhead;
+        for (const f of ['sales', 'direct', 'overhead', 'gross', 'net', 'expenses']) x[f] = round(x[f]);
+      }
       rows.push({
+        channels: ch, overhead: round(overhead), direct: round(costs - overhead),
         year: i + 1, buyers: y.buyers, subsEnd: y.subsEnd, subsAvg: round(subsAvg), districts: y.districts, districtSeats, clinics: y.clinics || 0, clinicSeats, seats,
         talkerGross: round(talkerGross), tetherGross: round(tetherGross), schoolGross: round(schoolGross), gross: round(gross),
         storeFees: round(storeFees), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,

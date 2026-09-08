@@ -739,7 +739,10 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   independent AI Frank had research the market after it reviewed the
   product screenshots and the demo HTML; its sources are not in hand.
   Clinical seats in it are therapists, priced at the school rate (Frank,
-  8 Sep). `hub-model.html` is the finance model's view of the same ramp:
+  8 Sep). Its Projections tab is the channel widget Frank asked for the
+  same day (each channel and all combined; sales, expenses, gross, net
+  per year), computed by `finance-model.js`; his original table sits
+  under a toggle. `hub-model.html` is the finance model's view of the same ramp:
   projections with the model's cost lines, roadmap with each claim's
   standing, costs with provenance, what `api/plan.js` does with each
   RevenueCat event plus a live check of the webhook secret.

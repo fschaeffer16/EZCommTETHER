@@ -116,6 +116,26 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. Channel widget in Frank's Master Hub, on his ask.** Frank:
+  "I would just like a better widget. Can you fix it to break out each
+  one separately and then one button that has all of them combined. I
+  want each year - sales, expenses, gross and net (net is after all
+  overhead right?)" Built into the Projections tab of hub.html, his look:
+  buttons All combined, Individual app sales, Family subscriptions,
+  Schools, Clinics; each year Units, Sales, Expenses, Gross, Net, Running
+  Net, plus a five-year line. Definitions, stated on the page: Sales is
+  what customers pay; Gross is sales minus the direct costs of those sales
+  (store 15%, RevenueCat, refunds, texts, voice, alerts, acquisition); Net
+  is gross minus overhead (Vercel, Twilio number, Apple, Google, 10DLC,
+  Codemagic, operating), so yes, net is after all overhead; Expenses is
+  both. In a single channel's view overhead is shared out by that
+  channel's share of sales (my rule, stated on the page). The numbers come
+  from finance-model.js on the page's own ramp, with the inputs injected
+  by api/hub.js behind the password; the model now returns the per-channel
+  split and the channels add up to the totals (checked, 0 mismatches over
+  20 rows). His original table stays under "Show the original table".
+  Roadmap, Costs and Webhooks tabs untouched.
+
 - **8 Sep 2026. Frank's Master Hub goes up as written; my rebuild was
   a rule 2 breach.** Frank: "Why did you change it?" The page was the
   work of an independent AI he had research the market after it reviewed

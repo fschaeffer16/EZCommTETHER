@@ -53,7 +53,8 @@ program for low-income/disability families.
 - **Keep the interactive model and the business plan in sync.** They are one artifact in two
   forms; if one changes, change the other. Since 7 Sep 2026 that means `finance.html` (the
   widget, family password) and `hub-model.html` (the model's view of the Master Hub, 8 Sep; `hub.html` is
-  Frank's page as written and is never regenerated) with `finance-model.js` and `api/finance-defaults.json`, and the
+  Frank's page as written, its Projections tab a channel widget on the same model; the page is
+  edited only on his word, never regenerated) with `finance-model.js` and `api/finance-defaults.json`, and the
   plan document generated from the same formulas; `model-ezvoxa.html` is the older market build.
 
 ## Deploys
