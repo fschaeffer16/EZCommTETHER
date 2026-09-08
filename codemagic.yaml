@@ -39,14 +39,14 @@ workflows:
         # Subscriptions are off until pricing is confirmed and the products
         # exist (APPSTORE.md, "Switching the subscription on"). To enable:
         #   EZ_BILLING: "1"
-        #   EZ_PRODUCT_ID: <the subscription's product id from App Store Connect>
+        #   EZ_RC_KEY_IOS: <RevenueCat public Apple SDK key, appl_...>
         EZ_BILLING: "0"
     scripts:
       - name: Package the template into the native shell
         script: |
           cd native
           npm ci
-          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING EZ_PRODUCT_ID=${EZ_PRODUCT_ID:-} node build.js
+          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING EZ_RC_KEY_IOS=${EZ_RC_KEY_IOS:-} node build.js
           npx cap sync ios
       - name: Bump build number
         script: |
@@ -98,15 +98,15 @@ workflows:
       vars:
         EZ_API_BASE: https://ez-comm-tether.vercel.app
         # Same switch as iOS; use the RevenueCat public Google SDK key:
-        # Android billing is not built yet (Google Play Billing direct comes
-        # after the iPhone version is in TestFlight). Leave this at 0.
+        #   EZ_BILLING: "1"
+        #   EZ_RC_KEY_ANDROID: <goog_...>
         EZ_BILLING: "0"
     scripts:
       - name: Package the template into the native shell
         script: |
           cd native
           npm ci
-          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING node build.js
+          EZ_API_BASE=$EZ_API_BASE EZ_BILLING=$EZ_BILLING EZ_RC_KEY_ANDROID=${EZ_RC_KEY_ANDROID:-} node build.js
           npx cap sync android
       - name: Build the signed bundle
         script: |

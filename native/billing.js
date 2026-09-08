@@ -1,28 +1,34 @@
-// The billing bridge for the iOS store shell. Injected into index.html by
-// native/build.js ONLY when the build runs with EZ_BILLING=1 — the web app,
-// the PWA, and store builds without the flag never carry this code.
+// The billing bridge for the native store shells. Injected into index.html
+// by native/build.js ONLY when the build runs with EZ_BILLING=1 — the web
+// app, the PWA, and store builds without the flag never carry this code.
 //
 // It implements the window.__EZ_BILLING contract that demo.html reads:
 //
-//   configured  true once the store plugin answered; until then (and on any
+//   configured  true once the store SDK initialized; until then (and on any
 //               failure) it stays false and the app treats itself as
 //               unlocked. Fail-open on purpose: a billing outage must never
 //               take a feature from someone who paid.
-//   premium     whether this Apple Account holds a live subscription. The
-//               rest of the family is covered by the family's plan, which the
-//               app reads from our server (api/home.js), not from here.
+//   premium     whether the "premium" entitlement is active right now.
 //   purchase(done)  opens the store's own purchase sheet (price shown by the
 //                   store, never by us), then done(errOrNull).
-//   restore(done)   Restore Purchases (Apple requires the button).
-//   manage()        opens the store's subscription management sheet.
-//   onChange(fn)    called whenever the store reports a change.
-//   identify(id)    the family's hidden billing id. It is sent to Apple as the
-//                   appAccountToken on the next purchase, and Apple returns it
-//                   in every server notification for that subscription.
+//   restore(done)   restores prior purchases (Apple requires this button).
+//   manage()        opens the store's subscription management screen.
+//   onChange(fn)    called whenever entitlement state changes.
+//   identify(id)    tells the store SDK which family this phone belongs to
+//                   (the family's hidden billing id from api/home.js), or
+//                   null when the phone leaves its family. A subscription
+//                   bought on any phone in the family is then honored on
+//                   every phone that identifies with the same id, which is
+//                   RevenueCat's documented behavior for custom App User IDs.
 //
-// Backed by StoreKit 2 directly through EZStorePlugin.swift in the native
-// shell (Frank, 5 Sep 2026: no middleman). The product id is injected by
-// build.js from EZ_PRODUCT_ID; nothing secret lives here.
+// Backed by RevenueCat (@revenuecat/purchases-capacitor), which fronts both
+// StoreKit and Google Play Billing with one entitlement model, and can later
+// share entitlements with web (Stripe) purchases. The API keys are public
+// SDK keys (safe to embed); they are injected by build.js from the
+// EZ_RC_KEY_IOS / EZ_RC_KEY_ANDROID environment variables, so no key lives
+// in the repo. The entitlement identifier is "premium" and the offering is
+// RevenueCat's "default" offering — configure both in the RevenueCat
+// dashboard (APPSTORE.md walks through it).
 //
 // THE EMERGENCY BUTTON NEVER READS ANY OF THIS. Hard rule.
 
@@ -30,8 +36,6 @@
   'use strict';
 
   var listeners = [];
-  var familyId = null;
-  var productId = window.__EZ_PRODUCT_ID || '';
   var B = {
     configured: false,
     premium: false,
@@ -39,53 +43,95 @@
     restore: function (done) { if (done) done('not_ready'); },
     manage: function () {},
     onChange: function (fn) { if (typeof fn === 'function') listeners.push(fn); },
-    identify: function (id) { familyId = id || null; },
+    identify: function (id) { wantId = id || null; wantSet = true; if (ready) pushIdentity(); },
   };
+  var wantId = null, wantSet = false, ready = false, haveId = null, pushIdentity = function () {};
   window.__EZ_BILLING = B;
 
   function emit() {
     for (var i = 0; i < listeners.length; i++) { try { listeners[i](); } catch (e) {} }
   }
-  function apply(status) {
-    try {
-      var was = B.premium;
-      B.premium = !!(status && status.premium);
-      B.configured = true;
-      if (was !== B.premium) emit();
-    } catch (e) {}
-  }
 
   function boot() {
     var cap = window.Capacitor;
-    if (!cap || !productId) return;                  // no shell or no product: stay unlocked
-    var P = null;
-    try {
-      if (cap.isPluginAvailable && !cap.isPluginAvailable('EZStore')) return;
-      P = cap.registerPlugin ? cap.registerPlugin('EZStore') : (cap.Plugins && cap.Plugins.EZStore);
-    } catch (e) { P = null; }
-    if (!P) return;
+    var P = cap && cap.Plugins && cap.Plugins.Purchases;
+    if (!P) return; // plugin not in this build: stay unconfigured = unlocked
 
-    P.status().then(function (s) { apply(s); B.configured = true; emit(); }).catch(function () { /* stay unlocked */ });
-    try { P.addListener('change', function (s) { apply(s); }); } catch (e) {}
+    var key = null;
+    try {
+      var platform = cap.getPlatform ? cap.getPlatform() : '';
+      if (platform === 'ios') key = window.__EZ_RC_KEY_IOS || null;
+      else if (platform === 'android') key = window.__EZ_RC_KEY_ANDROID || null;
+    } catch (e) {}
+    if (!key) return; // no key injected for this platform: stay unlocked
+
+    function apply(customerInfo) {
+      try {
+        var ent = customerInfo && customerInfo.entitlements && customerInfo.entitlements.active;
+        var was = B.premium;
+        B.premium = !!(ent && ent.premium);
+        B.configured = true;
+        if (was !== B.premium) emit();
+      } catch (e) {}
+    }
+
+    // Log the SDK in as the family (or out of it). Runs once the SDK is up,
+    // and again whenever the app changes its mind (join, leave, new family).
+    pushIdentity = function () {
+      if (!wantSet || wantId === haveId) return;
+      var id = wantId;
+      var p = id ? P.logIn({ appUserID: id }) : P.logOut();
+      p.then(function (r) { haveId = id; apply(r && r.customerInfo); emit(); })
+       .catch(function () { /* keep whatever the SDK had; try again next launch */ });
+    };
+
+    P.configure({ apiKey: key })
+      .then(function () {
+        try {
+          P.addCustomerInfoUpdateListener(function (info) { apply(info); });
+        } catch (e) {}
+        return P.getCustomerInfo();
+      })
+      .then(function (r) {
+        apply(r && r.customerInfo);
+        B.configured = true;
+        ready = true;
+        pushIdentity();
+        emit();
+      })
+      .catch(function () { /* stay unconfigured = unlocked */ });
 
     B.purchase = function (done) {
-      P.purchase({ productId: productId, appAccountToken: familyId || '' })
-        .then(function (s) {
-          apply(s);
-          var o = s && s.outcome;
-          if (done) done(o === 'success' || o === 'cancelled' || o === 'pending' ? null : 'purchase_failed');
+      P.getOfferings()
+        .then(function (o) {
+          var cur = o && o.current;
+          var pkg = cur && cur.availablePackages && cur.availablePackages[0];
+          if (!pkg) throw new Error('no_offering');
+          return P.purchasePackage({ aPackage: pkg });
         })
-        .catch(function () { if (done) done('purchase_failed'); });
+        .then(function (r) { apply(r && r.customerInfo); if (done) done(B.premium ? null : 'not_entitled'); })
+        .catch(function (e) {
+          // A cancelled sheet is not an error worth showing.
+          var cancelled = e && (e.userCancelled || /cancel/i.test(String(e.message || e)));
+          if (done) done(cancelled ? null : 'purchase_failed');
+        });
     };
+
     B.restore = function (done) {
-      P.restore()
-        .then(function (s) { apply(s); if (done) done(B.premium ? null : 'nothing_restored'); })
+      P.restorePurchases()
+        .then(function (r) { apply(r && r.customerInfo); if (done) done(B.premium ? null : 'nothing_restored'); })
         .catch(function () { if (done) done('restore_failed'); });
     };
+
     B.manage = function () {
-      P.manage().catch(function () {
-        try { window.open('https://apps.apple.com/account/subscriptions', '_blank'); } catch (e) {}
-      });
+      // The customer manages the subscription where they bought it.
+      try {
+        var platform = cap.getPlatform ? cap.getPlatform() : '';
+        var url = platform === 'android'
+          ? 'https://play.google.com/store/account/subscriptions'
+          : 'https://apps.apple.com/account/subscriptions';
+        window.open(url, '_blank');
+      } catch (e) {}
     };
   }
 

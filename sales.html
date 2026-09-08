@@ -28,7 +28,7 @@
 </style>
 
 <h1>EZvoxa Sales</h1>
-<p class="sub">What the App Store has told us: new subscriptions, renewals, cancellations, expirations and refunds, as they arrive. Nothing shows without the family password.</p>
+<p class="sub">What RevenueCat and the App Store have told us: new subscriptions, renewals, cancellations, expirations and refunds, as they arrive. Nothing shows without the family password.</p>
 
 <form id="f">
   <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
@@ -59,7 +59,8 @@
     var m = { SUBSCRIBED: s === 'RESUBSCRIBE' ? 'Subscribed again' : 'New subscription', DID_RENEW: s === 'BILLING_RECOVERY' ? 'Renewed after a billing retry' : 'Renewed',
       DID_CHANGE_RENEWAL_STATUS: s === 'AUTO_RENEW_DISABLED' ? 'Cancelled (runs to the end date)' : 'Turned auto-renew back on',
       DID_CHANGE_RENEWAL_PREF: 'Changed plan', EXPIRED: 'Expired', GRACE_PERIOD_EXPIRED: 'Grace period ended', DID_FAIL_TO_RENEW: s === 'GRACE_PERIOD' ? 'Payment failed, grace period' : 'Payment failed, retrying',
-      REFUND: 'Refunded', REFUND_REVERSED: 'Refund reversed', REVOKE: 'Access revoked', OFFER_REDEEMED: 'Offer redeemed', PRICE_INCREASE: 'Price increase notice', TEST: 'Test notification' };
+      REFUND: 'Refunded', REFUND_REVERSED: 'Refund reversed', REVOKE: 'Access revoked', OFFER_REDEEMED: 'Offer redeemed', PRICE_INCREASE: 'Price increase notice', TEST: 'Test notification',
+      INITIAL_PURCHASE: 'New subscription', RENEWAL: 'Renewed', CANCELLATION: 'Cancelled (runs to the end date)', UNCANCELLATION: 'Turned auto-renew back on', EXPIRATION: 'Expired', BILLING_ISSUE: 'Payment failed, retrying', PRODUCT_CHANGE: 'Changed plan', SUBSCRIPTION_PAUSED: 'Paused', TRANSFER: 'Moved to another account', NON_RENEWING_PURCHASE: 'One-time purchase' };
     return m[t] || (t + (s ? ' / ' + s : ''));
   }
   async function load() {

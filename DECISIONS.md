@@ -55,13 +55,11 @@ a dated line saying it was reversed. Dates are the day it happened.
       cannot read from here. Frank's ElevenLabs account page shows the
       per-character rate and remaining credits.
 
-- [ ] **First Codemagic build with EZ_BILLING=1** is the first compile of
-      `native/ios/App/App/EZStorePlugin.swift`. Watch it; fix anything it
-      throws. (5 Sep)
-- [ ] **Android billing**: Google Play Billing in Kotlin plus Google's
-      notifications through a Cloud Pub/Sub topic into `api/plan.js`.
-      After the iPhone version is in TestFlight. Read Google's own
-      documentation first. Needs Frank's go. (5 Sep)
+- [x] ~~First Codemagic build compiles EZStorePlugin.swift~~ Not needed
+      while billing runs through RevenueCat; the file is out of the Xcode
+      target (7 Sep). Comes back only if the direct path is switched on.
+- [x] ~~Android billing direct~~ Covered by RevenueCat (7 Sep). Only needed
+      if the direct path is ever switched on.
 - [ ] **Pricing session** with unit counts next to every dollar: Twilio
       figures verified 5 Sep; per-family monthly cost of the natural voice
       still to be measured from our logs and Eleven Labs' own pricing page.
@@ -118,6 +116,22 @@ a dated line saying it was reversed. Dates are the day it happened.
   and counts buyers per copy, not per family; the pricing session and a
   family-shaped rebuild of the model are owed, model and document
   updated together (CLAUDE.md rule).
+- **7 Sep 2026. RevenueCat path RESTORED on Frank's go ("ok restore it").**
+  native/billing.js, build.js, native/package.json and package-lock,
+  Package.swift, the Xcode project, storyboard, SceneDelegate and
+  codemagic.yaml are back to their 5 Sep state; the plugin is installed
+  again. api/plan.js now takes RevenueCat events (shared secret) AND
+  Apple's signed notifications (dormant); the sales page knows both sets
+  of names. The Swift store plugin stays on disk, out of the Xcode target,
+  so it cannot break a build. Verified: the RevenueCat path with a fake
+  store (no secret 503, wrong secret 401, purchase, retry ignored,
+  cancel keeps, expiry locks texting, renewal, grant kept, unknown family
+  ignored, TEST, dashboard counts), the Apple path still passing its own
+  test, and the built store shell against a fake RevenueCat plugin. Still
+  to confirm from RevenueCat's own page before switch-on: the event
+  names and the refund event's name. Frank's steps are in "EZvoxa
+  Subscriptions with RevenueCat.docx", replacing the Apple document's
+  steps (that document stays as the record of the dormant path).
 - **7 Sep 2026. RevenueCat's cost, from RevenueCat's own pricing page**
   (Frank's screenshot): free up to $2,500 in monthly tracked revenue, then
   1% of what is tracked. Against the model's working prices: Floor $7,528

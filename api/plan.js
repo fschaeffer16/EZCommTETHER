@@ -1,3 +1,10 @@
+// RevenueCat (Frank, 7 Sep 2026: "I am good using RevenueCat") tells us here
+// when a family's subscription starts, renews, lapses or ends, for both
+// stores; the App Store's own notifications are also accepted, dormant, so
+// the direct path from 5 Sep can be switched to later without new code.
+// Either way we find the family, write the plan onto its record, and log
+// the event for the sales page.
+//
 // The App Store tells us here when a family's subscription starts, renews,
 // lapses, is refunded or ends. We verify that the message really came from
 // Apple, find the family it belongs to, write the plan onto the family's
@@ -34,6 +41,8 @@
 //                         and Access, Integrations, In-App Purchase), for the
 //                         "send a test notification" button on the sales page.
 //   FAMILY_SYNC_PASSWORD  guards the sales page and the test button.
+//   RC_WEBHOOK_SECRET     the Authorization header value set on RevenueCat's
+//                         webhook. Without it RevenueCat events are refused.
 
 const { SignedDataVerifier, Environment, AppStoreServerAPIClient } = require('@apple/app-store-server-library');
 const { X509Certificate } = require('crypto');
@@ -96,7 +105,66 @@ function peekEnvironment(signedPayload) {
   } catch (e) { return 'Sandbox'; }
 }
 
-// ---- what each notification means for the family's plan ----
+// ---- RevenueCat events (both stores) ----
+// Event names from RevenueCat's webhook documentation, read 5 Sep 2026 via
+// search results; the page itself was not opened from here. Confirm the
+// list on RevenueCat's "Event Types and Fields" page before switch-on.
+const RC_STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER'];
+const RC_ENDS = ['EXPIRATION', 'SUBSCRIPTION_PAUSED'];
+const RC_KEEPS = ['CANCELLATION', 'BILLING_ISSUE'];   // still paid until the expiry the store gave
+async function rcFindCode(ev) {
+  const ids = [ev.app_user_id, ev.original_app_user_id].concat(Array.isArray(ev.aliases) ? ev.aliases : []);
+  for (const id of ids) {
+    const s = String(id || '');
+    if (!s || s.indexOf('$RCAnonymousID') === 0) continue;
+    const code = await kvGet('rc:' + s.replace(/[^A-Za-z0-9-]/g, ''));
+    if (code) return code;
+  }
+  return null;
+}
+async function handleRevenueCat(req, res, body) {
+  const secret = process.env.RC_WEBHOOK_SECRET;
+  if (!secret) return res.status(503).json({ ok: false, error: 'not_configured' });
+  const auth = String(req.headers.authorization || '');
+  if (auth !== secret && auth !== 'Bearer ' + secret) return res.status(401).json({ ok: false, error: 'unauthorized' });
+  const ev = body.event || {};
+  const type = String(ev.type || '');
+  const sandbox = ev.environment === 'SANDBOX';
+  const evId = String(ev.id || '').replace(/[^0-9A-Za-z-]/g, '');
+  // Non-2xx makes RevenueCat retry; an event that is not ours is answered 200.
+  try {
+    if (evId) {
+      const seen = await kv(['SET', 'ntf:rc:' + evId, '1', 'NX', 'EX', 30 * 86400]);
+      if (!(seen && seen.result)) return res.status(200).json({ ok: true, duplicate: true });
+    }
+    const code = await rcFindCode(ev);
+    const price = typeof ev.price_in_purchased_currency === 'number' ? Math.round(ev.price_in_purchased_currency * 1000) : (typeof ev.price === 'number' ? Math.round(ev.price * 1000) : null);
+    await logEvent({ at: Date.now(), store: 'revenuecat', via: String(ev.store || '').slice(0, 24), type, subtype: '', sandbox, code: code ? mask(code) : '', productId: String(ev.product_id || '').slice(0, 80), price, currency: price !== null ? String(ev.currency || 'USD').slice(0, 8) : '', expiresAt: ev.expiration_at_ms ? Number(ev.expiration_at_ms) : null, txn: '', matched: code ? 'token' : 'none', uuid: evId });
+    if (type === 'TEST') return res.status(200).json({ ok: true, test: true });
+    if (!code) return res.status(200).json({ ok: true, ignored: 'no_family' });
+    const fam = await kvGetJson('fam:' + code);
+    if (!fam) return res.status(200).json({ ok: true, ignored: 'unknown_family' });
+    const cur = fam.plan || {};
+    if (cur.source === 'manual' && cur.active && (!cur.expiresAt || cur.expiresAt > Date.now())) {
+      return res.status(200).json({ ok: true, ignored: 'manual_plan' });
+    }
+    const expiresAt = ev.expiration_at_ms ? Number(ev.expiration_at_ms) : (cur.expiresAt || null);
+    let next = null;
+    if (RC_STARTS.indexOf(type) >= 0) next = { active: true };
+    else if (RC_ENDS.indexOf(type) >= 0) next = { active: false };
+    else if (RC_KEEPS.indexOf(type) >= 0) next = { active: !!cur.active };
+    if (!next) return res.status(200).json({ ok: true, noted: type });
+    fam.plan = { ...next, source: 'store', store: 'revenuecat', via: String(ev.store || '').slice(0, 24), productId: String(ev.product_id || '').slice(0, 80), expiresAt, lastEvent: type, sandbox, updatedAt: Date.now() };
+    await kv(['SET', 'fam:' + code, JSON.stringify(fam)]);
+    const live = fam.plan.active && (!expiresAt || expiresAt + DAY > Date.now());
+    await kv([live ? 'SADD' : 'SREM', 'plan:active', code]);
+    return res.status(200).json({ ok: true, active: !!fam.plan.active });
+  } catch (e) {
+    return res.status(502).json({ ok: false, error: 'storage_error' });
+  }
+}
+
+// ---- what each App Store notification means for the family's plan ----
 // From Apple's notificationType table. Anything not listed leaves the plan
 // alone and is only logged.
 function nextPlan(cur, type, subtype, tx, renewal) {
@@ -151,12 +219,12 @@ async function dashboard() {
   for (const e of events) {
     const m = new Date(e.at).toISOString().slice(0, 7);
     const row = months[m] || (months[m] = { month: m, new: 0, renewals: 0, cancellations: 0, expirations: 0, refunds: 0, reported: {} });
-    if (e.type === 'SUBSCRIBED') row.new++;
-    else if (e.type === 'DID_RENEW') row.renewals++;
-    else if (e.type === 'DID_CHANGE_RENEWAL_STATUS' && e.subtype === 'AUTO_RENEW_DISABLED') row.cancellations++;
-    else if (e.type === 'EXPIRED' || e.type === 'GRACE_PERIOD_EXPIRED') row.expirations++;
-    else if (e.type === 'REFUND' || e.type === 'REVOKE') row.refunds++;
-    if ((e.type === 'SUBSCRIBED' || e.type === 'DID_RENEW' || e.type === 'OFFER_REDEEMED') && typeof e.price === 'number' && e.currency && !e.sandbox) {
+    if (e.type === 'SUBSCRIBED' || e.type === 'INITIAL_PURCHASE') row.new++;
+    else if (e.type === 'DID_RENEW' || e.type === 'RENEWAL') row.renewals++;
+    else if ((e.type === 'DID_CHANGE_RENEWAL_STATUS' && e.subtype === 'AUTO_RENEW_DISABLED') || e.type === 'CANCELLATION') row.cancellations++;
+    else if (e.type === 'EXPIRED' || e.type === 'GRACE_PERIOD_EXPIRED' || e.type === 'EXPIRATION') row.expirations++;
+    else if (e.type === 'REFUND' || e.type === 'REVOKE') row.refunds++;   // Apple's names; RevenueCat's refund event name not confirmed from its page
+    if ((e.type === 'SUBSCRIBED' || e.type === 'DID_RENEW' || e.type === 'OFFER_REDEEMED' || e.type === 'INITIAL_PURCHASE' || e.type === 'RENEWAL') && typeof e.price === 'number' && e.currency && !e.sandbox) {
       row.reported[e.currency] = (row.reported[e.currency] || 0) + e.price;   // milliunits, as Apple reported them
     }
     if ((e.type === 'REFUND') && typeof e.price === 'number' && e.currency && !e.sandbox) {
@@ -178,7 +246,7 @@ function apiClient(envName) {
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'GET') {
-    return res.status(200).json({ ok: true, configured: { storage: Boolean(kvEnv().url && kvEnv().token), roots: rootCerts().length, appId: appAppleId() !== undefined, apiKey: Boolean(process.env.APPLE_IAP_KEY && process.env.APPLE_IAP_KEY_ID && process.env.APPLE_ISSUER_ID) } });
+    return res.status(200).json({ ok: true, configured: { storage: Boolean(kvEnv().url && kvEnv().token), roots: rootCerts().length, appId: appAppleId() !== undefined, apiKey: Boolean(process.env.APPLE_IAP_KEY && process.env.APPLE_IAP_KEY_ID && process.env.APPLE_ISSUER_ID), revenuecat: Boolean(process.env.RC_WEBHOOK_SECRET) } });
   }
   if (req.method !== 'POST') { res.setHeader('Allow', 'GET, POST'); return res.status(405).json({ ok: false, error: 'method_not_allowed' }); }
   if (!kvEnv().url || !kvEnv().token) return res.status(500).json({ ok: false, error: 'storage_not_configured' });
@@ -205,7 +273,10 @@ module.exports = async (req, res) => {
     }
   }
 
-  // ---- Apple's side: a signed notification ----
+  // ---- RevenueCat's side: a plain JSON event with a shared secret ----
+  if (body.event) return handleRevenueCat(req, res, body);
+
+  // ---- Apple's side (dormant unless App Store Connect points here): a signed notification ----
   const signedPayload = body.signedPayload;
   if (!signedPayload || typeof signedPayload !== 'string') return res.status(400).json({ ok: false, error: 'no_payload' });
   const envName = peekEnvironment(signedPayload);

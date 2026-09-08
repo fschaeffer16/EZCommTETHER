@@ -627,6 +627,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Codemagic build with EZ_BILLING=1 is the compile). NOT reachable from
   here: apple.com (root certificate) and help.apple.com; Frank downloads
   Apple Root CA - G3 himself (APPSTORE.md step 4). Owed: Android.
+  **7 Sep 2026: RevenueCat restored on Frank's go** after he read its
+  pricing page (free to $2,500 monthly tracked revenue, then 1%). See
+  DECISIONS.md for what came back and what stays dormant.
   The claim that the paid-app Family Sharing checkbox
   is gone came from a forum and is STRUCK. Labeled assumptions with no
   data: how often families send SOS or everyday texts; the per-family

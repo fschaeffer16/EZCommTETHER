@@ -39,10 +39,10 @@ deploy lanes changes.
     the price — we never print one), **Restore purchases** (Apple requires
     it), Manage subscription, Privacy Policy and Terms links. Verified
     working against a simulated store 1 Sep.
-  - `native/billing.js` implements the bridge on StoreKit 2 directly, through
-    `native/ios/App/App/EZStorePlugin.swift` (Frank, 5 Sep 2026: no
-    middleman). It fails open: if the store cannot be reached, the app is
-    simply unlocked. Android is not built yet.
+  - `native/billing.js` implements the bridge with RevenueCat
+    (`@revenuecat/purchases-capacitor`, both platforms; Frank, 7 Sep 2026).
+    It fails open: if billing can't initialize, the app is simply unlocked.
+    The direct StoreKit 2 plugin from 5 Sep is on disk, dormant.
   - **The SOS Family Alert button reads none of this. Hard rule, enforced in
     code comments at every layer.**
 - **Codemagic** (`codemagic.yaml`): iOS workflow (signs, TestFlight) and
@@ -111,68 +111,65 @@ reviewers always ask):
 Blocked on: **pricing confirmed by Frank** (LEDGER rule: no price is
 published anywhere until then) and **the customer-SOS decision** (below).
 
-**Direct with Apple, no middleman (Frank's decision, 5 Sep 2026).** The app
-talks to StoreKit 2 itself (`native/ios/App/App/EZStorePlugin.swift`, read
-by `native/billing.js`), and Apple's servers tell ours about every purchase,
-renewal, cancellation, expiry and refund (`api/plan.js`, verified with
-Apple's own library, `@apple/app-store-server-library`). The purchase is
-filed under the family's hidden billing id, sent to Apple as the
-`appAccountToken`, so every phone in the family gets it. All of it was
-written from Apple's documentation read on 5 Sep 2026; the Swift file has
-not been compiled here (no Xcode on this machine), so the first Codemagic
-build with `EZ_BILLING: "1"` is its first compile.
+**Billing through RevenueCat (Frank, 7 Sep 2026: "I looked into it more and
+I am good using RevenueCat"; restored the same day).** The app talks to the
+stores through RevenueCat's plugin (`native/billing.js`), RevenueCat tells our
+server about every purchase, renewal, cancellation and expiry (`api/plan.js`,
+shared secret), and the purchase is filed under the family's hidden billing
+id, which the app logs the plugin in with. Both stores, one set of code.
+RevenueCat's price, from its own pricing page: nothing up to $2,500 in
+monthly tracked revenue, then 1% of what is tracked.
+
+The direct-with-Apple path from 5 Sep stays in the repository, dormant:
+`native/ios/App/App/EZStorePlugin.swift` and `EZBridgeViewController.swift`
+are on disk but not in the Xcode target, and `api/plan.js` still accepts
+Apple's own signed notifications if App Store Connect is ever pointed at
+it. Switching later needs no new code.
 
 Then, in order:
 
-1. **App Store Connect, the product.** Monetization, Subscriptions, create
-   a group "EZvoxa Premium" and an auto-renewable subscription. Suggested
-   product id `ezvoxa_premium_monthly` (a yearly one can follow). Price set
-   HERE, never in code. Fill the subscription's own privacy and terms
-   fields. Attach it to the app version you submit. Note the app's numeric
-   Apple ID from the App Information page.
-2. **App Store Connect, the notification URL.** App Information, App Store
-   Server Notifications: Production URL `https://app.ezvoxa.com/api/plan`,
-   Sandbox URL the same, Version 2 for both.
-3. **App Store Connect, the key for the test button.** Users and Access,
-   Integrations, In-App Purchase, Generate In-App Purchase Key. Download it
-   once (Apple keeps no copy). Note the Key ID and the Issuer ID shown on
-   that page.
-4. **Apple's root certificate.** Download Apple Root CA - G3 from
-   `https://www.apple.com/certificateauthority/` (this machine cannot reach
-   that site). Turn the .cer file into text with `base64 -i AppleRootCA-G3.cer`
-   on a Mac, or open it and copy the PEM text.
-5. **Vercel env vars** (SETUP.md has the table): `APPLE_ROOT_CERTS`,
-   `APPLE_APP_ID`, `APPLE_IAP_KEY`, `APPLE_IAP_KEY_ID`, `APPLE_ISSUER_ID`.
-   Redeploy. `GET /api/plan` then reports `roots: 1`, `appId: true`,
-   `apiKey: true`.
-6. **Prove the pipe** before any build: open `https://app.ezvoxa.com/sales.html`,
-   enter the family password, tap "Send an Apple test notification". Apple
-   posts a TEST event to `/api/plan` and it appears in the list within a
-   minute. If it does not, the URL in step 2 or the certificate in step 4
-   is wrong; nothing else is involved.
-7. **Codemagic**: set `EZ_BILLING: "1"` and `EZ_PRODUCT_ID:
-   ezvoxa_premium_monthly` in the iOS workflow vars, build, submit as an
-   update. Apple reviews the in-app purchase with it.
-8. **Sandbox test in TestFlight**, with a Sandbox Apple Account from App
-   Store Connect (Users and Access, Sandbox): subscribe on one phone; the
-   natural voice is on for every phone in the family; the sales page shows
-   the purchase marked sandbox; cancel in Settings, Apple ID,
-   Subscriptions, and the voice falls back on expiry everywhere; Restore
-   Purchases works on a reinstall; a phone that joins the family after the
-   purchase is premium at once.
-9. Everyday texting is locked from day one (Frank, 5 Sep 2026): a family
+1. **RevenueCat account** (its own page: free to $2,500 monthly tracked
+   revenue, then 1%): create the project, add the Apple app and the Google
+   app, create entitlement **`premium`**, offering **`default`** with the
+   packages. Copy the public SDK keys (Apple `appl_...`, Google `goog_...`).
+2. **App Store Connect**: Subscriptions → create group "EZvoxa Premium" →
+   auto-renewable subscription(s) (suggested ids: `ezvoxa_premium_monthly`,
+   optional `ezvoxa_premium_yearly`). Price set HERE, never in code.
+   Fill the subscription's own privacy/terms fields. Attach the
+   subscription to the app version you submit. RevenueCat also needs the
+   App Store Connect In-App Purchase key (Users and Access, Integrations,
+   In-App Purchase) uploaded in its dashboard.
+3. **Play Console**: Monetize → Subscriptions → same products, same ids.
+4. **RevenueCat webhook** (`api/plan.js`): in the RevenueCat project,
+   Integrations → Webhooks → add `https://app.ezvoxa.com/api/plan`, and set
+   its Authorization header value to a long random secret. Put the same
+   secret in Vercel as `RC_WEBHOOK_SECRET`. Without the env var the
+   endpoint refuses RevenueCat events. `GET /api/plan` reports
+   `revenuecat: true` once it is set.
+5. **Codemagic**: set `EZ_BILLING: "1"` and the RevenueCat public SDK keys
+   (`EZ_RC_KEY_IOS`, `EZ_RC_KEY_ANDROID`) in the workflow vars, build,
+   submit as an update. Apple reviews the IAP with it.
+6. **Sandbox test in TestFlight**, with a Sandbox Apple Account: subscribe
+   on one phone; the natural voice is on for every phone in the family;
+   the sales page shows the purchase marked sandbox; cancel it and the
+   voice falls back on expiry everywhere; Restore Purchases works on a
+   reinstall; a phone that joins the family after the purchase is premium
+   at once.
+7. Everyday texting is locked from day one (Frank, 5 Sep 2026): a family
    texts only while its plan is active, from the store or from a hardship
    grant. There is no switch. To test texting on a family before the store
    products exist, grant it a plan (SETUP.md, Part I). SOS Family Alert
    never reads the plan; it is throttled per family instead (10 alerts in
    ten minutes).
-10. **Android** comes after the iPhone version is in TestFlight: Google Play
-    Billing in Kotlin the same way, with Google's notifications through a
-    Cloud Pub/Sub topic feeding `api/plan.js`. Not started.
+8. Before switch-on, open RevenueCat's "Event Types and Fields"
+   documentation page and confirm the event names `api/plan.js` handles
+   and the refund event's name (not confirmed from the page; refunds are
+   not yet counted on the sales page for RevenueCat events).
 
 **The sales page** (`sales.html`, family password): active subscriptions,
 and per month new, renewals, cancellations, expirations and refunds, from
-Apple's notifications as they arrive, refreshing every 30 seconds. Dollar
+RevenueCat's events (and Apple's, if ever enabled) as they arrive,
+refreshing every 30 seconds. Dollar
 figures are the prices Apple put on each event, before commission, and
 Apple says not to use them as the record for money; App Store Connect's
 Payments and Financial Reports are the record. Sandbox events show but are

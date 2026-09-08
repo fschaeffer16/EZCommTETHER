@@ -156,6 +156,7 @@ subscription on"); all optional until it switches on:
 
 | Name | Value |
 |---|---|
+| `RC_WEBHOOK_SECRET` | the Authorization header value you set on RevenueCat's webhook to `/api/plan`. Required for billing through RevenueCat. |
 | `APPLE_ROOT_CERTS` | Apple Root CA - G3 from apple.com/certificateauthority, as base64 of the .cer file or as PEM text. Without it every Apple notification is answered 500 and Apple retries. |
 | `APPLE_APP_ID` | the app's numeric Apple ID from App Store Connect (required for production notifications) |
 | `APPLE_BUNDLE_ID` | `com.ezvoxa.app` (the default; only set it if the bundle id ever changes) |
@@ -163,6 +164,9 @@ subscription on"); all optional until it switches on:
 | `APPLE_IAP_KEY_ID` | that key's Key ID |
 | `APPLE_ISSUER_ID` | the Issuer ID shown on the same page |
 | `APPLE_ONLINE_CHECKS` | leave unset. `0` skips Apple's certificate revocation check, for testing only. |
+
+The `APPLE_*` variables belong to the direct-with-Apple path, which is dormant
+while billing runs through RevenueCat; they can stay unset.
 
 **The voice's memory.** `api/speak.js` keeps every clip it makes in the same
 KV store, so a phrase costs ElevenLabs once and never again on any phone.
