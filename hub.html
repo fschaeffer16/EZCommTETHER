@@ -3,223 +3,33 @@
 <title>EZvoxa Master Hub</title>
 <style>
   *{box-sizing:border-box}
-  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-  body{padding:22px 18px 60px;max-width:1600px;margin:0 auto}
-  h1{font-size:22px;margin:0 0 4px}
-  h2{font-size:16px;margin:22px 0 8px;color:#EFEAE2}
-  h3{font-size:14px;margin:18px 0 6px;color:#EFEAE2}
-  .sub{font-size:14px;color:#8C857A;margin:0 0 18px;line-height:1.45}
-  form.pw{display:flex;gap:10px;margin-bottom:20px;max-width:520px}
+  html,body{margin:0;background:#0b0f19;color:#f9fafb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+  body{padding:22px 18px 60px;max-width:720px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{font-size:14px;color:#9ca3af;margin:0 0 18px;line-height:1.45}
+  form.pw{display:flex;gap:10px;margin-bottom:20px}
   form.pw[hidden]{display:none}
-  input[type=password]{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
-  button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;font-size:15px;font-weight:800;padding:10px 16px;cursor:pointer}
-  button.quiet{background:#2B241C;color:#EFEAE2}
-  button.on{background:#7DE59A;color:#0A0A0F}
-  #msg{font-size:15px;color:#FF9A8A;min-height:22px;margin-bottom:10px}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px;position:sticky;top:0;background:#0A0A0F;padding:8px 0;z-index:5}
-  .tabs button{font-size:14px}
-  .pane{display:none} .pane.on{display:block}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
-  .card{border:1px solid #2B241C;border-radius:12px;padding:14px 15px;background:#100E0B}
-  .card h3{margin:0 0 10px;font-size:14px;color:#8C857A;text-transform:uppercase;letter-spacing:.04em}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0 6px}
-  .stat{border:1px solid #2B241C;border-radius:12px;padding:12px 14px;background:#100E0B}
-  .stat .n{font-size:22px;font-weight:800} .stat .l{font-size:12px;color:#8C857A;margin-top:2px;line-height:1.35}
-  .wrap{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{text-align:right;padding:7px 6px;border-bottom:1px solid #2B241C;white-space:nowrap;vertical-align:top}
-  th:first-child,td:first-child{text-align:left}
-  th{color:#8C857A;font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
-  td.neg{color:#FF9A8A}
-  table.text td,table.text th{text-align:left;white-space:normal;line-height:1.4}
-  .dot{width:12px;height:12px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px}
-  .verified{background:#7DE59A} .document{background:#FFB020} .assumption{background:#FF6B5E} .hub{background:#8AB4FF}
-  .legend{font-size:12.5px;color:#8C857A;margin:8px 0 0;line-height:1.7}
-  .chip{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;border-radius:6px;padding:2px 7px;margin-right:6px;vertical-align:middle;color:#0A0A0F}
-  .chip.verified{background:#7DE59A} .chip.hub{background:#8AB4FF} .chip.blocked{background:#FF6B5E} .chip.notinhand{background:#FFB020}
-  ul{padding-left:20px;margin:6px 0} li{margin:0 0 10px;font-size:13.5px;line-height:1.5}
-  li .how{display:block;color:#8C857A;font-size:12.5px;margin-top:3px}
-  .note{font-size:12.5px;color:#8C857A;line-height:1.5;margin-top:10px}
-  .stamp{font-size:12px;color:#7A7060;margin-top:4px}
-  pre{background:#050508;border:1px solid #2B241C;border-radius:10px;padding:12px;font-size:12px;overflow-x:auto;color:#C8E6FF;line-height:1.45}
-  a{color:#FFB020}
+  input[type=password]{flex:1;background:#111827;border:1px solid #1f2937;border-radius:8px;color:#f9fafb;font-size:17px;padding:12px 14px;min-width:0}
+  button{background:#38bdf8;color:#0b0f19;border:0;border-radius:8px;font-size:15px;font-weight:800;padding:10px 16px;cursor:pointer}
+  #msg{font-size:15px;color:#fca5a5;min-height:22px}
+  a{color:#38bdf8}
 </style>
-
 <h1>EZvoxa Master Hub</h1>
-<p class="sub">EZ Voice LLC. Projections, the rollout roadmap, the cost schedule and the store webhook, one page. The projections are computed by the same formulas as the finance widget and the plan document, so the three cannot disagree. Nothing shows without the family password, and no price lives in this page.</p>
-
+<p class="sub">Frank's page, as written. Family password to open; it carries prices. The finance model's view of the same ramp is at <a href="hub-model.html">hub-model.html</a>.</p>
 <form class="pw" id="f">
   <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
   <button type="submit">Open</button>
 </form>
 <div id="msg"></div>
-
-<div id="view" hidden>
-  <div class="tabs" id="tabs">
-    <button type="button" class="on" data-pane="proj">Projections</button>
-    <button type="button" class="quiet" data-pane="road">Roadmap</button>
-    <button type="button" class="quiet" data-pane="costs">Costs and Ops</button>
-    <button type="button" class="quiet" data-pane="hooks">Webhooks</button>
-  </div>
-  <div class="legend"><span class="dot verified"></span> verified from the entity's own page &nbsp; <span class="dot document"></span> from Frank's 7 Sep 2026 document, not verified from the page &nbsp; <span class="dot hub"></span> from the Master Hub page pasted 8 Sep 2026, not verified &nbsp; <span class="dot assumption"></span> assumption, no source. Hover a dot for the note. <span id="stamp" class="stamp"></span></div>
-
-  <!-- Projections -->
-  <div class="pane on" id="pane-proj">
-    <h2>Five-year projections</h2>
-    <div class="tabs" id="cases" style="position:static;padding:0"></div>
-    <div class="cards" id="cards"></div>
-    <div class="wrap"><table id="proj"><thead><tr><th>Year</th><th>Buyers</th><th>Subs, year end</th><th>Subs, average</th><th>Districts</th><th>District seats</th><th>Clinics</th><th>Clinic seats</th><th>Talker</th><th>Family Tether</th><th>Schools and clinics</th><th>Gross</th><th>Store 15%</th><th>RevenueCat</th><th>Refunds</th><th>Cloud and fixed</th><th>Acquisition</th><th>Operating</th><th>Net</th><th>Cumulative</th></tr></thead><tbody></tbody></table></div>
-    <p class="note" id="compare"></p>
-    <p class="note">Talker: buyers that year times the one-time price. Family Tether: the average of the year's starting and ending subscribers, times the monthly price, times twelve. Schools and clinics: institutional seats at the volume price when 20 or more seats, else the list price; clinics are priced like schools until someone says otherwise. Store fee applies to everything sold through a store. RevenueCat is 1% of store sales once tracked revenue passes $2,500 a month. Cloud and fixed: texts and alerts at Twilio's rates, the voice per family, the Twilio number, Vercel, Codemagic, Apple's yearly fee, Google's and 10DLC one-time fees. Refunds and acquisition are the model's carried-over assumptions. To change an input, use the <a href="finance.html">finance widget</a>; the same defaults feed both pages.</p>
-  </div>
-
-  <!-- Roadmap -->
-  <div class="pane" id="pane-road">
-    <h2>Rollout roadmap: Florida, then the Southeast, then national</h2>
-    <p class="note">The three phases and their month ranges are the pasted Master Hub's. Frank has not set dates. Each line carries what I could check on 8 Sep 2026. A site marked blocked could not be opened from this environment; the way in is given so Frank can read it himself.</p>
-
-    <h3>Phase 1: a Florida cluster (the hub says months 6 to 18)</h3>
-    <ul>
-      <li><span class="chip hub">hub</span><strong>Anchor pilot at Evan's school.</strong> Frank's 7 Sep document says Year 1 is a free pilot at Evan's school, requested by its ESE director. The hub adds "documented classroom data from Cynthia Puentes". <span class="chip notinhand">not in hand</span> No classroom data exists in this repository or the ledger; nothing here can cite it until it is written down.</li>
-      <li><span class="chip blocked">blocked</span><strong>FDLRS centers.</strong> The hub proposes demonstration units at Florida Diagnostic and Learning Resources System centers for Martin, Palm Beach, Brevard, Indian River and Okeechobee counties. Which center serves which county is not verified.<span class="how">Way in: search "FDLRS associate centers" on fldoe.org (the Florida Department of Education), or open fdlrs.org. Both refused a connection from here on 8 Sep. Paste the center list and I will put the counties right.</span></li>
-    </ul>
-
-    <h3>Phase 2: statewide Florida and regional hubs (the hub says months 18 to 36)</h3>
-    <ul>
-      <li><span class="chip blocked">blocked</span><strong>State assistive technology lending libraries.</strong> The hub names FAAST, the Florida Alliance for Assistive Services and Technology, as a place to lend units so a school speech-language pathologist can try the app before ordering. Whether FAAST lends software, and how a vendor gets a product in, is not verified.<span class="how">Way in: search "FAAST Florida assistive technology device loan program". faast.org refused a connection from here on 8 Sep.</span></li>
-      <li><span class="chip blocked">blocked</span><strong>Orders under the micro-purchase line.</strong> The hub says keeping an order under $10,000 lets an ESE director sign without a board vote, using IDEA Part B money. The federal micro-purchase threshold lives in 2 CFR 200.1; the current dollar figure and whether a district's own purchasing policy sets a lower line are not verified. Board approval rules are set district by district.<span class="how">Way in: search "2 CFR 200.1 micro-purchase threshold" and open the ecfr.gov result (the federal government's own text). Then the district's purchasing policy, on its own site. ecfr.gov refused a connection from here on 8 Sep.</span></li>
-    </ul>
-
-    <h3>Phase 3: national (the hub says months 36 to 60)</h3>
-    <ul>
-      <li><span class="chip blocked">blocked</span><strong>Conferences.</strong> The hub names ATIA in Orlando and the CEC convention. Dates, cities and exhibitor costs are not verified.<span class="how">Way in: search "ATIA conference exhibitor" and "CEC convention exhibitor". atia.org and exceptionalchildren.org refused a connection from here on 8 Sep.</span></li>
-      <li><span class="chip verified">verified</span><strong>Apple School Manager volume purchase.</strong> Apple's own developer page (developer.apple.com/education, read 8 Sep 2026) says every App Store app is automatically available for volume purchase in Apple School Manager, and that a developer can enable a 50% discount for educational institutions buying 20 or more copies of the app. Two things follow. The discount is on copies of the app itself, so a school seat priced differently from the consumer app would need its own listing or a custom app; not settled. "Zero RFP friction" is the hub's phrase, not Apple's; a district's purchasing rules still apply.</li>
-    </ul>
-  </div>
-
-  <!-- Costs -->
-  <div class="pane" id="pane-costs">
-    <h2>Operating cost schedule</h2>
-    <div class="wrap"><table class="text" id="costtab"><thead><tr><th>Item</th><th>Type</th><th>Rate</th><th>What it pays for</th><th>Standing</th></tr></thead><tbody></tbody></table></div>
-    <p class="note">The same figures feed the projections above. The hub's ElevenLabs line, $5 to $22 a month base, is shown for the record; the model carries the voice as a per-family cost instead, because since 7 Sep each phrase is paid for once and then remembered on the server.</p>
-    <h2>Where operations stand</h2>
-    <div class="grid" id="ops"></div>
-  </div>
-
-  <!-- Webhooks -->
-  <div class="pane" id="pane-hooks">
-    <h2>What the server does with each RevenueCat event</h2>
-    <p class="note">This is what <code>api/plan.js</code> does today, not a sketch. The endpoint is <code>/api/plan</code> on the app's domain: ez-comm-tether.vercel.app on the family lane, app.ezvoxa.com on the customer lane. Every event must carry the shared secret in its Authorization header or it is refused. The same event id is never applied twice. A hardship grant made by us is never overridden by a store event. <span id="health"></span></p>
-    <div class="wrap"><table class="text" id="hooktab"><thead><tr><th>Event</th><th>Effect on the family's plan</th><th>What that unlocks or locks</th></tr></thead><tbody></tbody></table></div>
-    <h3>Where the pasted hub's sketch differs from the code</h3>
-    <ul>
-      <li><strong>SOS is never locked.</strong> The sketch's EXPIRATION comment says it "locks remote sync and SOS texting". SOS Family Alert is free, final (Frank, 2 Sep 2026), and <code>api/sos.js</code> never reads the plan. An expiry locks everyday texting and the natural voice. The talker keeps talking.</li>
-      <li><strong>A lifetime Core Talker is not something our server grants.</strong> The sketch grants it on NON_RENEWING_PURCHASE. The one-time app purchase belongs to the store and the buyer's store account; our server only ever tracks the family's Tether plan. Today NON_RENEWING_PURCHASE turns the family plan on, which is right only while the subscription is the sole product. If the Core Talker is ever sold as a one-time in-app purchase inside a free app, that line has to change, and it must not turn the Tether on. Frank's call on how the Talker is sold decides it; not built either way.</li>
-      <li><strong>Refunds.</strong> The sketch refunds on CANCELLATION when <code>cancel_reason</code> is CUSTOMER_SUPPORT. Today CANCELLATION keeps the plan to the expiry the store gave, and no refund branch exists, because RevenueCat's event names and that field could not be read from revenuecat.com (blocked from here). The sales page counts refunds under Apple's names only. <span class="chip blocked">blocked</span> Way in: on revenuecat.com search "webhook event types and fields", then paste the event list and the CANCELLATION fields.</li>
-      <li><strong>Endpoint.</strong> The sketch hard-codes app.ezvoxa.com. Until a release is cut, the live endpoint is the family lane's, and that is the URL to give RevenueCat first.</li>
-    </ul>
-    <h3>The code's own event lists</h3>
-    <pre id="hookcode"></pre>
-  </div>
-</div>
-
-<script src="finance-model.js"></script>
 <script>
-(function () {
-  var inputs = null, scenario = 'national';
-  var msg = document.getElementById('msg');
-  var HUB_CUMULATIVE = 8058740;   // the pasted Master Hub's five-year cumulative net, for the comparison line
-  function esc(x) { var s = document.createElement('span'); s.textContent = String(x == null ? '' : x); return s.innerHTML; }
-  function money(n) { return (n < 0 ? '(' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('en-US') + (n < 0 ? ')' : ''); }
-  function num(n) { return Math.round(n).toLocaleString('en-US'); }
-  function prov(path) { return inputs.provenance[path] || inputs.provenance[path.split('.')[0]] || { status: 'assumption', note: 'No note.' }; }
-  function dot(p) { return '<span class="dot ' + esc(p.status) + '" title="' + esc(p.note) + '"></span>'; }
-
-  document.getElementById('tabs').addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function (x) { x.className = x === b ? 'on' : 'quiet'; });
-    Array.prototype.forEach.call(document.querySelectorAll('.pane'), function (p) { p.classList.toggle('on', p.id === 'pane-' + b.getAttribute('data-pane')); });
-  });
-
-  function renderProjections() {
-    var all = EZFinance.projectAll(inputs);
-    var order = ['national', 'floor', 'mid', 'ceiling'].filter(function (k) { return inputs.scenarios[k]; });
-    var T = document.getElementById('cases'); T.innerHTML = '';
-    order.forEach(function (k) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = k === scenario ? 'on' : 'quiet';
-      b.textContent = inputs.scenarios[k].label + ': ' + money(all[k].total.net) + ' over five years';
-      b.onclick = function () { scenario = k; renderProjections(); };
-      T.appendChild(b);
-    });
-    var r = all[scenario], y5 = r.rows[r.rows.length - 1];
-    var sp = prov('scenarios.' + scenario);
-    document.getElementById('cards').innerHTML = [[num(r.total.buyers), 'App buyers over five years'], [num(r.subsEndYear5), 'Subscribers at the end of Year 5'], [num(y5.districtSeats), 'District seats in Year 5'], [num(y5.clinicSeats), 'Clinic seats in Year 5'], [money(r.total.gross), 'Gross sales over five years'], [money(r.total.net), 'Net over five years']].map(function (c) { return '<div class="stat"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
-    document.querySelector('#proj tbody').innerHTML = r.rows.map(function (x) {
-      var cells = [x.year, num(x.buyers), num(x.subsEnd), num(x.subsAvg), num(x.districts), num(x.districtSeats), num(x.clinics), num(x.clinicSeats), money(x.talkerGross), money(x.tetherGross), money(x.schoolGross), money(x.gross), money(-x.storeFees), money(-x.revenueCat), money(-x.refunds), money(-x.cloud), money(-x.acquisition), money(-x.opex), money(x.net), money(x.cumulative)];
-      return '<tr>' + cells.map(function (c) { return '<td' + (typeof c === 'string' && c.charAt(0) === '(' ? ' class="neg"' : '') + '>' + esc(c) + '</td>'; }).join('') + '</tr>';
-    }).join('');
-    var cmp = dot(sp) + 'Ramp: ' + esc(sp.note);
-    if (scenario === 'national') cmp += ' The pasted hub showed ' + money(HUB_CUMULATIVE) + ' cumulative for the same ramp; it took out only the store\'s 15% and its operating column, and counted subscribers at year end. This table also takes out RevenueCat, refunds, the per-family cloud costs, the fixed subscriptions and acquisition, and counts subscribers as the average of the year, which is why it lands at ' + money(r.total.net) + '.';
-    document.getElementById('compare').innerHTML = cmp;
-  }
-
-  function renderCosts() {
-    var c = inputs.costs;
-    var rows = [
-      ['Apple Developer Program', 'Yearly', '$' + c.appleDeveloperYearly + ' a year', 'App Store distribution, TestFlight, the notification key.', 'costs.appleDeveloperYearly'],
-      ['Google Play Console', 'One-time', '$' + c.googlePlayOneTime + ' one-time', 'Android distribution.', 'costs.googlePlayOneTime'],
-      ['Store commission', 'Share of sales', (c.storeCommission * 100) + '% of store sales', 'Apple Small Business Program and Google Play, both under $1M a year.', 'costs.storeCommission'],
-      ['RevenueCat', 'Share of sales', (c.revenueCatRate * 100) + '% once tracked revenue passes $' + num(c.revenueCatFreeMonthly) + ' a month', 'One purchase handler for both stores; the webhook feeds the family plan.', 'costs.revenueCatRate'],
-      ['Twilio, 10DLC registration', 'One-time', '$' + c.tenDlcOneTime + ' one-time', 'Registering the number to send texts to US phones.', 'costs.tenDlcOneTime'],
-      ['Twilio, one text', 'Per use', '$' + c.textCostEach + ' per text', 'Everyday texting from the talker (paid families only).', 'costs.textCostEach'],
-      ['Twilio, one SOS alert', 'Per use', '$' + c.alertCostEach + ' per person alerted', 'SOS Family Alert with the map link. Free to the family; our cost.', 'costs.alertCostEach'],
-      ['Twilio, the number', 'Monthly', '$' + c.twilioNumberMonthly + ' a month', 'The sending number.', 'costs.twilioNumberMonthly'],
-      ['ElevenLabs, natural voice', 'Per family', '$' + c.voicePerFamilyMonth + ' per family per month', 'Each phrase is spoken once and remembered on the server. The hub listed $5 to $22 a month base instead; not read from ElevenLabs.', 'costs.voicePerFamilyMonth'],
-      ['Vercel', 'Monthly', '$' + c.vercelMonthly + ' a month', 'The endpoints, the family store, the webhook.', 'costs.vercelMonthly'],
-      ['Codemagic', 'Monthly', '$' + c.codemagicMonthly + ' a month', 'Native builds and signing.', 'costs.codemagicMonthly'],
-      ['Refunds and chargebacks', 'Share of sales', (c.refundRate * 100) + '% of store sales', 'Leakage.', 'costs.refundRate'],
-      ['Acquisition', 'Per buyer', '$' + c.acquisitionPerBuyer + ' per buyer', 'Blended cost to reach one buyer.', 'costs.acquisitionPerBuyer']
-    ];
-    document.querySelector('#costtab tbody').innerHTML = rows.map(function (r) { var p = prov(r[4]); return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td><td>' + esc(r[3]) + '</td><td>' + dot(p) + esc(p.status === 'verified' ? 'Verified' : p.status === 'document' ? 'From the document' : 'Assumption') + '<div class="note" style="margin-top:4px">' + esc(p.note) + '</div></td></tr>'; }).join('');
-    var ops = [
-      ['Live now', ['Family Code on every phone; the purchase attaches to the family, never the phone.', 'Everyday texting locked until the family plan is active. No switch.', 'SOS Family Alert free, never reads the plan, 10 alerts per family per ten minutes.', 'Auto reply to anyone who texts our number back.', 'Natural voice remembered on the server after the first use of each phrase.', 'Hardship grant and revoke from our side, family password.']],
-      ['Waiting on Frank', ['Apple Developer enrollment approval.', 'RevenueCat account, the products, the webhook secret into Vercel.', 'First Codemagic build and the sandbox purchase test.', 'Twilio: point replies at /api/inbound.', 'Run dub.html once so the voice memory is filled.', 'Price confirmation. Nothing publishes before it.']],
-      ['Open rulings', ['SOS inside the paid tier (the 7 Sep document) or free (the 2 Sep ruling; kept free here).', 'Two-way voice messages (the document) or one-way (built).', 'Trial length, 14 or 30 days.', 'How the Core Talker is sold: paid app, or free app with a one-time purchase. It changes the webhook.']]
-    ];
-    document.getElementById('ops').innerHTML = ops.map(function (o) { return '<div class="card"><h3>' + esc(o[0]) + '</h3><ul>' + o[1].map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>'; }).join('');
-  }
-
-  function renderHooks() {
-    // Mirrors the constants in api/plan.js. If those change, change these.
-    var STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER'];
-    var ENDS = ['EXPIRATION', 'SUBSCRIPTION_PAUSED'];
-    var KEEPS = ['CANCELLATION', 'BILLING_ISSUE'];
-    var rows = [];
-    STARTS.forEach(function (t) { rows.push([t, 'Plan active, source store, to the expiry the event carries.', 'Unlocks everyday texting and the natural voice on every phone in the family. Nothing changes for SOS or the talker.']); });
-    KEEPS.forEach(function (t) { rows.push([t, 'Plan left as it is; the expiry the event carries is recorded.', 'The family keeps what it paid for until that date.']); });
-    ENDS.forEach(function (t) { rows.push([t, 'Plan inactive.', 'Locks everyday texting and the natural voice. SOS stays on. The talker keeps talking.']); });
-    rows.push(['TEST', 'Logged only.', 'Shows on the sales page as a test; never counted as money.']);
-    rows.push(['anything else', 'Logged only; the plan is left alone.', 'Nothing.']);
-    document.querySelector('#hooktab tbody').innerHTML = rows.map(function (r) { return '<tr><td><code>' + esc(r[0]) + '</code></td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('');
-    document.getElementById('hookcode').textContent = "// api/plan.js, as deployed\nconst RC_STARTS = " + JSON.stringify(STARTS) + ";\nconst RC_ENDS = " + JSON.stringify(ENDS) + ";\nconst RC_KEEPS = " + JSON.stringify(KEEPS) + ";   // still paid until the expiry the store gave\n\n// A running hardship grant (source: manual) is never overridden by a store event.\n// Event names were read via search results, not from RevenueCat's page; confirm before switch-on.";
-    fetch('/api/plan').then(function (r) { return r.json(); }).then(function (j) {
-      var c = (j && j.configured) || {};
-      document.getElementById('health').innerHTML = 'Live check just now: RevenueCat secret ' + (c.revenuecat ? '<b>set</b>' : '<b>not set</b>, so the endpoint refuses every RevenueCat event until it is') + '; family storage ' + (c.storage ? 'reachable' : 'not configured') + '.';
-    }).catch(function () { document.getElementById('health').textContent = 'Live check: could not reach /api/plan.'; });
-  }
-
-  document.getElementById('f').addEventListener('submit', async function (ev) {
-    ev.preventDefault(); msg.textContent = 'Loading…';
-    try {
-      var r = await fetch('/api/finance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.getElementById('pw').value }) });
-      var j = await r.json();
-      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : 'Could not load.'; return; }
-      inputs = j.inputs;
-      if (!inputs.scenarios[scenario]) scenario = Object.keys(inputs.scenarios)[0];
-      msg.textContent = ''; document.getElementById('view').hidden = false; document.getElementById('f').hidden = true;
-      document.getElementById('stamp').textContent = 'Defaults as of ' + inputs.asOf + '.';
-      renderProjections(); renderCosts(); renderHooks();
-    } catch (e) { msg.textContent = 'Could not reach the server.'; }
-  });
-})();
+document.getElementById('f').addEventListener('submit', async function (ev) {
+  ev.preventDefault();
+  var msg = document.getElementById('msg'); msg.textContent = 'Loading…';
+  try {
+    var r = await fetch('/api/hub', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.getElementById('pw').value }) });
+    var j = await r.json();
+    if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : 'Could not load.'; return; }
+    document.open(); document.write(j.html); document.close();
+  } catch (e) { msg.textContent = 'Could not reach the server.'; }
+});
 </script>

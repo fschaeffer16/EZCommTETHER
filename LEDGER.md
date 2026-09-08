@@ -733,11 +733,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 
 ## Pages and names
 
-- `hub.html` (8 Sep 2026): the Master Hub, family password; four tabs:
-  projections (same model as finance.html, adds the National case with
-  clinics), roadmap with each claim's standing, costs with provenance,
-  what `api/plan.js` does with each RevenueCat event plus a live check of
-  whether the webhook secret is set. See DECISIONS.md, 8 Sep.
+- `hub.html` (8 Sep 2026): Frank's Master Hub page as written, family
+  password (the page carries prices; it is served by `api/hub.js` from
+  `api/hub-page.json`, never as a plain file). The page came from an
+  independent AI Frank had research the market after it reviewed the
+  product screenshots and the demo HTML; its sources are not in hand.
+  Clinical seats in it are therapists, priced at the school rate (Frank,
+  8 Sep). `hub-model.html` is the finance model's view of the same ramp:
+  projections with the model's cost lines, roadmap with each claim's
+  standing, costs with provenance, what `api/plan.js` does with each
+  RevenueCat event plus a live check of the webhook secret.
 - `finance.html` (7 Sep 2026): the finance widget, family password; inputs
   from `api/finance-defaults.json` with provenance; formulas in
   `finance-model.js`, shared with the plan document. See DECISIONS.md.
