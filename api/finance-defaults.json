@@ -28,7 +28,7 @@
   "assumptions": {
     "textsPerFamilyPerMonth": 30,
     "alertsPerFamilyPerYear": 2,
-    "schoolsThroughStore": true
+    "schoolsThroughStore": false
   },
   "scenarios": {
     "floor": {
@@ -210,7 +210,7 @@
     },
     "prices.schoolVolume": {
       "status": "document",
-      "note": "Volume price at 20 or more seats in Frank's document. The discount rule is verified: developer.apple.com/education, read 8 Sep 2026, says a developer can enable a 50% discount for educational institutions buying 20 or more copies of the app. Frank, 8 Sep: EZvoxa Pro is its own App Store listing, so the $249.99 list price and the $124.99 volume price belong to that listing, not the consumer app. The prices themselves are not confirmed."
+      "note": "Volume price at 20 or more seats in Frank's document, originally Apple's 50% education rule. Since Pro is sold direct (Frank, 8 Sep), Apple's rule no longer sets it; whether a volume price exists at all is Frank's call, asked and not yet answered. Working number."
     },
     "costs.storeCommission": {
       "status": "verified",
@@ -278,7 +278,7 @@
     },
     "assumptions.schoolsThroughStore": {
       "status": "document",
-      "note": "Frank's document sells the school license through Apple School Manager and Google Play, so the store's 15% applies. The earlier model invoiced schools directly."
+      "note": "Frank, 8 Sep 2026: Pro is sold by EZ Voice direct, districts and clinics included, so no store commission on those seats. The 7 Sep document had them going through Apple School Manager and Google Play; superseded."
     },
     "scenarios": {
       "status": "document",
