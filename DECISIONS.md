@@ -162,7 +162,12 @@ a dated line saying it was reversed. Dates are the day it happened.
   and whether Google Play gets a matching Pro listing. Frank also said
   the same day he likes keeping the subscription under $10 a month;
   $99.99 one-time, $9.99 a month, $99.99 a year remain the working prices,
-  still marked not confirmed until he says "confirmed".
+  still marked not confirmed until he says "confirmed". Frank's reason
+  for the Pro price: "School districts and clinical can afford it." A
+  20-seat order at $124.99 is $2,500 and a 100-seat order $12,499, both
+  under the $15,000 federal micro-purchase threshold (FAR 2.101, verified
+  8 Sep), so a director can sign without a board vote where district
+  policy allows.
 
 - **8 Sep 2026. The template still carried Evan's whole dormant profile;
   cut out the same evening.** Frank: "The template app has not have any
