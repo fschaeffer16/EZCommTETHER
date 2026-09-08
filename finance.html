@@ -9,6 +9,7 @@
   h2{font-size:16px;margin:26px 0 8px;color:#EFEAE2}
   .sub{font-size:14px;color:#8C857A;margin:0 0 18px;line-height:1.45}
   form.pw{display:flex;gap:10px;margin-bottom:20px;max-width:520px}
+  form.pw[hidden]{display:none}
   input[type=password]{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
   button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;font-size:15px;font-weight:800;padding:10px 16px;cursor:pointer}
   button.quiet{background:#2B241C;color:#EFEAE2}
@@ -56,7 +57,7 @@
 
   <div class="tabs" id="tabs"></div>
   <div class="cards" id="cards"></div>
-  <div class="wrap"><table id="proj"><thead><tr><th>Year</th><th>Buyers</th><th>Subs, year end</th><th>Subs, average</th><th>Districts</th><th>Seats</th><th>Talker</th><th>Family Tether</th><th>Schools</th><th>Gross</th><th>Store 15%</th><th>RevenueCat</th><th>Refunds</th><th>Cloud and fixed</th><th>Acquisition</th><th>Operating</th><th>Net</th><th>Cumulative</th></tr></thead><tbody></tbody></table></div>
+  <div class="wrap"><table id="proj"><thead><tr><th>Year</th><th>Buyers</th><th>Subs, year end</th><th>Subs, average</th><th>Districts</th><th>Seats, schools and clinics</th><th>Talker</th><th>Family Tether</th><th>Schools and clinics</th><th>Gross</th><th>Store 15%</th><th>RevenueCat</th><th>Refunds</th><th>Cloud and fixed</th><th>Acquisition</th><th>Operating</th><th>Net</th><th>Cumulative</th></tr></thead><tbody></tbody></table></div>
   <p class="note">Talker: buyers that year times the one-time price. Family Tether: the average of the year's starting and ending subscribers, times the monthly price, times twelve. Schools: district seats at the volume price when 20 or more seats, else the list price. Store fee applies to everything sold through a store. RevenueCat is 1% of store sales once tracked revenue passes $2,500 a month. Cloud and fixed: texts and alerts at Twilio's rates, the voice per family, the Twilio number, Vercel, Codemagic, Apple's yearly fee, Google's and 10DLC one-time fees. Refunds and acquisition are the model's carried-over assumptions.</p>
 
   <h2>Inputs</h2>
@@ -67,7 +68,8 @@
   </div>
   <h2>Ramp for the selected case</h2>
   <div class="years" id="years"></div>
-  <div class="row" style="grid-template-columns:auto 110px;max-width:360px;margin-top:10px"><span>Seats per district</span><input id="seats" type="number" min="1" step="1"></div>
+  <div class="row" style="grid-template-columns:auto 110px;max-width:360px;margin-top:10px"><span>Seats per district (unused when a year names its seats)</span><input id="seats" type="number" min="1" step="1"></div>
+  <p class="note">The National case (from the Master Hub page, 8 Sep) names its district seats and adds clinics; the <a href="hub.html" style="color:#FFB020">Master Hub</a> shows it with the roadmap, costs and webhook.</p>
   <div class="tabs" style="margin-top:14px"><button class="quiet" id="reset" type="button">Reset to the saved defaults</button></div>
 </div>
 
@@ -105,7 +107,10 @@
     sc.years.forEach(function (y, i) {
       var card = document.createElement('div'); card.className = 'card';
       card.innerHTML = '<h3>Year ' + (i + 1) + '</h3>';
-      [['buyers', 'App buyers'], ['subsEnd', 'Subscribers at year end'], ['districts', 'Districts'], ['opex', 'Operating expenses']].forEach(function (f) {
+      var fields = [['buyers', 'App buyers'], ['subsEnd', 'Subscribers at year end'], ['districts', 'Districts']];
+      if (y.districtSeats != null) fields.push(['districtSeats', 'District seats'], ['clinics', 'Clinics'], ['clinicSeats', 'Clinic seats']);
+      fields.push(['opex', 'Operating expenses']);
+      fields.forEach(function (f) {
         var row = document.createElement('div'); row.className = 'row';
         row.innerHTML = '<span>' + f[1] + '</span><input type="number" step="1" value="' + y[f[0]] + '">';
         row.querySelector('input').addEventListener('input', function (e) { var v = parseFloat(e.target.value); if (!isNaN(v)) { y[f[0]] = v; render(); } });

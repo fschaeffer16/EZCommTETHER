@@ -52,7 +52,8 @@ program for low-income/disability families.
   main → ez-comm-tether.vercel.app / ezvoxa.com), e.g. `hearhim.html`.
 - **Keep the interactive model and the business plan in sync.** They are one artifact in two
   forms; if one changes, change the other. Since 7 Sep 2026 that means `finance.html` (the
-  widget, family password) with `finance-model.js` and `api/finance-defaults.json`, and the
+  widget, family password) and `hub.html` (the Master Hub, 8 Sep: projections, roadmap,
+  costs, webhook) with `finance-model.js` and `api/finance-defaults.json`, and the
   plan document generated from the same formulas; `model-ezvoxa.html` is the older market build.
 
 ## Deploys

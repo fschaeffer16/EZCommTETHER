@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-09-07",
-  "note": "Working numbers, not confirmed prices. Every value says where it came from. 'verified' means read from the entity's own page; 'document' means it came from Frank's 7 Sep 2026 business plan document and has not been verified from the entity's page; 'assumption' means nobody has a source.",
+  "asOf": "2026-09-08",
+  "note": "Working numbers, not confirmed prices. Every value says where it came from. 'verified' means read from the entity's own page; 'document' means it came from Frank's 7 Sep 2026 business plan document and has not been verified from the entity's page; 'hub' means it came from the Executive Master Hub page Frank pasted 8 Sep 2026 (written by another AI) and has not been verified; 'assumption' means nobody has a source.",
   "prices": {
     "talkerOneTime": 99.99,
     "tetherMonthly": 9.99,
@@ -17,7 +17,7 @@
     "acquisitionPerBuyer": 12,
     "textCostEach": 0.0133,
     "alertCostEach": 0.0266,
-    "voicePerFamilyMonth": 0.10,
+    "voicePerFamilyMonth": 0.1,
     "twilioNumberMonthly": 1.15,
     "tenDlcOneTime": 19,
     "vercelMonthly": 20,
@@ -31,33 +31,262 @@
     "schoolsThroughStore": true
   },
   "scenarios": {
-    "floor":   { "label": "Floor",   "seatsPerDistrict": 30, "years": [ {"buyers":500,"subsEnd":80,"districts":0,"opex":24800}, {"buyers":1000,"subsEnd":210,"districts":2,"opex":26450}, {"buyers":1400,"subsEnd":360,"districts":4,"opex":34120}, {"buyers":1650,"subsEnd":500,"districts":7,"opex":41200}, {"buyers":1800,"subsEnd":620,"districts":10,"opex":45073} ] },
-    "mid":     { "label": "Mid",     "seatsPerDistrict": 50, "years": [ {"buyers":1300,"subsEnd":210,"districts":0,"opex":32500}, {"buyers":2600,"subsEnd":560,"districts":3,"opex":42800}, {"buyers":3600,"subsEnd":950,"districts":8,"opex":57200}, {"buyers":4200,"subsEnd":1310,"districts":16,"opex":68450}, {"buyers":4600,"subsEnd":1600,"districts":28,"opex":79208} ] },
-    "ceiling": { "label": "Ceiling", "seatsPerDistrict": 50, "years": [ {"buyers":3200,"subsEnd":510,"districts":0,"opex":52100}, {"buyers":6400,"subsEnd":1380,"districts":10,"opex":81400}, {"buyers":8800,"subsEnd":2350,"districts":40,"opex":112600}, {"buyers":10500,"subsEnd":3250,"districts":100,"opex":138900}, {"buyers":11200,"subsEnd":3950,"districts":200,"opex":157629} ] }
+    "floor": {
+      "label": "Floor",
+      "seatsPerDistrict": 30,
+      "years": [
+        {
+          "buyers": 500,
+          "subsEnd": 80,
+          "districts": 0,
+          "opex": 24800
+        },
+        {
+          "buyers": 1000,
+          "subsEnd": 210,
+          "districts": 2,
+          "opex": 26450
+        },
+        {
+          "buyers": 1400,
+          "subsEnd": 360,
+          "districts": 4,
+          "opex": 34120
+        },
+        {
+          "buyers": 1650,
+          "subsEnd": 500,
+          "districts": 7,
+          "opex": 41200
+        },
+        {
+          "buyers": 1800,
+          "subsEnd": 620,
+          "districts": 10,
+          "opex": 45073
+        }
+      ]
+    },
+    "mid": {
+      "label": "Mid",
+      "seatsPerDistrict": 50,
+      "years": [
+        {
+          "buyers": 1300,
+          "subsEnd": 210,
+          "districts": 0,
+          "opex": 32500
+        },
+        {
+          "buyers": 2600,
+          "subsEnd": 560,
+          "districts": 3,
+          "opex": 42800
+        },
+        {
+          "buyers": 3600,
+          "subsEnd": 950,
+          "districts": 8,
+          "opex": 57200
+        },
+        {
+          "buyers": 4200,
+          "subsEnd": 1310,
+          "districts": 16,
+          "opex": 68450
+        },
+        {
+          "buyers": 4600,
+          "subsEnd": 1600,
+          "districts": 28,
+          "opex": 79208
+        }
+      ]
+    },
+    "ceiling": {
+      "label": "Ceiling",
+      "seatsPerDistrict": 50,
+      "years": [
+        {
+          "buyers": 3200,
+          "subsEnd": 510,
+          "districts": 0,
+          "opex": 52100
+        },
+        {
+          "buyers": 6400,
+          "subsEnd": 1380,
+          "districts": 10,
+          "opex": 81400
+        },
+        {
+          "buyers": 8800,
+          "subsEnd": 2350,
+          "districts": 40,
+          "opex": 112600
+        },
+        {
+          "buyers": 10500,
+          "subsEnd": 3250,
+          "districts": 100,
+          "opex": 138900
+        },
+        {
+          "buyers": 11200,
+          "subsEnd": 3950,
+          "districts": 200,
+          "opex": 157629
+        }
+      ]
+    },
+    "national": {
+      "label": "National",
+      "seatsPerDistrict": 50,
+      "years": [
+        {
+          "buyers": 2400,
+          "subsEnd": 450,
+          "districts": 0,
+          "districtSeats": 0,
+          "clinics": 0,
+          "clinicSeats": 0,
+          "opex": 34500
+        },
+        {
+          "buyers": 5500,
+          "subsEnd": 1450,
+          "districts": 12,
+          "districtSeats": 480,
+          "clinics": 15,
+          "clinicSeats": 150,
+          "opex": 53700
+        },
+        {
+          "buyers": 8500,
+          "subsEnd": 2900,
+          "districts": 45,
+          "districtSeats": 2000,
+          "clinics": 50,
+          "clinicSeats": 500,
+          "opex": 81700
+        },
+        {
+          "buyers": 11500,
+          "subsEnd": 4600,
+          "districts": 140,
+          "districtSeats": 7000,
+          "clinics": 120,
+          "clinicSeats": 1200,
+          "opex": 114700
+        },
+        {
+          "buyers": 14500,
+          "subsEnd": 6500,
+          "districts": 320,
+          "districtSeats": 17500,
+          "clinics": 250,
+          "clinicSeats": 2500,
+          "opex": 147700
+        }
+      ]
+    }
   },
   "provenance": {
-    "prices.talkerOneTime": { "status": "document", "note": "Core Talker one-time price in Frank's 7 Sep document. The earlier model used $79.99. Not confirmed." },
-    "prices.tetherMonthly": { "status": "document", "note": "Connected Family Tether monthly price in Frank's 7 Sep document. The earlier model used $12.99. Not confirmed." },
-    "prices.tetherYearly": { "status": "document", "note": "Yearly option in Frank's document. Not used in the projection; the yearly share is unknown." },
-    "prices.schoolList": { "status": "document", "note": "EZvoxa Pro list price per seat in Frank's document." },
-    "prices.schoolVolume": { "status": "document", "note": "Volume price at 20 or more seats in Frank's document, described as Apple School Manager's 50% education volume discount. The discount rule was not verified from Apple's page." },
-    "costs.storeCommission": { "status": "verified", "note": "Apple Small Business Program 15% under $1M a year; Google Play 15% on the first $1M. Read from Apple's and Google's help pages 4 Sep 2026." },
-    "costs.revenueCatRate": { "status": "verified", "note": "RevenueCat's own pricing page, 7 Sep 2026: 1% of tracked revenue once past $2,500 a month." },
-    "costs.revenueCatFreeMonthly": { "status": "verified", "note": "Same page: nothing up to $2,500 in monthly tracked revenue." },
-    "costs.refundRate": { "status": "assumption", "note": "About 4% refund and chargeback leakage, carried over from the 15 Aug model, which cited a vendor benchmark that does not pass the sourcing rule." },
-    "costs.acquisitionPerBuyer": { "status": "assumption", "note": "About $12 blended cost per buyer, carried over from the 15 Aug model as a labeled assumption." },
-    "costs.textCostEach": { "status": "verified", "note": "Twilio US SMS page, 5 Sep 2026: $0.0083 per outbound segment plus up to $0.005 carrier fee, one segment." },
-    "costs.alertCostEach": { "status": "verified", "note": "Same page; an SOS text with a map link is two segments, to one person." },
-    "costs.voicePerFamilyMonth": { "status": "assumption", "note": "Per-family monthly cost of the natural voice after the 7 Sep server memory (each phrase paid once). Not measured yet; placeholder." },
-    "costs.twilioNumberMonthly": { "status": "verified", "note": "Twilio US page, 5 Sep 2026: leased long code $1.15 a month." },
-    "costs.tenDlcOneTime": { "status": "document", "note": "$4 brand plus $15 campaign registration in Frank's document. Twilio's page says 10DLC fees apply but does not show the amounts; not verified." },
-    "costs.vercelMonthly": { "status": "document", "note": "Vercel Pro $20 a month in Frank's document. Not read from Vercel's page." },
-    "costs.codemagicMonthly": { "status": "document", "note": "Free tier with 500 build minutes a month in Frank's document. Not read from Codemagic's page." },
-    "costs.appleDeveloperYearly": { "status": "verified", "note": "Apple Developer Program, $99 a year, Apple's enrollment page." },
-    "costs.googlePlayOneTime": { "status": "verified", "note": "Google Play Console registration, $25 one-time, recorded in the ledger from Google's page." },
-    "assumptions.textsPerFamilyPerMonth": { "status": "assumption", "note": "How many texts a family sends a month. No data until real families use it." },
-    "assumptions.alertsPerFamilyPerYear": { "status": "assumption", "note": "How many SOS alerts a family sends a year. No data. The alert is free to the family; this is our cost." },
-    "assumptions.schoolsThroughStore": { "status": "document", "note": "Frank's document sells the school license through Apple School Manager and Google Play, so the store's 15% applies. The earlier model invoiced schools directly." },
-    "scenarios": { "status": "document", "note": "Buyers, year-end subscribers, districts, seats per district and operating expenses per year are the ramps in Frank's 7 Sep document, which follow the 15 Aug model's labeled assumptions. Year 1 is the free pilot at Evan's school." }
+    "prices.talkerOneTime": {
+      "status": "document",
+      "note": "Core Talker one-time price in Frank's 7 Sep document. The earlier model used $79.99. Not confirmed."
+    },
+    "prices.tetherMonthly": {
+      "status": "document",
+      "note": "Connected Family Tether monthly price in Frank's 7 Sep document. The earlier model used $12.99. Not confirmed."
+    },
+    "prices.tetherYearly": {
+      "status": "document",
+      "note": "Yearly option in Frank's document. Not used in the projection; the yearly share is unknown."
+    },
+    "prices.schoolList": {
+      "status": "document",
+      "note": "EZvoxa Pro list price per seat in Frank's document."
+    },
+    "prices.schoolVolume": {
+      "status": "document",
+      "note": "Volume price at 20 or more seats in Frank's document. The discount rule itself is verified: developer.apple.com/education, read 8 Sep 2026, says a developer can enable a 50% discount for educational institutions buying 20 or more copies of the app. Apple's page says copies of the app, so a school seat priced differently from the consumer app would need its own listing or a custom app; not settled. The $249.99 list price is the document's."
+    },
+    "costs.storeCommission": {
+      "status": "verified",
+      "note": "Apple Small Business Program 15% under $1M a year; Google Play 15% on the first $1M. Read from Apple's and Google's help pages 4 Sep 2026."
+    },
+    "costs.revenueCatRate": {
+      "status": "verified",
+      "note": "RevenueCat's own pricing page, 7 Sep 2026: 1% of tracked revenue once past $2,500 a month."
+    },
+    "costs.revenueCatFreeMonthly": {
+      "status": "verified",
+      "note": "Same page: nothing up to $2,500 in monthly tracked revenue."
+    },
+    "costs.refundRate": {
+      "status": "assumption",
+      "note": "About 4% refund and chargeback leakage, carried over from the 15 Aug model, which cited a vendor benchmark that does not pass the sourcing rule."
+    },
+    "costs.acquisitionPerBuyer": {
+      "status": "assumption",
+      "note": "About $12 blended cost per buyer, carried over from the 15 Aug model as a labeled assumption."
+    },
+    "costs.textCostEach": {
+      "status": "verified",
+      "note": "Twilio US SMS page, 5 Sep 2026: $0.0083 per outbound segment plus up to $0.005 carrier fee, one segment."
+    },
+    "costs.alertCostEach": {
+      "status": "verified",
+      "note": "Same page; an SOS text with a map link is two segments, to one person."
+    },
+    "costs.voicePerFamilyMonth": {
+      "status": "assumption",
+      "note": "Per-family monthly cost of the natural voice after the 7 Sep server memory (each phrase paid once). Not measured yet; placeholder."
+    },
+    "costs.twilioNumberMonthly": {
+      "status": "verified",
+      "note": "Twilio US page, 5 Sep 2026: leased long code $1.15 a month."
+    },
+    "costs.tenDlcOneTime": {
+      "status": "document",
+      "note": "$4 brand plus $15 campaign registration in Frank's document. Twilio's page says 10DLC fees apply but does not show the amounts; not verified."
+    },
+    "costs.vercelMonthly": {
+      "status": "document",
+      "note": "Vercel Pro $20 a month in Frank's document. Not read from Vercel's page."
+    },
+    "costs.codemagicMonthly": {
+      "status": "document",
+      "note": "Free tier with 500 build minutes a month in Frank's document. Not read from Codemagic's page."
+    },
+    "costs.appleDeveloperYearly": {
+      "status": "verified",
+      "note": "Apple Developer Program, $99 a year, Apple's enrollment page."
+    },
+    "costs.googlePlayOneTime": {
+      "status": "verified",
+      "note": "Google Play Console registration, $25 one-time, recorded in the ledger from Google's page."
+    },
+    "assumptions.textsPerFamilyPerMonth": {
+      "status": "assumption",
+      "note": "How many texts a family sends a month. No data until real families use it."
+    },
+    "assumptions.alertsPerFamilyPerYear": {
+      "status": "assumption",
+      "note": "How many SOS alerts a family sends a year. No data. The alert is free to the family; this is our cost."
+    },
+    "assumptions.schoolsThroughStore": {
+      "status": "document",
+      "note": "Frank's document sells the school license through Apple School Manager and Google Play, so the store's 15% applies. The earlier model invoiced schools directly."
+    },
+    "scenarios": {
+      "status": "document",
+      "note": "Buyers, year-end subscribers, districts, seats per district and operating expenses per year for Floor, Mid and Ceiling are the ramps in Frank's 7 Sep document, which follow the 15 Aug model's labeled assumptions. Year 1 is the free pilot at Evan's school. National is separate: see scenarios.national."
+    },
+    "scenarios.national": {
+      "status": "hub",
+      "note": "The national ramp from the Executive Master Hub page Frank pasted 8 Sep 2026: buyers, year-end subscribers, districts with their seat totals, and clinics with theirs. Its operating column was labeled OpEx and RC; the model computes RevenueCat itself, so operating here is that column minus 1% of the page's own gross (buyers times $99.99 plus year-end subscribers times $9.99 times twelve), which leaves round figures of $34,500, $53,700, $81,700, $114,700 and $147,700. Clinics are a channel the page introduced; nobody has said who the clinics are or what they pay, so they are priced like school seats."
+    }
   }
 }

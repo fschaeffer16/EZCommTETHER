@@ -16,18 +16,23 @@
   // One case, five years. Returns rows with unit counts beside every dollar.
   function project(inputs, scenario) {
     const p = inputs.prices, c = inputs.costs, a = inputs.assumptions;
-    const years = scenario.years;              // [{buyers, subsEnd, districts, opex}] x5
+    const years = scenario.years;              // [{buyers, subsEnd, districts, opex, districtSeats?, clinics?, clinicSeats?}] x5
     const rows = [];
     let cumulative = 0, subsPrev = 0;
     let tenDlcPaid = false, googlePaid = false;
     for (let i = 0; i < years.length; i++) {
       const y = years[i];
-      const seats = y.districts * scenario.seatsPerDistrict;
+      // Institutional seats: districts times seats per district unless the
+      // year names its seat count outright; clinics (8 Sep national case)
+      // add their own seats and are priced the same way as schools.
+      const districtSeats = y.districtSeats != null ? y.districtSeats : y.districts * scenario.seatsPerDistrict;
+      const clinicSeats = y.clinicSeats || 0;
+      const seats = districtSeats + clinicSeats;
       // Subscribers: revenue counts the average of the year's start and end.
       const subsAvg = (subsPrev + y.subsEnd) / 2;
       const talkerGross = y.buyers * p.talkerOneTime;
       const tetherGross = subsAvg * p.tetherMonthly * 12;
-      const schoolGross = seats * (y.districts > 0 && seats >= p.schoolVolumeSeats ? p.schoolVolume : p.schoolList);
+      const schoolGross = seats * (seats >= p.schoolVolumeSeats ? p.schoolVolume : p.schoolList);
       const storeGross = talkerGross + tetherGross;
       const storeFees = storeGross * c.storeCommission + schoolGross * (a.schoolsThroughStore ? c.storeCommission : 0);
       // RevenueCat: nothing to $2,500 tracked a month, then 1% of what it tracks.
@@ -49,7 +54,7 @@
       const net = gross - costs;
       cumulative += net;
       rows.push({
-        year: i + 1, buyers: y.buyers, subsEnd: y.subsEnd, subsAvg: round(subsAvg), districts: y.districts, seats,
+        year: i + 1, buyers: y.buyers, subsEnd: y.subsEnd, subsAvg: round(subsAvg), districts: y.districts, districtSeats, clinics: y.clinics || 0, clinicSeats, seats,
         talkerGross: round(talkerGross), tetherGross: round(tetherGross), schoolGross: round(schoolGross), gross: round(gross),
         storeFees: round(storeFees), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,
         net: round(net), cumulative: round(cumulative),

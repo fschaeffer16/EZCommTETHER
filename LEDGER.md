@@ -733,6 +733,11 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 
 ## Pages and names
 
+- `hub.html` (8 Sep 2026): the Master Hub, family password; four tabs:
+  projections (same model as finance.html, adds the National case with
+  clinics), roadmap with each claim's standing, costs with provenance,
+  what `api/plan.js` does with each RevenueCat event plus a live check of
+  whether the webhook secret is set. See DECISIONS.md, 8 Sep.
 - `finance.html` (7 Sep 2026): the finance widget, family password; inputs
   from `api/finance-defaults.json` with provenance; formulas in
   `finance-model.js`, shared with the plan document. See DECISIONS.md.

@@ -45,6 +45,18 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## MUST DO (open items, newest first)
 
+- [ ] **Frank's rulings from the Master Hub (8 Sep):** how the Core Talker
+      is sold (paid app or free app with a one-time purchase), and who
+      the clinics in the National case are and what they pay. Until then
+      NON_RENEWING_PURCHASE turns the family plan on and clinics are
+      priced like schools.
+- [ ] **Frank's side, read what I could not (8 Sep):** the FDLRS center
+      list on fldoe.org, FAAST's device loan program on faast.org, the
+      micro-purchase threshold in 2 CFR 200.1 on ecfr.gov, and RevenueCat's
+      "webhook event types and fields" page. Paste what each says and I
+      put the roadmap and the webhook right. The way in for each is on
+      hub.html, Roadmap and Webhooks tabs.
+
 - [ ] **Frank's side, run the voice dub once** (7 Sep): open
       https://ez-comm-tether.vercel.app/dub.html on a computer or phone,
       type the family password, tap "Start the dub", leave the page open
@@ -101,6 +113,41 @@ a dated line saying it was reversed. Dates are the day it happened.
       twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
+
+- **8 Sep 2026. Master Hub widget built from the page Frank pasted.** Frank
+  pasted an "EZvoxa Executive Master Hub" page written by another AI (tabs:
+  a national five-year ramp, a three-phase rollout roadmap, a cost
+  schedule, a RevenueCat webhook sketch) and asked "Can you turn this code
+  into a widget for me?" Built `hub.html` on our domain, family password,
+  four tabs. Choices I made, stated here because he did not make them:
+  (a) the Projections tab is computed by `finance-model.js`, not typed
+  in, so a "National" case was added to `api/finance-defaults.json` with
+  the page's buyers, subscribers, district seat totals and a new clinics
+  line; the model now takes a year's seat count outright and clinic
+  seats, priced like school seats until Frank says who the clinics are;
+  (b) the page's "OpEx and RC" column bundled RevenueCat, which the model
+  computes itself, so operating is that column minus 1% of the page's own
+  gross, which leaves round figures ($34,500 to $147,700), checked
+  arithmetic, not a guess; the model lands at $6,911,806 against the
+  page's $8,058,740 and the tab says why; (c) every roadmap claim carries
+  its standing: Apple School Manager's 50% discount at 20 or more copies
+  verified from developer.apple.com/education; FDLRS, FAAST, the 2 CFR
+  200.1 micro-purchase threshold, ATIA and CEC unverified because
+  fldoe.org, fdlrs.org, faast.org, ecfr.gov, atia.org and
+  exceptionalchildren.org all refused a connection from here, each with
+  the way in; "classroom data from Cynthia Puentes" marked not in hand
+  (nothing in the repository or ledger); (d) the Webhooks tab shows what
+  `api/plan.js` does, not the sketch, and lists the four places the sketch
+  differs: SOS never locks; the server grants no lifetime talker; no
+  refund branch and no `cancel_reason` until RevenueCat's page is read;
+  the live endpoint is the family lane's. The plan document gained the
+  National case and the roadmap section from the same generator. Nothing
+  published; no price outside the password.
+  Two new questions for Frank, not built either way: how the Core Talker
+  is sold (paid app, or free app with a one-time purchase; it decides
+  what NON_RENEWING_PURCHASE must do), and who the clinics are.
+  Apple's discount is on copies of the app itself, so a school seat priced
+  above the consumer app needs its own listing or a custom app; flagged.
 
 - **7 Sep 2026. Finance widget and the plan rebuilt from Frank's document.**
   Frank pasted a business plan page written by another AI (Core Talker
