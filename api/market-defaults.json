@@ -1,0 +1,229 @@
+{
+ "asOf": "2026-09-08",
+ "note": "Market model inputs. Every figure carries a provenance entry: 'verified' read from the entity's own page on the date given; 'assumption' has no source and is Frank's to set. Frank's rulings 8 Sep 2026: six English-first countries are the launch market, every other country is uncounted upside; NIH-hosted research counts as a source; undiagnosed people are an uncounted upside, not a multiplier.",
+ "countries": {
+  "us": {
+   "name": "United States",
+   "total": 340110988,
+   "age13plus": 288872301,
+   "age13to17": 21894033
+  },
+  "uk": {
+   "name": "United Kingdom",
+   "total": 69281400
+  },
+  "ca": {
+   "name": "Canada",
+   "total": 41651653
+  },
+  "au": {
+   "name": "Australia",
+   "total": 27801023
+  },
+  "nz": {
+   "name": "New Zealand",
+   "total": 5324700
+  },
+  "ie": {
+   "name": "Ireland",
+   "total": 5458600
+  }
+ },
+ "shares": {
+  "age13plusOutsideUS": 0.85
+ },
+ "prevalence": {
+  "autismAdultRate": 0.007874,
+  "autismTeenUSRate": 0.032258,
+  "minimallyVerbalShare": 0.3,
+  "aphasiaUS": 2000000
+ },
+ "schools": {
+  "usIdea6to21": 6998778,
+  "usIdeaAutism": 980000,
+  "share13to21of6to21": 0.5625,
+  "usRegularDistricts": 13349,
+  "englandEhcPlans": 538547,
+  "englandEhcAutismShare": 0.335,
+  "englandShare13plus": 0.5,
+  "seatsPerDistrict": 40
+ },
+ "clinical": {
+  "usInpatientRehabFacilities": 1222,
+  "seatsPerFacility": 5
+ },
+ "conversion": {
+  "low": {
+   "label": "Low",
+   "buyerShare": [
+    0.0005,
+    0.00125,
+    0.0025,
+    0.004,
+    0.0055
+   ],
+   "subscriptionAttach": 0.15,
+   "schoolSeatShare": [
+    0.0005,
+    0.002,
+    0.005,
+    0.009,
+    0.013
+   ],
+   "clinicFacilityShare": [
+    0.005,
+    0.015,
+    0.03,
+    0.05,
+    0.07
+   ]
+  },
+  "base": {
+   "label": "Base",
+   "buyerShare": [
+    0.001,
+    0.0025,
+    0.005,
+    0.008,
+    0.011
+   ],
+   "subscriptionAttach": 0.25,
+   "schoolSeatShare": [
+    0.001,
+    0.004,
+    0.01,
+    0.018,
+    0.026
+   ],
+   "clinicFacilityShare": [
+    0.01,
+    0.03,
+    0.06,
+    0.1,
+    0.14
+   ]
+  },
+  "high": {
+   "label": "High",
+   "buyerShare": [
+    0.002,
+    0.005,
+    0.01,
+    0.016,
+    0.022
+   ],
+   "subscriptionAttach": 0.35,
+   "schoolSeatShare": [
+    0.002,
+    0.008,
+    0.02,
+    0.036,
+    0.052
+   ],
+   "clinicFacilityShare": [
+    0.02,
+    0.06,
+    0.12,
+    0.2,
+    0.28
+   ]
+  }
+ },
+ "opex": [
+  52100,
+  81400,
+  112600,
+  138900,
+  157629
+ ],
+ "provenance": {
+  "countries.us": {
+   "status": "verified",
+   "note": "Census Bureau national population by single year of age, NC-EST2024, vintage 2024: total 340,110,988; 13 and over 288,872,301; 13 to 17 21,894,033. Read 8 Sep 2026."
+  },
+  "countries.uk": {
+   "status": "verified",
+   "note": "ONS mid-2024 estimate, 69,281,400. Read 8 Sep 2026."
+  },
+  "countries.ca": {
+   "status": "verified",
+   "note": "Statistics Canada, 41,651,653 on 1 July 2025; 0 to 14 is 15.0% of the population. Read 8 Sep 2026."
+  },
+  "countries.au": {
+   "status": "verified",
+   "note": "Australian Bureau of Statistics, 27,801,023 at 31 December 2025. Read 8 Sep 2026."
+  },
+  "countries.nz": {
+   "status": "verified",
+   "note": "Stats NZ, 5,324,700 at 30 June 2025. Read 8 Sep 2026."
+  },
+  "countries.ie": {
+   "status": "verified",
+   "note": "Central Statistics Office, 5,458,600 in April 2025. Read 8 Sep 2026."
+  },
+  "shares.age13plusOutsideUS": {
+   "status": "assumption",
+   "note": "Share of the population aged 13 and over in the five countries outside the US. Canada's own figure is 85.0% aged 15 and over (Statistics Canada); the same share is applied to the UK, Australia, New Zealand and Ireland until their age tables are read. The US uses its exact count."
+  },
+  "prevalence.autismAdultRate": {
+   "status": "verified",
+   "note": "WHO autism fact sheet: in 2021 about 1 in 127 persons worldwide had autism. Applied to everyone 18 and over, and to 13 to 17 outside the US."
+  },
+  "prevalence.autismTeenUSRate": {
+   "status": "verified",
+   "note": "CDC ADDM Network: about 1 in 31 children aged 8 identified with autism (2022). Applying an 8-year-old rate to 13 to 17 year olds is an assumption; it is the only US rate CDC publishes for children."
+  },
+  "prevalence.minimallyVerbalShare": {
+   "status": "verified",
+   "note": "Tager-Flusberg and Kasari 2013, NIH-hosted (PMC3869868): about 30% of children with autism remain minimally verbal even after years of intervention. Applied to adults as well, which is an assumption; the study is about school-aged children."
+  },
+  "prevalence.aphasiaUS": {
+   "status": "verified",
+   "note": "NIDCD (NIH): about 2 million people in the United States have aphasia, nearly 180,000 acquire it each year. The same rate per head is applied to the other five countries, which is an assumption. Stroke survivors are not counted separately, because aphasia is the speech-loss part of stroke and counting both would double count."
+  },
+  "schools.usIdea6to21": {
+   "status": "verified",
+   "note": "NCES Digest tables 204.30 and 204.70, 2022-23: 7,525,941 children 3 to 21 served under IDEA, of whom 527,163 are 3 to 5."
+  },
+  "schools.usIdeaAutism": {
+   "status": "verified",
+   "note": "NCES Digest table 204.30, 2022-23: 980,000 served under the autism category (13.0%)."
+  },
+  "schools.share13to21of6to21": {
+   "status": "assumption",
+   "note": "Share of the 6 to 21 group who are 13 to 21: nine of sixteen ages, as if every age were equal in number. NCES does not publish the autism count by age in the table read."
+  },
+  "schools.usRegularDistricts": {
+   "status": "verified",
+   "note": "NCES Digest table 214.30: 13,349 regular public school districts in 2019-20."
+  },
+  "schools.englandEhcPlans": {
+   "status": "verified",
+   "note": "Department for Education, special educational needs in England, 2025/26: 538,547 pupils with an EHC plan; 33.5% with autism as the primary need."
+  },
+  "schools.englandShare13plus": {
+   "status": "assumption",
+   "note": "Share of England's EHC pupils aged 13 and over. The release does not give it in the page read; half is a placeholder."
+  },
+  "schools.seatsPerDistrict": {
+   "status": "assumption",
+   "note": "Average seats in a district order. Nobody has sold one yet."
+  },
+  "clinical.usInpatientRehabFacilities": {
+   "status": "verified",
+   "note": "CMS Provider Data Catalog, Inpatient Rehabilitation Facility general information dataset: 1,222 Medicare-certified facilities, 8 Sep 2026. Outpatient speech therapy practices, ALS clinics and the other four countries' rehab centers are not counted: the US labor statistics page for speech-language pathologists blocked the request and ASHA's site answers with a bot challenge."
+  },
+  "clinical.seatsPerFacility": {
+   "status": "assumption",
+   "note": "Seats a facility buys. Nobody has sold one yet."
+  },
+  "conversion": {
+   "status": "assumption",
+   "note": "Frank's to set. Buyer share is new one-time buyers each year as a share of the counted consumer market; subscription attach is the share of all buyers to date who hold the Family Tether at year end; school seat share is new seats each year as a share of the counted school market; clinic facility share is the share of facilities that have bought by that year, times seats per facility. Base is roughly twice the pasted hub's ramp in Year 1 as a share of market; Low is half of Base; High is twice Base."
+  },
+  "opex": {
+   "status": "document",
+   "note": "Operating expenses per year are the Ceiling case in Frank's 7 Sep document, the closest in scale."
+  }
+ }
+}

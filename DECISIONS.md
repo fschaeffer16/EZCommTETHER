@@ -51,11 +51,13 @@ a dated line saying it was reversed. Dates are the day it happened.
       ends it; SUBSCRIPTION_EXTENDED counts as a start; a CANCELLATION
       with cancel_reason CUSTOMER_SUPPORT is counted as a refund on the
       sales page and its price taken off the reported total. Tests pass.
-- [ ] **Market model (asked 8 Sep, "Answer before you run anything";
-      answered; sources read the same day, see LEDGER).** Not built.
-      Waiting on Frank's go and his rulings: the English-first line (six
-      countries recommended), NIH-hosted research as a source, and the
-      conversion assumptions.
+- [x] ~~Market model~~ Built 8 Sep after Frank's rulings (six countries,
+      NIH ok, undiagnosed as upside): `market.html`, `api/market-defaults.json`,
+      `marketSize` and `marketRamp` in `finance-model.js`, and "EZvoxa
+      Market Model and Business Plan.docx". Still owed: Frank's own
+      conversion levels; Apple's country list; age tables for four
+      countries; clinical counts beyond US inpatient rehab; special
+      education outside the US and England.
 - [ ] **Frank's side, still blocked (8 Sep):** add to the allow list
       bls.gov, *.bls.gov, cms.gov, *.cms.gov, population.un.org, *.un.org,
       acquisition.gov, *.acquisition.gov, fdlrs.org, canada.ca,
@@ -147,6 +149,24 @@ a dated line saying it was reversed. Dates are the day it happened.
       twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
+
+- **8 Sep 2026. Market model built from scratch, on Frank's ask** ("Can
+  you start from scratch, looking at the app as it stands now,
+  researching all nonverbal, semiverbal people over age 13 worldwide who
+  the app would immediately be available to on the App Store and Google
+  Play and run a full proposed business model with costs and projections
+  ... Then, build a separate school district model and then a smaller
+  clinical model"). Answered before running, as he asked; he opened the
+  network, gave the rulings above, and pasted Google Play's list. Built:
+  the counted market (six countries, 13 and over, autism minimally verbal
+  plus aphasia: 4,022,648 people; school seats US and England 192,437; US
+  inpatient rehab facilities 1,222), three conversion levels as labeled
+  assumptions, the three models and the combined view on the finance
+  model's cost lines, the widget at market.html (family password), and
+  the Word document from the same formulas. Base five-year net
+  $12,306,440; Low $5,099,593; High $28,283,856. Every figure carries its
+  source or its assumption label. Conversion levels are placeholders for
+  Frank to set; they are the whole difference between the three.
 
 - **8 Sep 2026. Frank's rulings for the market model.** The six
   English-first countries (US, UK, Ireland, Canada, Australia, New

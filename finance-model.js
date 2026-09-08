@@ -92,7 +92,49 @@
     return out;
   }
 
-  const api = { project, projectAll };
+  // ---- Market model (8 Sep 2026) ----
+  // The counted market, built up from sourced figures, and the ramp that a
+  // conversion level turns it into. The ramp then runs through project()
+  // like any other case, so every channel gets the same cost lines.
+  function marketSize(m) {
+    const c = m.countries, pv = m.prevalence, sh = m.shares, sc = m.schools, cl = m.clinical;
+    const lines = [];
+    let autism = 0, aphasia = 0, pop13 = 0;
+    for (const k of Object.keys(c)) {
+      const x = c[k];
+      const a13 = x.age13plus != null ? x.age13plus : x.total * sh.age13plusOutsideUS;
+      pop13 += a13;
+      let aut;
+      if (x.age13to17 != null) aut = x.age13to17 * pv.autismTeenUSRate * pv.minimallyVerbalShare + (a13 - x.age13to17) * pv.autismAdultRate * pv.minimallyVerbalShare;
+      else aut = a13 * pv.autismAdultRate * pv.minimallyVerbalShare;
+      const aph = k === 'us' ? pv.aphasiaUS : a13 * (pv.aphasiaUS / c.us.age13plus);
+      autism += aut; aphasia += aph;
+      lines.push({ key: k, name: x.name, pop13: round(a13), autism: round(aut), aphasia: round(aph), total: round(aut + aph) });
+    }
+    const consumer = round(autism + aphasia);
+    const usSchool = sc.usIdeaAutism * pv.minimallyVerbalShare * sc.share13to21of6to21;
+    const enSchool = sc.englandEhcPlans * sc.englandEhcAutismShare * pv.minimallyVerbalShare * sc.englandShare13plus;
+    const school = round(usSchool + enSchool);
+    const clinicalFacilities = cl.usInpatientRehabFacilities;
+    return { lines, pop13: round(pop13), autism: round(autism), aphasia: round(aphasia), consumer, school, usSchool: round(usSchool), enSchool: round(enSchool), clinicalFacilities, clinicalSeats: round(clinicalFacilities * cl.seatsPerFacility) };
+  }
+  function marketRamp(m, level) {
+    const size = marketSize(m), cv = m.conversion[level];
+    const years = []; let cumBuyers = 0;
+    for (let i = 0; i < 5; i++) {
+      const buyers = round(size.consumer * cv.buyerShare[i]);
+      cumBuyers += buyers;
+      const subsEnd = round(cumBuyers * cv.subscriptionAttach);
+      const districtSeats = round(size.school * cv.schoolSeatShare[i]);
+      const districts = round(districtSeats / m.schools.seatsPerDistrict);
+      const clinics = round(size.clinicalFacilities * cv.clinicFacilityShare[i]);
+      const clinicSeats = clinics * m.clinical.seatsPerFacility;
+      years.push({ buyers, subsEnd, districts, districtSeats, clinics, clinicSeats, opex: m.opex[i], buyerShare: cv.buyerShare[i], schoolSeatShare: cv.schoolSeatShare[i], clinicFacilityShare: cv.clinicFacilityShare[i] });
+    }
+    return { label: 'Market, ' + cv.label, seatsPerDistrict: m.schools.seatsPerDistrict, years, size };
+  }
+
+  const api = { project, projectAll, marketSize, marketRamp };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.EZFinance = api;
 })(typeof window !== 'undefined' ? window : globalThis);

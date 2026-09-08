@@ -799,6 +799,12 @@ palsy prevalence, ALS registry counts and Down syndrome adult counts
 
 ## Pages and names
 
+- `market.html` (8 Sep 2026): the market model, family password: the
+  counted market with sources, consumer, school district and clinical
+  models plus all combined, Low/Base/High conversion, editable inputs.
+  Inputs in `api/market-defaults.json` (served by api/finance.js),
+  formulas `marketSize`/`marketRamp` in `finance-model.js`, document
+  "EZvoxa Market Model and Business Plan.docx" from the same formulas.
 - `hub.html` (8 Sep 2026): Frank's Master Hub page as written, family
   password (the page carries prices; it is served by `api/hub.js` from
   `api/hub-page.json`, never as a plain file). The page came from an

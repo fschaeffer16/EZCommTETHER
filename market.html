@@ -1,0 +1,227 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZvoxa Market Model</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  body{padding:22px 18px 60px;max-width:1600px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:16px;margin:22px 0 8px}
+  h3{font-size:14px;margin:16px 0 6px}
+  .sub{font-size:14px;color:#8C857A;margin:0 0 18px;line-height:1.45}
+  form.pw{display:flex;gap:10px;margin-bottom:20px;max-width:520px}
+  form.pw[hidden]{display:none}
+  input[type=password]{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
+  button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;font-size:14px;font-weight:800;padding:10px 16px;cursor:pointer}
+  button.quiet{background:#2B241C;color:#EFEAE2}
+  button.on{background:#7DE59A;color:#0A0A0F}
+  #msg{font-size:15px;color:#FF9A8A;min-height:22px;margin-bottom:10px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px;position:sticky;top:0;background:#0A0A0F;padding:8px 0;z-index:5}
+  .row2{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px;align-items:center}
+  .row2 span{font-size:13px;color:#8C857A;margin-right:4px}
+  .pane{display:none} .pane.on{display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+  .card{border:1px solid #2B241C;border-radius:12px;padding:14px 15px;background:#100E0B}
+  .card h3{margin:0 0 10px;font-size:14px;color:#8C857A;text-transform:uppercase;letter-spacing:.04em}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0 6px}
+  .stat{border:1px solid #2B241C;border-radius:12px;padding:12px 14px;background:#100E0B}
+  .stat .n{font-size:22px;font-weight:800} .stat .l{font-size:12px;color:#8C857A;margin-top:2px;line-height:1.35}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:right;padding:7px 6px;border-bottom:1px solid #2B241C;white-space:nowrap;vertical-align:top}
+  th:first-child,td:first-child{text-align:left}
+  th{color:#8C857A;font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  td.neg{color:#FF9A8A} td.hi{color:#7DE59A;font-weight:700}
+  table.text td,table.text th{text-align:left;white-space:normal;line-height:1.4}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px}
+  .verified{background:#7DE59A} .document{background:#FFB020} .assumption{background:#FF6B5E}
+  .legend{font-size:12.5px;color:#8C857A;margin:8px 0 0;line-height:1.7}
+  .note{font-size:12.5px;color:#8C857A;line-height:1.5;margin-top:10px}
+  .in{display:grid;grid-template-columns:1fr 96px 24px;gap:8px;align-items:center;margin:5px 0;font-size:13px}
+  .in input{background:#16130E;border:1px solid #2B241C;border-radius:8px;color:#EFEAE2;font-size:13px;padding:6px 8px;width:96px;text-align:right}
+  .years{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+  .years .card{padding:10px 12px}
+  ul{padding-left:20px;margin:6px 0} li{margin:0 0 8px;font-size:13.5px;line-height:1.5}
+  a{color:#FFB020}
+</style>
+
+<h1>EZvoxa Market Model</h1>
+<p class="sub">Built 8 September 2026 from scratch: who cannot rely on speech in the six English-first countries where the app is on sale from day one, and what each channel earns if a chosen share of them buys. Three models, consumer, school district and clinical, each on its own button, and one for all of them together. Every year shows units, the share of the market they are, sales, expenses, gross and net. Same cost lines as the <a href="finance.html">finance widget</a>. Family password; no price lives in this page.</p>
+
+<form class="pw" id="f">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
+  <button type="submit">Open</button>
+</form>
+<div id="msg"></div>
+
+<div id="view" hidden>
+  <div class="legend"><span class="dot verified"></span> verified from the entity's own page &nbsp; <span class="dot document"></span> from Frank's 7 Sep 2026 document &nbsp; <span class="dot assumption"></span> assumption, no source, Frank's to set. Hover a dot for the note. <span id="stamp"></span></div>
+  <div class="tabs" id="tabs">
+    <button type="button" class="on" data-pane="market">The counted market</button>
+    <button type="button" class="quiet" data-pane="all">All combined</button>
+    <button type="button" class="quiet" data-pane="talker">Consumer</button>
+    <button type="button" class="quiet" data-pane="schools">School districts</button>
+    <button type="button" class="quiet" data-pane="clinics">Clinical</button>
+    <button type="button" class="quiet" data-pane="inputs">Conversion inputs</button>
+  </div>
+  <div class="row2"><span>Conversion level</span><button type="button" class="quiet" data-level="low">Low</button><button type="button" class="on" data-level="base">Base</button><button type="button" class="quiet" data-level="high">High</button></div>
+
+  <div class="pane on" id="pane-market">
+    <h2>Who the app is for, counted</h2>
+    <div class="cards" id="mcards"></div>
+    <h3>Consumer market: people 13 and over who cannot rely on speech, by country</h3>
+    <div class="wrap"><table id="mtab"><thead><tr><th>Country</th><th>Population 13 and over</th><th>Autism, minimally verbal</th><th>Aphasia</th><th>Counted market</th></tr></thead><tbody></tbody></table></div>
+    <p class="note" id="mnote"></p>
+    <h3>School market: students 13 to 21 in special education who cannot rely on speech</h3>
+    <div class="wrap"><table class="text" id="stab"><thead><tr><th>Line</th><th>Figure</th><th>Standing</th></tr></thead><tbody></tbody></table></div>
+    <h3>Clinical market: facilities that treat loss of speech</h3>
+    <div class="wrap"><table class="text" id="ctab"><thead><tr><th>Line</th><th>Figure</th><th>Standing</th></tr></thead><tbody></tbody></table></div>
+    <h3>Counted as upside, not in the numbers</h3>
+    <ul>
+      <li><strong>Every other country</strong> where English is official but not the home language: India, Nigeria, the Philippines, South Africa, Singapore and the rest of Google Play's and Apple's lists. Frank's ruling, 8 Sep.</li>
+      <li><strong>Undiagnosed and wrongly diagnosed people.</strong> The counts above are of identified people. No source gives a multiplier, so none is applied. Frank's ruling, 8 Sep.</li>
+      <li><strong>Conditions with no per-country count in hand:</strong> ALS, Parkinson's with speech loss, dementia with speech loss, cerebral palsy and Down syndrome in adults, traumatic brain injury, laryngectomy. WHO gives worldwide totals for some (Parkinson's over 8.5 million, dementia 57 million); the share who cannot rely on speech has no source yet.</li>
+      <li><strong>Outpatient speech therapy practices, ALS clinics, and rehab centers outside the US.</strong> The US labor statistics page blocked the request and ASHA's site answers with a bot challenge; other countries not yet read.</li>
+      <li><strong>Special education outside the US and England.</strong> Not yet read.</li>
+      <li><strong>Next languages.</strong> The same method points at the largest non-English store markets once English shows traction; no revenue counted until Frank decides.</li>
+    </ul>
+  </div>
+
+  <div class="pane" id="pane-all"><h2>All three models combined</h2><div class="cards" id="cards-all"></div><div class="wrap"><table id="tab-all"></table></div><p class="note" id="note-all"></p></div>
+  <div class="pane" id="pane-talker"><h2>Consumer: one-time app buyers and the Family Tether</h2><div class="cards" id="cards-talker"></div><div class="wrap"><table id="tab-talker"></table></div><p class="note" id="note-talker"></p></div>
+  <div class="pane" id="pane-schools"><h2>School districts: seats on purchase orders</h2><div class="cards" id="cards-schools"></div><div class="wrap"><table id="tab-schools"></table></div><p class="note" id="note-schools"></p></div>
+  <div class="pane" id="pane-clinics"><h2>Clinical: speech therapy, stroke and other rehab, ALS, any loss-of-speech center</h2><div class="cards" id="cards-clinics"></div><div class="wrap"><table id="tab-clinics"></table></div><p class="note" id="note-clinics"></p></div>
+
+  <div class="pane" id="pane-inputs">
+    <h2>Conversion inputs for the selected level (Frank's to set)</h2>
+    <p class="note">Buyer share: new one-time buyers each year as a share of the counted consumer market. Subscription attach: the share of all buyers to date who hold the Family Tether at year end. School seat share: new seats each year as a share of the counted school market. Clinic facility share: the share of facilities that have bought by that year, times seats per facility. Edit and every table recomputes; Reset puts the saved defaults back.</p>
+    <div class="years" id="cyears"></div>
+    <div class="grid" style="margin-top:12px">
+      <div class="card"><h3>Attach and seats</h3><div id="cother"></div></div>
+      <div class="card"><h3>Market inputs with no source</h3><div id="massume"></div></div>
+    </div>
+    <div class="tabs" style="position:static;margin-top:14px"><button class="quiet" id="reset" type="button">Reset to the saved defaults</button></div>
+  </div>
+</div>
+
+<script src="finance-model.js"></script>
+<script>
+(function () {
+  var inputs = null, market = null, saved = null, level = 'base', pane = 'market';
+  var msg = document.getElementById('msg');
+  function esc(x) { var s = document.createElement('span'); s.textContent = String(x == null ? '' : x); return s.innerHTML; }
+  function money(n) { return (n < 0 ? '(' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('en-US') + (n < 0 ? ')' : ''); }
+  function num(n) { return Math.round(n).toLocaleString('en-US'); }
+  function pct(x, d) { return (x * 100).toFixed(d == null ? 2 : d) + '%'; }
+  function prov(path) { return market.provenance[path] || market.provenance[path.split('.')[0]] || { status: 'assumption', note: 'No note.' }; }
+  function dot(p) { return '<span class="dot ' + esc(p.status) + '" title="' + esc(p.note) + '"></span>'; }
+  function standing(p) { return dot(p) + esc(p.status === 'verified' ? 'Verified' : p.status === 'document' ? 'From the document' : 'Assumption') + '<div class="note" style="margin-top:3px">' + esc(p.note) + '</div>'; }
+
+  document.getElementById('tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return; pane = b.getAttribute('data-pane');
+    Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function (x) { x.className = x === b ? 'on' : 'quiet'; });
+    Array.prototype.forEach.call(document.querySelectorAll('.pane'), function (p) { p.classList.toggle('on', p.id === 'pane-' + pane); });
+  });
+  document.querySelector('.row2').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return; level = b.getAttribute('data-level');
+    Array.prototype.forEach.call(document.querySelectorAll('.row2 button'), function (x) { x.className = x === b ? 'on' : 'quiet'; });
+    buildInputs(); render();
+  });
+
+  function renderMarket(size) {
+    document.getElementById('mcards').innerHTML = [[num(size.pop13), 'People 13 and over in the six countries'], [num(size.autism), 'Autistic and minimally verbal'], [num(size.aphasia), 'Living with aphasia'], [num(size.consumer), 'Counted consumer market'], [num(size.school), 'Counted school seats, US and England'], [num(size.clinicalFacilities), 'US inpatient rehab facilities']].map(function (c) { return '<div class="stat"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
+    document.querySelector('#mtab tbody').innerHTML = size.lines.map(function (l) { return '<tr><td>' + dot(prov('countries.' + l.key)) + esc(l.name) + '</td><td>' + num(l.pop13) + '</td><td>' + num(l.autism) + '</td><td>' + num(l.aphasia) + '</td><td class="hi">' + num(l.total) + '</td></tr>'; }).join('') + '<tr><td><strong>Six countries</strong></td><td>' + num(size.pop13) + '</td><td>' + num(size.autism) + '</td><td>' + num(size.aphasia) + '</td><td class="hi">' + num(size.consumer) + '</td></tr>';
+    var pv = market.prevalence, sh = market.shares;
+    document.getElementById('mnote').innerHTML = 'Autism: ' + dot(prov('prevalence.autismAdultRate')) + 'WHO, about 1 in 127 persons worldwide (2021), applied to adults; ' + dot(prov('prevalence.autismTeenUSRate')) + 'CDC, 1 in 31 eight-year-olds (2022), applied to US 13 to 17; ' + dot(prov('prevalence.minimallyVerbalShare')) + 'NIH-hosted study, about 30% minimally verbal. Aphasia: ' + dot(prov('prevalence.aphasiaUS')) + 'NIDCD, about 2 million in the US, the same rate per head applied elsewhere. Population 13 and over: ' + dot(prov('countries.us')) + 'US exact from the Census age file; ' + dot(prov('shares.age13plusOutsideUS')) + 'the other five at ' + pct(sh.age13plusOutsideUS, 0) + ' of their totals.';
+    var sc = market.schools, cl = market.clinical;
+    document.querySelector('#stab tbody').innerHTML = [
+      ['US students 6 to 21 under IDEA', num(sc.usIdea6to21), 'schools.usIdea6to21'], ['US students under the autism category', num(sc.usIdeaAutism), 'schools.usIdeaAutism'], ['Share who are 13 to 21', pct(sc.share13to21of6to21, 1), 'schools.share13to21of6to21'], ['Minimally verbal share', pct(pv.minimallyVerbalShare, 0), 'prevalence.minimallyVerbalShare'], ['US counted school seats', num(size.usSchool), 'schools.usIdeaAutism'],
+      ['England pupils with an EHC plan', num(sc.englandEhcPlans) + ', autism ' + pct(sc.englandEhcAutismShare, 1), 'schools.englandEhcPlans'], ['Share aged 13 and over', pct(sc.englandShare13plus, 0), 'schools.englandShare13plus'], ['England counted school seats', num(size.enSchool), 'schools.englandEhcPlans'],
+      ['US regular school districts', num(sc.usRegularDistricts), 'schools.usRegularDistricts'], ['Seats per district order', num(sc.seatsPerDistrict), 'schools.seatsPerDistrict']
+    ].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + standing(prov(r[2])) + '</td></tr>'; }).join('');
+    document.querySelector('#ctab tbody').innerHTML = [['US inpatient rehabilitation facilities, Medicare-certified', num(cl.usInpatientRehabFacilities), 'clinical.usInpatientRehabFacilities'], ['Seats per facility', num(cl.seatsPerFacility), 'clinical.seatsPerFacility']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + standing(prov(r[2])) + '</td></tr>'; }).join('');
+  }
+
+  function renderModel(key, ramp, R) {
+    var size = ramp.size;
+    var head, rows = [], run = 0, tot = { units: 0, sales: 0, expenses: 0, gross: 0, net: 0 };
+    if (key === 'all') head = ['Year', 'Buyers', 'Subs, year end', 'School seats', 'Clinic seats', 'Sales', 'Expenses', 'Gross', 'Net', 'Running net'];
+    else if (key === 'talker') head = ['Year', 'New buyers', 'Share of market', 'Subs, year end', 'Sales, app plus Tether', 'Expenses', 'Gross', 'Net', 'Running net'];
+    else if (key === 'schools') head = ['Year', 'New seats', 'Share of market', 'Districts', 'Sales', 'Expenses', 'Gross', 'Net', 'Running net'];
+    else head = ['Year', 'New seats', 'Facilities buying', 'Share of facilities', 'Sales', 'Expenses', 'Gross', 'Net', 'Running net'];
+    R.rows.forEach(function (r, i) {
+      var y = ramp.years[i], x, cells;
+      if (key === 'all') { x = { sales: r.gross, expenses: r.direct + r.overhead, gross: r.gross - r.direct, net: r.net }; cells = [num(r.buyers), num(r.subsEnd), num(r.districtSeats), num(r.clinicSeats)]; }
+      else if (key === 'talker') { var t = r.channels.talker, te = r.channels.tether; x = { sales: t.sales + te.sales, expenses: t.expenses + te.expenses, gross: t.gross + te.gross, net: t.net + te.net }; cells = [num(r.buyers), pct(y.buyerShare), num(r.subsEnd)]; }
+      else if (key === 'schools') { x = r.channels.schools; cells = [num(r.districtSeats), pct(y.schoolSeatShare), num(r.districts)]; }
+      else { x = r.channels.clinics; cells = [num(r.clinicSeats), num(r.clinics), pct(y.clinicFacilityShare, 1)]; }
+      run += x.net; tot.sales += x.sales; tot.expenses += x.expenses; tot.gross += x.gross; tot.net += x.net;
+      rows.push('<tr><td>Year ' + r.year + '</td>' + cells.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '<td>' + money(x.sales) + '</td><td class="neg">' + money(-x.expenses) + '</td><td>' + money(x.gross) + '</td><td class="hi">' + money(x.net) + '</td><td><strong>' + money(run) + '</strong></td></tr>');
+    });
+    rows.push('<tr><td><strong>5 years</strong></td>' + head.slice(1, head.length - 5).map(function () { return '<td></td>'; }).join('') + '<td>' + money(tot.sales) + '</td><td class="neg">' + money(-tot.expenses) + '</td><td>' + money(tot.gross) + '</td><td class="hi">' + money(tot.net) + '</td><td><strong>' + money(run) + '</strong></td></tr>');
+    document.getElementById('tab-' + key).innerHTML = '<thead><tr>' + head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody>';
+    var y5 = R.rows[4], cards;
+    if (key === 'all') cards = [[num(R.total.buyers), 'App buyers over five years'], [num(R.subsEndYear5), 'Subscribers at the end of Year 5'], [num(y5.districtSeats + y5.clinicSeats), 'Institutional seats sold in Year 5'], [money(tot.sales), 'Sales over five years'], [money(tot.net), 'Net over five years']];
+    else if (key === 'talker') cards = [[num(size.consumer), 'Counted consumer market'], [num(R.total.buyers), 'Buyers over five years'], [pct(R.total.buyers / size.consumer, 1), 'Of the market, after five years'], [num(R.subsEndYear5), 'Subscribers at the end of Year 5'], [money(tot.net), 'Net over five years']];
+    else if (key === 'schools') cards = [[num(size.school), 'Counted school seats'], [num(R.rows.reduce(function (t, r) { return t + r.districtSeats; }, 0)), 'Seats sold over five years'], [num(y5.districts), 'Districts buying in Year 5'], [money(tot.net), 'Net over five years']];
+    else cards = [[num(size.clinicalFacilities), 'US inpatient rehab facilities'], [num(y5.clinics), 'Facilities buying in Year 5'], [num(R.rows.reduce(function (t, r) { return t + r.clinicSeats; }, 0)), 'Seats sold over five years'], [money(tot.net), 'Net over five years']];
+    document.getElementById('cards-' + key).innerHTML = cards.map(function (c) { return '<div class="stat"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
+    var notes = {
+      all: 'Sales is what customers pay. Gross is sales minus the direct costs of those sales (the store\'s 15%, RevenueCat, refunds, texts, voice, alerts, acquisition). Net is gross minus overhead (Vercel, the Twilio number, Apple, Google, 10DLC, Codemagic, operating expenses). Expenses is both. Units sit beside every dollar.',
+      talker: 'Consumer sales are the one-time app at the working price plus the Family Tether on the average subscribers in the year. Overhead is shared out by this channel\'s share of sales. The share of market is new buyers that year over the counted market.',
+      schools: 'Seats at the volume price when 20 or more institutional seats sell in the year, else list; through Apple School Manager and Google Play, so the store\'s 15% applies. A district order is ' + num(market.schools.seatsPerDistrict) + ' seats on average (assumption). Districts here is seats over that.',
+      clinics: 'Therapists\' seats, priced at the school rate (Frank, 8 Sep). Counted facilities are the US inpatient rehab facilities only; outpatient practices, ALS clinics and other countries are upside until their counts are read.'
+    };
+    document.getElementById('note-' + key).textContent = notes[key] + ' Prices and costs are the finance defaults as of ' + inputs.asOf + '; nothing is confirmed until Frank confirms it.';
+  }
+
+  function render() {
+    var ramp = EZFinance.marketRamp(market, level);
+    var R = EZFinance.project(inputs, ramp);
+    renderMarket(ramp.size);
+    ['all', 'talker', 'schools', 'clinics'].forEach(function (k) { renderModel(k, ramp, R); });
+  }
+  function field(obj, key, label, step, path, fmt) {
+    var row = document.createElement('div'); row.className = 'in'; var p = prov(path);
+    row.innerHTML = '<span>' + esc(label) + '</span><input type="number" step="' + step + '" value="' + esc(fmt ? fmt(obj[key]) : obj[key]) + '">' + dot(p);
+    row.querySelector('input').addEventListener('input', function (e) { var v = parseFloat(e.target.value); if (!isNaN(v)) { obj[key] = fmt ? v / 100 : v; render(); } });
+    return row;
+  }
+  function buildInputs() {
+    var cv = market.conversion[level], Y = document.getElementById('cyears'); Y.innerHTML = '';
+    for (var i = 0; i < 5; i++) (function (i) {
+      var card = document.createElement('div'); card.className = 'card'; card.innerHTML = '<h3>Year ' + (i + 1) + '</h3>';
+      [['buyerShare', 'Buyer share, % of market'], ['schoolSeatShare', 'School seats, % of market'], ['clinicFacilityShare', 'Facilities buying, %']].forEach(function (f) {
+        var row = document.createElement('div'); row.className = 'in';
+        row.innerHTML = '<span>' + f[1] + '</span><input type="number" step="0.01" value="' + (cv[f[0]][i] * 100).toFixed(2) + '">' + dot(prov('conversion'));
+        row.querySelector('input').addEventListener('input', function (e) { var v = parseFloat(e.target.value); if (!isNaN(v)) { cv[f[0]][i] = v / 100; render(); } });
+        card.appendChild(row);
+      });
+      Y.appendChild(card);
+    })(i);
+    var O = document.getElementById('cother'); O.innerHTML = '';
+    O.appendChild(field(cv, 'subscriptionAttach', 'Subscription attach, % of buyers to date', '1', 'conversion', function (v) { return (v * 100).toFixed(0); }));
+    O.appendChild(field(market.schools, 'seatsPerDistrict', 'Seats per district order', '1', 'schools.seatsPerDistrict'));
+    O.appendChild(field(market.clinical, 'seatsPerFacility', 'Seats per facility', '1', 'clinical.seatsPerFacility'));
+    var A = document.getElementById('massume'); A.innerHTML = '';
+    A.appendChild(field(market.shares, 'age13plusOutsideUS', 'Aged 13 and over outside the US, %', '1', 'shares.age13plusOutsideUS', function (v) { return (v * 100).toFixed(0); }));
+    A.appendChild(field(market.prevalence, 'minimallyVerbalShare', 'Minimally verbal share of autism, %', '1', 'prevalence.minimallyVerbalShare', function (v) { return (v * 100).toFixed(0); }));
+    A.appendChild(field(market.schools, 'share13to21of6to21', 'US students who are 13 to 21, %', '1', 'schools.share13to21of6to21', function (v) { return (v * 100).toFixed(1); }));
+    A.appendChild(field(market.schools, 'englandShare13plus', 'England EHC pupils 13 and over, %', '1', 'schools.englandShare13plus', function (v) { return (v * 100).toFixed(0); }));
+  }
+  document.getElementById('f').addEventListener('submit', async function (ev) {
+    ev.preventDefault(); msg.textContent = 'Loading…';
+    try {
+      var r = await fetch('/api/finance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.getElementById('pw').value }) });
+      var j = await r.json();
+      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : 'Could not load.'; return; }
+      if (!j.market) { msg.textContent = 'The server has no market inputs yet.'; return; }
+      inputs = j.inputs; saved = JSON.stringify(j.market); market = JSON.parse(saved);
+      msg.textContent = ''; document.getElementById('view').hidden = false; document.getElementById('f').hidden = true;
+      document.getElementById('stamp').textContent = 'Inputs as of ' + market.asOf + '.';
+      buildInputs(); render();
+    } catch (e) { msg.textContent = 'Could not reach the server.'; }
+  });
+  document.getElementById('reset').addEventListener('click', function () { market = JSON.parse(saved); buildInputs(); render(); });
+})();
+</script>

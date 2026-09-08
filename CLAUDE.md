@@ -54,8 +54,9 @@ program for low-income/disability families.
   forms; if one changes, change the other. Since 7 Sep 2026 that means `finance.html` (the
   widget, family password) and `hub-model.html` (the model's view of the Master Hub, 8 Sep; `hub.html` is
   Frank's page as written, its Projections tab a channel widget on the same model; the page is
-  edited only on his word, never regenerated) with `finance-model.js` and `api/finance-defaults.json`, and the
-  plan document generated from the same formulas; `model-ezvoxa.html` is the older market build.
+  edited only on his word, never regenerated) and `market.html` (the market model, 8 Sep, inputs in `api/market-defaults.json`)
+  with `finance-model.js` and `api/finance-defaults.json`, and the
+  plan and market documents generated from the same formulas; `model-ezvoxa.html` is the older market build.
 
 ## Deploys
 
