@@ -45,6 +45,27 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## MUST DO (open items, newest first)
 
+- [ ] **api/plan.js: SUBSCRIPTION_PAUSED must not end the plan** (found
+      8 Sep on RevenueCat's own page: "Don't revoke access on this event.
+      Revoke access only on EXPIRATION with expiration reason
+      SUBSCRIPTION_PAUSED"). Today it is in RC_ENDS. Also: CANCELLATION
+      covers refunds, with cancel_reason CUSTOMER_SUPPORT among the values,
+      so the sales page can count RevenueCat refunds. One-line fixes; wait
+      for Frank's go.
+- [ ] **Market model (asked 8 Sep, "Answer before you run anything";
+      answered; sources read the same day, see LEDGER).** Not built.
+      Waiting on Frank's go and his rulings: the English-first line (six
+      countries recommended), NIH-hosted research as a source, and the
+      conversion assumptions.
+- [ ] **Frank's side, still blocked (8 Sep):** add to the allow list
+      bls.gov, *.bls.gov, cms.gov, *.cms.gov, population.un.org, *.un.org,
+      acquisition.gov, *.acquisition.gov, fdlrs.org, canada.ca,
+      *.canada.ca. asha.org, aihw.gov.au and faast.org answer with a bot
+      challenge and will need pasting. Google Play's country list
+      (support.google.com/googleplay/android-developer/answer/10532353)
+      and Apple's App Store country list render only in a browser; open
+      each and paste the list, or confirm the six countries are on both.
+
 - [ ] **Frank's ruling from the Master Hub (8 Sep):** how the Core Talker
       is sold (paid app or free app with a one-time purchase). Until then
       NON_RENEWING_PURCHASE turns the family plan on. Clinics are

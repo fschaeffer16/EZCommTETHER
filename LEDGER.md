@@ -731,6 +731,63 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   every .md, .yaml, and .docx path to /home. Never commit anything to this
   repo that must stay private even with that block: the repo deploys.
 
+## Market research figures, verified 8 Sep 2026 (read from each entity's own page after Frank opened the network)
+
+Population, all ages, latest official estimate: US 340,110,988 (2024, Census
+NC-EST2024 age file; 13 and over 288,872,301; 13 to 17 21,894,033); UK
+69,281,400 (mid-2024, ONS); Canada 41,651,653 (1 Jul 2025, Statistics
+Canada; 0 to 14 is 15.0%); Australia 27,801,023 (31 Dec 2025, ABS); New
+Zealand 5,324,700 (30 Jun 2025, Stats NZ); Ireland 5,458,600 (Apr 2025,
+CSO). Only the US figure has single-year ages in hand; the others are
+totals, and their 13-and-over share is not yet read.
+Prevalence: WHO, autism about 1 in 127 persons worldwide (2021); WHO,
+57 million living with dementia (2021), 93.8 million stroke cases (2021),
+over 8.5 million with Parkinson (2019), 1.3 billion with significant
+disability (16%). CDC, autism 1 in 31 eight-year-olds (2022 ADDM), more
+than 795,000 strokes a year in the US, about 5,775 babies a year born with
+Down syndrome, 214,110 TBI hospitalizations (2020). NIDCD (NIH), about 2
+million people in the US have aphasia and nearly 180,000 acquire it each
+year; 7.2% of children 3 to 17 had a voice, speech or language disorder in
+the past year. NIH-hosted research (Tager-Flusberg and Kasari 2013, PMC
+3869868): about 30% of children with autism remain minimally verbal;
+25 to 30% nonverbal or minimally verbal at kindergarten entry.
+Schools: NCES Digest table 204.30, 2022-23: 7,526,000 children 3 to 21
+served under IDEA, of whom autism 980,000 (13.0%), speech or language
+impairment 1,430,000, intellectual disability 434,000, multiple
+disabilities 126,000; table 204.70: 527,163 of the 7,525,941 are 3 to 5.
+England (DfE, 2026): 538,547 pupils with an EHC plan (6.0%), autism the
+most common need; 1,319,780 on SEN support.
+Costs: Vercel Pro $20 a month (vercel.com/pricing); Codemagic free plan
+500 macOS M2 build minutes a month, 1 parallel build (codemagic.io);
+ElevenLabs Starter $6 a month, Creator $22, Pro $99 (elevenlabs.io);
+RevenueCat nothing to $2,500 monthly tracked revenue then 1% (confirmed
+again from the page). Twilio: 10DLC registration fees exist, amounts on a
+help page that renders only in a browser; not read.
+RevenueCat webhook events, from its own "event types and fields" page:
+INITIAL_PURCHASE, RENEWAL, CANCELLATION (a subscription or non-renewing
+purchase was canceled OR REFUNDED), UNCANCELLATION, NON_RENEWING_PURCHASE,
+SUBSCRIPTION_PAUSED ("Don't revoke access on this event. Revoke access
+only on EXPIRATION with expiration reason SUBSCRIPTION_PAUSED"),
+EXPIRATION, BILLING_ISSUE, PRODUCT_CHANGE, SUBSCRIPTION_EXTENDED,
+REFUND_REVERSED, INVOICE_ISSUANCE, TRANSFER, TEMPORARY_ENTITLEMENT_GRANT,
+TEST, plus PRICE_INCREASE_CONSENT_*. cancel_reason values: UNSUBSCRIBE,
+BILLING_ERROR, DEVELOPER_INITIATED, PRICE_INCREASE, CUSTOMER_SUPPORT,
+UNKNOWN, SUBSCRIPTION_PAUSED. Our api/plan.js treats SUBSCRIPTION_PAUSED
+as an end; RevenueCat says not to. Fix needs Frank's go (DECISIONS).
+Roadmap: ATIA 2027 is January 22 to 24, 2027, and its own conference links
+point at Orlando. 2 CFR 200.1 (eCFR) defines the micro-purchase threshold
+as the amount set by the FAR at 48 CFR part 2; the dollar amount is on
+acquisition.gov, which is still blocked. Apple School Manager 50% at 20 or
+more copies verified earlier the same day.
+Still blocked or unreadable on 8 Sep: asha.org, aihw.gov.au, faast.org
+(bot challenge); bls.gov, cms.gov, population.un.org, acquisition.gov,
+fdlrs.org, canada.ca, nia.nih.gov (not on the allow list or human
+verification); Google Play's country list and Apple's App Store country
+list (pages found but the lists did not come through; store availability
+in the six English-first countries is NOT yet verified); CDC's cerebral
+palsy prevalence, ALS registry counts and Down syndrome adult counts
+(pages moved; not found).
+
 ## Pages and names
 
 - `hub.html` (8 Sep 2026): Frank's Master Hub page as written, family
