@@ -776,8 +776,17 @@ UNKNOWN, SUBSCRIPTION_PAUSED. Our api/plan.js treats SUBSCRIPTION_PAUSED
 as an end; RevenueCat says not to. Fix needs Frank's go (DECISIONS).
 Roadmap: ATIA 2027 is January 22 to 24, 2027, and its own conference links
 point at Orlando. 2 CFR 200.1 (eCFR) defines the micro-purchase threshold
-as the amount set by the FAR at 48 CFR part 2; the dollar amount is on
-acquisition.gov, which is still blocked. Apple School Manager 50% at 20 or
+as the amount set by the FAR at 48 CFR part 2; FAR 2.101 (acquisition.gov,
+FAC 2026-01, effective 13 Mar 2026): "Micro-purchase threshold means
+$15,000" with exceptions for construction and a few others. The pasted
+hub's $10,000 is out of date.
+Stores: Google Play sells paid apps, in-app purchases and subscriptions in
+all six English-first countries (Google's supported locations page, 15 Dec
+2025 version, pasted by Frank 8 Sep). Apple's list still to be read.
+Clinical: 1,222 Medicare-certified inpatient rehabilitation facilities in
+the US (CMS Provider Data Catalog, dataset 7t8x-u3ir, 8 Sep 2026).
+England: one in three pupils with an EHC plan has autism as the primary
+need (33.5%), 22.1% speech, language and communication needs (DfE). Apple School Manager 50% at 20 or
 more copies verified earlier the same day.
 Still blocked or unreadable on 8 Sep: asha.org, aihw.gov.au, faast.org
 (bot challenge); bls.gov, cms.gov, population.un.org, acquisition.gov,

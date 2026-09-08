@@ -106,12 +106,16 @@ function peekEnvironment(signedPayload) {
 }
 
 // ---- RevenueCat events (both stores) ----
-// Event names from RevenueCat's webhook documentation, read 5 Sep 2026 via
-// search results; the page itself was not opened from here. Confirm the
-// list on RevenueCat's "Event Types and Fields" page before switch-on.
-const RC_STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER'];
-const RC_ENDS = ['EXPIRATION', 'SUBSCRIPTION_PAUSED'];
-const RC_KEEPS = ['CANCELLATION', 'BILLING_ISSUE'];   // still paid until the expiry the store gave
+// Event names read from RevenueCat's own "Event Types and Fields" page on
+// 8 Sep 2026. Its rule for a pause: "Don't revoke access on this event.
+// Revoke access only on EXPIRATION with expiration reason
+// SUBSCRIPTION_PAUSED." So a pause keeps the family paid to the expiry the
+// store gave, like a cancellation; only EXPIRATION ends it (Frank's go, 8 Sep).
+// The same page: CANCELLATION also covers refunds, with cancel_reason
+// CUSTOMER_SUPPORT among its values; the sales page counts those as refunds.
+const RC_STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER', 'SUBSCRIPTION_EXTENDED'];
+const RC_ENDS = ['EXPIRATION'];
+const RC_KEEPS = ['CANCELLATION', 'BILLING_ISSUE', 'SUBSCRIPTION_PAUSED'];   // still paid until the expiry the store gave
 async function rcFindCode(ev) {
   const ids = [ev.app_user_id, ev.original_app_user_id].concat(Array.isArray(ev.aliases) ? ev.aliases : []);
   for (const id of ids) {
@@ -139,7 +143,8 @@ async function handleRevenueCat(req, res, body) {
     }
     const code = await rcFindCode(ev);
     const price = typeof ev.price_in_purchased_currency === 'number' ? Math.round(ev.price_in_purchased_currency * 1000) : (typeof ev.price === 'number' ? Math.round(ev.price * 1000) : null);
-    await logEvent({ at: Date.now(), store: 'revenuecat', via: String(ev.store || '').slice(0, 24), type, subtype: '', sandbox, code: code ? mask(code) : '', productId: String(ev.product_id || '').slice(0, 80), price, currency: price !== null ? String(ev.currency || 'USD').slice(0, 8) : '', expiresAt: ev.expiration_at_ms ? Number(ev.expiration_at_ms) : null, txn: '', matched: code ? 'token' : 'none', uuid: evId });
+    const subtype = String(ev.cancel_reason || ev.expiration_reason || '').slice(0, 32);   // RevenueCat's reason fields, when present
+    await logEvent({ at: Date.now(), store: 'revenuecat', via: String(ev.store || '').slice(0, 24), type, subtype, sandbox, code: code ? mask(code) : '', productId: String(ev.product_id || '').slice(0, 80), price, currency: price !== null ? String(ev.currency || 'USD').slice(0, 8) : '', expiresAt: ev.expiration_at_ms ? Number(ev.expiration_at_ms) : null, txn: '', matched: code ? 'token' : 'none', uuid: evId });
     if (type === 'TEST') return res.status(200).json({ ok: true, test: true });
     if (!code) return res.status(200).json({ ok: true, ignored: 'no_family' });
     const fam = await kvGetJson('fam:' + code);
@@ -221,13 +226,14 @@ async function dashboard() {
     const row = months[m] || (months[m] = { month: m, new: 0, renewals: 0, cancellations: 0, expirations: 0, refunds: 0, reported: {} });
     if (e.type === 'SUBSCRIBED' || e.type === 'INITIAL_PURCHASE') row.new++;
     else if (e.type === 'DID_RENEW' || e.type === 'RENEWAL') row.renewals++;
+    else if (e.type === 'CANCELLATION' && e.subtype === 'CUSTOMER_SUPPORT') row.refunds++;   // RevenueCat: a refund arrives as CANCELLATION with this reason (its page, 8 Sep 2026)
     else if ((e.type === 'DID_CHANGE_RENEWAL_STATUS' && e.subtype === 'AUTO_RENEW_DISABLED') || e.type === 'CANCELLATION') row.cancellations++;
     else if (e.type === 'EXPIRED' || e.type === 'GRACE_PERIOD_EXPIRED' || e.type === 'EXPIRATION') row.expirations++;
-    else if (e.type === 'REFUND' || e.type === 'REVOKE') row.refunds++;   // Apple's names; RevenueCat's refund event name not confirmed from its page
+    else if (e.type === 'REFUND' || e.type === 'REVOKE') row.refunds++;   // Apple's names
     if ((e.type === 'SUBSCRIBED' || e.type === 'DID_RENEW' || e.type === 'OFFER_REDEEMED' || e.type === 'INITIAL_PURCHASE' || e.type === 'RENEWAL') && typeof e.price === 'number' && e.currency && !e.sandbox) {
       row.reported[e.currency] = (row.reported[e.currency] || 0) + e.price;   // milliunits, as Apple reported them
     }
-    if ((e.type === 'REFUND') && typeof e.price === 'number' && e.currency && !e.sandbox) {
+    if ((e.type === 'REFUND' || (e.type === 'CANCELLATION' && e.subtype === 'CUSTOMER_SUPPORT')) && typeof e.price === 'number' && e.currency && !e.sandbox) {
       row.reported[e.currency] = (row.reported[e.currency] || 0) - e.price;
     }
   }

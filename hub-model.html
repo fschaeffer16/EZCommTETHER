@@ -115,7 +115,7 @@
     <ul>
       <li><strong>SOS is never locked.</strong> The sketch's EXPIRATION comment says it "locks remote sync and SOS texting". SOS Family Alert is free, final (Frank, 2 Sep 2026), and <code>api/sos.js</code> never reads the plan. An expiry locks everyday texting and the natural voice. The talker keeps talking.</li>
       <li><strong>A lifetime Core Talker is not something our server grants.</strong> The sketch grants it on NON_RENEWING_PURCHASE. The one-time app purchase belongs to the store and the buyer's store account; our server only ever tracks the family's Tether plan. Today NON_RENEWING_PURCHASE turns the family plan on, which is right only while the subscription is the sole product. If the Core Talker is ever sold as a one-time in-app purchase inside a free app, that line has to change, and it must not turn the Tether on. Frank's call on how the Talker is sold decides it; not built either way.</li>
-      <li><strong>Refunds.</strong> The sketch refunds on CANCELLATION when <code>cancel_reason</code> is CUSTOMER_SUPPORT. Today CANCELLATION keeps the plan to the expiry the store gave, and no refund branch exists, because RevenueCat's event names and that field could not be read from revenuecat.com (blocked from here). The sales page counts refunds under Apple's names only. <span class="chip blocked">blocked</span> Way in: on revenuecat.com search "webhook event types and fields", then paste the event list and the CANCELLATION fields.</li>
+      <li><strong>Refunds.</strong> RevenueCat's own page (read 8 Sep) confirms a refund arrives as CANCELLATION with <code>cancel_reason</code> CUSTOMER_SUPPORT, as the sketch had it. The sales page now counts those as refunds. The plan itself keeps the expiry the event carries, so a refunded period ends when the store says it ends. Also from that page: a pause (SUBSCRIPTION_PAUSED) must not remove access; only EXPIRATION does. Fixed the same day on Frank's go.</li>
       <li><strong>Endpoint.</strong> The sketch hard-codes app.ezvoxa.com. Until a release is cut, the live endpoint is the family lane's, and that is the URL to give RevenueCat first.</li>
     </ul>
     <h3>The code's own event lists</h3>
@@ -191,9 +191,9 @@
 
   function renderHooks() {
     // Mirrors the constants in api/plan.js. If those change, change these.
-    var STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER'];
-    var ENDS = ['EXPIRATION', 'SUBSCRIPTION_PAUSED'];
-    var KEEPS = ['CANCELLATION', 'BILLING_ISSUE'];
+    var STARTS = ['INITIAL_PURCHASE', 'RENEWAL', 'UNCANCELLATION', 'PRODUCT_CHANGE', 'NON_RENEWING_PURCHASE', 'TRANSFER', 'SUBSCRIPTION_EXTENDED'];
+    var ENDS = ['EXPIRATION'];
+    var KEEPS = ['CANCELLATION', 'BILLING_ISSUE', 'SUBSCRIPTION_PAUSED'];
     var rows = [];
     STARTS.forEach(function (t) { rows.push([t, 'Plan active, source store, to the expiry the event carries.', 'Unlocks everyday texting and the natural voice on every phone in the family. Nothing changes for SOS or the talker.']); });
     KEEPS.forEach(function (t) { rows.push([t, 'Plan left as it is; the expiry the event carries is recorded.', 'The family keeps what it paid for until that date.']); });
@@ -201,7 +201,7 @@
     rows.push(['TEST', 'Logged only.', 'Shows on the sales page as a test; never counted as money.']);
     rows.push(['anything else', 'Logged only; the plan is left alone.', 'Nothing.']);
     document.querySelector('#hooktab tbody').innerHTML = rows.map(function (r) { return '<tr><td><code>' + esc(r[0]) + '</code></td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('');
-    document.getElementById('hookcode').textContent = "// api/plan.js, as deployed\nconst RC_STARTS = " + JSON.stringify(STARTS) + ";\nconst RC_ENDS = " + JSON.stringify(ENDS) + ";\nconst RC_KEEPS = " + JSON.stringify(KEEPS) + ";   // still paid until the expiry the store gave\n\n// A running hardship grant (source: manual) is never overridden by a store event.\n// Event names were read via search results, not from RevenueCat's page; confirm before switch-on.";
+    document.getElementById('hookcode').textContent = "// api/plan.js, as deployed\nconst RC_STARTS = " + JSON.stringify(STARTS) + ";\nconst RC_ENDS = " + JSON.stringify(ENDS) + ";\nconst RC_KEEPS = " + JSON.stringify(KEEPS) + ";   // still paid until the expiry the store gave\n\n// A running hardship grant (source: manual) is never overridden by a store event.\n// Event names and the pause rule read from RevenueCat's own page, 8 Sep 2026.";
     fetch('/api/plan').then(function (r) { return r.json(); }).then(function (j) {
       var c = (j && j.configured) || {};
       document.getElementById('health').innerHTML = 'Live check just now: RevenueCat secret ' + (c.revenuecat ? '<b>set</b>' : '<b>not set</b>, so the endpoint refuses every RevenueCat event until it is') + '; family storage ' + (c.storage ? 'reachable' : 'not configured') + '.';

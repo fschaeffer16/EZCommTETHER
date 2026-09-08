@@ -45,13 +45,12 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## MUST DO (open items, newest first)
 
-- [ ] **api/plan.js: SUBSCRIPTION_PAUSED must not end the plan** (found
-      8 Sep on RevenueCat's own page: "Don't revoke access on this event.
-      Revoke access only on EXPIRATION with expiration reason
-      SUBSCRIPTION_PAUSED"). Today it is in RC_ENDS. Also: CANCELLATION
-      covers refunds, with cancel_reason CUSTOMER_SUPPORT among the values,
-      so the sales page can count RevenueCat refunds. One-line fixes; wait
-      for Frank's go.
+- [x] ~~api/plan.js: SUBSCRIPTION_PAUSED must not end the plan~~ Done
+      8 Sep on Frank's go ("ok so go on the RevenueCat part"): a pause now
+      keeps the family paid to the expiry the store gave, only EXPIRATION
+      ends it; SUBSCRIPTION_EXTENDED counts as a start; a CANCELLATION
+      with cancel_reason CUSTOMER_SUPPORT is counted as a refund on the
+      sales page and its price taken off the reported total. Tests pass.
 - [ ] **Market model (asked 8 Sep, "Answer before you run anything";
       answered; sources read the same day, see LEDGER).** Not built.
       Waiting on Frank's go and his rulings: the English-first line (six
@@ -148,6 +147,19 @@ a dated line saying it was reversed. Dates are the day it happened.
       twilio.com and paste me what the page says. (5 Sep)
 
 ## DECISIONS (newest first)
+
+- **8 Sep 2026. Frank's rulings for the market model.** The six
+  English-first countries (US, UK, Ireland, Canada, Australia, New
+  Zealand) are the launch market; every other country is "uncounted
+  upside" ("Uncounted upside is fine"). NIH-hosted research counts as a
+  source ("NIH figures are fine"). Undiagnosed and wrongly diagnosed
+  people: no source gives a multiplier, so they are named as an uncounted
+  upside, not counted; symptom-based counts (NIDCD) are the cross-check.
+  Google Play availability in all six countries verified from the page
+  Frank pasted (Google's "Supported locations for distribution", 15 Dec
+  2025 version). Frank on RevenueCat's pause rule: "Wouldn't we rather
+  pause and give them a chance to pay than to expire them immediately?"
+  Yes; fixed on his go.
 
 - **8 Sep 2026. Channel widget in Frank's Master Hub, on his ask.** Frank:
   "I would just like a better widget. Can you fix it to break out each
