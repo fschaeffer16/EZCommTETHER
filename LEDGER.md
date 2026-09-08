@@ -830,6 +830,43 @@ education discount enabled so 20 or more copies through Apple School
 Manager cost $124.99 each (developer.apple.com/education, verified 8 Sep).
 Open: what Pro adds over the consumer app; a matching Google Play listing.
 
+## St. Lucie Public Schools purchasing rules, from the district's own documents (read 8 Sep 2026)
+
+Source: www.stlucie.k12.fl.us, Purchasing Guidelines (one page) and the
+Purchasing Procedures Manual adopted by the School Board 8 Jan 2019, both
+PDFs under /pdf/departments/purchasing/. The district's site is
+stlucie.k12.fl.us (stlucieschools.org forwards there); its board agendas
+live on BoardDocs, which blocks non-browser requests.
+Thresholds by requisition total: up to $10,000.00, "use good business
+practices", no written quotes required though two or more "may be
+necessary"; $10,000.01 to $49,999.99, three written quotes; $50,000.01 or
+more, formal sealed solicitation, allow 60 days for a bid and 90 for an
+RFP; sole source needs a sole source letter from the vendor, with Board
+approval at $50,000 or more. Professional or consultant contracts over
+$100,000 need Board approval.
+Exemption the guidelines cite, Florida Administrative Rule 6A-1.012:
+educational services and copyrighted materials, "computer software"
+named, are exempt from competitive solicitation when purchased directly
+from the producer or publisher, the owner of the copyright, or an
+exclusive agent in the state. EZ Voice LLC is the copyright owner of
+EZvoxa. The manual's own sole source example: "Apple Computer sells its
+products directly under its K-12 pricing schedule."
+Becoming a vendor: online Vendor Application at
+stlucie.k12.fl.us/departments/purchasing/vendor-application/ with a W-9
+and the district's Insurance/Hold Harmless Agreement with proof of
+insurance attached; purchasing@stlucieschools.org for the rest; the
+district issues electronic purchase orders to one designated email
+address; Accounts Payable pays within 45 days of an approved invoice
+carrying the PO number. Bids are posted on Bonfire.
+Public records: Records Custodian, St. Lucie Public Schools Legal
+Department, 9461 Brandywine Lane, Port St. Lucie, FL 34986;
+prr@stlucieschools.org; (772) 429-5546.
+What this means for EZvoxa Pro at $124.99 a seat: an order up to 80
+seats ($9,999) needs no quotes at all; up to 400 seats ($49,999) needs
+three quotes unless bought direct from us under the software exemption;
+nothing under $50,000 goes to the Board. The pasted hub's "$10,000"
+figure was St. Lucie's quote line, not the federal threshold.
+
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
 Apple's own store search and listing pages, so verified. One-time apps:
