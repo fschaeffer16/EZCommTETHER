@@ -151,6 +151,17 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. Evan's name was still in the template's own text; fixed
+  without asking, per the rule.** Found while preparing the teacher link:
+  six Settings hints in demo.html said "Evan hears it when he taps",
+  "load Evan's board", "Evan's phone plays voice messages", "Move a
+  button Evan uses a lot", the phone-role picker offered "Evan's", and two
+  helpers fell back to the name 'Evan'. All now use the talker's own name
+  from Settings ("Name" until one is typed). Template build 2026.09.08.1.
+  Code comments that mention Evan remain; they are not shown to anyone.
+  The teacher link is the template itself, demo.html on the family lane,
+  which carries no Evan board, art or contacts.
+
 - **8 Sep 2026. "If you have the document use the document."** Frank's
   rule for the market model, after search-engine summaries he pasted
   turned out wrong (England EHC 13 and over claimed at 80%, actual 29.9%

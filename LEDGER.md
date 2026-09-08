@@ -824,6 +824,10 @@ palsy prevalence, ALS registry counts and Down syndrome adult counts
 
 ## Pages and names
 
+- Template build 2026.09.08.1 (demo.html, 8 Sep 2026): Evan's name removed
+  from six Settings hints, the phone-role picker and two name fallbacks;
+  the talker's own name from Settings is used everywhere. See DECISIONS.
+
 - `market.html` (8 Sep 2026): the market model, family password: the
   counted market with sources, consumer, school district and clinical
   models plus all combined, Low/Base/High conversion, editable inputs.

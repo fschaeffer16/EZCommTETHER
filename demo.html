@@ -3277,7 +3277,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:#E50914;flex:1;min-width:0;">Netflix</div>
           <div onClick="{{ gearNetflix }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
-        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type the show name under each picture. Evan hears it when he taps. Tap <b>+</b> to add a show.</div></sc-if>
+        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type the show name under each picture. {{ talkerName }} hears it on a tap. Tap <b>+</b> to add a show.</div></sc-if>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
             <sc-for list="{{ netflixSlots }}" as="w" hint-placeholder-count="16">
@@ -3302,7 +3302,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:#113CCF;flex:1;min-width:0;">Disney+</div>
           <div onClick="{{ gearDisney }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
-        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type the show name under each picture. Evan hears it when he taps. Tap <b>+</b> to add a show.</div></sc-if>
+        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type the show name under each picture. {{ talkerName }} hears it on a tap. Tap <b>+</b> to add a show.</div></sc-if>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
             <sc-for list="{{ disneySlots }}" as="w" hint-placeholder-count="14">
@@ -3327,7 +3327,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="font-size:24px;font-weight:800;color:#1F9E6E;flex:1;min-width:0;">Sports</div>
           <div onClick="{{ gearSports }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
-        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type a name under each picture. Evan hears it when he taps. Tap <b>+</b> to add one.</div></sc-if>
+        <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:var(--sub,#8C857A);padding:0 18px 8px;line-height:1.4;">Type a name under each picture. {{ talkerName }} hears it on a tap. Tap <b>+</b> to add one.</div></sc-if>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
             <sc-for list="{{ sportsPicks }}" as="p" hint-placeholder-count="8">
@@ -3505,7 +3505,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <sc-if value="{{ showFamilySetup }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:14px;background:var(--card,#fff);border:1.5px solid #C9DBFF;border-radius:16px;padding:14px 15px;">
               <div style="font-size:15px;font-weight:800;color:var(--ink,#1A1714);margin-bottom:4px;">Is this one of our phones?</div>
-              <div style="font-size:12.5px;font-weight:600;color:var(--sub,#8C857A);line-height:1.4;margin-bottom:10px;">Type the family key to load Evan's board on this phone.</div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--sub,#8C857A);line-height:1.4;margin-bottom:10px;">Type the family key to load {{ talkerName }}'s board on this phone.</div>
               <input defaultValue="" onChange="{{ onFamilyKey }}" placeholder="Family key" style="box-sizing:border-box;width:100%;padding:12px 13px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:16px;font-weight:700;color:var(--ink,#1A1714);background:var(--bg,#FBFAF7);font-family:inherit;" />
               <button onClick="{{ applyFamilyKey }}" style="width:100%;margin-top:10px;background:#3B82F6;color:#fff;border:none;border-radius:14px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;">Use this phone as ours</button>
               <sc-if value="{{ familyKeyErr }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;font-size:13px;font-weight:700;color:#C0473A;">That key isn't right.</div></sc-if>
@@ -3597,7 +3597,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <sc-if value="{{ setOpen_phone }}" hint-placeholder-val="{{ false }}">
 
           <div style="background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(20,16,12,.05);">
-            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? Evan's phone plays voice messages; anyone else listed here can record them. The list is everyone on the Family board set to get emergency alerts. This stays on this phone and is never synced.</div>
+            <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin-bottom:11px;line-height:1.4;">Whose phone is this? {{ talkerName }}'s phone plays voice messages; anyone else listed here can record them. The list is everyone on the Family board set to get emergency alerts. This stays on this phone and is never synced.</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
               <sc-for list="{{ roleOptions }}" as="r" hint-placeholder-count="5">
                 <div onClick="{{ r.onTap }}" style="text-align:center;border-radius:13px;padding:13px 6px;font-size:15px;font-weight:800;cursor:pointer;background:{{ r.bg }};color:{{ r.ink }};border:2px solid {{ r.border }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" style-active="transform:scale(.96)">{{ r.label }}</div>
@@ -3725,7 +3725,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </div>
           <sc-if value="{{ setOpen_arrange }}" hint-placeholder-val="{{ false }}">
 
-          <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:0 2px 12px;line-height:1.4;">Move a button Evan uses a lot nearer the top.</div>
+          <div style="font-size:12.5px;color:var(--sub,#8C857A);font-weight:600;margin:0 2px 12px;line-height:1.4;">Move a button {{ talkerName }} uses a lot nearer the top.</div>
           <sc-for list="{{ settingsHome }}" as="t" hint-placeholder-count="6">
             <div style="display:flex;align-items:center;gap:11px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:14px;padding:10px 12px;margin-bottom:8px;">
               <span style="font-size:22px;flex:none;">{{ t.emoji }}</span>
@@ -5891,7 +5891,7 @@ class Component extends DCLogic {
   // What identifies the family to the server: the code, or our password.
   authBody() { return this.hasFamily() ? { code: this.familyCode() } : { password: this.data().password }; }
   // The name texts and alerts go out under.
-  talkerName() { return this.isTemplateMode() ? this.ownerName() : 'Evan'; }
+  talkerName() { return this.ownerName(); }   // the template never carries a fixed name
   phoneLabel(role) { return role === 'user' ? (this.talkerName() + "'s phone") : "Parent's phone"; }
   famErrMsg(j) {
     const e = j && j.error;
@@ -6139,7 +6139,7 @@ class Component extends DCLogic {
   ownerName() {
     const n = (this.data().ownerName || '').trim();
     if (n) return n;
-    return this.isEvanProfile() ? 'Evan' : 'Name';
+    return 'Name';   // the template never falls back to a real person's name
   }
   // No photo set. Evan's phones keep the picture that has always been there;
   // a phone somebody bought gets the same initials disc the people boards use.
@@ -6766,7 +6766,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.06.2'; }
+  APP_BUILD() { return '2026.09.08.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -8436,7 +8436,7 @@ class Component extends DCLogic {
       }),
 
       // Whose phone this is, and the recorder that follows from it.
-      roleOptions: [['evan', "Evan's"]].concat(this.voiceSenders().map((p) => [p.id, p.name])).map(([v, label]) => {
+      roleOptions: [['evan', this.talkerName() + "'s"]].concat(this.voiceSenders().map((p) => [p.id, p.name])).map(([v, label]) => {
         const on = this.deviceRole() === v;
         return { label, bg: on ? '#4F46E5' : 'var(--card,#fff)', ink: on ? '#fff' : 'var(--ink,#1A1714)', border: on ? '#4F46E5' : 'var(--slot,#E6E1D8)', onTap: () => this.setDeviceRole(v) };
       }),
