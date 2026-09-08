@@ -10,15 +10,18 @@
   },
   "uk": {
    "name": "United Kingdom",
-   "total": 69281400
+   "total": 69281437,
+   "age13plus": 59222071
   },
   "ca": {
    "name": "Canada",
-   "total": 41651653
+   "total": 41651653,
+   "age13plus": 35403905
   },
   "au": {
    "name": "Australia",
-   "total": 27801023
+   "total": 27611026,
+   "age13plus": 23482317
   },
   "nz": {
    "name": "New Zealand",
@@ -26,7 +29,8 @@
   },
   "ie": {
    "name": "Ireland",
-   "total": 5458600
+   "total": 5525600,
+   "age13plus": 4684040
   }
  },
  "shares": {
@@ -143,27 +147,27 @@
   },
   "countries.uk": {
    "status": "verified",
-   "note": "ONS mid-2024 estimate, 69,281,400. Read 8 Sep 2026."
+   "note": "ONS mid-2024 estimates file (mye24tablesuk.xlsx, MYE2 Persons by single year of age): all ages 69,281,437; 13 and over 59,222,071 (85.5%). Read 8 Sep 2026."
   },
   "countries.ca": {
    "status": "verified",
-   "note": "Statistics Canada, 41,651,653 on 1 July 2025; 0 to 14 is 15.0% of the population. Read 8 Sep 2026."
+   "note": "Statistics Canada, The Daily, 24 Sep 2025: population 41,651,653 on 1 July 2025; 0 to 14 is 15.0%. The figure used is 15 and over, 85.0%; 13 and 14 year olds are not added because the single-age table renders only in a browser, so the count is slightly low."
   },
   "countries.au": {
    "status": "verified",
-   "note": "Australian Bureau of Statistics, 27,801,023 at 31 December 2025. Read 8 Sep 2026."
+   "note": "Australian Bureau of Statistics, National, state and territory population, table 59, population by single year of age, June 2025: all ages 27,611,026; 13 and over 23,482,317 (85.1%). Read 8 Sep 2026. The December 2025 headline total is 27,801,023."
   },
   "countries.nz": {
    "status": "verified",
-   "note": "Stats NZ, 5,324,700 at 30 June 2025. Read 8 Sep 2026."
+   "note": "Stats NZ, 5,324,700 at 30 June 2025. Read 8 Sep 2026. The age split is not in hand: the release's tables render only in a browser, so the 85% placeholder share applies to New Zealand alone."
   },
   "countries.ie": {
    "status": "verified",
-   "note": "Central Statistics Office, 5,458,600 in April 2025. Read 8 Sep 2026."
+   "note": "Central Statistics Office data service, table PEA01, April 2026 estimate: all ages 5,525,600; 15 and over 4,533,200; 10 to 14 377,100. 13 and over taken as 15 and over plus two fifths of 10 to 14, 4,684,040 (84.8%). Read 8 Sep 2026."
   },
   "shares.age13plusOutsideUS": {
    "status": "assumption",
-   "note": "Share of the population aged 13 and over in the five countries outside the US. Canada's own figure is 85.0% aged 15 and over (Statistics Canada); the same share is applied to the UK, Australia, New Zealand and Ireland until their age tables are read. The US uses its exact count."
+   "note": "Share aged 13 and over where a country's own age table is not in hand. After 8 Sep this applies only to New Zealand. The four countries with their own tables came out at 85.5% (UK), 85.0% (Canada, 15 and over), 85.1% (Australia) and 84.8% (Ireland), so the placeholder is in line."
   },
   "prevalence.autismAdultRate": {
    "status": "verified",

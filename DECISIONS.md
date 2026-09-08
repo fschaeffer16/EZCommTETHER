@@ -55,8 +55,8 @@ a dated line saying it was reversed. Dates are the day it happened.
       NIH ok, undiagnosed as upside): `market.html`, `api/market-defaults.json`,
       `marketSize` and `marketRamp` in `finance-model.js`, and "EZvoxa
       Market Model and Business Plan.docx". Still owed: Frank's own
-      conversion levels; age tables for four
-      countries; clinical counts beyond US inpatient rehab; special
+      conversion levels; New Zealand's age table (the other four are in);
+      clinical counts beyond US inpatient rehab; special
       education outside the US and England.
 - [ ] **Frank's side, still blocked (8 Sep):** add to the allow list
       bls.gov, *.bls.gov, cms.gov, *.cms.gov, population.un.org, *.un.org,

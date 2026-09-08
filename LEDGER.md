@@ -738,8 +738,15 @@ NC-EST2024 age file; 13 and over 288,872,301; 13 to 17 21,894,033); UK
 69,281,400 (mid-2024, ONS); Canada 41,651,653 (1 Jul 2025, Statistics
 Canada; 0 to 14 is 15.0%); Australia 27,801,023 (31 Dec 2025, ABS); New
 Zealand 5,324,700 (30 Jun 2025, Stats NZ); Ireland 5,458,600 (Apr 2025,
-CSO). Only the US figure has single-year ages in hand; the others are
-totals, and their 13-and-over share is not yet read.
+CSO). Aged 13 and over, from the offices' own age tables (8 Sep,
+later the same day): UK 59,222,071 of 69,281,437 (ONS mye24tablesuk.xlsx,
+85.5%); Australia 23,482,317 of 27,611,026 at June 2025 (ABS table 59,
+85.1%); Ireland 4,684,040 of 5,525,600 at April 2026 (CSO PxStat PEA01:
+15 and over 4,533,200 plus two fifths of the 10 to 14 group, 84.8%);
+Canada taken at its published 85.0% aged 15 and over (StatCan Daily);
+New Zealand still at the 85% placeholder, its tables render only in a
+browser. World Population Review, which Frank screenshotted, is an
+aggregator and is not used.
 Prevalence: WHO, autism about 1 in 127 persons worldwide (2021); WHO,
 57 million living with dementia (2021), 93.8 million stroke cases (2021),
 over 8.5 million with Parkinson (2019), 1.3 billion with significant
