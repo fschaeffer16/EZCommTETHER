@@ -118,6 +118,14 @@ a dated line saying it was reversed. Dates are the day it happened.
   and counts buyers per copy, not per family; the pricing session and a
   family-shaped rebuild of the model are owed, model and document
   updated together (CLAUDE.md rule).
+- **7 Sep 2026. RevenueCat is back on the table, by Frank:** "By the way, I
+  looked into it more and I am good using RevenueCat." This reverses the
+  5 Sep "go direct" decision, which stays on record below. Not yet a build
+  order; described to him what restoring the RevenueCat path entails (the
+  5 Sep bridge and webhook from history, Android covered by it, the Swift
+  store plugin unused, the sales page fed by RevenueCat events). His fee
+  figure is his own reading; not read from RevenueCat's page here.
+  Awaiting his go.
 - **7 Sep 2026. First business plan document.** Frank asked for "all the
   business plan and projections we have so far." None existed in the
   repository, ever; the only projections were the interactive model
