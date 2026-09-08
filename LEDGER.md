@@ -822,6 +822,24 @@ in the six English-first countries is NOT yet verified); CDC's cerebral
 palsy prevalence, ALS registry counts and Down syndrome adult counts
 (pages moved; not found).
 
+## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
+
+Apple's own store search and listing pages, so verified. One-time apps:
+Proloquo2Go (AssistiveWare) $249.99, plus a $149.99 Gateway vocabulary
+in-app purchase; TouchChat HD (Prentke Romich) $149.99, the WordPower
+edition $299.99; LAMP Words For Life (Prentke Romich) $299.99; Avaz AAC
+Lifetime Edition $299.99. Subscription apps, free to download: Proloquo
+(AssistiveWare's newer app) $9.99 a month or $99.99 a year; Avaz AAC
+$9.99 a month, $99.99 a year, lifetime in-app $199.99. CoughDrop: free to
+download, its in-app prices did not come through. TD Snap, Speak for
+Yourself and GoTalk NOW: the search returned nothing usable. Frank's
+recollection was "the cheapest competition is like 249.99"; the cheapest
+one-time app is TouchChat HD at $149.99, and the newest apps are
+subscription only at exactly our Tether numbers. EZvoxa's working prices
+($99.99 one-time, $9.99 a month or $99.99 a year) sit below every
+one-time competitor and level with the subscription ones. Prices still
+not confirmed by Frank.
+
 ## Pages and names
 
 - Template build 2026.09.08.2 (demo.html, 8 Sep 2026): Evan's dormant
