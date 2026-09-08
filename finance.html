@@ -1,0 +1,150 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZvoxa Finances</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0A0A0F;color:#EFEAE2;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  body{padding:22px 18px 60px;max-width:1600px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:16px;margin:26px 0 8px;color:#EFEAE2}
+  .sub{font-size:14px;color:#8C857A;margin:0 0 18px;line-height:1.45}
+  form.pw{display:flex;gap:10px;margin-bottom:20px;max-width:520px}
+  input[type=password]{flex:1;background:#16130E;border:1px solid #2B241C;border-radius:10px;color:#EFEAE2;font-size:17px;padding:12px 14px;min-width:0}
+  button{background:#FFB020;color:#0A0A0F;border:0;border-radius:10px;font-size:15px;font-weight:800;padding:10px 16px;cursor:pointer}
+  button.quiet{background:#2B241C;color:#EFEAE2}
+  button.on{background:#7DE59A;color:#0A0A0F}
+  #msg{font-size:15px;color:#FF9A8A;min-height:22px;margin-bottom:10px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+  .card{border:1px solid #2B241C;border-radius:12px;padding:14px 15px;background:#100E0B}
+  .card h3{margin:0 0 10px;font-size:14px;color:#8C857A;text-transform:uppercase;letter-spacing:.04em}
+  .row{display:grid;grid-template-columns:1fr 110px 24px;gap:8px;align-items:center;margin:6px 0;font-size:13px}
+  .row input{background:#16130E;border:1px solid #2B241C;border-radius:8px;color:#EFEAE2;font-size:14px;padding:7px 9px;width:110px;text-align:right}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .verified{background:#7DE59A} .document{background:#FFB020} .assumption{background:#FF6B5E}
+  .legend{font-size:12.5px;color:#8C857A;margin:8px 0 0;line-height:1.6}
+  .legend .dot{vertical-align:middle;margin-right:4px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0 6px}
+  .stat{border:1px solid #2B241C;border-radius:12px;padding:12px 14px;background:#100E0B}
+  .stat .n{font-size:26px;font-weight:800;line-height:1}
+  .stat .l{font-size:12.5px;color:#8C857A;margin-top:6px}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:right;padding:7px 6px;border-bottom:1px solid #2B241C;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{color:#8C857A;font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  td.neg{color:#FF9A8A}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+  .years{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .years .card{padding:10px 12px}
+  .years .row{grid-template-columns:1fr 84px}
+  .years .row input{width:84px}
+  .note{font-size:12.5px;color:#8C857A;line-height:1.5;margin-top:10px}
+  .stamp{font-size:12px;color:#7A7060;margin-top:4px}
+</style>
+
+<h1>EZvoxa Finances</h1>
+<p class="sub">Every price and cost is an input; the three cases recompute as you type. Unit counts sit beside every dollar. Nothing shows without the family password, and no price lives in this page. The business plan document is generated from the same formulas.</p>
+
+<form class="pw" id="f">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
+  <button type="submit">Open</button>
+</form>
+<div id="msg"></div>
+
+<div id="view" hidden>
+  <div class="legend"><span class="dot verified"></span> verified from the company's own page &nbsp; <span class="dot document"></span> from Frank's 7 Sep 2026 document, not verified from the page &nbsp; <span class="dot assumption"></span> assumption, no source. Hover a dot for the note. <span id="stamp" class="stamp"></span></div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="cards" id="cards"></div>
+  <div class="wrap"><table id="proj"><thead><tr><th>Year</th><th>Buyers</th><th>Subs, year end</th><th>Subs, average</th><th>Districts</th><th>Seats</th><th>Talker</th><th>Family Tether</th><th>Schools</th><th>Gross</th><th>Store 15%</th><th>RevenueCat</th><th>Refunds</th><th>Cloud and fixed</th><th>Acquisition</th><th>Operating</th><th>Net</th><th>Cumulative</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">Talker: buyers that year times the one-time price. Family Tether: the average of the year's starting and ending subscribers, times the monthly price, times twelve. Schools: district seats at the volume price when 20 or more seats, else the list price. Store fee applies to everything sold through a store. RevenueCat is 1% of store sales once tracked revenue passes $2,500 a month. Cloud and fixed: texts and alerts at Twilio's rates, the voice per family, the Twilio number, Vercel, Codemagic, Apple's yearly fee, Google's and 10DLC one-time fees. Refunds and acquisition are the model's carried-over assumptions.</p>
+
+  <h2>Inputs</h2>
+  <div class="grid">
+    <div class="card"><h3>Prices (working numbers, not confirmed)</h3><div id="prices"></div></div>
+    <div class="card"><h3>Costs and fees</h3><div id="costs"></div></div>
+    <div class="card"><h3>Usage assumptions</h3><div id="assumptions"></div></div>
+  </div>
+  <h2>Ramp for the selected case</h2>
+  <div class="years" id="years"></div>
+  <div class="row" style="grid-template-columns:auto 110px;max-width:360px;margin-top:10px"><span>Seats per district</span><input id="seats" type="number" min="1" step="1"></div>
+  <div class="tabs" style="margin-top:14px"><button class="quiet" id="reset" type="button">Reset to the saved defaults</button></div>
+</div>
+
+<script src="finance-model.js"></script>
+<script>
+(function () {
+  var inputs = null, defaults = null, scenario = 'mid';
+  var msg = document.getElementById('msg');
+  function esc(x) { var s = document.createElement('span'); s.textContent = String(x == null ? '' : x); return s.innerHTML; }
+  function money(n) { return (n < 0 ? '(' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('en-US') + (n < 0 ? ')' : ''); }
+  function num(n) { return Math.round(n).toLocaleString('en-US'); }
+  function prov(path) { var p = inputs.provenance[path] || inputs.provenance[path.split('.')[0]] || { status: 'assumption', note: 'No note.' }; return p; }
+  function field(group, key, label, step) {
+    var p = prov(group + '.' + key);
+    var row = document.createElement('div'); row.className = 'row';
+    row.innerHTML = '<span>' + esc(label) + '</span><input type="number" step="' + step + '" value="' + esc(inputs[group][key]) + '"><span class="dot ' + p.status + '" title="' + esc(p.note) + '"></span>';
+    row.querySelector('input').addEventListener('input', function (e) { var v = parseFloat(e.target.value); if (!isNaN(v)) { inputs[group][key] = v; render(); } });
+    return row;
+  }
+  function buildInputs() {
+    var P = document.getElementById('prices'); P.innerHTML = '';
+    [['talkerOneTime', 'Core Talker, one-time', '0.01'], ['tetherMonthly', 'Family Tether, per month', '0.01'], ['tetherYearly', 'Family Tether, per year (not used yet)', '0.01'], ['schoolList', 'School seat, list price', '0.01'], ['schoolVolume', 'School seat, volume price', '0.01'], ['schoolVolumeSeats', 'Seats for the volume price', '1']].forEach(function (f) { P.appendChild(field('prices', f[0], f[1], f[2])); });
+    var C = document.getElementById('costs'); C.innerHTML = '';
+    [['storeCommission', 'Store commission (share)', '0.01'], ['revenueCatRate', 'RevenueCat (share of store sales)', '0.001'], ['revenueCatFreeMonthly', 'RevenueCat free up to, per month', '1'], ['refundRate', 'Refunds and chargebacks (share)', '0.005'], ['acquisitionPerBuyer', 'Acquisition cost per buyer', '0.5'], ['textCostEach', 'One text, Twilio', '0.0001'], ['alertCostEach', 'One SOS alert to one person, Twilio', '0.0001'], ['voicePerFamilyMonth', 'Natural voice per family per month', '0.01'], ['twilioNumberMonthly', 'Twilio number per month', '0.01'], ['tenDlcOneTime', '10DLC registration, one-time', '1'], ['vercelMonthly', 'Vercel per month', '1'], ['codemagicMonthly', 'Codemagic per month', '1'], ['appleDeveloperYearly', 'Apple Developer Program per year', '1'], ['googlePlayOneTime', 'Google Play, one-time', '1']].forEach(function (f) { C.appendChild(field('costs', f[0], f[1], f[2])); });
+    var A = document.getElementById('assumptions'); A.innerHTML = '';
+    [['textsPerFamilyPerMonth', 'Texts per family per month', '1'], ['alertsPerFamilyPerYear', 'SOS alerts per family per year', '0.5']].forEach(function (f) { A.appendChild(field('assumptions', f[0], f[1], f[2])); });
+    var row = document.createElement('div'); row.className = 'row'; var p = prov('assumptions.schoolsThroughStore');
+    row.innerHTML = '<span>Schools buy through the stores (15% applies)</span><input type="checkbox" ' + (inputs.assumptions.schoolsThroughStore ? 'checked' : '') + ' style="width:auto;justify-self:end"><span class="dot ' + p.status + '" title="' + esc(p.note) + '"></span>';
+    row.querySelector('input').addEventListener('change', function (e) { inputs.assumptions.schoolsThroughStore = e.target.checked; render(); });
+    A.appendChild(row);
+  }
+  function buildYears() {
+    var Y = document.getElementById('years'); Y.innerHTML = '';
+    var sc = inputs.scenarios[scenario];
+    sc.years.forEach(function (y, i) {
+      var card = document.createElement('div'); card.className = 'card';
+      card.innerHTML = '<h3>Year ' + (i + 1) + '</h3>';
+      [['buyers', 'App buyers'], ['subsEnd', 'Subscribers at year end'], ['districts', 'Districts'], ['opex', 'Operating expenses']].forEach(function (f) {
+        var row = document.createElement('div'); row.className = 'row';
+        row.innerHTML = '<span>' + f[1] + '</span><input type="number" step="1" value="' + y[f[0]] + '">';
+        row.querySelector('input').addEventListener('input', function (e) { var v = parseFloat(e.target.value); if (!isNaN(v)) { y[f[0]] = v; render(); } });
+        card.appendChild(row);
+      });
+      Y.appendChild(card);
+    });
+    var seats = document.getElementById('seats'); seats.value = sc.seatsPerDistrict;
+    seats.oninput = function (e) { var v = parseInt(e.target.value, 10); if (v > 0) { sc.seatsPerDistrict = v; render(); } };
+  }
+  function render() {
+    var all = EZFinance.projectAll(inputs);
+    var T = document.getElementById('tabs'); T.innerHTML = '';
+    Object.keys(inputs.scenarios).forEach(function (k) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = k === scenario ? 'on' : 'quiet';
+      b.textContent = inputs.scenarios[k].label + ': ' + money(all[k].total.net) + ' over five years';
+      b.onclick = function () { scenario = k; buildYears(); render(); };
+      T.appendChild(b);
+    });
+    var r = all[scenario];
+    var y5 = r.rows[r.rows.length - 1];
+    document.getElementById('cards').innerHTML = [[num(r.total.buyers), 'App buyers over five years'], [num(r.subsEndYear5), 'Subscribers at the end of Year 5'], [num(y5.seats), 'School seats in Year 5'], [money(r.total.gross), 'Gross sales over five years'], [money(r.total.revenueCat), 'RevenueCat over five years'], [money(r.total.net), 'Net over five years']].map(function (c) { return '<div class="stat"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
+    document.querySelector('#proj tbody').innerHTML = r.rows.map(function (x) {
+      var cells = [x.year, num(x.buyers), num(x.subsEnd), num(x.subsAvg), num(x.districts), num(x.seats), money(x.talkerGross), money(x.tetherGross), money(x.schoolGross), money(x.gross), money(-x.storeFees), money(-x.revenueCat), money(-x.refunds), money(-x.cloud), money(-x.acquisition), money(-x.opex), money(x.net), money(x.cumulative)];
+      return '<tr>' + cells.map(function (c, i) { return '<td' + (typeof c === 'string' && c.charAt(0) === '(' ? ' class="neg"' : '') + '>' + esc(c) + '</td>'; }).join('') + '</tr>';
+    }).join('');
+  }
+  document.getElementById('f').addEventListener('submit', async function (ev) {
+    ev.preventDefault(); msg.textContent = 'Loading…';
+    try {
+      var r = await fetch('/api/finance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.getElementById('pw').value }) });
+      var j = await r.json();
+      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : 'Could not load.'; return; }
+      defaults = JSON.stringify(j.inputs); inputs = JSON.parse(defaults);
+      msg.textContent = ''; document.getElementById('view').hidden = false; document.getElementById('f').hidden = true;
+      document.getElementById('stamp').textContent = 'Defaults as of ' + inputs.asOf + '.';
+      buildInputs(); buildYears(); render();
+    } catch (e) { msg.textContent = 'Could not reach the server.'; }
+  });
+  document.getElementById('reset').addEventListener('click', function () { inputs = JSON.parse(defaults); buildInputs(); buildYears(); render(); });
+})();
+</script>

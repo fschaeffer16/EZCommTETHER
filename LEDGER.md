@@ -733,6 +733,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 
 ## Pages and names
 
+- `finance.html` (7 Sep 2026): the finance widget, family password; inputs
+  from `api/finance-defaults.json` with provenance; formulas in
+  `finance-model.js`, shared with the plan document. See DECISIONS.md.
 - `dub.html` (7 Sep 2026): speaks every phrase in Evan's app into the
   server's voice memory once (family password). See DECISIONS.md.
 

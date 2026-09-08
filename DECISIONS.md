@@ -102,6 +102,31 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **7 Sep 2026. Finance widget and the plan rebuilt from Frank's document.**
+  Frank pasted a business plan page written by another AI (Core Talker
+  $99.99 one-time; Connected Family Tether $9.99/mo or $99.99/yr per
+  family; EZvoxa Pro $249.99 list / $124.99 at 20+ seats through Apple
+  School Manager and Google Play; a cost schedule; RevenueCat lifecycle;
+  three five-year cases) and asked for "a widget for finances and
+  projections" and to "update the business plan and everything with it."
+  Built on that ask: `finance-model.js` (one set of formulas),
+  `api/finance-defaults.json` (every input with its provenance: verified /
+  from Frank's document / assumption), `api/finance.js` (defaults served
+  only with the family password, so no price is published), `finance.html`
+  (the widget: every input editable, three cases live, unit counts beside
+  every dollar), and the plan document regenerated from the same formulas.
+  Prices are NOT confirmed; they are the document's working numbers and
+  replace the 15 Aug $79.99 / $12.99. Three disagreements with standing
+  rules flagged for Frank, not baked in: the document puts SOS in the paid
+  tier (SOS stays free, Frank's 2 Sep final ruling); "two-way" voice notes
+  (one way); 14-day trial vs 30. The document's cost figures for 10DLC
+  ($4 + $15), Vercel ($20/mo), Codemagic (free 500 min) and the Apple
+  School Manager 50% rule are marked "from Frank's document, not verified
+  from the page." My tables come out lower than the document's because
+  they also take out RevenueCat, refunds, cloud, fixed and acquisition
+  costs. model-ezvoxa.html (the 15 Aug market build) stays as is; the
+  widget is now the finance model the plan follows.
+
 - **7 Sep 2026. Business plan document created.** Frank asked for "all the
   business plan and projections we have so far." Fact: no business plan
   document had ever existed in the repository; the only projections
