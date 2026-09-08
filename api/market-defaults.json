@@ -224,6 +224,10 @@
   "opex": {
    "status": "document",
    "note": "Operating expenses per year are the Ceiling case in Frank's 7 Sep document, the closest in scale."
+  },
+  "stores": {
+   "status": "verified",
+   "note": "Google Play: paid apps, in-app purchases and subscriptions in all six countries (Google's supported locations page, 15 Dec 2025 version, pasted by Frank 8 Sep 2026). Apple: all six are App Store countries or regions with English as the default store language (App Store Connect reference, App Store localizations, pasted by Frank 8 Sep 2026). The same Apple list shows English (U.K.) as the default store language in India, Nigeria, the Philippines, South Africa, Singapore and most of Africa and the Caribbean, which is the uncounted upside."
   }
  }
 }

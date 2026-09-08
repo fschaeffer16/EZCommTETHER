@@ -782,7 +782,11 @@ $15,000" with exceptions for construction and a few others. The pasted
 hub's $10,000 is out of date.
 Stores: Google Play sells paid apps, in-app purchases and subscriptions in
 all six English-first countries (Google's supported locations page, 15 Dec
-2025 version, pasted by Frank 8 Sep). Apple's list still to be read.
+2025 version, pasted by Frank 8 Sep). Apple: all six are App Store
+countries with English as the default store language (App Store Connect
+reference "App Store localizations", pasted by Frank 8 Sep); the same
+list shows English (U.K.) as the default in India, Nigeria, the
+Philippines, South Africa, Singapore and most of Africa and the Caribbean.
 Clinical: 1,222 Medicare-certified inpatient rehabilitation facilities in
 the US (CMS Provider Data Catalog, dataset 7t8x-u3ir, 8 Sep 2026).
 England: one in three pupils with an EHC plan has autism as the primary

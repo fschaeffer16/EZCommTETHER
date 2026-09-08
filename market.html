@@ -69,6 +69,7 @@
   <div class="pane on" id="pane-market">
     <h2>Who the app is for, counted</h2>
     <div class="cards" id="mcards"></div>
+    <p class="note" id="stores"></p>
     <h3>Consumer market: people 13 and over who cannot rely on speech, by country</h3>
     <div class="wrap"><table id="mtab"><thead><tr><th>Country</th><th>Population 13 and over</th><th>Autism, minimally verbal</th><th>Aphasia</th><th>Counted market</th></tr></thead><tbody></tbody></table></div>
     <p class="note" id="mnote"></p>
@@ -78,7 +79,7 @@
     <div class="wrap"><table class="text" id="ctab"><thead><tr><th>Line</th><th>Figure</th><th>Standing</th></tr></thead><tbody></tbody></table></div>
     <h3>Counted as upside, not in the numbers</h3>
     <ul>
-      <li><strong>Every other country</strong> where English is official but not the home language: India, Nigeria, the Philippines, South Africa, Singapore and the rest of Google Play's and Apple's lists. Frank's ruling, 8 Sep.</li>
+      <li><strong>Every other country</strong> where English is official but not the home language: India, Nigeria, the Philippines, South Africa, Singapore and the rest. Apple's own list shows English (U.K.) as the default store language in most of them. Frank's ruling, 8 Sep.</li>
       <li><strong>Undiagnosed and wrongly diagnosed people.</strong> The counts above are of identified people. No source gives a multiplier, so none is applied. Frank's ruling, 8 Sep.</li>
       <li><strong>Conditions with no per-country count in hand:</strong> ALS, Parkinson's with speech loss, dementia with speech loss, cerebral palsy and Down syndrome in adults, traumatic brain injury, laryngectomy. WHO gives worldwide totals for some (Parkinson's over 8.5 million, dementia 57 million); the share who cannot rely on speech has no source yet.</li>
       <li><strong>Outpatient speech therapy practices, ALS clinics, and rehab centers outside the US.</strong> The US labor statistics page blocked the request and ASHA's site answers with a bot challenge; other countries not yet read.</li>
@@ -131,6 +132,7 @@
   function renderMarket(size) {
     document.getElementById('mcards').innerHTML = [[num(size.pop13), 'People 13 and over in the six countries'], [num(size.autism), 'Autistic and minimally verbal'], [num(size.aphasia), 'Living with aphasia'], [num(size.consumer), 'Counted consumer market'], [num(size.school), 'Counted school seats, US and England'], [num(size.clinicalFacilities), 'US inpatient rehab facilities']].map(function (c) { return '<div class="stat"><div class="n">' + esc(c[0]) + '</div><div class="l">' + esc(c[1]) + '</div></div>'; }).join('');
     document.querySelector('#mtab tbody').innerHTML = size.lines.map(function (l) { return '<tr><td>' + dot(prov('countries.' + l.key)) + esc(l.name) + '</td><td>' + num(l.pop13) + '</td><td>' + num(l.autism) + '</td><td>' + num(l.aphasia) + '</td><td class="hi">' + num(l.total) + '</td></tr>'; }).join('') + '<tr><td><strong>Six countries</strong></td><td>' + num(size.pop13) + '</td><td>' + num(size.autism) + '</td><td>' + num(size.aphasia) + '</td><td class="hi">' + num(size.consumer) + '</td></tr>';
+    document.getElementById('stores').innerHTML = dot(prov('stores')) + 'On sale in all six from day one on both stores. ' + esc(prov('stores').note);
     var pv = market.prevalence, sh = market.shares;
     document.getElementById('mnote').innerHTML = 'Autism: ' + dot(prov('prevalence.autismAdultRate')) + 'WHO, about 1 in 127 persons worldwide (2021), applied to adults; ' + dot(prov('prevalence.autismTeenUSRate')) + 'CDC, 1 in 31 eight-year-olds (2022), applied to US 13 to 17; ' + dot(prov('prevalence.minimallyVerbalShare')) + 'NIH-hosted study, about 30% minimally verbal. Aphasia: ' + dot(prov('prevalence.aphasiaUS')) + 'NIDCD, about 2 million in the US, the same rate per head applied elsewhere. Population 13 and over: ' + dot(prov('countries.us')) + 'US exact from the Census age file; ' + dot(prov('shares.age13plusOutsideUS')) + 'the other five at ' + pct(sh.age13plusOutsideUS, 0) + ' of their totals.';
     var sc = market.schools, cl = market.clinical;
