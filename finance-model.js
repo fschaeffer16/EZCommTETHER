@@ -112,7 +112,7 @@
       lines.push({ key: k, name: x.name, pop13: round(a13), autism: round(aut), aphasia: round(aph), total: round(aut + aph) });
     }
     const consumer = round(autism + aphasia);
-    const usSchool = sc.usIdeaAutism * pv.minimallyVerbalShare * sc.share13to21of6to21;
+    const usSchool = sc.usIdeaAutism13to21 * pv.minimallyVerbalShare;
     const enSchool = sc.englandEhcAutism13plus * pv.minimallyVerbalShare;
     const school = round(usSchool + enSchool);
     const clinicalFacilities = cl.usInpatientRehabFacilities;

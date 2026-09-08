@@ -762,6 +762,16 @@ Schools: NCES Digest table 204.30, 2022-23: 7,526,000 children 3 to 21
 served under IDEA, of whom autism 980,000 (13.0%), speech or language
 impairment 1,430,000, intellectual disability 434,000, multiple
 disabilities 126,000; table 204.70: 527,163 of the 7,525,941 are 3 to 5.
+US federal file (OSEP, IDEA Section 618 Part B Child Count 2024-25, from
+data.ed.gov's API, read 8 Sep): autism students aged 13 through 21 total
+386,380 nationally, of 1,111,435 aged 5 through 21 (34.8%); ages 13 to
+17 are 142,976 / 134,732 / 129,100 / 123,068 / 112,074, then 59,415 at
+18 falling to 16,290 at 21. The file carries a national total row and
+totals by environment, so summing every row double counts; use the
+'US, Outlying Areas, and Freely Associated States' row with environment
+'Total, School Age'. data.ed.gov's CKAN API (api/3/action/package_search
+and package_show) gives the real download links; the site's page links
+do not.
 England (DfE, 2026): 538,547 pupils with an EHC plan (6.0%), autism the
 most common need; 1,319,780 on SEN support. From the release's own data
 file sen_age_sex_api.csv (read 8 Sep): autism EHC pupils 165,399, of whom

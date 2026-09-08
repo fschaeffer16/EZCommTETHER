@@ -151,6 +151,15 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. "If you have the document use the document."** Frank's
+  rule for the market model, after search-engine summaries he pasted
+  turned out wrong (England EHC 13 and over claimed at 80%, actual 29.9%
+  from the department's own file). Both school counts now come from the
+  governments' own data files: England 49,463 autism EHC pupils aged 13
+  and over; US 386,380 autism students aged 13 through 21 (OSEP 2024-25).
+  The two placeholders they replaced (50% and 56.3%) are gone. Counted
+  school seats fell from 192,437 to 130,753.
+
 - **8 Sep 2026. ALS, Parkinson's and dementia stay out of the counted
   market.** Frank pasted a search-engine summary of their prevalence and
   said "This is the best I can do and I am fine with whatever you settle

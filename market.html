@@ -137,7 +137,7 @@
     document.getElementById('mnote').innerHTML = 'Autism: ' + dot(prov('prevalence.autismAdultRate')) + 'WHO, about 1 in 127 persons worldwide (2021), applied to adults; ' + dot(prov('prevalence.autismTeenUSRate')) + 'CDC, 1 in 31 eight-year-olds (2022), applied to US 13 to 17; ' + dot(prov('prevalence.minimallyVerbalShare')) + 'NIH-hosted study, about 30% minimally verbal. Aphasia: ' + dot(prov('prevalence.aphasiaUS')) + 'NIDCD, about 2 million in the US, the same rate per head applied elsewhere. Population 13 and over: ' + dot(prov('countries.us')) + 'US exact from the Census age file; UK, Australia and Ireland from their statistics offices\' own age tables; Canada at its published 85% aged 15 and over; ' + dot(prov('shares.age13plusOutsideUS')) + 'New Zealand at ' + pct(sh.age13plusOutsideUS, 0) + ' of its total.';
     var sc = market.schools, cl = market.clinical;
     document.querySelector('#stab tbody').innerHTML = [
-      ['US students 6 to 21 under IDEA', num(sc.usIdea6to21), 'schools.usIdea6to21'], ['US students under the autism category', num(sc.usIdeaAutism), 'schools.usIdeaAutism'], ['Share who are 13 to 21', pct(sc.share13to21of6to21, 1), 'schools.share13to21of6to21'], ['Minimally verbal share', pct(pv.minimallyVerbalShare, 0), 'prevalence.minimallyVerbalShare'], ['US counted school seats', num(size.usSchool), 'schools.usIdeaAutism'],
+      ['US students under the autism category, ages 3 to 21 (2022-23)', num(sc.usIdeaAutism), 'schools.usIdeaAutism'], ['US autism students aged 13 through 21 (2024-25)', num(sc.usIdeaAutism13to21) + ' of ' + num(sc.usIdeaAutism5to21) + ' aged 5 through 21', 'schools.usIdeaAutism13to21'], ['Minimally verbal share', pct(pv.minimallyVerbalShare, 0), 'prevalence.minimallyVerbalShare'], ['US counted school seats', num(size.usSchool), 'schools.usIdeaAutism13to21'],
       ['England pupils with an EHC plan, all needs', num(sc.englandEhcPlans), 'schools.englandEhcPlans'], ['England autism EHC pupils aged 13 and over', num(sc.englandEhcAutism13plus), 'schools.englandEhcAutism13plus'], ['England counted school seats', num(size.enSchool), 'schools.englandEhcAutism13plus'],
       ['US regular school districts', num(sc.usRegularDistricts), 'schools.usRegularDistricts'], ['Seats per district order', num(sc.seatsPerDistrict), 'schools.seatsPerDistrict']
     ].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + standing(prov(r[2])) + '</td></tr>'; }).join('');
@@ -208,7 +208,6 @@
     var A = document.getElementById('massume'); A.innerHTML = '';
     A.appendChild(field(market.shares, 'age13plusOutsideUS', 'Aged 13 and over outside the US, %', '1', 'shares.age13plusOutsideUS', function (v) { return (v * 100).toFixed(0); }));
     A.appendChild(field(market.prevalence, 'minimallyVerbalShare', 'Minimally verbal share of autism, %', '1', 'prevalence.minimallyVerbalShare', function (v) { return (v * 100).toFixed(0); }));
-    A.appendChild(field(market.schools, 'share13to21of6to21', 'US students who are 13 to 21, %', '1', 'schools.share13to21of6to21', function (v) { return (v * 100).toFixed(1); }));
   }
   document.getElementById('f').addEventListener('submit', async function (ev) {
     ev.preventDefault(); msg.textContent = 'Loading…';
