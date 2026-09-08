@@ -847,6 +847,23 @@ subscription only at exactly our Tether numbers. EZvoxa's working prices
 ($99.99 one-time, $9.99 a month or $99.99 a year) sit below every
 one-time competitor and level with the subscription ones. Prices still
 not confirmed by Frank.
+School terms, from the makers' own sites (8 Sep, after Frank opened
+assistiveware.com and prc-saltillo.com): AssistiveWare sells Proloquo to
+schools as licenses bought direct, $99.99 per license for 1 year, $199.99
+for 2, $299.99 for 3, $399.99 for 4, $499.99 for 5, installable on
+multiple devices, no volume discount shown; its page states
+"Subscription purchases are not possible in Apple School Manager, so
+licenses must be purchased directly through AssistiveWare", and that
+Proloquo downloads free through Apple School Manager but needs a license
+to run. Proloquo2Go's own page shows $249.99 for iOS and a $124.99 line
+for buyers completing the AAC Essentials bundle; no school or volume
+price is stated there. PRC-Saltillo's site (TouchChat, LAMP) shows no
+prices and no school terms; its App Store prices are the record.
+touchchatapp.com and lampwflapp.com are not on the allow list.
+Consequence for EZvoxa: a one-time Pro app can be bought through Apple
+School Manager; the Family Tether subscription cannot, so a school
+that wants the connected features would need a direct license like
+AssistiveWare's. Not decided.
 
 ## Pages and names
 
