@@ -151,6 +151,16 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. EZvoxa Pro has no Family Tether. Frank: "A school would
+  never need the family tether. They have privacy issues with all that
+  anyway. Better to keep it separate."** So Pro is the talker alone: no
+  subscription, no texting, no voice messages, no cross-phone sync, and
+  no direct license is needed for schools (the question AssistiveWare's
+  page raised is closed). SOS Family Alert is a family feature and does
+  not belong in Pro either unless Frank says otherwise; not decided.
+  The market model already earns nothing from subscriptions on school
+  or clinical seats, so no number changes.
+
 - **8 Sep 2026. EZvoxa Pro is its own App Store listing. Frank: "EZVoxaPro
   is its own listing. period."** So the school and clinical seat is a
   separate app from the $99.99 consumer app: its own listing, its own

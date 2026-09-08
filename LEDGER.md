@@ -861,9 +861,9 @@ price is stated there. PRC-Saltillo's site (TouchChat, LAMP) shows no
 prices and no school terms; its App Store prices are the record.
 touchchatapp.com and lampwflapp.com are not on the allow list.
 Consequence for EZvoxa: a one-time Pro app can be bought through Apple
-School Manager; the Family Tether subscription cannot, so a school
-that wants the connected features would need a direct license like
-AssistiveWare's. Not decided.
+School Manager; the Family Tether subscription cannot. Frank, 8 Sep:
+schools never need the Tether and have privacy concerns with it, so
+Pro is the talker alone and stays separate. No direct license needed.
 
 ## Pages and names
 
