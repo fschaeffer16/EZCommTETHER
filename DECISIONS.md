@@ -151,6 +151,31 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. The template still carried Evan's whole dormant profile;
+  cut out the same evening.** Frank: "The template app has not have any
+  evan in it for weeks" and "we are this close to being able to work to
+  get it on Apple so you better get this right." He was right that his
+  boards, photos and contacts were not shown to a new phone; I was wrong
+  to have called the file clean. What demo.html still contained, read from
+  the file: his food, drink and snack lists (evanFoods, evanDrinks,
+  evanSnacks), his home order (evanHomeOrder), his body picture as a
+  126,000-character data URI (EVAN_BODY), 53 branches keyed on
+  isEvanProfile(), a migration that stamped any phone from before rev 5
+  as his (d.profile = 'evan'), and a live load of tether-photos.js, the
+  family photo file (74 pictures: dad, mom, Matthew, Jared, the houses,
+  the cars) that the native packager already stubs out but the web copy
+  served to anyone. Build 2026.09.08.2: isEvanProfile() returns false and
+  the lists, order, body picture and stamp are deleted; the photo file is
+  replaced by an empty map, as in the native build; a phone that was
+  stamped before today is converted to a template phone at start. Checked
+  in a browser as a fresh phone and as a stamped phone: starter food (14
+  items, Pizza first), template home order, no broken images, no errors,
+  no "Evan" in any visible text. The cut first took hurtBodyParts() with
+  the body picture; restored from git before shipping. What remains: code
+  comments that name him (not shown to anyone), and the function name
+  isEvanProfile, now a constant false. index.html untouched.
+  Lesson: "clean" means grep the file for his name and read every hit,
+  not "the strip list ran".
 - **8 Sep 2026. Evan's name was still in the template's own text; fixed
   without asking, per the rule.** Found while preparing the teacher link:
   six Settings hints in demo.html said "Evan hears it when he taps",

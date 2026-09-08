@@ -824,6 +824,12 @@ palsy prevalence, ALS registry counts and Down syndrome adult counts
 
 ## Pages and names
 
+- Template build 2026.09.08.2 (demo.html, 8 Sep 2026): Evan's dormant
+  profile cut out entirely (his lists, home order, body picture, the
+  pre-rev-5 stamp, the family photo file). isEvanProfile() is a constant
+  false in the template. See DECISIONS, 8 Sep. demo.html no longer loads
+  tether-photos.js; the web copy of the template shows the same neon set
+  the native build does.
 - Template build 2026.09.08.1 (demo.html, 8 Sep 2026): Evan's name removed
   from six Settings hints, the phone-role picker and two name fallbacks;
   the talker's own name from Settings is used everywhere. See DECISIONS.
