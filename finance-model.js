@@ -113,7 +113,7 @@
     }
     const consumer = round(autism + aphasia);
     const usSchool = sc.usIdeaAutism * pv.minimallyVerbalShare * sc.share13to21of6to21;
-    const enSchool = sc.englandEhcPlans * sc.englandEhcAutismShare * pv.minimallyVerbalShare * sc.englandShare13plus;
+    const enSchool = sc.englandEhcAutism13plus * pv.minimallyVerbalShare;
     const school = round(usSchool + enSchool);
     const clinicalFacilities = cl.usInpatientRehabFacilities;
     return { lines, pop13: round(pop13), autism: round(autism), aphasia: round(aphasia), consumer, school, usSchool: round(usSchool), enSchool: round(enSchool), clinicalFacilities, clinicalSeats: round(clinicalFacilities * cl.seatsPerFacility) };

@@ -138,7 +138,7 @@
     var sc = market.schools, cl = market.clinical;
     document.querySelector('#stab tbody').innerHTML = [
       ['US students 6 to 21 under IDEA', num(sc.usIdea6to21), 'schools.usIdea6to21'], ['US students under the autism category', num(sc.usIdeaAutism), 'schools.usIdeaAutism'], ['Share who are 13 to 21', pct(sc.share13to21of6to21, 1), 'schools.share13to21of6to21'], ['Minimally verbal share', pct(pv.minimallyVerbalShare, 0), 'prevalence.minimallyVerbalShare'], ['US counted school seats', num(size.usSchool), 'schools.usIdeaAutism'],
-      ['England pupils with an EHC plan', num(sc.englandEhcPlans) + ', autism ' + pct(sc.englandEhcAutismShare, 1), 'schools.englandEhcPlans'], ['Share aged 13 and over', pct(sc.englandShare13plus, 0), 'schools.englandShare13plus'], ['England counted school seats', num(size.enSchool), 'schools.englandEhcPlans'],
+      ['England pupils with an EHC plan, all needs', num(sc.englandEhcPlans), 'schools.englandEhcPlans'], ['England autism EHC pupils aged 13 and over', num(sc.englandEhcAutism13plus), 'schools.englandEhcAutism13plus'], ['England counted school seats', num(size.enSchool), 'schools.englandEhcAutism13plus'],
       ['US regular school districts', num(sc.usRegularDistricts), 'schools.usRegularDistricts'], ['Seats per district order', num(sc.seatsPerDistrict), 'schools.seatsPerDistrict']
     ].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + standing(prov(r[2])) + '</td></tr>'; }).join('');
     document.querySelector('#ctab tbody').innerHTML = [['US inpatient rehabilitation facilities, Medicare-certified', num(cl.usInpatientRehabFacilities), 'clinical.usInpatientRehabFacilities'], ['Seats per facility', num(cl.seatsPerFacility), 'clinical.seatsPerFacility']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + standing(prov(r[2])) + '</td></tr>'; }).join('');
@@ -209,7 +209,6 @@
     A.appendChild(field(market.shares, 'age13plusOutsideUS', 'Aged 13 and over outside the US, %', '1', 'shares.age13plusOutsideUS', function (v) { return (v * 100).toFixed(0); }));
     A.appendChild(field(market.prevalence, 'minimallyVerbalShare', 'Minimally verbal share of autism, %', '1', 'prevalence.minimallyVerbalShare', function (v) { return (v * 100).toFixed(0); }));
     A.appendChild(field(market.schools, 'share13to21of6to21', 'US students who are 13 to 21, %', '1', 'schools.share13to21of6to21', function (v) { return (v * 100).toFixed(1); }));
-    A.appendChild(field(market.schools, 'englandShare13plus', 'England EHC pupils 13 and over, %', '1', 'schools.englandShare13plus', function (v) { return (v * 100).toFixed(0); }));
   }
   document.getElementById('f').addEventListener('submit', async function (ev) {
     ev.preventDefault(); msg.textContent = 'Loading…';

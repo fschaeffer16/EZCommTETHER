@@ -48,9 +48,8 @@
   "share13to21of6to21": 0.5625,
   "usRegularDistricts": 13349,
   "englandEhcPlans": 538547,
-  "englandEhcAutismShare": 0.335,
-  "englandShare13plus": 0.5,
-  "seatsPerDistrict": 40
+  "seatsPerDistrict": 40,
+  "englandEhcAutism13plus": 49463
  },
  "clinical": {
   "usInpatientRehabFacilities": 1222,
@@ -195,7 +194,7 @@
   },
   "schools.share13to21of6to21": {
    "status": "assumption",
-   "note": "Share of the 6 to 21 group who are 13 to 21: nine of sixteen ages, as if every age were equal in number. NCES does not publish the autism count by age in the table read."
+   "note": "Share of the US 6 to 21 IDEA autism group who are 13 to 21: nine of sixteen ages, as if every age were equal in number. NCES does not publish the autism count by age in the tables read, and OSEP's autism fast-facts page blocked the request. Caution: England's own file shows only 29.9% of its autism EHC pupils aged 13 and over across ages 2 to 19, so the US share may be lower than this placeholder."
   },
   "schools.usRegularDistricts": {
    "status": "verified",
@@ -203,11 +202,7 @@
   },
   "schools.englandEhcPlans": {
    "status": "verified",
-   "note": "Department for Education, special educational needs in England, 2025/26: 538,547 pupils with an EHC plan; 33.5% with autism as the primary need."
-  },
-  "schools.englandShare13plus": {
-   "status": "assumption",
-   "note": "Share of England's EHC pupils aged 13 and over. The release does not give it in the page read; half is a placeholder."
+   "note": "Department for Education headline, 2025/26: 538,547 pupils with an EHC plan (6.0%), autism the most common primary need (33.5%). Shown for scale; the count used is the autism-by-age line."
   },
   "schools.seatsPerDistrict": {
    "status": "assumption",
@@ -232,6 +227,10 @@
   "stores": {
    "status": "verified",
    "note": "Google Play: paid apps, in-app purchases and subscriptions in all six countries (Google's supported locations page, 15 Dec 2025 version, pasted by Frank 8 Sep 2026). Apple: all six are App Store countries or regions with English as the default store language (App Store Connect reference, App Store localizations, pasted by Frank 8 Sep 2026). The same Apple list shows English (U.K.) as the default store language in India, Nigeria, the Philippines, South Africa, Singapore and most of Africa and the Caribbean, which is the uncounted upside."
+  },
+  "schools.englandEhcAutism13plus": {
+   "status": "verified",
+   "note": "Department for Education, special educational needs in England 2025/26, data file sen_age_sex_api.csv (national, all school types, EHC plan, primary need autistic spectrum disorder): 165,399 pupils, of whom 49,463 are aged 13 and over (29.9%). Across all needs, 153,839 of 493,764 EHC pupils in that file are 13 and over (31.2%). Read 8 Sep 2026."
   }
  }
 }

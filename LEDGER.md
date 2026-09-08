@@ -763,7 +763,11 @@ served under IDEA, of whom autism 980,000 (13.0%), speech or language
 impairment 1,430,000, intellectual disability 434,000, multiple
 disabilities 126,000; table 204.70: 527,163 of the 7,525,941 are 3 to 5.
 England (DfE, 2026): 538,547 pupils with an EHC plan (6.0%), autism the
-most common need; 1,319,780 on SEN support.
+most common need; 1,319,780 on SEN support. From the release's own data
+file sen_age_sex_api.csv (read 8 Sep): autism EHC pupils 165,399, of whom
+49,463 aged 13 and over (29.9%); all needs 493,764, of whom 153,839 aged
+13 and over (31.2%). A search-engine summary Frank pasted claimed 80%;
+wrong.
 Costs: Vercel Pro $20 a month (vercel.com/pricing); Codemagic free plan
 500 macOS M2 build minutes a month, 1 parallel build (codemagic.io);
 ElevenLabs Starter $6 a month, Creator $22, Pro $99 (elevenlabs.io);
