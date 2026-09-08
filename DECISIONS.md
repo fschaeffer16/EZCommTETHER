@@ -151,6 +151,18 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **8 Sep 2026. Private and corporate Pro sales go through EZ Voice
+  direct, not the stores. Frank: "I still want private / corporate sales
+  to go thru us I think. I won't cheapen our quality compared to theirs
+  when it comes to the older students."** So: public districts buy Pro
+  through Apple School Manager and Google Play; private schools, clinics
+  and companies buy direct from EZ Voice on an invoice, no store
+  commission. Pro stays priced level with the established apps, not
+  under them, for the 13-and-older market. Open, asked the same day:
+  whether Apple's 50% education discount at 20 or more copies stays on
+  for public districts ($124.99) or Pro is $249.99 to everyone; the
+  model carries the discount until he answers.
+
 - **8 Sep 2026. EZvoxa Pro has no Family Tether. Frank: "A school would
   never need the family tether. They have privacy issues with all that
   anyway. Better to keep it separate."** So Pro is the talker alone: no
