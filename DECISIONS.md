@@ -745,3 +745,13 @@ a dated line saying it was reversed. Dates are the day it happened.
   The spoken lines for the faces are mine, offered and not objected to:
   "It hurts a little. One to three." / "It hurts. Four to six." / "It hurts
   really bad. Seven to ten."; his to change.
+- **10 Sep 2026. The site upload wiped the form fix; put back, and the
+  durable fix goes through Claude Design.** Frank's 9 Sep upload replaced
+  site.js and the Join and Professionals forms went dead again. Restored
+  on the website's main the same night. The code is now also in
+  `forms-snippet.txt` at the site's root, and the brief tells Claude
+  Design to carry it in its own source, since every export overwrites
+  site.js. The Schools and Clinics branch was rebuilt on top of the upload
+  so it merges cleanly, and its hero opens the narrated guided demo page
+  (guided-demo.html with demo-narration.mp3), which is what Frank shipped,
+  not a video file.

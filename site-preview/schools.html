@@ -72,7 +72,8 @@
 
 <main class="sc">
 
-<!-- HERO: the narrated demo video goes here as pro-demo.mp4 (16:9). Until the file is in place the poster shows with a play badge. -->
+<!-- HERO: the narrated demo is the site's guided demo page (guided-demo.html with
+     demo-narration.mp3, 4:45), so the slot is a poster that opens it. -->
 <section class="sc-hero" id="top"><div class="wrap">
   <div class="sc-copy">
     <div class="sc-tag">EZvoxa Pro for schools and clinics</div>
@@ -82,9 +83,7 @@
     <div class="sc-actions"><a class="btn cyan" href="#quote">Request a quote</a><a class="btn alt" href="#pilot">Start a pilot</a></div>
   </div>
   <div class="sc-video" id="demoSlot">
-    <video id="demoVideo" preload="metadata" poster="schools-poster.jpg" playsinline>
-      <source src="pro-demo.mp4" type="video/mp4">
-    </video>
+    <img src="schools-poster.jpg" alt="EZvoxa Pro school board">
     <a class="sc-play" id="demoPlay" href="https://ezvoxa.com/guided-demo.html"><div><span>▶</span>Watch the demo</div></a>
   </div>
 </div></section>
@@ -256,13 +255,6 @@
 <script src="site.js?v=6"></script>
 <script>
 (function(){
-  // Demo video slot: if pro-demo.mp4 is not there yet, the poster stays and the badge links to the guided demo.
-  var v=document.getElementById('demoVideo'),badge=document.getElementById('demoPlay');
-  if(v&&badge){
-    v.addEventListener('loadedmetadata',function(){badge.style.display='none';});
-    v.addEventListener('error',function(){v.style.display='none';},true);
-    badge.addEventListener("click",function(e){if(v.readyState>0){e.preventDefault();badge.style.display="none";v.setAttribute("controls","");v.play();}});
-  }
   // Both forms post to our server. Same origin rules as the rest of the site's endpoints.
   var API=(location.hostname==='ez-comm-tether.vercel.app')?'/api/quote':'/app/api/quote';
   document.querySelectorAll('[data-quote-form]').forEach(function(f){

@@ -1146,3 +1146,10 @@ Pro is the talker alone and stays separate. No direct license needed.
   Frank's "EZvoxa_Numbered_Pain_Scale" (313 icons in the file). Faces
   measure 103px three across at 430 wide. Build 2026.09.09.3, both apps;
   flow checked end to end headless: spoken lines and summary as designed.
+- 10 Sep 2026: ezvoxa.com upload of 9 Sep (commits 957006e, 57b2cfc) added
+  the narrated guided demo (`demo-narration.mp3`, 4:45, played by
+  `guided-demo.html`), a `demo/` folder of template screenshots, an
+  `img/montage/` folder, Frank's ink signature, and the first blog entry on
+  journal.html ("Welcome to EZvoxa", Entry 01). It also replaced site.js
+  (form code removed, restored in 9d-series commit on main) and site.css.
+  Website branch `schools-section` force-pushed, rebuilt on that upload.
