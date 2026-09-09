@@ -151,6 +151,18 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Districts own the devices; EZ Voice supplies the
+  software. Frank: "I prefer the districts own the phones and we supply
+  the software."** Dedicated devices stay a priced-on-request line only.
+  Same message: "update the financial widget with your best estimates at
+  direct sales for school and clinical accounts through the website."
+  Done in the market model's Base level, labeled as Claude's estimate,
+  one seller: 140, 320, 1,000, 2,400 and 4,800 school seats in Years 1
+  to 5 (3, 8, 25, 60 and 120 districts at about 40 seats), clinics 3,
+  10, 30, 60 and 100 facilities at 5 seats; Low half, High double.
+  Frank on the thesis: "It is still a thesis, and it still needs more
+  research to prove it."
+
 - **9 Sep 2026. Frank's thesis and the opening he sees, recorded at his
   request ("You also need to document tonight's conversation").** What
   the evening established from sources: Florida's students with autism
