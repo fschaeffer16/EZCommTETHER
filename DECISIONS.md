@@ -771,3 +771,9 @@ a dated line saying it was reversed. Dates are the day it happened.
   ... don't give the child the next word, but instead of making them start
   over on the home screen, let the word they just picked bring a link to
   the next screen where the next word they want likely lives."
+- **10 Sep 2026. Frank, on the comparables:** "Teens like cool shit they
+  can put on their phones. Nonverbal teens just want a voice. Remember
+  that." Recorded in CLAUDE.md as a design principle. My reading: the
+  comparables measure apps built for clinics and classrooms on iPads, and
+  none was built for a teenager's own phone; they bound the old market,
+  not his.

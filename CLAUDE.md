@@ -168,6 +168,13 @@ program for low-income/disability families.
 
 ## Design principles for the app itself
 
+- **Frank, 10 Sep 2026, after the comparables showed the paid consumer channel
+  is thin: "Teens like cool shit they can put on their phones. Nonverbal
+  teens just want a voice. Remember that."** The incumbents' numbers
+  measure apps built for clinics and classrooms on iPads. None of them
+  was built for a teenager's own phone. That is the bet, and the
+  comparables do not measure it.
+
 - Evan is the user. Big tap targets, few words, no clutter. Don't shrink primary buttons.
 - Parent/editor UI (hints, edit controls) should be hidden unless edit mode is unlocked.
 - Emergency features must work independently of sync, cache, or customization state.
