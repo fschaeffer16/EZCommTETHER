@@ -59,7 +59,7 @@
       tenDlcPaid = true; googlePaid = true;
       const cloud = textCost + alertCost + voiceCost + fixed;
       const acquisition = y.buyers * c.acquisitionPerBuyer;
-      const gross = storeGross + schoolGross;
+      const gross = consumerGross + schoolGross;
       const costs = storeFees + cardFees + directSales + revenueCat + refunds + cloud + acquisition + y.opex;
       const net = gross - costs;
       cumulative += net;

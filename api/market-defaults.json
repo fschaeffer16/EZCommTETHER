@@ -74,11 +74,11 @@
     0.01835
    ],
    "clinicFacilityShare": [
-    0.0013,
-    0.0041,
-    0.0123,
-    0.0245,
-    0.0409
+    0.0008,
+    0.0021,
+    0.0049,
+    0.0103,
+    0.0163
    ]
   },
   "base": {
@@ -99,11 +99,11 @@
     0.03671
    ],
    "clinicFacilityShare": [
-    0.0025,
-    0.0082,
-    0.0245,
-    0.0491,
-    0.0818
+    0.0016,
+    0.0041,
+    0.0098,
+    0.0205,
+    0.0327
    ]
   },
   "high": {
@@ -124,11 +124,11 @@
     0.07342
    ],
    "clinicFacilityShare": [
-    0.005,
-    0.0164,
-    0.049,
-    0.0982,
-    0.1636
+    0.0032,
+    0.0082,
+    0.0196,
+    0.041,
+    0.0654
    ]
   }
  },
@@ -210,7 +210,7 @@
   },
   "conversion": {
    "status": "assumption",
-   "note": "Frank's to set. Buyer share is new one-time buyers each year as a share of the counted consumer market; subscription attach is the share of all buyers to date who hold the Family Tether at year end. The school and clinical shares are Claude's best estimate of direct sales through the website (Frank's ask, 9 Sep 2026), one seller at first, districts owning the devices and EZ Voice supplying the software: Year 1 St. Lucie district-wide (about 100 seats) plus two neighboring districts at 20 seats, 140 seats; Year 2 eight Florida districts at 40 seats, 320; Year 3 twenty-five districts across Florida and the Southeast, 1,000 seats; Year 4 sixty districts, 2,400; Year 5 one hundred twenty districts, 4,800, which is 0.9% of the 13,349 districts and 3.7% of the counted seats. Clinics: 3, 10, 30, 60 and 100 facilities at 5 seats. Base is that estimate; Low is half; High is double. Consumer buyer shares are unchanged placeholders."
+   "note": "Frank's to set. Buyer share is new one-time buyers each year as a share of the counted consumer market; subscription attach is the share of all buyers to date who hold the Family Tether at year end. The school and clinical shares are Claude's best estimate of direct sales through the website (Frank's ask, 9 Sep 2026), one seller at first, districts owning the devices and EZ Voice supplying the software: Year 1 St. Lucie district-wide (about 100 seats) plus two neighboring districts at 20 seats, 140 seats; Year 2 eight Florida districts at 40 seats, 320; Year 3 twenty-five districts across Florida and the Southeast, 1,000 seats; Year 4 sixty districts, 2,400; Year 5 one hundred twenty districts, 4,800, which is 0.9% of the 13,349 districts and 3.7% of the counted seats. Clinics grow slowest (Frank, 9 Sep: individual sales, then school districts, then clinical): 2, 5, 12, 25 and 40 facilities at 5 seats. The dedicated-device AAC market is not in this widget, by Frank's instruction. Base is that estimate; Low is half; High is double. Consumer buyer shares are unchanged placeholders."
   },
   "opex": {
    "status": "document",

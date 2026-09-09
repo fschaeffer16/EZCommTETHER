@@ -151,6 +151,16 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Order of growth, Frank: "Individual sales > school
+  districts > clinical and then perhaps we go after the AAC market after
+  that but that should not be in this widget." Clinical grows slowest.**
+  Base clinical estimate lowered to 2, 5, 12, 25 and 40 facilities at 5
+  seats; the dedicated-device AAC market is not in the market widget.
+  Same day: a web share of consumer sales added to the model with
+  Stripe's verified card fee (2.9% + $0.30), zero until Frank sets it;
+  a bug in that change (web sales dropped out of gross) was caught by the
+  channel check and fixed before it shipped.
+
 - **9 Sep 2026. Districts own the devices; EZ Voice supplies the
   software. Frank: "I prefer the districts own the phones and we supply
   the software."** Dedicated devices stay a priced-on-request line only.
