@@ -1221,3 +1221,9 @@ Pro is the talker alone and stays separate. No direct license needed.
   934.02(2): an oral communication is one uttered with a justified
   expectation that it is not being intercepted. Read for Frank's home
   camera question.
+- Copyright Office fee page (copyright.gov, read 10 Sep 2026 once Frank
+  opened it): Standard Application $65; Single Application $45 (one
+  author, same claimant, one work, not for hire); group of unpublished
+  works $85; group of two-dimensional artworks $85; paper filing $125;
+  recordation of a document (electronic) $95; supplementary registration
+  $100. Filing guide regenerated with these; the trademark side unchanged.
