@@ -192,6 +192,16 @@ a dated line saying it was reversed. Dates are the day it happened.
   His ILP work is in his ILP_blueprint repository, which this session
   has not opened. Order of work, his: "First things first." Nothing of
   this is built or scheduled; it is recorded so it is not lost.
+  Frank, later the same night, on what "newer" means, not cynically:
+  "you would think someone would have taken advantage of the growth in
+  technology to develop something newer, maybe easier to use with better
+  visual cues or a simpler board for them to navigate. Maybe something
+  that graduates them from one word to common phrases to make it easier
+  to build sentences as they show a certain proficiency?" That is the
+  product idea in one sentence: a board that starts at single words and
+  opens up common phrases and then sentence building as the child shows
+  proficiency, with the app itself noticing the proficiency. His idea,
+  recorded as his; not designed.
 - **9 Sep 2026. Direct sales and distribution design delivered for
   Frank's decision**, "EZvoxa Pro Direct Sales and Distribution
   Design.docx": the math (13,349 districts, 115,914 counted US seats,
