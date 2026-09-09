@@ -889,7 +889,20 @@ $299.99) and product lineup have not changed in kind; the only new
 product from an established maker is Proloquo (2022), a subscription
 rebuild. Frank, 9 Sep: an industry "asleep at the wheel", plus his own
 finding of user fatigue with LAMP on Evan's device; his observation, not
-a sourced figure.
+a sourced figure. Population check (Census Bureau, own pages): 2000
+Census 281,421,906; 2022 estimate 334,017,321; up 18.7%. Over the same
+span the autism student count rose 10.5 times and CDC's rate 4.8 times,
+so population growth explains almost none of it. Frank, 9 Sep, on the
+CDC's "broader identification" caveat: it cuts both ways, some children
+were and are misdiagnosed as ADHD or similar, and poorer families who
+did not take toddlers to specialists twenty years ago still do not; his
+argument, recorded as his. Frank, 9 Sep, on device fatigue: Evan's
+teachers told him that in 9th grade Evan never wanted to use his AAC
+device and the other students did not want their tablets either; when
+the family pushed to mainstream Evan, the district paid for outside
+technology support to follow him for a year, and now uses three separate
+companies to cover technology needs for mainstreamed students across 15
+to 20 schools in the district. His firsthand account; not a document.
 
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
