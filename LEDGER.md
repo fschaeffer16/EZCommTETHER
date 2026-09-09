@@ -927,6 +927,23 @@ only the state's financial tool, no budget books; fldoe.org answers 403
 from its own firewall regardless of the allow list; so the ESE budget
 for 2000-01 and 2024-25 needs a records request to the district (adopted
 budgets, annual financial reports, ESE program cost) or Frank's browser.
+Frank, 9 Sep, on the money: he expects funding rose from 2000 to 2025
+but not commensurate with the autism increase, and expects no great
+change in ESE curricula; the records request now also asks for the ESE
+Policies and Procedures documents for 2000-01 and today, and the ESE
+student counts for both years. Frank, 9 Sep: state ESE money is set by
+a formula on each child's level of disability but "does not have to be
+allocated to ESE. It can simply be added to the district's overall
+budget." His statement. My recollection, unverified, is that the ESE
+guaranteed allocation piece must be used for ESE services while the
+weighted formula money is unrestricted; the statute is s. 1011.62 F.S.,
+and leg.state.fl.us and flsenate.gov both refuse this environment. Ask
+Frank to paste the "exceptional student education guaranteed
+allocation" paragraph. Federal IDEA Part B: sites.ed.gov and
+www2.ed.gov refuse this environment; my unverified recollection is that
+subgrants to districts have not been paid per child since the 1999 base
+year, so the federal line cannot track the autism count; data.ed.gov
+has state-level Part B funding tables for 2004 and 2012.
 Frank, 9 Sep, on ESE programs: run "fundamentally unchanged for
 decades"; the district fought Evan's mainstreaming; self-contained
 classrooms mean "Less staff. Less oversight. Less cost." His view,
