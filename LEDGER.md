@@ -949,6 +949,32 @@ decades"; the district fought Evan's mainstreaming; self-contained
 classrooms mean "Less staff. Less oversight. Less cost." His view,
 recorded as his.
 
+## Read 9 Sep 2026 after Frank widened the allow list again
+
+Florida Statutes s. 1011.62 (flsenate.gov, 2025): subsection (8), the
+exceptional student education guaranteed allocation, "is created to fund
+the additional costs of programs for exceptional students specified in
+subparagraph (1)(d)2. and shall be supplemental to the funds appropriated
+in the Florida Education Finance Program for the basic student funding
+level"; its amount is the greater of the prior year's allocation per
+eligible FTE or the factor in the General Appropriations Act times
+eligible FTE, recalculated on actual membership. In the text read, no
+sentence requires a district to spend it on ESE; my earlier recollection
+of such a restriction is withdrawn. Subsection (1)(d): support levels IV
+and V are funded through a matrix of services completed at placement and
+at least every 3 years; other exceptional students at the basic level
+plus the guaranteed allocation. Frank's statement of 9 Sep stands on
+the text.
+Payment processors: Stripe 2.9% + $0.30 per successful domestic card
+transaction, no setup or monthly fees (stripe.com/pricing); PayPal cards
+from 2.89% + $0.29, PayPal checkout 3.49% + $0.49 (paypal.com); Square's
+page renders only in a browser, not read. In the finance model as
+costs.cardFeeRate and cardFeeFixed on the web share of consumer sales,
+which is 0 until Frank sets it.
+PRC-Saltillo's product sites (touchchatapp.com, lampwflapp.com): no
+school or volume pricing; TouchChat Discover is a free 30-day trial app,
+TouchChat HD Lite is unlocked by in-app purchase.
+
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
 Apple's own store search and listing pages, so verified. One-time apps:

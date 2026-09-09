@@ -24,12 +24,15 @@
     "codemagicMonthly": 0,
     "appleDeveloperYearly": 99,
     "googlePlayOneTime": 25,
-    "directSalesShare": 0.1
+    "directSalesShare": 0.1,
+    "cardFeeRate": 0.029,
+    "cardFeeFixed": 0.3
   },
   "assumptions": {
     "textsPerFamilyPerMonth": 30,
     "alertsPerFamilyPerYear": 2,
-    "schoolsThroughStore": false
+    "schoolsThroughStore": false,
+    "webShareOfConsumerSales": 0
   },
   "scenarios": {
     "floor": {
@@ -292,6 +295,18 @@
     "costs.directSalesShare": {
       "status": "assumption",
       "note": "Cost of selling EZvoxa Pro direct, as a share of Pro sales: sales time, travel, conferences, invoicing, collections. Added 9 Sep 2026 on Frank's go after the widget check found direct-sold seats carried no selling cost at all. 10% is a placeholder, Frank's to set; applies only when Pro seats are sold direct (the store checkbox off)."
+    },
+    "costs.cardFeeRate": {
+      "status": "verified",
+      "note": "Stripe pricing page, read 9 Sep 2026: 2.9% + $0.30 per successful domestic card transaction, no setup or monthly fees. PayPal's page the same day: cards from 2.89% + $0.29, PayPal checkout 3.49% + $0.49. Square's page renders only in a browser; not read. Applies to the share of consumer sales made on our website instead of the stores."
+    },
+    "costs.cardFeeFixed": {
+      "status": "verified",
+      "note": "Stripe, 9 Sep 2026: the $0.30 per transaction part of the card fee."
+    },
+    "assumptions.webShareOfConsumerSales": {
+      "status": "assumption",
+      "note": "Share of consumer sales (the one-time app and the Family Tether) made on ezvoxa.com rather than in the stores, once the web checkout exists. Zero until Frank sets it; on that share the card fee replaces the store's 15% and RevenueCat's 1%."
     }
   }
 }
