@@ -1181,3 +1181,16 @@ Pro is the talker alone and stays separate. No direct license needed.
   professionals, journal), and the form code from forms-snippet.txt in
   site.js. No price on the page; the only "Evan" is the menu link to his
   story.
+
+## Filing fees (read 10 Sep 2026)
+
+- USPTO trademark fee page (uspto.gov, fee schedule effective January 18,
+  2025): base application $350 per class; surcharges of $100 per class for
+  insufficient information and $200 per class for a free-form goods
+  description instead of the ID Manual; statement of use $150 per class;
+  extension $125 per class; petition to revive $250; five-year declaration
+  $325 per class; ten-year renewal combined with the declaration $650 per
+  class. tmsearch.uspto.gov is a script app that could not be queried from
+  here; whether anyone else holds EZVOXA or EZ VOICE is unchecked.
+- copyright.gov is blocked by the proxy (not on the allow list); copyright
+  registration fees unverified.
