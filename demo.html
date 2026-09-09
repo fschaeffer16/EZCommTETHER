@@ -5733,17 +5733,24 @@ class Component extends DCLogic {
       { glyph: '🖍️', txt: 'Can I borrow a marker?', say: 'Can I borrow a marker?', color: '#EC4899' },
       NURSE,
     ];
+    // Frank's friend art (10 Sep 2026). The file names set the phrases:
+    // "Hey!" became "Hey, what's up?", and "What's up?" and "Wanna sit
+    // together at lunch?" are new. "See ya later" keeps its glyph until the
+    // art is resent (the file arrived cut off); "Can I have a turn?" and
+    // "I like that." had no art in the set.
     if (kind === 'friends') return [
-      { glyph: '👋', txt: 'Hey!', say: 'Hey!', color: '#0EA5E9' },
-      { glyph: '🎮', txt: 'Do you wanna play?', say: 'Do you wanna play?', color: '#14B8A6' },
+      { glyph: '👋', icon: 'fr_hey', txt: "Hey, what's up?", say: "Hey, what's up?", color: '#F59E0B' },
+      { glyph: '💬', icon: 'fr_whatsup', txt: "What's up?", say: "What's up?", color: '#1F9E6E' },
+      { glyph: '🎮', icon: 'fr_play', txt: 'Do you wanna play?', say: 'Do you wanna play?', color: '#0EA5E9' },
       { glyph: '🔄', txt: 'Can I have a turn?', say: 'Can I have a turn?', color: '#F59E0B' },
-      { glyph: '😎', txt: "That's cool.", say: "That's cool.", color: '#7A5CFF' },
-      { glyph: '🍿', txt: 'Do you wanna hang out?', say: 'Do you wanna hang out?', color: '#E5533D' },
+      { glyph: '😎', icon: 'fr_cool', txt: "That's cool.", say: "That's cool.", color: '#14B8A6' },
+      { glyph: '🍿', icon: 'fr_hangout', txt: 'Do you wanna hang out?', say: 'Do you wanna hang out?', color: '#7A5CFF' },
       { glyph: '👍', txt: 'I like that.', say: 'I like that.', color: '#1F9E6E' },
-      { glyph: '🪑', txt: 'Can I sit here?', say: 'Can I sit here?', color: '#0EA5E9' },
-      { glyph: '😂', txt: "That's funny.", say: "That's funny.", color: '#F59E0B' },
-      { glyph: '🙏', txt: 'Please.', say: 'Please.', color: '#14B8A6' },
-      { glyph: '💛', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
+      { glyph: '🪑', icon: 'fr_sit', txt: 'Can I sit here?', say: 'Can I sit here?', color: '#E5533D' },
+      { glyph: '🍽️', icon: 'fr_lunch', txt: 'Wanna sit together at lunch?', say: 'Wanna sit together at lunch?', color: '#F59E0B' },
+      { glyph: '😂', icon: 'fr_funny', txt: "That's funny.", say: "That's funny.", color: '#A855F7' },
+      { glyph: '🙏', icon: 'fam_please', txt: 'Please.', say: 'Please.', color: '#14B8A6' },
+      { glyph: '💛', icon: 'fam_thanks', txt: 'Thank you.', say: 'Thank you.', color: '#DB2777' },
       { glyph: '👋', txt: 'See ya later.', say: 'See ya later.', color: '#6366F1' },
     ];
     return [
@@ -6721,7 +6728,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.09.3'; }
+  APP_BUILD() { return '2026.09.10.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}

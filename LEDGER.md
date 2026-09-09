@@ -1291,3 +1291,7 @@ Pro is the talker alone and stays separate. No direct license needed.
   50,000 people". Only Spoken, Sayella and Proloquo4Text name teens in
   their positioning. dynavoxgroup.com and most small makers' sites blocked
   from here.
+- 10 Sep 2026: eight friend icons added (`fr_hey`, `fr_whatsup`, `fr_play`,
+  `fr_cool`, `fr_hangout`, `fr_sit`, `fr_lunch`, `fr_funny`) from
+  "EZvoxa_Friend_Message_Icons"; 321 icons in the file. see_ya_later.png
+  in that zip is truncated and needs resending.

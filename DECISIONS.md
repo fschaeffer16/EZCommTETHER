@@ -777,3 +777,10 @@ a dated line saying it was reversed. Dates are the day it happened.
   comparables measure apps built for clinics and classrooms on iPads, and
   none was built for a teenager's own phone; they bound the old market,
   not his.
+- **10 Sep 2026. Friend phrases carry Frank's art**, sent as a zip with no
+  note; the file names set the phrases, so "Hey!" became "Hey, what's
+  up?" and "What's up?" and "Wanna sit together at lunch?" were added.
+  "See ya later" keeps its emoji because the file arrived cut off (57 KB,
+  only the top of the hand); "Can I have a turn?" and "I like that." had
+  no art in the set. Please and Thank you reuse the family art, which is
+  the same render. Both apps, build 2026.09.10.1.

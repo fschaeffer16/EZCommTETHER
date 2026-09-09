@@ -102,7 +102,13 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   School people (teachers, office, aides, Speech/OT, bus) open the same
   page with their category's phrases and no name row. Teachers' twelve
   responses carry Frank's teacher art (`tr_*`, 9 Sep 2026); the marker
-  phrase still has an emoji, the nurse keeps `ph_nurse`.
+  phrase still has an emoji, the nurse keeps `ph_nurse`. Friends (10 Sep
+  2026): thirteen phrases, ten with Frank's friend art (`fr_*` plus
+  `fam_please`/`fam_thanks`): Hey, what's up? / What's up? / Do you wanna
+  play? / Can I have a turn? (emoji) / That's cool. / Do you wanna hang
+  out? / I like that. (emoji) / Can I sit here? / Wanna sit together at
+  lunch? / That's funny. / Please. / Thank you. / See ya later. (emoji,
+  art file arrived cut off).
 - **food** — Food board. **One board with the same four sections in both apps,
   in this order: Drinks, Food, Snacks, Restaurants**, under the hunger chips
   (Hungry / Thirsty / Full / Snack). Evan's items differ from the template's;
