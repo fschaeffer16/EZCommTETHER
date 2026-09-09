@@ -1276,3 +1276,18 @@ Pro is the talker alone and stays separate. No direct license needed.
   participants preferred using the device to picture exchange or manual
   sign language." Only two hits on the comparison search; no controlled
   study of a combined sign-plus-device system found.
+- Comparables (10 Sep 2026, "EZvoxa AAC App Comparables.docx", working
+  file aac-comparables.md): no store publishes unit sales or buyer ages.
+  App Store US rating counts: Proloquo2Go 12,081 at $249.99; Proloquo4Text
+  921; TD Snap 825; Speak for Yourself 404; Avaz 315; TouchChat WordPower
+  131; LAMP 93; Avaz Lifetime 74; GoTalk NOW 2. Play installs: Speech
+  Assistant AAC 500K+ (free + $10.99); Avaz, Spoken, Leeloo, Cboard,
+  Talkie, Expressia, SymboTalk 100K+; CoughDrop 50K+; no paid-up-front
+  symbol app above 5K+ (TalkTablet PRO $199.99). Dynavox Group 2024 annual
+  report: net sales SEK 1,972.1m (2023: 1,613.3m), organic growth 18%,
+  North America 78%, gross margin 69%, EBIT margin 11.6%, about 90% paid
+  by insurers and public funders; no unit count. AssistiveWare: "over
+  500,000 AAC apps downloaded", iOS only. Smartbox: "Grid is used by over
+  50,000 people". Only Spoken, Sayella and Proloquo4Text name teens in
+  their positioning. dynavoxgroup.com and most small makers' sites blocked
+  from here.
