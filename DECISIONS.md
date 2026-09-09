@@ -737,3 +737,11 @@ a dated line saying it was reversed. Dates are the day it happened.
   had said I would do unless he objected; he did not. His older neon set
   for the seven teacher phrases (`ph_help` and the rest) stays in the icon
   file for the other school categories that still use it.
+- **9 Sep 2026. Hurt flow is two steps.** Frank: "I want to do the first
+  set of questions. Then I want to do a pain scale and I think that is
+  it." Built as said, both apps: step 1 unchanged, step 2 his three faces
+  (1-3, 4-6, 7-10), then the summary. Gone: "When does it hurt?", "When
+  did it start?", and the "I need help" answer (SOS is on every screen).
+  The spoken lines for the faces are mine, offered and not objected to:
+  "It hurts a little. One to three." / "It hurts. Four to six." / "It hurts
+  really bad. Seven to ten."; his to change.

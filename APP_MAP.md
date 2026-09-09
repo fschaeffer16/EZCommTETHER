@@ -149,6 +149,12 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   kitchen / living room / outside) at the top. The old **houses** screen is unreachable.
 - **hurtbody** — Evan's one Hurt board: the neon body map (head/neck/chest/belly, both
   arms/hands/legs/feet) with the I'm Sick symptoms under it; back arrow goes home.
+  Tapping a part says "My arm hurts." and opens a two-step sheet (9 Sep 2026,
+  down from four): step 1 "How did you get hurt?" (four picture tiles, two
+  across), step 2 "How bad does it hurt?" (Frank's numbered pain scale,
+  `pain_low` 1-3, `pain_mid` 4-6, `pain_high` 7-10, three across, spoken as
+  "It hurts really bad. Seven to ten."), then Got it with the summary and
+  Say it again. Same in both apps.
   **hurt** — the template's Health symptom board (inside Feelings). In Evan's app the
   `hurt` screen is no longer reachable.
 - **calendar** — month grid + inline live **Time** (tap → **clock**).

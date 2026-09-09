@@ -1142,3 +1142,7 @@ Pro is the talker alone and stays separate. No direct license needed.
   black) and `fam_please`, `fam_thanks` ("EZvoxa_Please_Thank_You_Icons").
   Icon file 11.74 MB, 310 icons. A teacher's page is 13 cards two across
   and scrolls about 680px; build 2026.09.09.2 in both apps.
+- 9 Sep 2026, Hurt: `pain_low`, `pain_mid`, `pain_high` added at 256px from
+  Frank's "EZvoxa_Numbered_Pain_Scale" (313 icons in the file). Faces
+  measure 103px three across at 430 wide. Build 2026.09.09.3, both apps;
+  flow checked end to end headless: spoken lines and summary as designed.
