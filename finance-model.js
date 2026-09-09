@@ -35,6 +35,9 @@
       const schoolGross = seats * (seats >= p.schoolVolumeSeats ? p.schoolVolume : p.schoolList);
       const storeGross = talkerGross + tetherGross;
       const storeFees = storeGross * c.storeCommission + schoolGross * (a.schoolsThroughStore ? c.storeCommission : 0);
+      // Selling Pro direct costs something too (9 Sep 2026): a share of Pro
+      // sales for sales time, travel, conferences, invoicing and collections.
+      const directSales = a.schoolsThroughStore ? 0 : schoolGross * (c.directSalesShare || 0);
       // RevenueCat: nothing to $2,500 tracked a month, then 1% of what it tracks.
       const monthlyTracked = storeGross / 12;
       const revenueCat = monthlyTracked >= c.revenueCatFreeMonthly ? storeGross * c.revenueCatRate : 0;
@@ -50,7 +53,7 @@
       const cloud = textCost + alertCost + voiceCost + fixed;
       const acquisition = y.buyers * c.acquisitionPerBuyer;
       const gross = storeGross + schoolGross;
-      const costs = storeFees + revenueCat + refunds + cloud + acquisition + y.opex;
+      const costs = storeFees + directSales + revenueCat + refunds + cloud + acquisition + y.opex;
       const net = gross - costs;
       cumulative += net;
       // Per-channel view (8 Sep): the same numbers split by who paid.
@@ -61,8 +64,8 @@
       const ch = {
         talker: { units: y.buyers, sales: talkerGross, direct: talkerGross * c.storeCommission + (storeGross ? revenueCat * talkerGross / storeGross : 0) + talkerGross * c.refundRate + alertBuyers + acquisition },
         tether: { units: round(subsAvg), sales: tetherGross, direct: tetherGross * c.storeCommission + (storeGross ? revenueCat * tetherGross / storeGross : 0) + tetherGross * c.refundRate + textCost + voiceCost + (alertCost - alertBuyers) },
-        schools: { units: districtSeats, sales: districtSeats * seatPrice, direct: districtSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : 0) },
-        clinics: { units: clinicSeats, sales: clinicSeats * seatPrice, direct: clinicSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : 0) },
+        schools: { units: districtSeats, sales: districtSeats * seatPrice, direct: districtSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : (c.directSalesShare || 0)) },
+        clinics: { units: clinicSeats, sales: clinicSeats * seatPrice, direct: clinicSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : (c.directSalesShare || 0)) },
       };
       const overhead = fixed + y.opex;
       for (const k of Object.keys(ch)) {
@@ -77,7 +80,7 @@
         channels: ch, overhead: round(overhead), direct: round(costs - overhead),
         year: i + 1, buyers: y.buyers, subsEnd: y.subsEnd, subsAvg: round(subsAvg), districts: y.districts, districtSeats, clinics: y.clinics || 0, clinicSeats, seats,
         talkerGross: round(talkerGross), tetherGross: round(tetherGross), schoolGross: round(schoolGross), gross: round(gross),
-        storeFees: round(storeFees), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,
+        storeFees: round(storeFees), directSales: round(directSales), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,
         net: round(net), cumulative: round(cumulative),
       });
       subsPrev = y.subsEnd;

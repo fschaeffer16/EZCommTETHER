@@ -23,7 +23,8 @@
     "vercelMonthly": 20,
     "codemagicMonthly": 0,
     "appleDeveloperYearly": 99,
-    "googlePlayOneTime": 25
+    "googlePlayOneTime": 25,
+    "directSalesShare": 0.1
   },
   "assumptions": {
     "textsPerFamilyPerMonth": 30,
@@ -287,6 +288,10 @@
     "scenarios.national": {
       "status": "hub",
       "note": "The national ramp from the Executive Master Hub page Frank pasted 8 Sep 2026, written by an independent AI that researched the market after reviewing the product's screenshots and demo; its sources are not in hand. Buyers, year-end subscribers, districts with their seat totals, and clinical seats (therapists, per Frank 8 Sep) with theirs, priced at the school rate as the page prices them. Its operating column was labeled OpEx and RC; the model computes RevenueCat itself, so operating here is that column minus 1% of the page's own gross (buyers times $99.99 plus year-end subscribers times $9.99 times twelve), which leaves round figures of $34,500, $53,700, $81,700, $114,700 and $147,700."
+    },
+    "costs.directSalesShare": {
+      "status": "assumption",
+      "note": "Cost of selling EZvoxa Pro direct, as a share of Pro sales: sales time, travel, conferences, invoicing, collections. Added 9 Sep 2026 on Frank's go after the widget check found direct-sold seats carried no selling cost at all. 10% is a placeholder, Frank's to set; applies only when Pro seats are sold direct (the store checkbox off)."
     }
   }
 }

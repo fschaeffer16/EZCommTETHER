@@ -151,6 +151,25 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Direct selling cost added on Frank's go** ("Go on the
+  sales cost input"): costs.directSalesShare, 10% of Pro sales, an
+  assumption for Frank to set, applied only when Pro seats are sold
+  direct. Base five-year net moves from $12,109,524 to $11,987,146.
+  Same message, Frank's direction for the direct sales design, recorded
+  for the design document: a corporate sales model, Frank as the
+  salesperson at first; a corporate section on the website, spelled out
+  so he can take it to Claude Design; his demo video with his own
+  ElevenLabs voiceover, done about 10 Sep, a big part of it; districts
+  served through a secure portal; his guess at distribution, a secure
+  download of the base app without Family Tether, with backup and
+  restore, updated once or twice a year; me to research and recommend;
+  no fixed pricing structure: he may heavily discount a poorer district
+  with many nonverbal children without raising prices elsewhere, give
+  discounts to take a district district-wide, and build a referral
+  program when a district brings in others; the same security for
+  clinical entities; dedicated refurbished iPhone Pro Max devices
+  shipped out as a fallback if a customer wants turnkey, not first.
+
 - **8 Sep 2026. EZvoxa Pro is sold by EZ Voice direct, not through the
   stores. Frank: "I still want private / corporate sales to go thru us I
   think. I won't cheapen our quality compared to theirs when it comes to
