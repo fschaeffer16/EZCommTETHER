@@ -1242,3 +1242,29 @@ Pro is the talker alone and stays separate. No direct license needed.
   2026. Of the first page of videos, 22 are "1 year ago", 6 "2 years ago",
   2 "4 months ago". No documentary listed as finished and released; two
   items are labeled preview or trailer.
+
+## Elementary AAC deep dive (10 Sep 2026)
+
+- Delivered as "EZvoxa Elementary AAC Deep Dive.docx"; the four working
+  files with a URL per fact are in research/aac-elementary-2026-09-10/
+  (products, design research, outcomes, funding). Frank's ask: "everything.
+  When they were built, the last time they had any substantial update,
+  what is the research behind how they are designed, how dated is that
+  research, success rates."
+- Headline facts kept here for memory: app first releases Proloquo2Go 21
+  Apr 2009, TouchChat 23 Dec 2010, GoTalk NOW 12 Oct 2011, Speak for
+  Yourself 21 Dec 2011, LAMP WFL 28 Aug 2012, Avaz 18 Sep 2012, CoughDrop
+  11 Oct 2015, TD Snap 4 Jun 2017, Grid for iPad 31 Jan 2018, Proloquo 7
+  Mar 2022 (Apple's lookup service). Minspeak 1982, Unity 1995, LAMP
+  workshops 2007 (PRC timeline). Kasari 2014: 61 children, d = 0.62 at 24
+  weeks, attenuated by 36, 25% attrition. Cochrane 2018: two RCTs, very
+  low quality. Phillips and Zhao 1993: 29.3% abandonment, 227 adults, all
+  AT. No study measures abandonment of school-issued SGDs. Medicare
+  Florida E2510 $9,645.69; Florida Medicaid E2510 $6,240.51, E2511
+  manually priced; Rule 59G-4.072 excludes tablets and phones; IDEA 34
+  CFR 300.105 "at public expense"; school match evaluation $102.63.
+- Blocked from here and still worth opening: tandfonline.com,
+  pubs.asha.org, sagepub, wiley, cochranelibrary (bot walls);
+  aacfunding.com, forbesaac.com, ablenetinc.com, talktometechnologies.com,
+  fdlrs.org, flrules.org, ncaep.fpg.unc.edu, aacandautism.com, cpec.org.au,
+  pecsusa.com (not on the allow list or refused).
