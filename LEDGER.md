@@ -1194,3 +1194,10 @@ Pro is the talker alone and stays separate. No direct license needed.
   here; whether anyone else holds EZVOXA or EZ VOICE is unchecked.
 - copyright.gov is blocked by the proxy (not on the allow list); copyright
   registration fees unverified.
+- Frank, 10 Sep 2026, on Dinn Mann (his account, not a document): has met
+  Evan; they have discussed GOATNET; says he has 28 documentaries done or
+  in progress and has always wanted to do one on Evan; grandfather built
+  the Astrodome; created MLB's media arm and sued the owners over a
+  promised 2 percent stake when it was sold. Frank's worry is the present:
+  "always looking for investors, always $2 million away from a launch".
+  Frank is not asserting that; he wonders.
