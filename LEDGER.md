@@ -1201,3 +1201,23 @@ Pro is the talker alone and stays separate. No direct license needed.
   promised 2 percent stake when it was sold. Frank's worry is the present:
   "always looking for investors, always $2 million away from a launch".
   Frank is not asserting that; he wonders.
+- goatnet.io read 10 Sep 2026 (curl; the page is a script app, so the text
+  came from its bundles): title "Goatnet - Stream, Connect, Create";
+  "Join Goatnet to stream exclusive content, connect with creators, and
+  discover amazing stories"; "GOATNET combines storytelling, creation
+  tools, identity, and meaningful connection into infrastructure built for
+  visibility, growth, and opportunity"; accounts "available for ages 13 and
+  up", with guardian consent and COPPA screens; routes for sign-up,
+  subscription, community, timeline, topics, "bleats", "goattakes",
+  "university", "giving", organizations, admin. api.goatnet.io answers
+  {"ok":true,"service":"goatnet-api"} and reports database HEALTHY. No
+  about, team, films, press or investor page; /about, /films,
+  /documentaries, /invest all 404. So: a social and streaming platform
+  under construction, live API, no public list of documentaries.
+- copyright.gov still blocked from here on 10 Sep after Frank's save;
+  copyright fees remain unverified in the filing guide.
+- Fla. Stat. 934.03(2)(d) (flsenate.gov, 2025): intercepting an oral
+  communication is lawful only when all parties have given prior consent;
+  934.02(2): an oral communication is one uttered with a justified
+  expectation that it is not being intercepted. Read for Frank's home
+  camera question.
