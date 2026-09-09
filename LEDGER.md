@@ -1153,3 +1153,8 @@ Pro is the talker alone and stays separate. No direct license needed.
   journal.html ("Welcome to EZvoxa", Entry 01). It also replaced site.js
   (form code removed, restored in 9d-series commit on main) and site.css.
   Website branch `schools-section` force-pushed, rebuilt on that upload.
+- 10 Sep 2026: the inbox page (`/waitlist-admin.html`) refreshes itself
+  every 30 seconds while open, shows "n new" on each tab, and marks
+  entries newer than the last visit NEW (last-seen time kept in that
+  browser only, key `ezvoxa.inbox.seen`). Frank asked for a way to watch
+  responses in real time once he announces the site.

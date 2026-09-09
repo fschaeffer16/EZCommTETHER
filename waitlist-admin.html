@@ -20,11 +20,13 @@
   .entry .c{color:#5CC8FF;font-size:15px;word-break:break-all}
   .entry .m{color:#B0A695;font-size:14px;margin-top:4px}
   .entry .t{color:#7A7060;font-size:12.5px;margin-top:4px}
+  .entry.new{border-color:#FFB020}
+  .new-tag{display:inline-block;background:#FFB020;color:#0A0A0F;font-size:11px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:8px;vertical-align:middle}
 </style>
 
 <h1>EZvoxa Inbox</h1>
 <p class="sub">Everything the website collects, newest first: the launch list, professional inquiries, and quote and pilot requests from schools and clinics.
-This page shows nothing without the family password.</p>
+Refreshes on its own every 30 seconds while open. Entries that arrived since you last looked are marked NEW. Nothing shows without the family password.</p>
 
 <form id="f">
   <input id="pw" type="password" autocomplete="current-password" placeholder="Family password">
@@ -32,6 +34,7 @@ This page shows nothing without the family password.</p>
 </form>
 <div id="msg"></div>
 <div id="tabs" style="display:none;gap:8px;margin-bottom:14px;flex-wrap:wrap"></div>
+<div id="live" style="display:none;font-size:13px;color:#7A7060;margin-bottom:10px"></div>
 <div id="count"></div>
 <div id="out"></div>
 
@@ -43,7 +46,10 @@ This page shows nothing without the family password.</p>
     { key: 'inquiries', label: 'Professional inquiries', url: '/api/professional-inquiry', noun: ['inquiry', 'inquiries'] },
     { key: 'waitlist', label: 'Launch list', url: '/api/waitlist', noun: ['person', 'people'] },
   ];
-  var lists = {}, current = 'quotes';
+  var lists = {}, current = 'quotes', timer = null, pw = '';
+  var SEEN_KEY = 'ezvoxa.inbox.seen';
+  function seen() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || '{}'); } catch (e) { return {}; } }
+  function markSeen(key) { try { var o = seen(); o[key] = Date.now(); localStorage.setItem(SEEN_KEY, JSON.stringify(o)); } catch (e) {} }
   function esc(x){ var s=document.createElement('span'); s.textContent=String(x==null?'':x); return s.innerHTML; }
   function when(e){ return e.at ? '<div class="t">' + esc(new Date(e.at).toLocaleString('en-US')) + '</div>' : ''; }
   function row(label, v){ return v ? '<div class="m"><span style="color:#7A7060">' + esc(label) + ':</span> ' + esc(v) + '</div>' : ''; }
@@ -55,46 +61,56 @@ This page shows nothing without the family password.</p>
     cnt.textContent = list.length + ' ' + (list.length === 1 ? src.noun[0] : src.noun[1]);
     document.querySelectorAll('#tabs button').forEach(function (b) { b.style.background = b.dataset.key === current ? '#FFB020' : '#2B241C'; b.style.color = b.dataset.key === current ? '#0A0A0F' : '#EFEAE2'; });
     if (!list.length) { msg.textContent = 'Nothing here yet.'; return; }
+    var since = seen()[current] || 0;
     list.forEach(function (e) {
-      var d = document.createElement('div'); d.className = 'entry';
+      var d = document.createElement('div'); d.className = 'entry' + (e.at && e.at > since ? ' new' : '');
+      var tag = (e.at && e.at > since) ? '<span class="new-tag">NEW</span>' : '';
       if (current === 'quotes') {
-        d.innerHTML = '<b>' + esc(e.kind === 'pilot' ? 'PILOT · ' : 'QUOTE · ') + esc(e.organization || '(no organization)') + '</b>' +
+        d.innerHTML = '<b>' + esc(e.kind === 'pilot' ? 'PILOT · ' : 'QUOTE · ') + esc(e.organization || '(no organization)') + '</b>' + tag +
           '<div class="c">' + esc([e.name, e.title].filter(Boolean).join(', ')) + ' · ' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' +
           row('Type', e.orgType) + row('State', e.state) + row('Cannot rely on speech', e.count) + row('Devices', e.devices) +
           row('Pilot seats', e.seats) + row('Program', e.program) + row('Heard of us', e.heard) + row('Referred by', e.referral) + row('Message', e.message) + when(e);
       } else if (current === 'inquiries') {
-        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
+        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' + tag +
           '<div class="c">' + esc(e.email) + '</div>' + row('Role', e.role) + row('Organization', e.organization) + row('Message', e.message) + row('Came from', e.source) + when(e);
       } else {
-        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
+        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' + tag +
           '<div class="c">' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' + row('About', e.about) + row('Came from', e.source) + when(e);
       }
       out.appendChild(d);
     });
   }
-  f.addEventListener('submit', async function (ev) {
-    ev.preventDefault();
+  async function load(first) {
     var msg = document.getElementById('msg'), tabs = document.getElementById('tabs');
-    var pw = document.getElementById('pw').value;
-    msg.textContent = 'Loading…'; document.getElementById('out').innerHTML = ''; document.getElementById('count').textContent = '';
+    if (first) { msg.textContent = 'Loading…'; document.getElementById('out').innerHTML = ''; document.getElementById('count').textContent = ''; }
     try {
       var results = await Promise.all(SOURCES.map(function (s) {
         return fetch(s.url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list', password: pw }) })
           .then(function (r) { return r.json(); }).catch(function () { return { ok: false, error: 'network' }; });
       }));
-      if (results.every(function (j) { return j && j.error === 'bad_password'; })) { msg.textContent = 'Wrong password.'; return; }
+      if (results.every(function (j) { return j && j.error === 'bad_password'; })) { msg.textContent = 'Wrong password.'; clearInterval(timer); timer = null; return; }
       tabs.innerHTML = ''; tabs.style.display = 'flex';
       SOURCES.forEach(function (s, i) {
         lists[s.key] = (results[i] && results[i].ok) ? (results[i].entries || []) : [];
         var b = document.createElement('button'); b.type = 'button'; b.dataset.key = s.key;
-        b.textContent = s.label + ' (' + lists[s.key].length + ')';
-        b.addEventListener('click', function () { current = s.key; render(); });
+        var sn = seen()[s.key] || 0; var fresh = lists[s.key].filter(function (e) { return e.at && e.at > sn; }).length;
+        b.textContent = s.label + ' (' + lists[s.key].length + (fresh ? ', ' + fresh + ' new' : '') + ')';
+        b.addEventListener('click', function () { markSeen(current); current = s.key; render(); });
         tabs.appendChild(b);
       });
       var failed = SOURCES.filter(function (s, i) { return !(results[i] && results[i].ok); }).map(function (s) { return s.label; });
       render();
       if (failed.length) document.getElementById('msg').textContent = 'Could not load: ' + failed.join(', ') + '.';
+      var live = document.getElementById('live'); live.style.display = 'block'; live.textContent = 'Last checked ' + new Date().toLocaleTimeString('en-US') + ' · checks again in 30 seconds';
     } catch (err) { msg.textContent = 'Could not reach the server. Try again.'; }
+  }
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    pw = document.getElementById('pw').value;
+    load(true);
+    clearInterval(timer); timer = setInterval(function () { load(false); }, 30000);
   });
+  // Leaving the page marks the open tab as seen, so NEW means new since the last visit.
+  window.addEventListener('pagehide', function () { if (pw) markSeen(current); });
 })();
 </script>
