@@ -755,3 +755,10 @@ a dated line saying it was reversed. Dates are the day it happened.
   so it merges cleanly, and its hero opens the narrated guided demo page
   (guided-demo.html with demo-narration.mp3), which is what Frank shipped,
   not a video file.
+- **10 Sep 2026. The younger-children product (ages 5 to 9) is tablet-first,
+  not phone-first** (Frank). Direction only; no build. My recommendation
+  the same day, recorded as mine: phrases stay as the daily layer, a
+  picture-first sentence builder that the adult can model on is the core,
+  software on district iPads before any dedicated device, and the design
+  comes out of a year of watching three to five children in one classroom,
+  not out of a symbol library.
