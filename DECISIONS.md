@@ -201,7 +201,9 @@ a dated line saying it was reversed. Dates are the day it happened.
   product idea in one sentence: a board that starts at single words and
   opens up common phrases and then sentence building as the child shows
   proficiency, with the app itself noticing the proficiency. His idea,
-  recorded as his; not designed.
+  recorded as his; not designed. Frank: "My son's AAC board has not
+  changed since 4th grade." Evan is 16; that is about six years on the
+  same board.
 - **9 Sep 2026. Direct sales and distribution design delivered for
   Frank's decision**, "EZvoxa Pro Direct Sales and Distribution
   Design.docx": the math (13,349 districts, 115,914 counted US seats,
