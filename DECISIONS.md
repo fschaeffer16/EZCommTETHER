@@ -151,6 +151,19 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Sales staff built in. Frank: "You would have to add
+  sales staff as we get past a certain level. Build that in."** Frank is
+  the first seller; each further salesperson closes 30 new districts a
+  year (placeholder) at $85,000 a year fully loaded (placeholder, no
+  source, labor statistics site blocked). Staff are added when the
+  year's new districts exceed what the sellers on hand can close; the
+  cost is overhead. At Base: 0, 0, 1, 3 and 7 added staff in Years 1 to
+  5, $935,000 over five years. Both inputs on the finance widget for
+  Frank to set. Frank on the ramp: not padding, word of mouth at
+  statewide conferences; I agreed with the mechanism and said Base is
+  achievable if the pilot yields a repeatable result and a second seller
+  is in place by Year 3.
+
 - **9 Sep 2026. School district ramp is Frank's.** "I think you might be
   way underselling school districts... I see is starting 10 districts
   maybe 50-75 by year 3 to anywhere from 150-300 by year 5... by year 4 I

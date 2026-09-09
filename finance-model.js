@@ -59,8 +59,15 @@
       tenDlcPaid = true; googlePaid = true;
       const cloud = textCost + alertCost + voiceCost + fixed;
       const acquisition = y.buyers * c.acquisitionPerBuyer;
+      // Sales staff (Frank, 9 Sep 2026: "You would have to add sales staff as we
+      // get past a certain level. Build that in"). Frank is the first seller;
+      // each further seller closes districtsPerSellerPerYear new districts.
+      const newDistricts = (y.districts || 0);
+      const sellersNeeded = a.districtsPerSellerPerYear > 0 ? Math.ceil(newDistricts / a.districtsPerSellerPerYear) : 1;
+      const salesStaff = Math.max(0, sellersNeeded - 1);
+      const salesStaffCost = salesStaff * (c.salesPersonYearly || 0);
       const gross = consumerGross + schoolGross;
-      const costs = storeFees + cardFees + directSales + revenueCat + refunds + cloud + acquisition + y.opex;
+      const costs = storeFees + cardFees + directSales + revenueCat + refunds + cloud + acquisition + salesStaffCost + y.opex;
       const net = gross - costs;
       cumulative += net;
       // Per-channel view (8 Sep): the same numbers split by who paid.
@@ -74,7 +81,7 @@
         schools: { units: districtSeats, sales: districtSeats * seatPrice, direct: districtSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : (c.directSalesShare || 0)) },
         clinics: { units: clinicSeats, sales: clinicSeats * seatPrice, direct: clinicSeats * seatPrice * (a.schoolsThroughStore ? c.storeCommission : (c.directSalesShare || 0)) },
       };
-      const overhead = fixed + y.opex;
+      const overhead = fixed + y.opex + salesStaffCost;
       for (const k of Object.keys(ch)) {
         const x = ch[k];
         x.overhead = gross > 0 ? overhead * x.sales / gross : 0;
@@ -87,7 +94,7 @@
         channels: ch, overhead: round(overhead), direct: round(costs - overhead),
         year: i + 1, buyers: y.buyers, subsEnd: y.subsEnd, subsAvg: round(subsAvg), districts: y.districts, districtSeats, clinics: y.clinics || 0, clinicSeats, seats,
         talkerGross: round(talkerGross), tetherGross: round(tetherGross), schoolGross: round(schoolGross), gross: round(gross),
-        storeFees: round(storeFees), cardFees: round(cardFees), directSales: round(directSales), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,
+        storeFees: round(storeFees), cardFees: round(cardFees), directSales: round(directSales), salesStaff, salesStaffCost: round(salesStaffCost), revenueCat: round(revenueCat), refunds: round(refunds), cloud: round(cloud), acquisition: round(acquisition), opex: y.opex,
         net: round(net), cumulative: round(cumulative),
       });
       subsPrev = y.subsEnd;

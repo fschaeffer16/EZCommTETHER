@@ -26,13 +26,15 @@
     "googlePlayOneTime": 25,
     "directSalesShare": 0.1,
     "cardFeeRate": 0.029,
-    "cardFeeFixed": 0.3
+    "cardFeeFixed": 0.3,
+    "salesPersonYearly": 85000
   },
   "assumptions": {
     "textsPerFamilyPerMonth": 30,
     "alertsPerFamilyPerYear": 2,
     "schoolsThroughStore": false,
-    "webShareOfConsumerSales": 0
+    "webShareOfConsumerSales": 0,
+    "districtsPerSellerPerYear": 30
   },
   "scenarios": {
     "floor": {
@@ -307,6 +309,14 @@
     "assumptions.webShareOfConsumerSales": {
       "status": "assumption",
       "note": "Share of consumer sales (the one-time app and the Family Tether) made on ezvoxa.com rather than in the stores, once the web checkout exists. Zero until Frank sets it; on that share the card fee replaces the store's 15% and RevenueCat's 1%."
+    },
+    "costs.salesPersonYearly": {
+      "status": "assumption",
+      "note": "Fully loaded yearly cost of one salesperson (pay, taxes, travel): $85,000. Claude's placeholder, 9 Sep 2026, on Frank's instruction to build in sales staff past a certain level. No source; the labor statistics site is blocked. Frank sets it."
+    },
+    "assumptions.districtsPerSellerPerYear": {
+      "status": "assumption",
+      "note": "New districts one salesperson can close in a year, 30: about one every eight working days including the district's paperwork. Frank is the first seller and is not paid from this line; staff are added when the year's new districts exceed what the sellers on hand can close. Claude's placeholder, 9 Sep 2026."
     }
   }
 }
