@@ -91,6 +91,14 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 "open to the top" behavior (see below).
 
 - **family** — Family people board. (Home → Family; Friends tile → same board, friends set)
+  Tapping a person opens their page (Evan's app, 9 Sep 2026): the photo at the
+  top says the name; no name row under it. Six phrases with Frank's neon art
+  (`fam_love`, `fam_miss`, `fam_needyou`, `fam_morning`, `fam_night`,
+  `fam_birthday`), captions without the name ("I love you"), spoken and
+  texted with it ("I love you Mom"), then Please and Thank you (emoji, no
+  art yet). With a phone number: rows, 124px picture, caption beside, Frank's
+  Text button (`ui_text`) beside that. Without: two across, 108px picture,
+  whatever the count (other phrase sheets go three across past four).
 - **food** — Food board. **One board with the same four sections in both apps,
   in this order: Drinks, Food, Snacks, Restaurants**, under the hunger chips
   (Hungry / Thirsty / Full / Snack). Evan's items differ from the template's;

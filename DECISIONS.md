@@ -713,3 +713,18 @@ a dated line saying it was reversed. Dates are the day it happened.
   branch (posts through the site's existing `/app` rewrite). Reported to
   Frank rather than pushed to the website's main, since that repository
   is his upload lane; his call to merge.
+- **9 Sep 2026. Family member page rebuilt around Frank's art** (Evan's
+  app only; the template untouched until he says). His rulings that night,
+  each built as said: no name row ("They are supposed to be able to click
+  Mom above it to say mom"); his Text button art, which I had missed in his
+  first message and he had to point out; a sixth phrase, "I need you", his
+  pick over "Can you come here?"; captions without the name ("I do not
+  need the word Mom six times on one page"), the spoken and texted line
+  keeps it. School people keep their name row until he says otherwise; he
+  is redoing the teacher art next.
+- **9 Sep 2026. Person pages stay two across.** Eight phrases three across
+  gave 66px pictures and a third of the screen empty, which is what he
+  meant by "empty space when there is no phone number". Two across with
+  room for a two-line caption scrolls a little at eight phrases; six would
+  fit. Please and Thank you stay on the page because he has not said to
+  drop them; flagged to him.

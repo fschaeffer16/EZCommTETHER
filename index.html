@@ -4178,7 +4178,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
                 <button onClick="{{ opt.onTap }}" style="{{ opt.span }}background:var(--card,#111);color:#fff;border:2.5px solid {{ opt.color }};border-radius:18px;padding:10px 6px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:{{ chooserCardH }};box-shadow:0 0 14px {{ opt.glow }};font-family:inherit;" style-active="transform:scale(.96)">
                   {{ opt.bigGlyphEl }}
-                  <span style="font-size:{{ chooserTxt }};font-weight:800;line-height:1.15;text-align:center;color:var(--ink,#fff);">{{ opt.txt }}</span>
+                  <span style="flex:none;display:block;width:100%;white-space:normal;font-size:{{ chooserTxt }};font-weight:800;line-height:1.15;text-align:center;color:var(--ink,#fff);">{{ opt.txt }}</span>
                 </button>
               </sc-for>
             </div>
@@ -4187,9 +4187,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div style="display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;">
             <sc-for list="{{ chooserOptions }}" as="opt" hint-placeholder-count="0">
               <div style="display:flex;gap:8px;align-items:stretch;">
-                <button onClick="{{ opt.onTap }}" style="flex:1;min-width:0;background:{{ opt.color }};color:#fff;border:none;border-radius:18px;padding:18px;font-size:19px;font-weight:800;cursor:pointer;text-align:left;display:flex;align-items:center;gap:13px;line-height:1.2;" style-active="transform:scale(.98)">{{ opt.glyphEl }}<span style="min-width:0;">{{ opt.txt }}</span></button>
+                <!-- The picture is the button (CLAUDE.md): 124px of art on a black
+                     card with one neon outline in the phrase's colour, caption
+                     beside it because the Text button has to sit beside the row
+                     (Frank, 9 Sep 2026). -->
+                <button onClick="{{ opt.onTap }}" style="flex:1;min-width:0;background:var(--card,#111);color:var(--ink,#fff);border:2.5px solid {{ opt.color }};box-shadow:0 0 18px {{ opt.glow }};border-radius:18px;padding:6px 10px 6px 6px;font-size:19px;font-weight:800;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;line-height:1.15;" style-active="transform:scale(.98)">{{ opt.rowPicEl }}<span style="min-width:0;">{{ opt.txt }}</span></button>
                 <sc-if value="{{ opt.canText }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ opt.onText }}" title="Text it" style="flex:none;width:82px;background:#2F9E44;color:#fff;border:none;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:800;" style-active="transform:scale(.96)"><span style="font-size:26px;line-height:1;">📨</span>Text</button>
+                  <button onClick="{{ opt.onText }}" title="Text it" style="flex:none;width:96px;background:var(--card,#111);border:2.5px solid #39FF14;box-shadow:0 0 18px rgba(57,255,20,.45);border-radius:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:4px;" style-active="transform:scale(.96)">{{ textBtnEl }}</button>
                 </sc-if>
               </div>
             </sc-for>
@@ -5451,11 +5455,17 @@ class Component extends DCLogic {
       { glyph: '👋', txt: 'See ya later.', say: 'See ya later.', color: '#6366F1' },
     ];
     return [
-      { glyph: '❤️', txt: 'I love you ' + nm, say: 'I love you ' + nm, color: '#E5533D' },
-      { glyph: '🥰', txt: 'I miss you ' + nm, say: 'I miss you ' + nm, color: '#7A5CFF' },
-      { glyph: '☀️', txt: 'Good morning ' + nm, say: 'Good morning ' + nm, color: '#F59E0B' },
-      { glyph: '🌙', txt: 'Goodnight ' + nm, say: 'Goodnight ' + nm, color: '#4F46E5' },
-      { glyph: '🎂', txt: 'Happy Birthday ' + nm + '! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
+      // Frank's neon art (9 Sep 2026): the picture is the button on a family
+      // member's page. "I need you" is the sixth phrase, his choice that night:
+      // the one that asks for something, and it works spoken or texted.
+      // The caption leaves the name out (Frank, 9 Sep 2026: "I do not need the
+      // word Mom six times on one page"); the spoken and texted line keeps it.
+      { glyph: '❤️', icon: 'fam_love', txt: 'I love you', say: 'I love you ' + nm, color: '#E5533D' },
+      { glyph: '🥰', icon: 'fam_miss', txt: 'I miss you', say: 'I miss you ' + nm, color: '#7A5CFF' },
+      { glyph: '🫶', icon: 'fam_needyou', txt: 'I need you', say: 'I need you ' + nm, color: '#0EA5E9' },
+      { glyph: '☀️', icon: 'fam_morning', txt: 'Good morning', say: 'Good morning ' + nm, color: '#F59E0B' },
+      { glyph: '🌙', icon: 'fam_night', txt: 'Goodnight', say: 'Goodnight ' + nm, color: '#4F46E5' },
+      { glyph: '🎂', icon: 'fam_birthday', txt: 'Happy Birthday! I love you!', say: 'Happy Birthday ' + nm + '! I love you!', color: '#DB2777' },
       { glyph: '🙏', txt: 'Please.', say: 'Please.', color: '#14B8A6' },
       { glyph: '💛', txt: 'Thank you.', say: 'Thank you.', color: '#1F9E6E' },
     ];
@@ -5875,7 +5885,11 @@ class Component extends DCLogic {
     // sentence on its own, and it means the name a teacher types when she adds
     // herself is already a phrase, without anybody entering it twice.
     const named = String(nm || '').trim();
-    const options = (named ? [{ glyph: '\uD83D\uDC4B', txt: named, say: named, color: this.ringFor(named) }] : [])
+    // Not on a family member's page: her photo at the top already says her
+    // name when tapped, so a "Mom" row under it was the same button twice
+    // (Frank, 9 Sep 2026). School people keep it until he says otherwise.
+    const isFamily = !kind || kind === 'family';
+    const options = (named && !isFamily ? [{ glyph: '\uD83D\uDC4B', txt: named, say: named, color: this.ringFor(named) }] : [])
       .concat(this.personPhrases(kind || 'family', nm));
     const canText = !!(p.phone && String(p.phone).trim());
     const tappableAvatar = (size) => React.createElement('div', { onClick: () => this.speak(nm), title: 'Tap to say ' + nm, style: { cursor: 'pointer' } }, this.personAvatar(p, size));
@@ -6227,7 +6241,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.07.1'; }
+  APP_BUILD() { return '2026.09.09.1'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -7478,7 +7492,11 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
       // Phrase sheets: three across when there are more than four phrases.
-      const cols = (((s.chooser && s.chooser.options) || []).length > 4) ? 3 : 2;
+      // A person's page stays two across whatever the count (Frank, 9 Sep
+      // 2026: eight phrases three across left 66px pictures and a third of
+      // the screen empty); two across fills it with 108px pictures.
+      const isPersonPage = !!(s.chooser && s.chooser.editPerson);
+      const cols = (!isPersonPage && ((s.chooser && s.chooser.options) || []).length > 4) ? 3 : 2;
     return {
       rootRef: this.rootRef,
       boardScrollRef: this.boardScrollRef,
@@ -7893,7 +7911,9 @@ class Component extends DCLogic {
       // than four phrases go three across with smaller pictures, so a board
       // like Bathroom shows every phrase without scrolling.
       chooserCols: cols,
-      chooserCardH: cols === 3 ? '104px' : '128px',
+      // A person's page: room for 108px of art and a two-line caption, so
+      // "Happy Birthday! I love you!" is not cut off at the card's edge.
+      chooserCardH: isPersonPage ? '176px' : (cols === 3 ? '104px' : '128px'),
       chooserTxt: cols === 3 ? '14.5px' : '16px',
       chooserOptions: (((s.chooser && s.chooser.options) || []).map((o, i, arr) => ({
         ...o,
@@ -7908,12 +7928,22 @@ class Component extends DCLogic {
         // (about 150px at 430) and never drops under the 96px floor. Three
         // across gets the 66px square the template's phrase boards use; the
         // old 50 and 58 were under the floor.
+        // The row layout (a person with a phone number): 124px of art, never
+        // the 34px thumbnail the rows used to carry. A phrase with no art yet
+        // shows its glyph at the same height.
+        rowPicEl: o.icon && this.iconUri(o.icon)
+          ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: { width: 124, height: 124, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
+          : React.createElement('span', { style: { width: 124, height: 124, fontSize: 64, lineHeight: '124px', textAlign: 'center', flex: 'none' } }, o.glyph || '💬'),
         bigGlyphEl: o.icon && this.iconUri(o.icon)
           ? React.createElement('img', { src: this.iconUri(o.icon), alt: '', style: cols === 3
             ? { width: 66, height: 66, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' }
             : { width: '100%', maxWidth: 170, height: 108, objectFit: 'contain', flex: 'none', mixBlendMode: 'screen' } })
           : React.createElement('span', { style: { fontSize: cols === 3 ? 42 : 52, lineHeight: 1, flex: 'none' } }, o.glyph || '💬'),
       }))),
+      // Frank's Text button art (9 Sep 2026): his glyph and caption, in the app's own box.
+      textBtnEl: this.iconUri('ui_text')
+        ? React.createElement('img', { src: this.iconUri('ui_text'), alt: 'Text', style: { width: '100%', height: 'auto', maxHeight: 120, objectFit: 'contain', mixBlendMode: 'screen' } })
+        : React.createElement('span', { style: { color: '#fff', fontSize: 13, fontWeight: 800 } }, '📨 Text'),
       sayOption: (opt) => { if (opt && opt.say) this.speak(opt.say); this.setState({ chooser: null }); },
       cancelCss: 'border:1.5px solid rgba(255,255,255,.18);border-radius:16px;',
       closeChooser: () => this.setState({ chooser: null }),

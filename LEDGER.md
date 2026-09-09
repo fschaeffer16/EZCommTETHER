@@ -1118,3 +1118,18 @@ Pro is the talker alone and stays separate. No direct license needed.
 - Measured 9 Sep at 1400, 900 and 430 wide: no horizontal overflow; proof
   cards 3/2/1 across; install columns 3/2/1; forms side by side on
   desktop, stacked below 1024.
+
+## Family member page art (9 Sep 2026)
+
+- Seven icons added to `tether-icons.js` at 256px on black (the rest of the
+  set is 128px; these draw at 124px in rows and 108px on cards, and 128px
+  was soft on a 3x screen): `fam_love`, `fam_miss`, `fam_needyou`,
+  `fam_morning`, `fam_night`, `fam_birthday`, `ui_text`. Sources: Frank's
+  zips "EZvoxa_Mom_Message_Icons" (five phrases plus a woman figure,
+  `mom.png`, not used: the photo at the top is the person), the "I need
+  you" hands, and the Text button; the Text art was cropped out of its
+  painted frame and drawn in the app's own box (CLAUDE.md, art is the
+  picture not the frame). File grew from 10.75 MB to 11.29 MB.
+- Measured 9 Sep at 430x900 in Evan's app under the anchor: rows 124px
+  pictures, Text button 96px wide; cards 170x108 pictures, 176px cards, 8
+  cards scroll 130px, 6 would fit. Build stamp 2026.09.09.1.
