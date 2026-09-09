@@ -1230,3 +1230,15 @@ Pro is the talker alone and stays separate. No direct license needed.
 - Frank, 10 Sep 2026: Dinn Mann has a YouTube channel for GOATNET with
   content on it (his statement; not viewed here); "the social media part
   of his plan came from me". Recorded as Frank's.
+- GOATNET on YouTube (read 10 Sep 2026 after Frank opened youtube.com):
+  channel @ItsGoatnet, "Lights. Cameras. Greatness.", website link
+  goatnet.io, 70 subscribers, 77 videos. The @GoatNet handle is a separate
+  empty channel. Latest 15 (channel feed): sports interviews and short
+  pieces (Bo Jackson twice, Tom Osborne, Billy "White Shoes" Johnson, Ray
+  Crone on Babe Ruth, Lou Collier, a jujitsu athlete, a horse-racing
+  trainer, "Met Oval: A Century of Soccer in NYC | Preview Episode", "Oh
+  Yes We Do: MVP Trailer", "Introducing Goat Stables"), 10 to 1,171 views
+  each; dated July to September 2025 and May 2026; nothing since 16 May
+  2026. Of the first page of videos, 22 are "1 year ago", 6 "2 years ago",
+  2 "4 months ago". No documentary listed as finished and released; two
+  items are labeled preview or trailer.
