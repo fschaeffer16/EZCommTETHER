@@ -729,3 +729,11 @@ a dated line saying it was reversed. Dates are the day it happened.
   room for a two-line caption scrolls a little at eight phrases; six would
   fit. Please and Thank you stay on the page because he has not said to
   drop them; flagged to him.
+- **9 Sep 2026. Teacher responses and Please / Thank you carry Frank's
+  art.** He sent both sets with no note after saying he was redoing the
+  teacher ones; built as sent, in both apps. Please and Thank you stay on
+  every family page, now with art, which settles the question I had
+  flagged. The name row is gone from school people's pages as well, as I
+  had said I would do unless he objected; he did not. His older neon set
+  for the seven teacher phrases (`ph_help` and the rest) stays in the icon
+  file for the other school categories that still use it.

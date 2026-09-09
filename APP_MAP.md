@@ -99,6 +99,10 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
   art yet). With a phone number: rows, 124px picture, caption beside, Frank's
   Text button (`ui_text`) beside that. Without: two across, 108px picture,
   whatever the count (other phrase sheets go three across past four).
+  School people (teachers, office, aides, Speech/OT, bus) open the same
+  page with their category's phrases and no name row. Teachers' twelve
+  responses carry Frank's teacher art (`tr_*`, 9 Sep 2026); the marker
+  phrase still has an emoji, the nurse keeps `ph_nurse`.
 - **food** — Food board. **One board with the same four sections in both apps,
   in this order: Drinks, Food, Snacks, Restaurants**, under the hunger chips
   (Hungry / Thirsty / Full / Snack). Evan's items differ from the template's;

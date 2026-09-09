@@ -1135,3 +1135,10 @@ Pro is the talker alone and stays separate. No direct license needed.
   cards scroll 130px, 6 would fit. Build stamp 2026.09.09.1.
 - Same build applied to `demo.html` (template) the same night, build
   2026.09.09.1, verified identically at 430x900.
+- 9 Sep 2026, later: thirteen more icons at 256px: `tr_help`,
+  `tr_dontunderstand`, `tr_break`, `tr_finished`, `tr_sayagain`,
+  `tr_bathroom`, `tr_thankyou`, `tr_moretime`, `tr_homework`, `tr_pencil`,
+  `tr_pen` (Frank's "EZvoxa_Teacher_Response_Icons", RGBA flattened onto
+  black) and `fam_please`, `fam_thanks` ("EZvoxa_Please_Thank_You_Icons").
+  Icon file 11.74 MB, 310 icons. A teacher's page is 13 cards two across
+  and scrolls about 680px; build 2026.09.09.2 in both apps.
