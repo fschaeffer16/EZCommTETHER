@@ -91,7 +91,7 @@ Home is `screen: 'board'`. Emergency and Settings excluded from the slim-bar
 "open to the top" behavior (see below).
 
 - **family** — Family people board. (Home → Family; Friends tile → same board, friends set)
-  Tapping a person opens their page (Evan's app, 9 Sep 2026): the photo at the
+  Tapping a person opens their page (both apps, 9 Sep 2026): the photo at the
   top says the name; no name row under it. Six phrases with Frank's neon art
   (`fam_love`, `fam_miss`, `fam_needyou`, `fam_morning`, `fam_night`,
   `fam_birthday`), captions without the name ("I love you"), spoken and

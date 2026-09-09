@@ -714,7 +714,8 @@ a dated line saying it was reversed. Dates are the day it happened.
   Frank rather than pushed to the website's main, since that repository
   is his upload lane; his call to merge.
 - **9 Sep 2026. Family member page rebuilt around Frank's art** (Evan's
-  app only; the template untouched until he says). His rulings that night,
+  app first; the template the same night on his "This needs to go to
+  Evan's app also", read as both apps). His rulings that night,
   each built as said: no name row ("They are supposed to be able to click
   Mom above it to say mom"); his Text button art, which I had missed in his
   first message and he had to point out; a sixth phrase, "I need you", his

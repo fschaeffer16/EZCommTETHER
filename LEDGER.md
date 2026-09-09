@@ -1133,3 +1133,5 @@ Pro is the talker alone and stays separate. No direct license needed.
 - Measured 9 Sep at 430x900 in Evan's app under the anchor: rows 124px
   pictures, Text button 96px wide; cards 170x108 pictures, 176px cards, 8
   cards scroll 130px, 6 would fit. Build stamp 2026.09.09.1.
+- Same build applied to `demo.html` (template) the same night, build
+  2026.09.09.1, verified identically at 430x900.
