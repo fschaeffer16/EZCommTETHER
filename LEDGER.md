@@ -1227,3 +1227,6 @@ Pro is the talker alone and stays separate. No direct license needed.
   works $85; group of two-dimensional artworks $85; paper filing $125;
   recordation of a document (electronic) $95; supplementary registration
   $100. Filing guide regenerated with these; the trademark side unchanged.
+- Frank, 10 Sep 2026: Dinn Mann has a YouTube channel for GOATNET with
+  content on it (his statement; not viewed here); "the social media part
+  of his plan came from me". Recorded as Frank's.
