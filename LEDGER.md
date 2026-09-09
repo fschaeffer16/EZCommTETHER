@@ -872,6 +872,25 @@ three quotes unless bought direct from us under the software exemption;
 nothing under $50,000 goes to the Board. The pasted hub's "$10,000"
 figure was St. Lucie's quote line, not the federal threshold.
 
+## How the autism count grew while the apps stood still (read 8 and 9 Sep 2026)
+
+CDC ADDM, autism identified among 8-year-olds, per 1,000: 2000 6.7 (1 in
+150); 2008 11.3 (1 in 88); 2012 14.5 (1 in 69); 2016 18.5 (1 in 54); 2020
+27.6 (1 in 36); 2022 32.2 (1 in 31). NCES table 204.30, students served
+under IDEA's autism category: 2000-01 93,000; 2008-09 336,000; 2012-13
+498,000; 2016-17 661,000; 2022-23 980,000. So the identified school-age
+autism population is 2.9 times what it was when Proloquo2Go (2009),
+TouchChat (2010) and LAMP Words for Life (2012) launched, per Apple's
+release dates, and 10.5 times the 2000 figure. CDC attributes part of
+the rise to broader identification; the NIH-hosted study puts the
+minimally verbal share at about 30% now, down from about 50% under older
+criteria, partly for the same reason. The apps' list prices ($149.99 to
+$299.99) and product lineup have not changed in kind; the only new
+product from an established maker is Proloquo (2022), a subscription
+rebuild. Frank, 9 Sep: an industry "asleep at the wheel", plus his own
+finding of user fatigue with LAMP on Evan's device; his observation, not
+a sourced figure.
+
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
 Apple's own store search and listing pages, so verified. One-time apps:
