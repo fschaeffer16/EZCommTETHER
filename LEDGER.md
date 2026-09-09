@@ -1295,3 +1295,12 @@ Pro is the talker alone and stays separate. No direct license needed.
   `fr_cool`, `fr_hangout`, `fr_sit`, `fr_lunch`, `fr_funny`) from
   "EZvoxa_Friend_Message_Icons"; 321 icons in the file. see_ya_later.png
   in that zip is truncated and needs resending.
+- Apple "Get ready for iPhone Duo" (developer.apple.com/iphone-duo, read
+  10 Sep 2026, Frank's link): a new iPhone with "multiple displays and
+  scenes"; Apple asks developers to "dynamically resize and adjust
+  layouts", "explore resizability for all screen sizes", and build for
+  "adaptive layouts" and a new camera experience; Xcode 27.1 beta; online
+  group labs 16 and 17 Sep, forum Q&As 23 Sep. The page's detail pages are
+  script-rendered and unread; design guide marked "coming soon". No
+  hardware specifics on the page read. Frank: "This could make for an
+  interesting development."
