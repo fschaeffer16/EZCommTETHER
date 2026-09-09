@@ -172,8 +172,8 @@
     var notes = {
       all: 'Sales is what customers pay. Gross is sales minus the direct costs of those sales (the store\'s 15%, RevenueCat, refunds, texts, voice, alerts, acquisition). Net is gross minus overhead (Vercel, the Twilio number, Apple, Google, 10DLC, Codemagic, operating expenses). Expenses is both. Units sit beside every dollar.',
       talker: 'Consumer sales are the one-time app at the working price plus the Family Tether on the average subscribers in the year. Overhead is shared out by this channel\'s share of sales. The share of market is new buyers that year over the counted market.',
-      schools: 'Seats at the volume price when 20 or more institutional seats sell in the year, else list; through Apple School Manager and Google Play, so the store\'s 15% applies. A district order is ' + num(market.schools.seatsPerDistrict) + ' seats on average (assumption). Districts here is seats over that.',
-      clinics: 'Clinicians\' seats of EZvoxa Pro, the same listing and the same prices as schools (Frank, 8 Sep). Counted facilities are the US inpatient rehab facilities only; outpatient practices, ALS clinics and other countries are upside until their counts are read.'
+      schools: 'EZvoxa Pro seats, sold by EZ Voice direct on a purchase order (Frank, 8 Sep), so no store commission: $' + inputs.prices.schoolList + ' list; the $' + inputs.prices.schoolVolume + ' figure at 20 or more seats in a year is a stand-in for what negotiated large orders might average, Frank\'s to set deal by deal. A district order is ' + num(market.schools.seatsPerDistrict) + ' seats on average (assumption). Districts here is seats over that.',
+      clinics: 'Clinicians\' seats of EZvoxa Pro, the same product and the same direct sale as schools (Frank, 8 Sep). Counted facilities are the US inpatient rehab facilities only; outpatient practices, ALS clinics and other countries are upside until their counts are read.',
     };
     document.getElementById('note-' + key).textContent = notes[key] + ' Prices and costs are the finance defaults as of ' + inputs.asOf + '; nothing is confirmed until Frank confirms it.';
   }

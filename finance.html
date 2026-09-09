@@ -97,7 +97,7 @@
     var A = document.getElementById('assumptions'); A.innerHTML = '';
     [['textsPerFamilyPerMonth', 'Texts per family per month', '1'], ['alertsPerFamilyPerYear', 'SOS alerts per family per year', '0.5']].forEach(function (f) { A.appendChild(field('assumptions', f[0], f[1], f[2])); });
     var row = document.createElement('div'); row.className = 'row'; var p = prov('assumptions.schoolsThroughStore');
-    row.innerHTML = '<span>Schools buy through the stores (15% applies)</span><input type="checkbox" ' + (inputs.assumptions.schoolsThroughStore ? 'checked' : '') + ' style="width:auto;justify-self:end"><span class="dot ' + p.status + '" title="' + esc(p.note) + '"></span>';
+    row.innerHTML = '<span>Pro seats sold through the stores (15% applies); off means sold direct by EZ Voice</span><input type="checkbox" ' + (inputs.assumptions.schoolsThroughStore ? 'checked' : '') + ' style="width:auto;justify-self:end"><span class="dot ' + p.status + '" title="' + esc(p.note) + '"></span>';
     row.querySelector('input').addEventListener('change', function (e) { inputs.assumptions.schoolsThroughStore = e.target.checked; render(); });
     A.appendChild(row);
   }

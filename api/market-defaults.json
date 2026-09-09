@@ -227,6 +227,10 @@
   "schools.usIdeaAutism13to21": {
    "status": "verified",
    "note": "US Department of Education, Office of Special Education Programs, IDEA Section 618 Part B Child Count and Educational Environments 2024-25 (bchildcountandedenvironment2024-25.csv, data.ed.gov), national total row 'US, Outlying Areas, and Freely Associated States', environment 'Total, School Age', disability Autism: ages 13 through 21 sum to 386,380 (ages 13 to 17: 142,976, 134,732, 129,100, 123,068, 112,074; 18 to 21: 59,415, 30,860, 24,236, 16,290); ages 5 through 21 sum to 1,111,435, so 13 through 21 is 34.8%. Read 8 Sep 2026."
+  },
+  "schools.usIdeaAutism5to21": {
+   "status": "verified",
+   "note": "Same federal 2024-25 file, national total row, autism ages 5 (school age) through 21: 1,111,435. Shown so the 13-through-21 share (34.8%) can be seen."
   }
  }
 }
