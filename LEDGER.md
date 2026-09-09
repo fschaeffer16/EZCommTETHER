@@ -904,6 +904,34 @@ technology support to follow him for a year, and now uses three separate
 companies to cover technology needs for mainstreamed students across 15
 to 20 schools in the district. His firsthand account; not a document.
 
+## Florida and St. Lucie autism counts over time (federal files, read 9 Sep 2026)
+
+Source: US Department of Education, IDEA Section 618 Part B child count,
+state-level files (data.ed.gov, 2005 to 2011 dataset and 2012 to 2024
+dataset) and the LEA-level files 2020-21 to 2024-25 (the 2024-25 file
+uploaded by Frank, the rest from data.ed.gov's API). Florida, students
+aged 6 through 21 in the autism category: 2005 7,918; 2008 12,532; 2011
+19,365; 2024 58,848 (7.4 times 2005). Florida, all disabilities aged 6
+through 21: 2005 364,566; 2024 406,711 (up 12%). The 2012, 2016 and 2020
+files label categories differently and were not extracted. St. Lucie
+County, school-age autism: 2020-21 579; 2021-22 704; 2022-23 826;
+2023-24 897; 2024-25 1,035 (up 79% in four years); school-age students
+with disabilities 5,383 to 6,692 (up 24%); in 2024-25 autism is 15.5%
+of the district's school-age students with disabilities.
+Budget side of Frank's bet (9 Sep: "I will bet you a paycheck that if
+you study the ESE budget of St. Lucie County School District from the
+year 2000 and compare what it was last year in 2025 and then compare
+that to the increase in autism diagnosis alone you will see exactly
+what I'm talking about"): the district's Fiscal Transparency page links
+only the state's financial tool, no budget books; fldoe.org answers 403
+from its own firewall regardless of the allow list; so the ESE budget
+for 2000-01 and 2024-25 needs a records request to the district (adopted
+budgets, annual financial reports, ESE program cost) or Frank's browser.
+Frank, 9 Sep, on ESE programs: run "fundamentally unchanged for
+decades"; the district fought Evan's mainstreaming; self-contained
+classrooms mean "Less staff. Less oversight. Less cost." His view,
+recorded as his.
+
 ## Competitor prices, read from Apple's App Store data (US, 8 Sep 2026)
 
 Apple's own store search and listing pages, so verified. One-time apps:
