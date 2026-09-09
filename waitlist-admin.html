@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EZvoxa Waitlist</title>
+<title>EZvoxa Inbox</title>
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;background:#0A0A0F;color:#EFEAE2;
@@ -22,8 +22,8 @@
   .entry .t{color:#7A7060;font-size:12.5px;margin-top:4px}
 </style>
 
-<h1>EZvoxa Waitlist</h1>
-<p class="sub">The people who asked to be told the day it goes on sale. Newest first.
+<h1>EZvoxa Inbox</h1>
+<p class="sub">Everything the website collects, newest first: the launch list, professional inquiries, and quote and pilot requests from schools and clinics.
 This page shows nothing without the family password.</p>
 
 <form id="f">
@@ -31,39 +31,69 @@ This page shows nothing without the family password.</p>
   <button type="submit">Show the list</button>
 </form>
 <div id="msg"></div>
+<div id="tabs" style="display:none;gap:8px;margin-bottom:14px;flex-wrap:wrap"></div>
 <div id="count"></div>
 <div id="out"></div>
 
 <script>
 (function () {
   var f = document.getElementById('f');
+  var SOURCES = [
+    { key: 'quotes', label: 'Schools and clinics', url: '/api/quote', noun: ['request', 'requests'] },
+    { key: 'inquiries', label: 'Professional inquiries', url: '/api/professional-inquiry', noun: ['inquiry', 'inquiries'] },
+    { key: 'waitlist', label: 'Launch list', url: '/api/waitlist', noun: ['person', 'people'] },
+  ];
+  var lists = {}, current = 'quotes';
+  function esc(x){ var s=document.createElement('span'); s.textContent=String(x==null?'':x); return s.innerHTML; }
+  function when(e){ return e.at ? '<div class="t">' + esc(new Date(e.at).toLocaleString('en-US')) + '</div>' : ''; }
+  function row(label, v){ return v ? '<div class="m"><span style="color:#7A7060">' + esc(label) + ':</span> ' + esc(v) + '</div>' : ''; }
+  function render() {
+    var out = document.getElementById('out'), cnt = document.getElementById('count'), msg = document.getElementById('msg');
+    var src = SOURCES.filter(function (s) { return s.key === current; })[0];
+    var list = (lists[current] || []).slice().reverse();
+    out.innerHTML = ''; msg.textContent = '';
+    cnt.textContent = list.length + ' ' + (list.length === 1 ? src.noun[0] : src.noun[1]);
+    document.querySelectorAll('#tabs button').forEach(function (b) { b.style.background = b.dataset.key === current ? '#FFB020' : '#2B241C'; b.style.color = b.dataset.key === current ? '#0A0A0F' : '#EFEAE2'; });
+    if (!list.length) { msg.textContent = 'Nothing here yet.'; return; }
+    list.forEach(function (e) {
+      var d = document.createElement('div'); d.className = 'entry';
+      if (current === 'quotes') {
+        d.innerHTML = '<b>' + esc(e.kind === 'pilot' ? 'PILOT · ' : 'QUOTE · ') + esc(e.organization || '(no organization)') + '</b>' +
+          '<div class="c">' + esc([e.name, e.title].filter(Boolean).join(', ')) + ' · ' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' +
+          row('Type', e.orgType) + row('State', e.state) + row('Cannot rely on speech', e.count) + row('Devices', e.devices) +
+          row('Pilot seats', e.seats) + row('Program', e.program) + row('Heard of us', e.heard) + row('Referred by', e.referral) + row('Message', e.message) + when(e);
+      } else if (current === 'inquiries') {
+        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
+          '<div class="c">' + esc(e.email) + '</div>' + row('Role', e.role) + row('Organization', e.organization) + row('Message', e.message) + row('Came from', e.source) + when(e);
+      } else {
+        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
+          '<div class="c">' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' + row('About', e.about) + row('Came from', e.source) + when(e);
+      }
+      out.appendChild(d);
+    });
+  }
   f.addEventListener('submit', async function (ev) {
     ev.preventDefault();
-    var msg = document.getElementById('msg');
-    var out = document.getElementById('out');
-    var cnt = document.getElementById('count');
-    msg.textContent = 'Loading…'; out.innerHTML = ''; cnt.textContent = '';
+    var msg = document.getElementById('msg'), tabs = document.getElementById('tabs');
+    var pw = document.getElementById('pw').value;
+    msg.textContent = 'Loading…'; document.getElementById('out').innerHTML = ''; document.getElementById('count').textContent = '';
     try {
-      var r = await fetch('/api/waitlist', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'list', password: document.getElementById('pw').value }),
+      var results = await Promise.all(SOURCES.map(function (s) {
+        return fetch(s.url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list', password: pw }) })
+          .then(function (r) { return r.json(); }).catch(function () { return { ok: false, error: 'network' }; });
+      }));
+      if (results.every(function (j) { return j && j.error === 'bad_password'; })) { msg.textContent = 'Wrong password.'; return; }
+      tabs.innerHTML = ''; tabs.style.display = 'flex';
+      SOURCES.forEach(function (s, i) {
+        lists[s.key] = (results[i] && results[i].ok) ? (results[i].entries || []) : [];
+        var b = document.createElement('button'); b.type = 'button'; b.dataset.key = s.key;
+        b.textContent = s.label + ' (' + lists[s.key].length + ')';
+        b.addEventListener('click', function () { current = s.key; render(); });
+        tabs.appendChild(b);
       });
-      var j = await r.json();
-      if (!j.ok) { msg.textContent = j.error === 'bad_password' ? 'Wrong password.' : ('Could not load: ' + (j.error || 'unknown')); return; }
-      var list = (j.entries || []).slice().reverse();
-      msg.textContent = '';
-      cnt.textContent = list.length + (list.length === 1 ? ' person' : ' people') + ' on the list';
-      if (!list.length) { msg.textContent = 'The list is empty.'; return; }
-      list.forEach(function (e) {
-        var d = document.createElement('div'); d.className = 'entry';
-        function esc(x){ var s=document.createElement('span'); s.textContent=String(x==null?'':x); return s.innerHTML; }
-        d.innerHTML = '<b>' + esc(e.name || '(no name)') + '</b>' +
-          '<div class="c">' + esc([e.email, e.phone].filter(Boolean).join(' · ')) + '</div>' +
-          (e.about ? '<div class="m">' + esc(e.about) + '</div>' : '') +
-          (e.source ? '<div class="m">Came from: ' + esc(e.source) + '</div>' : '') +
-          (e.at ? '<div class="t">' + esc(new Date(e.at).toLocaleString('en-US')) + '</div>' : '');
-        out.appendChild(d);
-      });
+      var failed = SOURCES.filter(function (s, i) { return !(results[i] && results[i].ok); }).map(function (s) { return s.label; });
+      render();
+      if (failed.length) document.getElementById('msg').textContent = 'Could not load: ' + failed.join(', ') + '.';
     } catch (err) { msg.textContent = 'Could not reach the server. Try again.'; }
   });
 })();
