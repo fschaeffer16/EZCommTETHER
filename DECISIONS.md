@@ -151,6 +151,27 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Frank approved section 8 of the direct sales design:
+  "I am fine with everything in section 8 of the build document."** So:
+  (1) the license design is go: organization account plus join codes on
+  the Family Code machinery, no student data; (2) install paths in the
+  order recommended, unlisted store apps plus the web app first, custom
+  app through Apple School Manager when a district asks, dedicated
+  devices priced only on request; (3) quote reason codes as listed; the
+  referral credit is money off the next order unless Frank says free
+  seats; (4) stripe.com and paypal.com were added the same day and read;
+  (5) the school product is named EZvoxa Pro on the site, its own icon
+  still to be made, nothing of Evan in it; (6) the pilot is described as
+  "a Florida district" until the district agrees in writing to be named.
+  Frank the same day: "remember the site has to work desktop, tablet and
+  mobile." The corporate section will be built as real pages in the
+  EZvoxaWEBSITE repository in the site's own style, responsive, with the
+  two forms posting to our API, plus a Word brief for Claude Design.
+  The EZvoxaWEBSITE repository was attached to this session and cloned
+  (last commit 7 Sep, "Add files via upload"); ezvoxa.com opened to this
+  environment the same night. No narrated demo found on any live page or
+  in the repository as of this check; Frank to say where it was added.
+
 - **9 Sep 2026. Sales staff built in. Frank: "You would have to add
   sales staff as we get past a certain level. Build that in."** Frank is
   the first seller; each further salesperson closes 30 new districts a
