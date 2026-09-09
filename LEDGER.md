@@ -1158,3 +1158,26 @@ Pro is the talker alone and stays separate. No direct license needed.
   entries newer than the last visit NEW (last-seen time kept in that
   browser only, key `ezvoxa.inbox.seen`). Frank asked for a way to watch
   responses in real time once he announces the site.
+
+## GOATNET / Dinn Mann (read 10 Sep 2026, before Frank's 11 AM call)
+
+- USPTO TSDR, serial 90648136 (government record, read directly): mark
+  GOATNET with a goat drawing; owner Mann, John Dinn, individual, Newtown,
+  Pennsylvania; filed Apr. 15, 2021 as intent-to-use, never filed as in
+  use; classes 009 (software for streaming audiovisual content, search and
+  recommendation) and 041 (entertainment and educational services, video on
+  demand, reviews and recommendations); ABANDONED Jun. 15, 2022 for failure
+  to respond to an Office action. Attorney of record Daniel Marcus.
+- goatnet.com redirects to goatnet.io, which is not on the allow list, so
+  the company's own site is unread. His LinkedIn (self-description): a
+  "studio, tech and marketing platform"; founding executive at MLB Advanced
+  Media 2001 to 2017. Not verified from an independent source.
+
+## Corporate section live (10 Sep 2026)
+
+- Claude Design's export (207e438) put schools.html on www.ezvoxa.com with
+  the figures, sources, forms, poster and guided-demo link intact, "Schools
+  & Clinics" in the menu on every page checked (index, app, join,
+  professionals, journal), and the form code from forms-snippet.txt in
+  site.js. No price on the page; the only "Evan" is the menu link to his
+  story.
