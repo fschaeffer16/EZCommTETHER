@@ -151,6 +151,14 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. School district ramp is Frank's.** "I think you might be
+  way underselling school districts... I see is starting 10 districts
+  maybe 50-75 by year 3 to anywhere from 150-300 by year 5... by year 4 I
+  would want all of Florida and once we get outside Florida? It should
+  take off quickly." Base 10, 25, 60, 120, 225 districts; Low 10, 20,
+  50, 90, 150; High 10, 35, 75, 180, 300; 40 seats a district stays my
+  assumption. Florida has 67 regular districts (NCES 214.30).
+
 - **9 Sep 2026. Order of growth, Frank: "Individual sales > school
   districts > clinical and then perhaps we go after the AAC market after
   that but that should not be in this widget." Clinical grows slowest.**

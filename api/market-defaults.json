@@ -67,11 +67,11 @@
    ],
    "subscriptionAttach": 0.15,
    "schoolSeatShare": [
-    0.00053,
-    0.00122,
-    0.00382,
-    0.00918,
-    0.01835
+    0.00306,
+    0.00612,
+    0.0153,
+    0.02753,
+    0.04589
    ],
    "clinicFacilityShare": [
     0.0008,
@@ -92,11 +92,11 @@
    ],
    "subscriptionAttach": 0.25,
    "schoolSeatShare": [
-    0.00107,
-    0.00245,
+    0.00306,
     0.00765,
     0.01836,
-    0.03671
+    0.03671,
+    0.06883
    ],
    "clinicFacilityShare": [
     0.0016,
@@ -117,11 +117,11 @@
    ],
    "subscriptionAttach": 0.35,
    "schoolSeatShare": [
-    0.00214,
-    0.0049,
-    0.0153,
-    0.03672,
-    0.07342
+    0.00306,
+    0.01071,
+    0.02294,
+    0.05507,
+    0.09178
    ],
    "clinicFacilityShare": [
     0.0032,
@@ -210,7 +210,7 @@
   },
   "conversion": {
    "status": "assumption",
-   "note": "Frank's to set. Buyer share is new one-time buyers each year as a share of the counted consumer market; subscription attach is the share of all buyers to date who hold the Family Tether at year end. The school and clinical shares are Claude's best estimate of direct sales through the website (Frank's ask, 9 Sep 2026), one seller at first, districts owning the devices and EZ Voice supplying the software: Year 1 St. Lucie district-wide (about 100 seats) plus two neighboring districts at 20 seats, 140 seats; Year 2 eight Florida districts at 40 seats, 320; Year 3 twenty-five districts across Florida and the Southeast, 1,000 seats; Year 4 sixty districts, 2,400; Year 5 one hundred twenty districts, 4,800, which is 0.9% of the 13,349 districts and 3.7% of the counted seats. Clinics grow slowest (Frank, 9 Sep: individual sales, then school districts, then clinical): 2, 5, 12, 25 and 40 facilities at 5 seats. The dedicated-device AAC market is not in this widget, by Frank's instruction. Base is that estimate; Low is half; High is double. Consumer buyer shares are unchanged placeholders."
+   "note": "Frank's to set. Buyer share is new one-time buyers each year as a share of the counted consumer market; subscription attach is the share of all buyers to date who hold the Family Tether at year end. School districts are Frank's estimate (9 Sep 2026): \"I see is starting 10 districts maybe 50-75 by year 3 to anywhere from 150-300 by year 5. I say that because by year 4 I would want all of Florida and once we get outside Florida? It should take off quickly.\" Base 10, 25, 60, 120 and 225 districts; Low 10, 20, 50, 90, 150; High 10, 35, 75, 180, 300; at 40 seats a district (Claude's assumption). Florida has 67 regular districts (NCES table 214.30), so Year 4 at Base is all of Florida plus about 50 outside it. Clinics are Claude's estimate and grow slowest (Frank, 9 Sep: individual sales, then school districts, then clinical): 2, 5, 12, 25 and 40 facilities at 5 seats. The dedicated-device AAC market is not in this widget, by Frank's instruction. Base is that estimate; Low is half; High is double. Consumer buyer shares are unchanged placeholders."
   },
   "opex": {
    "status": "document",
