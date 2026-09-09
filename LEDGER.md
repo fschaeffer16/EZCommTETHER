@@ -1268,3 +1268,11 @@ Pro is the talker alone and stays separate. No direct license needed.
   aacfunding.com, forbesaac.com, ablenetinc.com, talktometechnologies.com,
   fdlrs.org, flrules.org, ncaep.fpg.unc.edu, aacandautism.com, cpec.org.au,
   pecsusa.com (not on the allow list or refused).
+- Sign versus device, checked 10 Sep 2026 (PubMed, abstract only): Lorah
+  et al. 2015, J Autism Dev Disord, PMID 25413144, systematic review of
+  tablets as speech-generating devices in autism: studies comparing
+  tablets with picture exchange or manual sign "found that acquisition was
+  often quicker when using a tablet computer and that the vast majority of
+  participants preferred using the device to picture exchange or manual
+  sign language." Only two hits on the comparison search; no controlled
+  study of a combined sign-plus-device system found.

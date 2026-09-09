@@ -762,3 +762,12 @@ a dated line saying it was reversed. Dates are the day it happened.
   software on district iPads before any dedicated device, and the design
   comes out of a year of watching three to five children in one classroom,
   not out of a symbol library.
+- **10 Sep 2026. Frank's three principles for the younger-children product,
+  in his words, recorded as direction (no build):** (1) asked whether to
+  combine sign language and a talking device; (2) "customization is key.
+  Whether it is the teacher or the family, the freedom to add, move,
+  change buttons is critical to a child's development"; (3) "even building
+  sentences has to be quicker. It cannot be in and out of a dozen screens
+  ... don't give the child the next word, but instead of making them start
+  over on the home screen, let the word they just picked bring a link to
+  the next screen where the next word they want likely lives."
