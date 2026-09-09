@@ -151,6 +151,53 @@ a dated line saying it was reversed. Dates are the day it happened.
 
 ## DECISIONS (newest first)
 
+- **9 Sep 2026. Frank's thesis and the opening he sees, recorded at his
+  request ("You also need to document tonight's conversation").** What
+  the evening established from sources: Florida's students with autism
+  aged 6 to 21 went from 7,918 (2005) to 58,848 (2024), 7.4 times, while
+  all disabilities grew 12%; St. Lucie's school-age autism count rose 79%
+  in four years to 1,035; the US population grew 18.7% from 2000 to
+  2022; the AAC apps that hold the prices launched in 2009 to 2012 and
+  the only new product from an established maker since is Proloquo
+  (2022). Frank's thesis, in his words, still to be tested against the
+  district's budget books and ESE policies (records request drafted):
+  ESE programs "have run fundamentally unchanged for decades";
+  self-contained classrooms mean "Less staff. Less oversight. Less
+  cost"; funding rose but "not commensurate with the increase in Autism
+  students"; and "the old ESE model that worked off lowly paid aides is
+  probably how it has been done given that no company has re-invented or
+  figured out a better way to reach these children other than old school
+  sign language and 14-17 year old software." His finding of device
+  fatigue is from Evan's teachers and the other students in his 9th
+  grade class, not Evan alone.
+  The opening Frank sees: after EZvoxa, "a more efficient device for
+  elementary school kids than the current AAC devices. Still include
+  sentence structure but maybe in a different way, something newer,
+  fresher. Something that gives these nonverbal children more credit for
+  being smarter than the old systems do." Built while EZvoxa is taking
+  off, then "add an ILP program (you see I am already working on that) so
+  that we can truly MEET THESE KIDS WHERE THEY ARE from the beginning."
+  His ILP work is in his ILP_blueprint repository, which this session
+  has not opened. Order of work, his: "First things first." Nothing of
+  this is built or scheduled; it is recorded so it is not lost.
+- **9 Sep 2026. Direct sales and distribution design delivered for
+  Frank's decision**, "EZvoxa Pro Direct Sales and Distribution
+  Design.docx": the math (13,349 districts, 115,914 counted US seats,
+  8.7 a district; Florida about 6,100 seats, St. Lucie about 108),
+  Frank as the seller, quotes with reason codes for negotiated, hardship,
+  district-wide, referral and pilot pricing, Apple's and Google's rules
+  read from their pages (3.1.1, 3.1.3(b), 3.1.3(c), unlisted
+  distribution, custom apps, managed Google Play), the recommended setup
+  (organization account plus join codes on the Family Code machinery, no
+  student data; unlisted store apps plus the web app first, custom app
+  through Apple School Manager on request, dedicated devices priced only
+  when asked; releases once or twice a year on the release lane; backup
+  and restore as built), the security promises, the website corporate
+  section spelled out for Claude Design, the web app as the answer for
+  buyers without store accounts, and six decisions Frank owes before a
+  build. Payment processor fees unverified (stripe.com, paypal.com,
+  squareup.com blocked). No build started.
+
 - **9 Sep 2026. Direct selling cost added on Frank's go** ("Go on the
   sales cost input"): costs.directSalesShare, 10% of Pro sales, an
   assumption for Frank to set, applied only when Pro seats are sold
