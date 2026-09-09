@@ -1091,3 +1091,30 @@ Pro is the talker alone and stays separate. No direct license needed.
   host-scoped rewrites in vercel.json; the vercel.app root still serves
   Evan's app for the three phones. The website's story section carries
   Frank's own wording from EZ's Voice, and links to both documents.
+
+## Schools and Clinics section (built 9 Sep 2026)
+
+- Website repository fschaeffer16/EZvoxaWEBSITE, branch `schools-section`:
+  `schools.html`, `schools-poster.jpg` (School board screen on navy,
+  1600x900, made from `app-school.jpg`), `site.js` (form wiring added).
+  Preview copy in this repository under `site-preview/` (page, site.css,
+  site.js, poster, icon), served at
+  https://ez-comm-tether.vercel.app/site-preview/schools.html with links
+  pointing back to ezvoxa.com.
+- Endpoint `api/quote.js`: stores quote and pilot requests under
+  `ezvoxa:quotes` in the same Upstash store, emails them when
+  `QUOTE_EMAIL_TO` is set (SendGrid, sender `SOS_EMAIL_FROM`, reply-to the
+  requester), 5 requests per address per hour, honeypot field `website`,
+  origin check plus CORS for our hosts, list action with the family
+  password. `QUOTE_EMAIL_TO` is not set yet; Frank sets it on Vercel.
+- ezvoxa.com redirects (308) to www.ezvoxa.com. The site's vercel.json
+  rewrites `/app/(.*)` to ez-comm-tether.vercel.app, and that path works
+  for POST (checked 9 Sep: www.ezvoxa.com/app/api/waitlist answers). So
+  site forms post same-origin to `/app/api/...`; no CORS needed for the
+  waitlist and inquiry endpoints, which have none.
+- Demo video slot on the page plays `pro-demo.mp4` from the site's root
+  when Frank places it; no narrated demo exists in the repository or on
+  the live site as of 9 Sep.
+- Measured 9 Sep at 1400, 900 and 430 wide: no horizontal overflow; proof
+  cards 3/2/1 across; install columns 3/2/1; forms side by side on
+  desktop, stacked below 1024.

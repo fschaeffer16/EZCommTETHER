@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Schools and Clinics · EZvoxa Pro</title>
+<meta name="description" content="EZvoxa Pro for school districts, private schools, clinics and rehab centers. Owned outright. No subscription. No student data.">
+<link rel="stylesheet" href="site.css?v=30">
+<style>
+/* Schools and Clinics section. Page-specific styles only; brand tokens come from site.css. */
+.sc h1{font-size:clamp(38px,4.6vw,66px);line-height:1.02;letter-spacing:-.03em;margin:0 0 18px}
+.sc h2{font-size:clamp(30px,3.4vw,48px);line-height:1.08;letter-spacing:-.025em;margin:8px 0 22px}
+.sc h3{font-size:22px;line-height:1.2;margin:0 0 8px}
+.sc p{line-height:1.55}
+.sc .section{padding:72px 5vw}
+.sc .wrap.wide{max-width:1360px}
+.sc .kicker{margin-bottom:10px}
+.sc .lead{font-size:clamp(18px,1.6vw,24px)}
+.sc-hero{background:linear-gradient(135deg,#061427,#092a49);color:#fff;padding:56px 5vw 64px}
+.sc-hero .wrap{max-width:1360px;margin:auto;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center}
+.sc-video{position:relative;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.35);aspect-ratio:16/9}
+.sc-video video,.sc-video img{width:100%;height:100%;object-fit:cover;display:block}
+.sc-video .sc-play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;background:rgba(6,20,39,.35);text-align:center;padding:20px}
+.sc-video .sc-play span{display:block;width:78px;height:78px;border-radius:50%;background:var(--cyan);color:#052033;display:grid;place-items:center;font-size:30px;margin:0 auto 12px}
+.sc-hero .lead{color:#d9e8f1}
+.sc-tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.sc-line{font-size:clamp(20px,2vw,28px);font-weight:700;line-height:1.3;margin:22px 0 0;color:#fff}
+.sc-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+.sc .btn.cyan{background:var(--cyan);border-color:var(--cyan);color:#052033}
+.sc .btn.alt{background:transparent}.sc-hero .btn.alt{color:#fff;border-color:#91a8b8}
+.sc-proof{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.sc-proof .sc-card{padding:28px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 8px 28px rgba(8,35,55,.05);display:flex;flex-direction:column}
+.sc-num{font-size:clamp(40px,4vw,58px);font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--navy2);margin:0 0 10px}
+.sc-num small{font-size:.42em;letter-spacing:0;color:#087d9f;display:block;margin-top:6px}
+.sc-src{font-size:13px;line-height:1.45;color:#6d7989;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.sc-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.sc-cols .sc-card{padding:28px;border-radius:22px;background:#f4f7fb;border:1px solid var(--line)}
+.sc-cols .sc-step{font-size:12px;font-weight:700;letter-spacing:.14em;color:#087d9f;margin-bottom:10px}
+.sc-cols p,.sc-proof p{color:#4d5a6b;margin:0 0 10px}
+.sc-note{max-width:980px;margin:28px 0 0;font-size:18px;line-height:1.55;color:#4d5a6b}
+.sc-two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.sc-price{padding:32px;border-radius:22px;background:var(--navy2);color:#fff}
+.sc-price .sc-tag{color:var(--cyan)}
+.sc-price h3{font-size:26px;margin-bottom:6px}
+.sc-price p{color:#c9d8e4;margin:0 0 8px}
+.sc-list{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:12px}
+.sc-list li{display:flex;gap:12px;font-size:18px;line-height:1.45}
+.sc-list li:before{content:'✓';color:#0a9fb9;font-weight:700;flex:none}
+.dark .sc-list li:before{color:var(--cyan)}
+.sc-mini{font-size:15px;color:#6d7989;line-height:1.5;margin-top:18px}
+.sc-forms{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px}
+.sc-form h3{margin-bottom:6px}
+.sc-form .sc-intro{color:#4d5a6b;margin:0 0 18px}
+.sc-form label{display:grid;gap:6px;font-weight:700;font-size:14px;color:#26344a}
+.sc-form .form-grid{gap:14px}
+.sc-form input,.sc-form select,.sc-form textarea{font-weight:400;font-size:16px;min-height:46px}
+.sc-form textarea{min-height:110px;resize:vertical}
+.sc-form .btn{width:100%}
+.sc-form [data-status]{font-size:15px;line-height:1.45;color:#26344a;min-height:1em}
+.sc-form [data-status].bad{color:#b32828}
+.sc-form [data-status].good{color:#0a7d3b;font-weight:700}
+.sc-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.sc-form{position:relative}
+.sc-footer-note{font-size:15px;color:#6d7989;margin-top:20px;line-height:1.5}
+@media(max-width:1024px){.sc-proof,.sc-cols{grid-template-columns:repeat(2,1fr)}.sc-hero .wrap{grid-template-columns:1fr;gap:32px}.sc-hero .sc-copy{order:2}.sc-forms{grid-template-columns:1fr}}
+@media(max-width:768px){.sc .section{padding:56px 20px}.sc-hero{padding:32px 20px 48px}.sc-two{grid-template-columns:1fr;gap:28px}.sc-actions .btn{width:100%}.sc-list li{font-size:17px}}
+@media(max-width:590px){.sc-proof,.sc-cols{grid-template-columns:1fr}.sc-form .form-grid{grid-template-columns:1fr}.sc-form .form-grid .full{grid-column:auto}.sc-video{border-radius:14px}}
+</style>
+</head><body>
+<header class="topbar"><div class="topbar-inner">
+  <nav class="mainnav"><a href="https://ezvoxa.com/index.html">Home</a><a href="https://ezvoxa.com/evan-story.html">Evan’s Story</a><a href="https://ezvoxa.com/app.html">The App</a><a href="https://ezvoxa.com/families.html">For Families</a><a href="https://ezvoxa.com/professionals.html">Professionals</a><a href="schools.html" class="active">Schools &amp; Clinics</a><a href="https://ezvoxa.com/journal.html">From Frank</a></nav>
+  <a class="join-logo" href="https://ezvoxa.com/join.html" aria-label="Join the launch"><span class="join-logo-text">Click to join<br>the launch <span class="join-arrow">→</span></span><img src="icon-ezvoxa-512.png" alt="EZvoxa"></a>
+  <button class="menu-btn" aria-label="Open menu">☰</button>
+</div></header>
+
+<main class="sc">
+
+<!-- HERO: the narrated demo video goes here as pro-demo.mp4 (16:9). Until the file is in place the poster shows with a play badge. -->
+<section class="sc-hero" id="top"><div class="wrap">
+  <div class="sc-copy">
+    <div class="sc-tag">EZvoxa Pro for schools and clinics</div>
+    <h1>A voice for students who cannot rely on speech.<br>Built for 13 and older.</h1>
+    <p class="lead">A picture-first communication app for teenagers and adults who do not read. The picture is the button. No reading required.</p>
+    <p class="sc-line">Owned outright. No subscription. No student data.</p>
+    <div class="sc-actions"><a class="btn cyan" href="#quote">Request a quote</a><a class="btn alt" href="#pilot">Start a pilot</a></div>
+  </div>
+  <div class="sc-video" id="demoSlot">
+    <video id="demoVideo" preload="metadata" poster="schools-poster.jpg" playsinline>
+      <source src="pro-demo.mp4" type="video/mp4">
+    </video>
+    <a class="sc-play" id="demoPlay" href="https://ezvoxa.com/guided-demo.html"><div><span>▶</span>Watch the demo</div></a>
+  </div>
+</div></section>
+
+<!-- PROOF: three sourced figures. Every figure keeps its source line. -->
+<section class="section white" id="why"><div class="wrap wide">
+  <div class="kicker">Why now</div>
+  <h2>The students changed. The tools did not.</h2>
+  <p class="lead">The leading communication apps for nonverbal students were released between 2009 and 2012. The number of students they were built for has grown several times over since then.</p>
+  <div class="sc-proof">
+    <div class="sc-card">
+      <p class="sc-num">2.9×<small>students with autism served under IDEA, 2008-09 to 2022-23</small></p>
+      <p>336,000 students in 2008-09. 980,000 in 2022-23. The current apps launched in that first window and have not been rebuilt for the students who arrived after.</p>
+      <div class="sc-src">Source: National Center for Education Statistics, Digest of Education Statistics, table 204.30. App release years from Apple’s App Store listings: Proloquo2Go 2009, TouchChat 2010, LAMP Words for Life 2012.</div>
+    </div>
+    <div class="sc-card">
+      <p class="sc-num">7.4×<small>Florida students aged 6 to 21 with autism, 2005 to 2024</small></p>
+      <p>7,918 students in 2005. 58,848 in 2024. Over the same years, Florida students with disabilities of every kind in that age band grew 12 percent. This is not a general rise. It is autism.</p>
+      <div class="sc-src">Source: US Department of Education, IDEA Section 618 Part B child count, state-level files, data.ed.gov.</div>
+    </div>
+    <div class="sc-card">
+      <p class="sc-num">+79%<small>St. Lucie County school-age students with autism, 2020-21 to 2024-25</small></p>
+      <p>579 students in 2020-21. 1,035 in 2024-25. Autism is now 15.5 percent of the district’s school-age students with disabilities.</p>
+      <div class="sc-src">Source: US Department of Education, IDEA Section 618 Part B child count, LEA-level files, 2020-21 through 2024-25.</div>
+    </div>
+  </div>
+  <p class="sc-note">EZvoxa Pro is the EZvoxa app with the family features removed and organization licensing added. Same boards, same pictures, same voice.</p>
+</div></section>
+
+<!-- HOW IT WORKS: the three install paths from the design document, section 5. -->
+<section class="section light" id="how"><div class="wrap wide">
+  <div class="kicker">How it works</div>
+  <h2>One license. Three ways to install. No district is told no.</h2>
+  <div class="sc-cols">
+    <div class="sc-card">
+      <div class="sc-step">PATH A · THE DEFAULT</div>
+      <h3>App Store or Google Play, by your private link</h3>
+      <p>EZvoxa Pro is an unlisted store app. It does not appear in search. Your district’s private link installs it on any iPad, iPhone or Android device, managed or not, and it updates through the store like any other app.</p>
+      <p>Each device joins your organization with a join code from your portal. The code counts one seat. No student names are entered anywhere.</p>
+    </div>
+    <div class="sc-card">
+      <div class="sc-step">PATH B · ANY DEVICE, NO STORE ACCOUNT</div>
+      <h3>From the web, on any device</h3>
+      <p>Install from app.ezvoxa.com to the home screen, enter the join code, done. Same app, same code, no Apple ID or Google account needed. This is the path for a classroom that has devices but no store accounts.</p>
+      <p>Districts that require everything through Apple School Manager can receive EZvoxa Pro as a custom app for their organization ID, invoiced by us.</p>
+    </div>
+    <div class="sc-card">
+      <div class="sc-step">PATH C · ON REQUEST</div>
+      <h3>On devices we ship</h3>
+      <p>For programs that want a dedicated communication device: supervised phones locked to the app, shipped configured with your join code. Priced separately on the quote when a district asks for it.</p>
+    </div>
+  </div>
+  <p class="sc-note"><strong>Updates once or twice a year.</strong> Nothing on a device changes on its own between releases, and your administrator gets a release note by email before each one. <strong>Backup and restore</strong> is built in: a device can export its buttons and settings to a file and restore them on a replacement device. The file stays with the district. We never hold it.</p>
+</div></section>
+
+<!-- PRICING AND PURCHASING: one list price, stated once, no discount table anywhere. -->
+<section class="section white" id="pricing"><div class="wrap wide">
+  <div class="kicker">Pricing and purchasing</div>
+  <h2>One seat, one price. Volume and district-wide pricing by quote.</h2>
+  <div class="sc-two">
+    <div class="sc-price">
+      <div class="sc-tag">EZvoxa Pro</div>
+      <!-- PRICE LINE: the list price per seat goes in the next line, stated once, when Frank confirms it. -->
+      <h3>Per seat, owned outright</h3>
+      <p>One seat is one device. No subscription, no renewal, no per-student fee. Updates included.</p>
+      <p>Volume pricing, district-wide pricing and pilot terms are set on your quote, not on a public table. Ask, and we will price your program.</p>
+      <div class="sc-actions"><a class="btn cyan" href="#quote">Request a quote</a></div>
+    </div>
+    <div>
+      <h3>What your purchasing office needs from us</h3>
+      <ul class="sc-list">
+        <li>Purchase orders accepted. Invoices carry your PO number. Net 45 terms.</li>
+        <li>W-9 and certificate of insurance on request, before or with the quote.</li>
+        <li>Sole source letter provided on company letterhead. EZ Voice LLC is the copyright owner of EZvoxa Pro.</li>
+        <li>Vendor application forms completed on request.</li>
+        <li>For Florida districts: computer software bought directly from the copyright owner is exempt from competitive solicitation under Florida Administrative Code Rule 6A-1.012.</li>
+      </ul>
+      <p class="sc-mini">Purchasing thresholds and forms vary by district. Send us yours and we will follow them.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- SECURITY AND PRIVACY: the promises from the design document, section 5, as a short list. -->
+<section class="section dark" id="security"><div class="wrap wide">
+  <div class="kicker">Security and privacy</div>
+  <h2>No student data. That is a design rule, not a setting.</h2>
+  <div class="sc-two">
+    <ul class="sc-list">
+      <li>No student names, records or identifiers on our servers, ever. The app’s data stays on the device.</li>
+      <li>Our server holds only your organization, its seat count, its administrators, its devices by join code, and its orders.</li>
+      <li>Portal sign-in by emailed link. No passwords to leak. Sessions expire. Every action is logged with who and when.</li>
+      <li>Join codes expire and are single-use per device. Remove a device from the portal and its seat is freed and that device is locked.</li>
+      <li>Purchase orders, invoices, W-9 and insurance certificate are stored in your portal, so your purchasing office gets everything from one page.</li>
+    </ul>
+    <div>
+      <p class="lead">EZvoxa Pro contains no family features: no texting, no family alerts, no shared contacts, no location. Those belong to the family edition and are not in the school build.</p>
+      <p><a href="https://ezvoxa.com/privacy.html" style="color:var(--cyan);font-weight:700">Read the privacy policy →</a></p>
+      <p class="sc-mini" style="color:#b8c6d3">EZvoxa helps someone communicate. It is not a medical device and does not replace 911.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- REFERRAL PROGRAM: one paragraph, terms by quote. -->
+<section class="section light" id="referral"><div class="wrap wide">
+  <div class="kicker">Referral program</div>
+  <h2>Bring in a district, earn a credit.</h2>
+  <p class="lead" style="max-width:980px">A district that brings in another district earns a credit on its next order. We record who referred whom, so the credit is applied automatically when the second district’s order is paid. Terms are set on your quote.</p>
+</div></section>
+
+<!-- FORMS: both post JSON to our server. No prices on either form. -->
+<section class="section white" id="quote"><div class="wrap wide">
+  <div class="kicker">Get started</div>
+  <h2>Request a quote, or start a pilot.</h2>
+  <p class="lead" style="max-width:980px">Both go straight to the founder, not a sales queue.</p>
+  <div class="sc-forms">
+
+    <form class="form-card sc-form" data-quote-form data-kind="quote" novalidate>
+      <h3>Request a quote</h3>
+      <p class="sc-intro">Tell us about your program. We will send a quote and the purchasing documents your office needs.</p>
+      <div class="form-grid">
+        <label class="full">Organization name<input name="organization" required maxlength="200"></label>
+        <label>Type<select name="orgType" required><option value="">Choose one</option><option>Public school district</option><option>Private school</option><option>Clinic or rehab center</option><option>Other</option></select></label>
+        <label>State<input name="state" required maxlength="60" placeholder="Florida"></label>
+        <label>Contact name<input name="name" required maxlength="120"></label>
+        <label>Title<input name="title" maxlength="120" placeholder="ESE Director"></label>
+        <label>Work email<input name="email" type="email" required maxlength="160"></label>
+        <label>Phone<input name="phone" type="tel" maxlength="40"></label>
+        <label>Students or patients who cannot rely on speech<select name="count" required><option value="">Choose a range</option><option>1 to 10</option><option>11 to 25</option><option>26 to 50</option><option>51 to 100</option><option>101 to 250</option><option>More than 250</option><option>Not sure yet</option></select></label>
+        <label>Devices in use<select name="devices" required><option value="">Choose one</option><option>iPad</option><option>iPhone</option><option>Android</option><option>Mixed</option><option>None yet</option></select></label>
+        <label>How did you hear of us?<select name="heard" required><option value="">Choose one</option><option>Another district or clinic</option><option>A parent</option><option>A teacher or therapist</option><option>Search</option><option>Conference or event</option><option>Other</option></select></label>
+        <label>Referred by (district, clinic or person)<input name="referral" maxlength="160"></label>
+        <label class="full">Anything else<textarea name="message" maxlength="2000"></textarea></label>
+        <label class="hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+        <button class="btn cyan full" type="submit">Send the quote request</button>
+        <div class="full" data-status aria-live="polite"></div>
+      </div>
+    </form>
+
+    <form class="form-card sc-form" id="pilot" data-quote-form data-kind="pilot" novalidate>
+      <h3>Start a pilot</h3>
+      <p class="sc-intro">A pilot is a set number of seats at no charge for a set period, in one classroom or program. It converts to an order without re-entry.</p>
+      <div class="form-grid">
+        <label class="full">Organization name<input name="organization" required maxlength="200"></label>
+        <label>Type<select name="orgType" required><option value="">Choose one</option><option>Public school district</option><option>Private school</option><option>Clinic or rehab center</option><option>Other</option></select></label>
+        <label>State<input name="state" required maxlength="60" placeholder="Florida"></label>
+        <label>Contact name<input name="name" required maxlength="120"></label>
+        <label>Title<input name="title" maxlength="120"></label>
+        <label>Work email<input name="email" type="email" required maxlength="160"></label>
+        <label>Phone<input name="phone" type="tel" maxlength="40"></label>
+        <label>Pilot seats<select name="seats" required><option value="">Choose one</option><option>1 to 5</option><option>6 to 10</option><option>11 to 20</option><option>More than 20</option></select></label>
+        <label>Classroom or program<input name="program" required maxlength="200" placeholder="High school ESE, adult day program"></label>
+        <label>Students or patients who cannot rely on speech<select name="count" required><option value="">Choose a range</option><option>1 to 10</option><option>11 to 25</option><option>26 to 50</option><option>51 to 100</option><option>101 to 250</option><option>More than 250</option><option>Not sure yet</option></select></label>
+        <label>Devices in use<select name="devices" required><option value="">Choose one</option><option>iPad</option><option>iPhone</option><option>Android</option><option>Mixed</option><option>None yet</option></select></label>
+        <label>How did you hear of us?<select name="heard" required><option value="">Choose one</option><option>Another district or clinic</option><option>A parent</option><option>A teacher or therapist</option><option>Search</option><option>Conference or event</option><option>Other</option></select></label>
+        <label>Referred by (district, clinic or person)<input name="referral" maxlength="160"></label>
+        <label class="full">Anything else<textarea name="message" maxlength="2000"></textarea></label>
+        <label class="hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+        <button class="btn full" type="submit">Send the pilot request</button>
+        <div class="full" data-status aria-live="polite"></div>
+      </div>
+    </form>
+
+  </div>
+  <p class="sc-footer-note">Nothing you enter here is shared or sold. It goes to EZ Voice LLC and nowhere else.</p>
+</div></section>
+
+<footer class="footer"><div class="footer-inner"><div>EZ Voice LLC · Florida<br>EZvoxa helps someone communicate. It is not a medical device and does not replace 911.</div><div><a href="https://ezvoxa.com/privacy.html">Privacy</a> · <a href="schools.html">Schools and clinics</a></div></div></footer>
+</main>
+<script src="site.js?v=6"></script>
+<script>
+(function(){
+  // Demo video slot: if pro-demo.mp4 is not there yet, the poster stays and the badge links to the guided demo.
+  var v=document.getElementById('demoVideo'),badge=document.getElementById('demoPlay');
+  if(v&&badge){
+    v.addEventListener('loadedmetadata',function(){badge.style.display='none';});
+    v.addEventListener('error',function(){v.style.display='none';},true);
+    badge.addEventListener("click",function(e){if(v.readyState>0){e.preventDefault();badge.style.display="none";v.setAttribute("controls","");v.play();}});
+  }
+  // Both forms post to our server. Same origin rules as the rest of the site's endpoints.
+  var API=(location.hostname==='ez-comm-tether.vercel.app')?'/api/quote':'/app/api/quote';
+  document.querySelectorAll('[data-quote-form]').forEach(function(f){
+    var status=f.querySelector('[data-status]');
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      status.className='';status.textContent='';
+      var missing=[].slice.call(f.querySelectorAll('[required]')).filter(function(el){return !String(el.value||'').trim();});
+      if(missing.length){status.className='bad';status.textContent='Please fill in the fields marked, starting with '+(missing[0].closest('label').firstChild.textContent.trim().toLowerCase())+'.';missing[0].focus();return;}
+      var email=f.querySelector('[name=email]').value.trim();
+      if(!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(email)){status.className='bad';status.textContent='That email address does not look right.';return;}
+      var data={kind:f.dataset.kind,source:'ezvoxa.com/schools'};
+      [].slice.call(f.elements).forEach(function(el){if(el.name)data[el.name]=el.value;});
+      var btn=f.querySelector('button[type=submit]');btn.disabled=true;status.textContent='Sending…';
+      fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+        .then(function(r){return r.json();})
+        .then(function(j){
+          if(j&&j.ok){status.className='good';status.textContent=(f.dataset.kind==='pilot'?'Pilot request received.':'Quote request received.')+' We will be in touch.';f.reset();}
+          else{status.className='bad';status.textContent=(j&&j.error==='too_many')?'Too many requests from this connection. Please try again in an hour.':'Something went wrong on our side. Please email us instead and we will answer the same day.';btn.disabled=false;}
+        })
+        .catch(function(){status.className='bad';status.textContent='Could not reach our server. Please check your connection and try again.';btn.disabled=false;});
+    });
+  });
+})();
+</script>
+</body></html>

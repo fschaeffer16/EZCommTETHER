@@ -683,3 +683,33 @@ a dated line saying it was reversed. Dates are the day it happened.
   App Store Server Notifications and StoreKit 2 pages.
 - **5 Sep 2026. Family Code in v1.** Frank: "No. V1 has to have this. We
   sell customization as a big part of this." Built and live.
+- **9 Sep 2026. Schools and Clinics section built on a branch, not on the
+  live site.** Frank approved section 8 of the direct sales design and
+  asked whether I would code the section for him to hand to Claude
+  Design; he did not ask for it on ezvoxa.com yet. So it lives on branch
+  `schools-section` of the website repository, with a preview copy at
+  ez-comm-tether.vercel.app/site-preview/schools.html, and a Word brief
+  (`EZvoxa Schools and Clinics Section Brief.docx`). Merging to the
+  website's main is his call after he has seen it on phone, tablet and
+  desktop.
+- **9 Sep 2026. No price on the section.** Pricing is not confirmed
+  (standing rule), so the list price line in the price card is left out
+  of the code with a marked spot. Everything else in section 6 of the
+  design document is on the page as written there.
+- **9 Sep 2026. No promises Frank did not make.** I first wrote "you will
+  hear back within two business days", "forms returned within five
+  business days" and "never in the middle of a school day" into the page
+  copy, then struck all three before pushing: none is his. The page says
+  "We will be in touch" and nothing about turnaround. A reply-time
+  promise is his to add.
+- **9 Sep 2026. Nothing of Evan on the section.** The section rule from
+  the design document. A line describing the app's origin ("built at home
+  for a teenager with speech apraxia by his father") was written and
+  then removed for that reason; the page says only that Pro is the
+  EZvoxa app with family features removed.
+- **9 Sep 2026. The site's join and professionals forms were dead.**
+  Found while building: site.js on the live site has no submit code, so
+  both forms reload the page and lose the entry. Fix is on the same
+  branch (posts through the site's existing `/app` rewrite). Reported to
+  Frank rather than pushed to the website's main, since that repository
+  is his upload lane; his call to merge.
