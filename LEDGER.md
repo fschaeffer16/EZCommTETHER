@@ -1415,6 +1415,18 @@ Pro is the talker alone and stays separate. No direct license needed.
   `privacy.html` is unchanged and still serves at
   `ez-comm-tether.vercel.app/privacy.html`; if it is edited, the website copy
   must be re-copied or the two will diverge again.
+- **Which privacy page wins: `privacy.html` in EZCommTETHER is CANONICAL; the
+  copy in the website repo is a MIRROR.** The approved 2 Sep wording is the
+  legal artifact and it lives here. The website copy carries the same wording;
+  as of this entry it is the bare approved page, and a version adding the site
+  chrome plus a clearly marked "This website" section covering ezvoxa.com's
+  page-view counting is built and waiting on Frank's approval of that section's
+  wording (branch `claude/eloquent-cerf-4m0mpo` on the website repo).
+  If the two ever disagree on the *policy* text, this file wins
+  and the mirror is wrong: re-copy the 9 approved sections from here. Nothing
+  keeps them in sync automatically, so an edit here is not live at
+  `ezvoxa.com/privacy.html` until someone copies it over. The website-only
+  section is the one part that is deliberately not in this repo's copy.
 - **OPEN, for Frank, 10 Sep 2026: the website's page-view counting is no
   longer disclosed anywhere.** That disclosure lived only in the website
   placeholder page that was just replaced. The approved app policy now at
