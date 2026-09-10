@@ -65,6 +65,8 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 - **privacy.html: APPROVED by Frank 2 Sep 2026 ("The wording is fine").**
   In effect, dated 2 September 2026, live at ezvoxa.com/privacy.html and
   linked from the site footer. This is the URL for both store listings.
+  (True when written, made false by the 9 Sep site upload, true again
+  10 Sep 2026 — see the resolution entry below.)
 
 ## Trial program (decided 31 Aug 2026)
 
@@ -1399,13 +1401,30 @@ Pro is the talker alone and stays separate. No direct license needed.
   180 days. Counting started 10 Sep 2026, so anything before that is gone.
   No analytics company is involved, which keeps the app's "no analytics
   packages, no tracking scripts" promise true.
-- **CORRECTION, 10 Sep 2026: the approved privacy policy is NOT live at
-  ezvoxa.com/privacy.html.** That address serves the website's placeholder
-  page. The approved 2 Sep policy is at `ez-comm-tether.vercel.app/privacy.html`,
-  reachable from the site as `www.ezvoxa.com/app/privacy.html`. The earlier
-  entry in this file saying otherwise was true when written and was made
-  false by the 9 Sep site upload. **Both store listings ask for a privacy
-  policy URL and Frank has not chosen which one to give them.**
+- **RESOLVED 10 Sep 2026 (supersedes the correction this entry replaces).**
+  Frank chose: the approved 2 Sep policy is served at
+  **`ezvoxa.com/privacy.html`**, and that is the URL for both store listings
+  and the one Apple checks at review. The website placeholder that the 9 Sep
+  upload left there is gone. `privacy.html` in the website repo is now a
+  byte-identical copy of this repo's `privacy.html`
+  (md5 `8dfef12f710812cfd9d69dfd437ee869`) — copied, not reformatted, so the
+  approved wording and the 2 September 2026 date are unchanged.
+  `www.ezvoxa.com/app/privacy.html` now **redirects** to it (a temporary 307
+  in the website's `vercel.json`, placed ahead of the `/app/(.*)` rewrite), so
+  the two addresses can no longer drift apart. This repo's own
+  `privacy.html` is unchanged and still serves at
+  `ez-comm-tether.vercel.app/privacy.html`; if it is edited, the website copy
+  must be re-copied or the two will diverge again.
+- **OPEN, for Frank, 10 Sep 2026: the website's page-view counting is no
+  longer disclosed anywhere.** That disclosure lived only in the website
+  placeholder page that was just replaced. The approved app policy now at
+  `ezvoxa.com/privacy.html` describes the app and says "no analytics
+  packages, no tracking scripts"; it says nothing about the website counting
+  views, which the other twelve pages still do via `site.js`. The counter
+  itself is unchanged and still stores no identifier. Two ways to close it:
+  add a short website paragraph to the page, or state that the policy covers
+  the app only. Adding or removing privacy wording is Frank's call, so
+  nothing was written either way.
 - **10 Sep 2026: `forms-snippet.txt` on the website now carries BOTH blocks**
   that a site upload deletes, the form wiring and the view counter, with a
   header telling whoever pastes it what breaks without each. Paste the whole
