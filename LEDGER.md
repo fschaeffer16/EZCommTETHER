@@ -1417,11 +1417,11 @@ Pro is the talker alone and stays separate. No direct license needed.
   must be re-copied or the two will diverge again.
 - **Which privacy page wins: `privacy.html` in EZCommTETHER is CANONICAL; the
   copy in the website repo is a MIRROR.** The approved 2 Sep wording is the
-  legal artifact and it lives here. The website copy carries the same wording;
-  as of this entry it is the bare approved page, and a version adding the site
-  chrome plus a clearly marked "This website" section covering ezvoxa.com's
-  page-view counting is built and waiting on Frank's approval of that section's
-  wording (branch `claude/eloquent-cerf-4m0mpo` on the website repo).
+  legal artifact and it lives here. The website copy carries the same wording
+  inside the site's own chrome (topbar, site.css, site footer), plus a clearly
+  marked "This website" section below the policy covering ezvoxa.com's
+  page-view counting, which the app policy does not describe. Frank approved
+  that section's wording 10 Sep 2026 and it is live.
   If the two ever disagree on the *policy* text, this file wins
   and the mirror is wrong: re-copy the 9 approved sections from here. Nothing
   keeps them in sync automatically, so an edit here is not live at
