@@ -800,5 +800,6 @@ a dated line saying it was reversed. Dates are the day it happened.
   / soccer field?" and "Can I play with Lilly?". Frank's corrections the
   same hour: bike says "Can I ride my bike?"; Park and Movies were meant
   too: "Can we go to the park?", "Can we go to the movies?". All eight
-  scenes speak one line now (build 2026.09.10.3). Evan's app
+  scenes speak one line now (build 2026.09.10.3). Trampoline: "Can we go
+  to the trampoline park?" (Frank, same hour; build 2026.09.10.4). Evan's app
   only; Lilly is the family's dog and does not go in the template.
