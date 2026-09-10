@@ -1333,3 +1333,25 @@ Pro is the talker alone and stays separate. No direct license needed.
    for elementary, middle and high school that meets students where they
    are, with a district-level dashboard to see results in real time
    (Frank's words, 10 Sep 2026).
+
+- **10 Sep 2026, from Frank: the business bank account holds $200.** His
+  figure, stated when he asked for the investor handoff. The account was
+  opened 4 Sep 2026 (above); the bank's name is still not recorded here.
+
+- **"EZvoxa Business and Product Handoff.docx" (10 Sep 2026):** the
+  investor/analyst handoff, 9,640 words, fifteen sections, no projections of
+  any kind by Frank's instruction. It is the single place where the company
+  record, the product state, the four channels, the counted market, the
+  competitor prices, every cost with its verified/document/assumption mark,
+  and the trademark and copyright fee tables sit together. Built from
+  LEDGER, DECISIONS, api/finance-defaults.json, api/market-defaults.json,
+  the two research folders, APPSTORE.md, RELEASE.md and "EZvoxa Pro Direct
+  Sales and Distribution Design.docx". Read it before rebuilding any of that
+  material from scratch. Working prices appear in it behind two warning
+  boxes; the no-published-price rule still stands for everything outside it.
+  Note for any session needing a .docx read: pandoc is NOT installed in this
+  environment. LibreOffice is installed but cannot load any .docx here, so
+  PDF rendering as a check is unavailable; the schema validator at
+  .../skills/synced/*/docx/scripts/office/validate.py does work. Text can be
+  extracted with a short python zipfile plus regex script over
+  word/document.xml.

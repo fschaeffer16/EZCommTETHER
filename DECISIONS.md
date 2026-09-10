@@ -835,3 +835,37 @@ a dated line saying it was reversed. Dates are the day it happened.
      discovery classroom (not asked); everything in the handoff's
      recommendations remains unapproved; nothing in either research
      folder authorizes a build.
+
+- **10 Sep 2026. Investor handoff written, with every past projection
+  removed on Frank's instruction.** Frank: "Give me everything I need in a
+  handoff about the product, potential revenue streams, what sets us apart,
+  where we are in the development process ... everything BUT the financials
+  ... I want every detail all the research needed for someone to work up
+  financial projections but I do not want ANY of the past financial
+  projections." Delivered as "EZvoxa Business and Product Handoff.docx",
+  fifteen sections, 9,640 words. What went in: the company and its accounts,
+  the product and its backend, what is built and what is not, the four
+  channels and what each takes, the working prices, the schools channel with
+  one district's real purchasing ladder, the counted market with its
+  arithmetic and its caveats, the growth-versus-stagnation evidence, the
+  competitor table, every known cost marked verified/document/assumption,
+  trademark and copyright explained with the fee tables, and a closing
+  section naming every input nobody has data for. What stayed out, by his
+  instruction: every scenario ramp, every five-year net, every cumulative
+  figure, the conversion levels, and the modeled operating-expense schedules.
+  Judgment calls I made, stated here because he did not make them:
+  (a) the working prices ARE printed, because a model cannot be built without
+  a price, inside two warning boxes saying they are unconfirmed and must not
+  be quoted outside the company; this is the narrowest reading of the 1 Sep
+  no-published-price rule that still answers what he asked for. If he wants
+  them out, they come out.
+  (b) conversion shares were treated as part of the projections and excluded,
+  listed instead as the first input a modeler must choose.
+  (c) Frank's own observations (industry asleep at the wheel, LAMP fatigue,
+  the fourth-grade board) are printed as his firsthand account, labeled as
+  not sourced, with a line telling any deck to present them that way.
+  Corrections carried in: the WordPower "Intelligent Jumps" refutation is in
+  the competition section as a boxed warning, so the sharp claim is the only
+  one available to anyone writing from this document; and the pasted hub
+  page's "$10,000 federal micro-purchase threshold" is corrected to the FAR's
+  $15,000 with the $10,000 identified as St. Lucie's own quote line.
