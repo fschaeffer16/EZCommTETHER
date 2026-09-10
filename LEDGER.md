@@ -1367,3 +1367,26 @@ Pro is the talker alone and stays separate. No direct license needed.
   what I am asking you to do here."** Quicker sentences and next-screen
   linking belong to the younger-children thread. They are not an EZvoxa
   claim and do not go in EZvoxa material.
+
+- **10 Sep 2026: both repositories are already attached to Claude sessions.**
+  `fschaeffer16/EZCommTETHER` and `fschaeffer16/ezvoxawebsite`, the website
+  clone at `/home/user/ezvoxawebsite`, fetch confirmed against origin/main.
+  Frank does not need to grant anything for GitHub. **Vercel is NOT
+  reachable and does not need to be:** no credentials in the session and
+  api.vercel.com is refused by the proxy. Everything ships through a git
+  push, so Vercel access would only expose the environment secrets. Do not
+  ask him for it.
+- **10 Sep 2026, live check of the website forms.** After the 9 Sep upload
+  wiped the form code once, the current live `main` (207e438) still has it:
+  `site.js` wires `[data-signup-form]` to `/app/api/waitlist` and
+  `[data-prof-form]` to `/app/api/professional-inquiry`, with `BASE='/app'`.
+  Verified against the live site, not just the file: GET
+  `www.ezvoxa.com/app/api/waitlist` answers `{"ok":true,"configured":true}`,
+  and a POST with a deliberately invalid address answers `bad_email`, which
+  proves the path and the storage without putting a fake name on Frank's
+  list. Use that same pair of calls to re-check after any future site upload.
+- **10 Sep 2026: no analytics of any kind is installed on ezvoxa.com.** No
+  tag on any page, checked in the repository and against the live homepage.
+  The site has been up since 1 Sep, so there is no traffic history at all
+  and no baseline to multiply for any marketing plan. Not yet raised as a
+  build; Frank's call.
