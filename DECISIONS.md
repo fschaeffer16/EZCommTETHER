@@ -864,8 +864,15 @@ a dated line saying it was reversed. Dates are the day it happened.
   (c) Frank's own observations (industry asleep at the wheel, LAMP fatigue,
   the fourth-grade board) are printed as his firsthand account, labeled as
   not sourced, with a line telling any deck to present them that way.
-  Corrections carried in: the WordPower "Intelligent Jumps" refutation is in
-  the competition section as a boxed warning, so the sharp claim is the only
-  one available to anyone writing from this document; and the pasted hub
-  page's "$10,000 federal micro-purchase threshold" is corrected to the FAR's
-  $15,000 with the $10,000 identified as St. Lucie's own quote line.
+  Correction carried in: the pasted hub page's "$10,000 federal
+  micro-purchase threshold" is corrected to the FAR's $15,000, with the
+  $10,000 identified as St. Lucie's own quote line.
+  **Same day, Frank corrected me and I removed it:** "please do not take what
+  I said about link to the next screen literally. That device is not part of
+  what I am asking you to do here." I had put the WordPower "Intelligent
+  Jumps" refutation into the competition section as a boxed warning and had
+  listed next-word behavior as a place the incumbents are weak. Both are
+  gone. Next-word navigation belongs to the younger-children product, not to
+  EZvoxa, and putting it in an EZvoxa handoff implied we were claiming it.
+  The refutation stays on record above and in the research folder, where it
+  belongs. Handoff now 9,506 words.

@@ -1355,3 +1355,15 @@ Pro is the talker alone and stays separate. No direct license needed.
   .../skills/synced/*/docx/scripts/office/validate.py does work. Text can be
   extracted with a short python zipfile plus regex script over
   word/document.xml.
+
+- **10 Sep 2026, from Frank, on the younger-children product: "Trust me, I
+  already have something much larger in mind for the younger children."**
+  His words. What it is has not been described to me and I have not asked.
+  Recorded so no session assumes the elementary research folder or
+  HANDOFF-EARLY.md describes his intent for that product. Nothing in either
+  is approved, and the direction is his to set.
+- **10 Sep 2026, Frank on next-word navigation: "please do not take what I
+  said about link to the next screen literally. That device is not part of
+  what I am asking you to do here."** Quicker sentences and next-screen
+  linking belong to the younger-children thread. They are not an EZvoxa
+  claim and do not go in EZvoxa material.
