@@ -1410,3 +1410,11 @@ Pro is the talker alone and stays separate. No direct license needed.
   that a site upload deletes, the form wiring and the view counter, with a
   header telling whoever pastes it what breaks without each. Paste the whole
   file at the end of `site.js` after any upload.
+- **10 Sep 2026, live and verified in production.** `/api/hit` answers on the
+  app host and through the site at `www.ezvoxa.com/app/api/hit`; storage is
+  configured; a POST carrying our own Origin is counted and a POST from
+  another site is refused. The live `site.js?v=8` carries the counter on all
+  twelve pages. The cache version had to be bumped or browsers would have
+  kept v=7 and none of it would have run. One test view of the home page was
+  recorded on 10 Sep while proving the write path, so the very first number
+  Frank sees includes it.
