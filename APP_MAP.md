@@ -333,3 +333,25 @@ Settings. Not changed here.
   Reliable art goes through `iconUri()` data-URIs in `tether-icons.js`.
 - Boards render as `position:absolute; inset:0` overlays inside a `flex:1`
   content region below the top stack; the home grid stays in the DOM behind them.
+
+## Editing from the boards (10 Sep 2026)
+
+- Every board that holds buttons has the Edit pill (password once, then
+  Edit / Done). Added that day: Home (phone and tablet headers) and the
+  restaurant menus. Utility boards (Calendar, Time, Colors, Numbers,
+  Calculator, Spell it, Sentence Build, Word bank) have none.
+- In edit mode a board with a section of its own shows a blue "+ Add to
+  [board]" bar at the bottom: Home, Food, Places (Fun and Places
+  sections), Night, Feelings, Hurt. It opens the Create a New Button form
+  with the section fixed, and saving returns to the board in edit mode.
+  Tapping a custom button in edit mode opens the same form to edit it.
+  People boards keep "Add someone"; Netflix, Disney+ and Sports keep
+  their own "+ Add" slot controls.
+- Settings no longer shows "Add & edit buttons" or the button list on
+  its own; the card appears only when opened from a board, titled "Add
+  to [board]", listing that board's custom buttons. The old "Add a New
+  Button" shortcut at the top of Settings is gone.
+- Evan's Places scenes (10 Sep 2026): Pool, Beach, Trampoline, Bike Ride,
+  Soccer Field and Dogs speak one line on tap and open nothing ("Can we
+  go to the pool?", "Can I play with Lilly?"); Park and Movies still open
+  their two-line chooser. Template unchanged on this point.

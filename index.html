@@ -2802,6 +2802,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </div>
     
     <div onClick="{{ closeApp }}" style="flex:none;display:flex;align-items:center;gap:7px;padding:6px 4px;cursor:pointer;" style-active="transform:scale(.92)"><span style="font-size:23px;font-weight:900;line-height:1;color:#F59E0B;">✕</span><span style="font-size:17px;font-weight:800;color:#F59E0B;white-space:nowrap;">Close</span></div>
+    <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
     <div onClick="{{ openSettings }}" style="width:40px;height:40px;border-radius:50%;background:#1b1f27;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.55);" style-active="transform:scale(.92)">⚙️</div>
   </div>
 
@@ -2868,6 +2869,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       <div style="flex:none;max-width:44%;font-size:26px;font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ownerName }}</div>
       <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#1D9BF0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;line-height:1;">✓</span>
       <div style="flex:1;"></div>
+      <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
       <div onClick="{{ openSettings }}" style="flex:none;width:52px;height:44px;border-radius:14px;background:#14161d;border:1.5px solid #2A2E39;display:flex;align-items:center;justify-content:center;font-size:21px;cursor:pointer;" style-active="transform:scale(.93)">⚙️</div>
       <div onClick="{{ closeApp }}" style="flex:none;height:44px;border-radius:14px;background:#14161d;border:1.5px solid #2A2E39;display:flex;align-items:center;gap:8px;padding:0 16px;cursor:pointer;" style-active="transform:scale(.94)"><span style="font-size:20px;font-weight:900;line-height:1;color:#E5533D;">✕</span><span style="font-size:17px;font-weight:800;color:#fff;white-space:nowrap;">Close</span></div>
     </div>
@@ -3138,6 +3140,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
           <div onClick="{{ openFood }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:{{ restaurantColor }};flex:1;min-width:0;">{{ restaurantName }}</div>
+          <div onClick="{{ gearEdit }}" style="flex:none;height:38px;border-radius:19px;padding:0 14px;background:{{ editPillBg }};color:{{ editPillInk }};display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.08);" style-active="transform:scale(.94)">{{ editPillIcon }} {{ editPillText }}</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:6px 18px 24px;">
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
@@ -3463,7 +3466,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;background:var(--bg,#FBFAF7);display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 18px 8px;flex:none;">
-          <div onClick="{{ goBoard }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
+          <div onClick="{{ settingsBack }}" style="width:44px;height:44px;border-radius:50%;background:var(--card,#fff);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--ink,#1A1714);cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);" style-active="transform:scale(.9)">‹</div>
           <div style="font-size:24px;font-weight:800;color:var(--ink,#1A1714);display:flex;align-items:center;gap:8px;"><span style="font-size:22px;">⚙️</span>Settings</div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:8px 18px 150px;">
@@ -3481,7 +3484,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <sc-if value="{{ familyKeyErr }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;font-size:13px;font-weight:700;color:#C0473A;">That key isn't right.</div></sc-if>
             </div>
           </sc-if>
-          <button onClick="{{ jumpToAddButton }}" style="width:100%;margin-top:14px;background:#3B82F6;color:#fff;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">➕</span>Add a New Button</button>
           <button onClick="{{ openVoiceChooser }}" style="width:100%;margin-top:12px;background:var(--card,#fff);color:var(--ink,#1A1714);border:1.5px solid var(--slot,#E6E1D8);border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.06);display:flex;align-items:center;justify-content:center;gap:8px;" style-active="transform:scale(.98)"><span style="font-size:20px;">🎙️</span>Choose Voice</button>
 
 <sc-if value="{{ showPhoneRole }}" hint-placeholder-val="{{ false }}">
@@ -3577,9 +3579,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
                     </sc-if>
 
+          <!-- The button form lives on the boards now (Frank, 10 Sep 2026): it shows here only when a board's "+ Add" or a custom button in edit mode opened it. -->
+          <sc-if value="{{ addFromBoard }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ setTog_buttons }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
             <span style="font-size:20px;flex:none;">➕</span>
-            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">Add & edit buttons</span>
+            <span style="flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--ink,#1A1714);">{{ addCardTitle }}</span>
             <span style="font-size:15px;color:var(--hint,#C9C2B8);flex:none;">{{ setChev_buttons }}</span>
           </div>
           <sc-if value="{{ setOpen_buttons }}" hint-placeholder-val="{{ false }}">
@@ -3603,12 +3607,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </sc-for>
             </div>
             <button onClick="{{ nbAddPhrase }}" style="margin-top:8px;background:transparent;border:none;color:#3B82F6;font-size:13px;font-weight:800;cursor:pointer;padding:4px 2px;">+ Add another phrase</button>
+            <sc-if value="{{ nbShowSection }}" hint-placeholder-val="{{ true }}">
             <div style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub,#8C857A);margin:12px 2px 7px;">Add to which section</div>
             <select onChange="{{ nbOnSection }}" defaultValue="{{ nbSection }}" style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid var(--slot,#E6E1D8);border-radius:12px;font-size:15px;font-weight:700;color:var(--ink,#1A1714);background:var(--card,#fff);font-family:inherit;">
               <sc-for list="{{ nbSections }}" as="opt" hint-placeholder-count="8">
                 <option value="{{ opt.value }}">{{ opt.label }}</option>
               </sc-for>
             </select>
+            </sc-if>
             <sc-if value="{{ nbErr }}" hint-placeholder-val=""><div style="color:#C0473A;font-size:13px;font-weight:700;margin-top:10px;">{{ nbErr }}</div></sc-if>
             <sc-if value="{{ nbAdded }}" hint-placeholder-val=""><div style="color:#1F8A5B;font-size:13px;font-weight:700;margin-top:10px;">✓ {{ nbAdded }}</div></sc-if>
             <button onClick="{{ addButton }}" style="margin-top:14px;width:100%;background:#3B82F6;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.28);" style-active="transform:scale(.98)">{{ nbSaveLabel }}</button>
@@ -3631,6 +3637,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           </sc-if>
 
                     </sc-if>
+          </sc-if>
 
           <div onClick="{{ setTog_password }}" style="margin-top:12px;background:var(--card,#fff);border:1.5px solid var(--slot,#EDEAE3);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 2px 8px rgba(20,16,12,.05);" style-active="transform:scale(.99)">
             <span style="font-size:20px;flex:none;">🔒</span>
@@ -4153,6 +4160,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <!-- The phrase chooser lives inside the content region, under the
          Yes / Home / No row and the quick strip, so the anchor stays on
          screen and usable while a sheet is open (Frank, 3 Sep 2026). -->
+    <!-- "+ Add" on any board with a section of its own, edit mode only (Frank, 10 Sep 2026). -->
+    <sc-if value="{{ showAddBar }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ addBarTap }}" style="position:absolute;left:18px;right:18px;bottom:22px;z-index:55;background:#3B82F6;color:#fff;border-radius:18px;padding:15px;font-size:17px;font-weight:800;text-align:center;cursor:pointer;box-shadow:0 8px 24px rgba(20,16,12,.25);" style-active="transform:scale(.97)">+ Add to {{ addBarLabel }}</div>
+    </sc-if>
     <sc-if value="{{ hasChooser }}" hint-placeholder-val="{{ false }}">
       <!-- A phrase screen opens like every other board (Frank, 4 Sep 2026):
            the back button in the header, the phrases under it, no sheet and
@@ -5258,17 +5269,17 @@ class Component extends DCLogic {
     // Dad's and Mom's house come first from houses(). Mall, Grocery Store and
     // Movies have no photo of their own, so they use the neon icons.
     return [
-      { sect: 'fun', key: 'pool', label: 'Pool', art: 'assets/fun/pool.jpg', q: 'Can I go to the pool?', s: 'I wanna go to the pool.', extra: [
+      { sect: 'fun', key: 'pool', label: 'Pool', art: 'assets/fun/pool.jpg', direct: 'Can we go to the pool?', q: 'Can I go to the pool?', s: 'I wanna go to the pool.', extra: [
         { glyph: '🛟', txt: 'Can I have a pool noodle?', say: 'Can I have a pool noodle?', color: '#0EA5E9' },
         { glyph: '🛟', txt: 'I want a pool noodle.', say: 'I want a pool noodle.', color: '#7A5CFF' },
       ]},
-      { sect: 'fun', key: 'beach', label: 'Beach', art: 'assets/fun/beach.jpg', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
+      { sect: 'fun', key: 'beach', label: 'Beach', art: 'assets/fun/beach.jpg', direct: 'Can we go to the beach?', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
       { sect: 'fun', key: 'park', label: 'Park', art: 'assets/places/playground.jpg', q: 'Can we go to the park?', s: 'I wanna go to the park.' },
       { sect: 'fun', key: 'movies', label: 'Movies', art: 'place_movie_theater', q: 'Can we go to the movies?', s: 'I wanna go to the movies.' },
-      { sect: 'fun', key: 'bike_ride', label: 'Bike Ride', art: 'assets/fun/bicycle.jpg', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
-      { sect: 'fun', key: 'trampoline', label: 'Trampoline', art: 'assets/fun/trampoline.jpg', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
-      { sect: 'fun', key: 'soccer_field', label: 'Soccer Field', q: 'Can I play soccer?', s: 'I wanna play soccer.' },
-      { sect: 'fun', key: 'dogs', label: 'Dogs', art: 'assets/fun/dogs.jpg', q: 'Can I play with the dog?', s: 'I wanna play with the dog.' },
+      { sect: 'fun', key: 'bike_ride', label: 'Bike Ride', art: 'assets/fun/bicycle.jpg', direct: 'Can we go to the bike ride?', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
+      { sect: 'fun', key: 'trampoline', label: 'Trampoline', art: 'assets/fun/trampoline.jpg', direct: 'Can we go to the trampoline?', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
+      { sect: 'fun', key: 'soccer_field', label: 'Soccer Field', direct: 'Can we go to the soccer field?', q: 'Can I play soccer?', s: 'I wanna play soccer.' },
+      { sect: 'fun', key: 'dogs', label: 'Dogs', art: 'assets/fun/dogs.jpg', direct: 'Can I play with Lilly?', q: 'Can I play with the dog?', s: 'I wanna play with the dog.' },
       { key: 'doctor', label: "Doctor's Office", q: 'Do I have to go to the doctor?', s: 'I need to go to the doctor.' },
       { key: 'mall', label: 'Mall', art: 'place_mall', q: 'Can we go to the mall?', s: 'I want to go to the mall.' },
       { key: 'grocery', label: 'Grocery Store', art: 'place_grocery', q: 'Can we go to the grocery store?', s: 'I want to go to the grocery store.' },
@@ -5310,7 +5321,11 @@ class Component extends DCLogic {
     ];
     // Some places have their own things to ask for once he's there.
     if (p.extra) options = options.concat(p.extra);
-    const normalTap = () => this.setState({ chooser: { label, noIcon: true, emoji: '📍', options: options.map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } });
+    // Frank, 10 Sep 2026: the Places scenes (pool, beach, trampoline, bike,
+    // soccer, dogs) say one line when tapped and open nothing.
+    const normalTap = p.direct
+      ? () => this.speak(p.direct)
+      : () => this.setState({ chooser: { label, noIcon: true, emoji: '📍', options: options.map((o) => ({ ...o, onTap: () => { this.speak(o.say); this.setState({ chooser: null }); } })) } });
     return {
       ...p,
       label,
@@ -6246,7 +6261,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.10.1'; }
+  APP_BUILD() { return '2026.09.10.2'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
@@ -6819,6 +6834,7 @@ class Component extends DCLogic {
   customTap(b) {
     const items = (b.phrases || []).map((p) => (p || '').trim()).filter(Boolean).map((p) => ({ txt: p }));
     return () => {
+      if (this.state.editMode) { this.openAddFrom(b.section || 'home', b.id); return; }
       if (items.length > 1) this.openPhraseChooser(b.label || 'Button', b.emoji || '⭐', items);
       else if (items.length === 1) this.speak(items[0].txt);
       else this.speak(b.label || '');
@@ -7096,8 +7112,22 @@ class Component extends DCLogic {
     // memory until the big Save button ran, and a force-close lost them.
     const ok = this.saveStore();
     this._nb = null;
+    if (ok && this.state.addFrom) { const back = this.state.addFrom; this.setState({ nbErr: '', nbAdded: '', screen: back, addFrom: null, addSection: null, editMode: true }); return; }
     if (ok) this.setState({ nbErr: '', nbAdded: nm + (d.editId ? ' updated' : ' added to ' + this.sectionLabel(d.section)) });
     else this.setState({ nbAdded: '', nbErr: 'NOT SAVED. This phone\'s storage for the app is full. Remove a photo or an old button, then add ' + nm + ' again.' });
+  }
+  // "+ Add" on a board (Frank, 10 Sep 2026): the Create a New Button form
+  // opens with the section already set, and saving comes back to the board.
+  // Settings no longer lists the form on its own; it appears only this way.
+  addSectionFor(screen) {
+    return ({ board: 'home', food: 'food', drinks: 'food', snacks: 'food', places: 'places', fun: 'fun', night: 'night', feelings: 'feelings', hurtbody: 'hurt', hurt: 'hurt' })[screen] || null;
+  }
+  openAddFrom(section, editId) {
+    const from = this.state.screen === 'settings' ? (this.state.addFrom || 'board') : this.state.screen;
+    if (editId) this.editCustom(editId); else this._nb = { editId: null, label: '', emoji: '⭐', image: null, phrases: ['', '', ''], section };
+    this.setState({ screen: 'settings', setOpen: 'buttons', addFrom: from, addSection: section, nbErr: '', nbAdded: '', chooser: null });
+    // The form sits under the phone's own cards; bring it into view.
+    setTimeout(() => { const el = document.getElementById('nb-form'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start' }); }, 60);
   }
   removeCustom(id) { const a = this.data().buttons; const i = a.findIndex((b) => b.id === id); if (i >= 0) a.splice(i, 1); if (this._nb && this._nb.editId === id) this._nb = null; this.saveStore(); this.forceUpdate(); }
 
@@ -8209,9 +8239,17 @@ class Component extends DCLogic {
       nbFormKey: this.nb().editId || 'new',
       nbFormBorder: this.nb().editId ? '#3B82F6' : 'var(--slot,#EDEAE3)',
       cancelEdit: () => this.cancelEdit(),
-      customButtonsList: this.data().buttons.map((b) => ({ ...b, sectionName: this.sectionLabel(b.section), isEditing: this.nb().editId === b.id, edit: () => this.editCustom(b.id), remove: () => this.removeCustom(b.id) })),
-      hasCustomButtons: this.data().buttons.length > 0,
-      noCustomButtons: this.data().buttons.length === 0,
+      // From a board, the form shows only that board's buttons.
+      addFromBoard: !!s.addFrom,
+      addCardTitle: s.addFrom ? ('Add to ' + this.sectionLabel(s.addSection)) : 'Add & edit buttons',
+      nbShowSection: !s.addFrom,
+      showAddBar: !!s.editMode && !s.chooser && !s.editSheet && !!this.addSectionFor(s.screen),
+      addBarLabel: this.sectionLabel(this.addSectionFor(s.screen) || 'home'),
+      addBarTap: () => this.openAddFrom(this.addSectionFor(s.screen)),
+      settingsBack: () => (s.addFrom ? this.setState({ screen: s.addFrom, addFrom: null, addSection: null }) : this.setState({ screen: 'board', editMode: false })),
+      customButtonsList: this.data().buttons.filter((b) => !s.addFrom || b.section === s.addSection).map((b) => ({ ...b, sectionName: this.sectionLabel(b.section), isEditing: this.nb().editId === b.id, edit: () => this.editCustom(b.id), remove: () => this.removeCustom(b.id) })),
+      hasCustomButtons: this.data().buttons.some((b) => !s.addFrom || b.section === s.addSection),
+      noCustomButtons: !this.data().buttons.some((b) => !s.addFrom || b.section === s.addSection),
       onPw: (e) => { this._pw = e.target.value; this.checkUnlock(e.target.value); },
       doSave: () => this.doSave(),
       pwErr: s.pwErr || '',

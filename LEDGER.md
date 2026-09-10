@@ -1304,3 +1304,9 @@ Pro is the talker alone and stays separate. No direct license needed.
   script-rendered and unread; design guide marked "coming soon". No
   hardware specifics on the page read. Frank: "This could make for an
   interesting development."
+- 10 Sep 2026: Lilly is the family dog (Frank, "Can I play with Lilly").
+  Build 2026.09.10.2 both apps: board-level "+ Add", Settings without the
+  button form, Edit pill on Home and restaurant menus, Evan's Places
+  scenes direct-speak. Verified headless in both apps: add from Night
+  creates a Night button and returns to the board; custom button in edit
+  mode opens its editor; existing custom buttons untouched.

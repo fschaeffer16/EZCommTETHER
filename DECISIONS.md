@@ -784,3 +784,20 @@ a dated line saying it was reversed. Dates are the day it happened.
   only the top of the hand); "Can I have a turn?" and "I like that." had
   no art in the set. Please and Thank you reuse the family art, which is
   the same render. Both apps, build 2026.09.10.1.
+- **10 Sep 2026. Edit on every board, "+ Add" on the boards, Settings
+  simplified** (Frank: "I need an edit button inside every home button
+  like we do for family and teachers ... if we do that we can probably
+  make the overall setting button a little simpler"; "I'm good with the
+  other fixes but I do NOT want to lose Evan's Netflix or Disney buttons
+  that he still has"). Built in both apps, build 2026.09.10.2. Netflix
+  and Disney+ untouched: their slots, saved pictures and existing "+ Add"
+  stay exactly as they were. Boards without a custom section (Morning,
+  Watch menu, Sports, School menu) got no add bar; flagged to Frank.
+- **10 Sep 2026. Evan's Places scenes speak one line** (Frank: "should
+  not have buttons inside them. They should just say can we go to the
+  ... and then the word and for the dogs it should say can I play with
+  Lilly"). Built literally: "Can we go to the pool / beach / trampoline
+  / bike ride / soccer field?" and "Can I play with Lilly?". The bike
+  wording follows his pattern and reads oddly; flagged for his word.
+  Park and Movies were not named and keep their chooser. Evan's app
+  only; Lilly is the family's dog and does not go in the template.
