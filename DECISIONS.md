@@ -876,3 +876,16 @@ a dated line saying it was reversed. Dates are the day it happened.
   EZvoxa, and putting it in an EZvoxa handoff implied we were claiming it.
   The refutation stays on record above and in the research folder, where it
   belongs. Handoff now 9,506 words.
+
+- **10 Sep 2026. My error, caught by Frank's question, corrected in two
+  places.** He asked whether the family sync and voice messaging backend
+  exists yet. Checking it showed I had carried a stale claim into the
+  handoff: that a customer's emergency alert is only a demonstration because
+  the server knows nobody but us. That has been false since the 5 Sep Family
+  Code build. `api/sos.js`, `api/voice.js`, `api/settings.js` and
+  `api/text.js` all read `fam:CODE`, and SOS alerts every person that family
+  marked. The claim came from APPSTORE.md, which had not been updated after
+  the build. Both are fixed: the row is out of the handoff (now 9,471 words)
+  and APPSTORE.md carries a dated correction rather than a silent edit.
+  Lesson: a runbook written before a build is a stale source. Check the code,
+  not the document, for what is built.

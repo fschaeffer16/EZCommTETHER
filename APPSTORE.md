@@ -195,9 +195,14 @@ It is never part of the subscription, even though the cloud send costs
 Twilio money like the paid texts do. The cost is absorbed; abuse is
 handled with rate limiting, not a paywall. Do not reopen this.**
 
-What still has to be BUILT before we can market it to customers: on our
-phones the alert really sends through our server; on a customer's phone it
-is a demonstration, because the server only knows our family's numbers.
+**Corrected 10 Sep 2026: this is BUILT.** The paragraph here used to say a
+customer's alert was only a demonstration because the server knew nobody but
+us. That stopped being true on 5 Sep with the Family Code build. `api/sos.js`
+reads `fam:CODE:settings` and alerts every person that family marked "Gets
+the emergency alert", skips fictional 555 numbers, and never carries our
+medical note. A phone with no family is still a demo; a phone in a family is
+not. Verified in the code and by the two-phone Playwright run recorded in
+LEDGER.
 The build path, both stages free to the customer:
 
 - **v1.1, on-device**: the alert opens Messages prefilled with the alert
