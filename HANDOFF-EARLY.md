@@ -105,7 +105,18 @@ measures abandonment of school-issued devices; Medicare Florida allowable
 for a device is $9,645.69, Florida Medicaid $6,240.51, tablets excluded,
 and the district buys software under IDEA.
 
-## What is NOT verified
+## Update, 10 Sep 2026 (later)
+
+The items below were checked by the younger-product thread; its files are
+in research/aac-board-2026-09-09/ (aac-standard.md first). "Nobody else
+does it" is false as stated: WordPower ships hand-authored next-word
+navigation ("Intelligent Jumps"). The defensible claim is navigation that
+learns the individual child's transitions, which nobody ships. Sign clips
+on buttons: nobody ships them. Sync benchmark: CoughDrop supervisors and
+Grid 3 remote editors. Still not done: asking a district to host the
+discovery classroom. Nothing is approved for build.
+
+## What is NOT verified (as written before that update)
 
 - "Nobody else does it" (the picked word linking to the next likely
   screen). Not checked. The makers' pages say only "predictive features"

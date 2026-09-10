@@ -101,6 +101,11 @@ program for low-income/disability families.
 - **DECISIONS.md is read FIRST, every session (Frank's order, 6 Sep 2026).** It opens with the
   two rules he restated: no guessing, no assuming; and no execution of a build without his
   approval. Every decision and every promise goes into it in the same commit as the work.
+- **Research folders:** `research/aac-elementary-2026-09-10/` (this thread's
+  deep dive) and `research/aac-board-2026-09-09/` (the younger-product
+  thread's standard, copied from ILP_blueprint). `HANDOFF-EARLY.md` is the
+  handoff for the younger product. Research and recommendation only; no
+  build in either is approved.
 - **LEDGER.md is the memory that survives.** Conversation context gets condensed and
   details vanish; Frank has been burned by this (1 Sep 2026: I forgot which domains he
   owns). Any standing fact or decision from a conversation — domains, accounts, prices,

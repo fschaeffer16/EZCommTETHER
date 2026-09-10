@@ -803,3 +803,35 @@ a dated line saying it was reversed. Dates are the day it happened.
   scenes speak one line now (build 2026.09.10.3). Trampoline: "Can we go
   to the trampoline park?" (Frank, same hour; build 2026.09.10.4). Evan's app
   only; Lilly is the family's dog and does not go in the template.
+- **10 Sep 2026. Corrections carried over from the younger-product
+  thread** (its research lives in ILP_blueprint, branch
+  claude/aac-board-nonverbal-children-462fxh, commit 0389051; copied here
+  to research/aac-board-2026-09-09/). Read from aac-standard.md Part 4 and
+  spot-checked at the source:
+  1. "Nobody else does it" is false as stated. WordPower has shipped
+     rule-based next-word navigation for years: Smartbox's own page
+     documents "Intelligent Jumps" ("when a cell is selected this will
+     automatically jump to another grid with additional related
+     vocabulary") and "logical next words" (read 10 Sep 2026,
+     hub.thinksmartbox.com/knowledgebase/features-of-wordpower/). The
+     claim that holds: nobody ships navigation that learns the individual
+     child's own transitions, and no symbol AAC routes screens with AI.
+     Use only the sharp form in any pitch, filing or public claim.
+  2. Sign clips on buttons: no product ships it; Frank's decision (yes,
+     no, or test) stays open.
+  3. Sync benchmark: CoughDrop's supervisor accounts and Grid 3's invited
+     remote editors; the Family Code structure clears both on ownership
+     if propagation is real-time.
+  4. The PCS child-recognition figures (2.8 to 12.5 percent, 2002 and
+     2005) come from two non-US typically developing samples; quote them
+     with that caveat, not as universal rates.
+  5. Thistle 2018 (consistent symbol location, 24 typical preschoolers)
+     has never been replicated with children who use AAC; the discovery
+     classroom can be that replication.
+  6. Age range for that product's research is 3 to 12 (Frank, 9 Sep:
+     meet the kids where they are); the 5 to 9 framing holds for go to
+     market.
+  7. Still not verified or not done: whether a district will host the
+     discovery classroom (not asked); everything in the handoff's
+     recommendations remains unapproved; nothing in either research
+     folder authorizes a build.

@@ -1310,3 +1310,12 @@ Pro is the talker alone and stays separate. No direct license needed.
   scenes direct-speak. Verified headless in both apps: add from Night
   creates a Night button and returns to the board; custom button in edit
   mode opens its editor; existing custom buttons untouched.
+- 10 Sep 2026: the younger-product thread wrote its research into the
+  ILP_blueprint repository (branch claude/aac-board-nonverbal-children-
+  462fxh, folder research/aac-board-2026-09-09: standard, products,
+  outcomes, design research, growth; 18,269 words) because CLAUDE.md,
+  DECISIONS.md and LEDGER.md do not exist there. Copied into this
+  repository at research/aac-board-2026-09-09/ on 10 Sep. Its headline:
+  WordPower "Intelligent Jumps" and "logical next words" already do
+  rule-based next-word navigation (verified on Smartbox's page); the
+  unclaimed space is navigation learned from the individual child.
