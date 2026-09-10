@@ -797,7 +797,8 @@ a dated line saying it was reversed. Dates are the day it happened.
   not have buttons inside them. They should just say can we go to the
   ... and then the word and for the dogs it should say can I play with
   Lilly"). Built literally: "Can we go to the pool / beach / trampoline
-  / bike ride / soccer field?" and "Can I play with Lilly?". The bike
-  wording follows his pattern and reads oddly; flagged for his word.
-  Park and Movies were not named and keep their chooser. Evan's app
+  / soccer field?" and "Can I play with Lilly?". Frank's corrections the
+  same hour: bike says "Can I ride my bike?"; Park and Movies were meant
+  too: "Can we go to the park?", "Can we go to the movies?". All eight
+  scenes speak one line now (build 2026.09.10.3). Evan's app
   only; Lilly is the family's dog and does not go in the template.

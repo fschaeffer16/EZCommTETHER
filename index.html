@@ -5274,9 +5274,9 @@ class Component extends DCLogic {
         { glyph: '🛟', txt: 'I want a pool noodle.', say: 'I want a pool noodle.', color: '#7A5CFF' },
       ]},
       { sect: 'fun', key: 'beach', label: 'Beach', art: 'assets/fun/beach.jpg', direct: 'Can we go to the beach?', q: 'Can I go to the beach?', s: 'I wanna go to the beach.' },
-      { sect: 'fun', key: 'park', label: 'Park', art: 'assets/places/playground.jpg', q: 'Can we go to the park?', s: 'I wanna go to the park.' },
-      { sect: 'fun', key: 'movies', label: 'Movies', art: 'place_movie_theater', q: 'Can we go to the movies?', s: 'I wanna go to the movies.' },
-      { sect: 'fun', key: 'bike_ride', label: 'Bike Ride', art: 'assets/fun/bicycle.jpg', direct: 'Can we go to the bike ride?', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
+      { sect: 'fun', key: 'park', label: 'Park', art: 'assets/places/playground.jpg', direct: 'Can we go to the park?', q: 'Can we go to the park?', s: 'I wanna go to the park.' },
+      { sect: 'fun', key: 'movies', label: 'Movies', art: 'place_movie_theater', direct: 'Can we go to the movies?', q: 'Can we go to the movies?', s: 'I wanna go to the movies.' },
+      { sect: 'fun', key: 'bike_ride', label: 'Bike Ride', art: 'assets/fun/bicycle.jpg', direct: 'Can I ride my bike?', q: 'Can I ride my bike?', s: 'I wanna ride my bike.' },
       { sect: 'fun', key: 'trampoline', label: 'Trampoline', art: 'assets/fun/trampoline.jpg', direct: 'Can we go to the trampoline?', q: 'Can I jump on the trampoline?', s: 'I wanna jump on the trampoline.' },
       { sect: 'fun', key: 'soccer_field', label: 'Soccer Field', direct: 'Can we go to the soccer field?', q: 'Can I play soccer?', s: 'I wanna play soccer.' },
       { sect: 'fun', key: 'dogs', label: 'Dogs', art: 'assets/fun/dogs.jpg', direct: 'Can I play with Lilly?', q: 'Can I play with the dog?', s: 'I wanna play with the dog.' },
@@ -6261,7 +6261,7 @@ class Component extends DCLogic {
   // Bump APP_BUILD when cutting a release — it is the only way to answer "did
   // that phone actually pick up the fix?" without guessing, and the only thing
   // to ask a customer for over email.
-  APP_BUILD() { return '2026.09.10.2'; }
+  APP_BUILD() { return '2026.09.10.3'; }
   buildLine() {
     let host = '';
     try { host = location.hostname || ''; } catch (e) {}
