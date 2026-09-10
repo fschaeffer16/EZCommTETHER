@@ -1390,3 +1390,23 @@ Pro is the talker alone and stays separate. No direct license needed.
   The site has been up since 1 Sep, so there is no traffic history at all
   and no baseline to multiply for any marketing plan. Not yet raised as a
   build; Frank's call.
+
+- **10 Sep 2026: page views are counted on our own server.** `api/hit.js`,
+  the beacon at the end of `site.js` on the website, and a "Website traffic"
+  tab on `/waitlist-admin.html` behind the family password. Counts a page
+  path per day plus the referring host. No address, cookie, identifier or
+  query string is stored, and it cannot tell one visitor from another. Kept
+  180 days. Counting started 10 Sep 2026, so anything before that is gone.
+  No analytics company is involved, which keeps the app's "no analytics
+  packages, no tracking scripts" promise true.
+- **CORRECTION, 10 Sep 2026: the approved privacy policy is NOT live at
+  ezvoxa.com/privacy.html.** That address serves the website's placeholder
+  page. The approved 2 Sep policy is at `ez-comm-tether.vercel.app/privacy.html`,
+  reachable from the site as `www.ezvoxa.com/app/privacy.html`. The earlier
+  entry in this file saying otherwise was true when written and was made
+  false by the 9 Sep site upload. **Both store listings ask for a privacy
+  policy URL and Frank has not chosen which one to give them.**
+- **10 Sep 2026: `forms-snippet.txt` on the website now carries BOTH blocks**
+  that a site upload deletes, the form wiring and the view counter, with a
+  header telling whoever pastes it what breaks without each. Paste the whole
+  file at the end of `site.js` after any upload.

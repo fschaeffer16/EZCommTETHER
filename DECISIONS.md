@@ -889,3 +889,45 @@ a dated line saying it was reversed. Dates are the day it happened.
   and APPSTORE.md carries a dated correction rather than a silent edit.
   Lesson: a runbook written before a build is a stale source. Check the code,
   not the document, for what is built.
+
+- **10 Sep 2026. Website analytics built on our own server, not bought in.**
+  Frank: "add analytics to the site." Before building I found the conflict:
+  the approved privacy policy (2 Sep) says in its own summary "no
+  advertising, no analytics packages, no tracking scripts", and the App
+  Store privacy answers say nothing is used to track anyone. Dropping a
+  third-party tag on the site would make all three harder to say, and the
+  districts we sell to ask exactly this question. Vercel's own analytics
+  pages render only in a browser, so I could not read what their product
+  collects or costs, which under the sourcing rule means I could not
+  recommend it honestly either.
+  Built instead: `api/hit.js`, a page-view counter in the key-value store we
+  already run. It stores a count per page per day and the host that referred
+  the visitor. No IP, no cookie, no identifier, no query string, no full
+  referring URL. Two visitors are indistinguishable from one visitor twice,
+  by design. Only paths we publish get a key; anything else is filed as
+  "other", so a probing request cannot create keys. Reading the counts needs
+  the family password, like the waitlist. A fourth tab, "Website traffic",
+  shows a month as thirty columns, the most opened pages, and where they came
+  from, with a plain note that these are page opens and not people.
+  Verified: both the pipeline and the one-command-at-a-time fallback give
+  identical results against a fake store; a junk path and a foreign origin
+  are both refused; the inbox tab renders in a real browser at 1280px and at
+  390px with no sideways scroll; and the beacon fires once per page from the
+  real site pages with the right payload.
+  **Decisions I made that Frank did not, for him to overrule:** counting on
+  our own server rather than buying a product; and the wording of the new
+  paragraph on the website's privacy page, since wording is his call. That
+  page was a placeholder, not his approved policy, so I added to it rather
+  than editing anything he had signed off. If he wants different words they
+  change on his say-so.
+- **10 Sep 2026. Found while doing the above: the approved privacy policy is
+  NOT live at the address the store listings use.** `ezvoxa.com/privacy.html`
+  serves the website's placeholder ("a fuller privacy policy will be
+  published"). The approved 2 Sep policy is live, but at
+  `ez-comm-tether.vercel.app/privacy.html`, reachable from the site as
+  `/app/privacy.html`. The 9 Sep site upload is what replaced it, the same
+  failure mode that deletes the form code. LEDGER's claim that the approved
+  policy is live at ezvoxa.com/privacy.html is now wrong and has been
+  corrected. The website privacy page now links to the app policy so the two
+  are at least connected, but **which URL goes in the store listings is
+  Frank's call and is not fixed.** Not raised as a build; flagged.
