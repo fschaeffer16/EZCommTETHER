@@ -1319,3 +1319,17 @@ Pro is the talker alone and stays separate. No direct license needed.
   WordPower "Intelligent Jumps" and "logical next words" already do
   rule-based next-word navigation (verified on Smartbox's page); the
   unclaimed space is navigation learned from the individual child.
+
+## Frank's three threads (his description, 10 Sep 2026)
+
+1. This thread: the app (EZvoxa and Evan's app), repository EZCommTETHER,
+   where CLAUDE.md, DECISIONS.md, LEDGER.md and the research folders live.
+2. An AAC research thread: the younger-children product (ages 3 to 12
+   research, 5 to 9 go to market); its work so far is in ILP_blueprint on
+   branch claude/aac-board-nonverbal-children-462fxh and copied here to
+   research/aac-board-2026-09-09/. Recommended to run on EZCommTETHER so
+   its decisions land in the same files.
+3. An ILP curricula thread: repository ILP_blueprint; a full curriculum
+   for elementary, middle and high school that meets students where they
+   are, with a district-level dashboard to see results in real time
+   (Frank's words, 10 Sep 2026).
