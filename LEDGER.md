@@ -1445,4 +1445,7 @@ Pro is the talker alone and stays separate. No direct license needed.
   COMPANY to all threads, saying the file now exists. EZVOXA wrote two entries
   to WEB the same day: `site.js` now carries two blocks a site upload deletes,
   and the approved privacy policy is not live at the address the store
-  listings need.
+  listings need. **The second of those was overtaken the same evening:** Frank
+  put the approved policy at `ezvoxa.com/privacy.html` and it is live there,
+  verified from the live page. A correction was appended to `NOTICES.md` so the
+  WEB thread does not act on a stale entry of mine.
