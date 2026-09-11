@@ -1636,3 +1636,15 @@ Pro is the talker alone and stays separate. No direct license needed.
   Vercel variable without the full ID beside it.** Anyone reading "use James"
   later has a coin flip between a Southern narrator and a young Singaporean
   voice, and the mistake would only surface after customers heard it.
+- **11 Sep 2026, product voice shortlist as it stands.** Always written with the
+  id, never the name alone.
+  - Mike `ewxUvnyvvOehYjKjUVKC` - conversational, deep, direct, warm.
+  - James `kSvMZug5ZFM9sKGpLAei` - Southern narration.
+  - Jake `hxPRa8HUuKYsm1kiWDEi` - youthful, energetic.
+  - Andray `FsK9b8Cv2pGkFUtfpOyM` - encouraging, youthful.
+  - Hugh H `8n9Xb8GOqw6yNVOQ6ewr` - versatile, natural, modern. **Frank has not
+    said whether this one is for the product or for Evan's app.**
+  For Evan's app, unconfirmed: Julius `VlUmeC1Uzj3NnwiVR9K9`.
+  Out: Zach `GVERRoGD1VgvkBmxamFb` (Frank's ruling; stays the website demo
+  voice), James `aSXZu6bgEOS8MXVRzjPi` (mistyped id, never a candidate).
+  Not revisited since the first pass: Rodney `eY2VJs4Gi8QKG2RV01sS`.
