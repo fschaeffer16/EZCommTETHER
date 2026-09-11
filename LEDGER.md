@@ -1563,3 +1563,10 @@ Pro is the talker alone and stays separate. No direct license needed.
   Mike are all adult narrators by comparison; Mike is the best of those three.
   Frank decides; this is an ear.
 
+- **11 Sep 2026, Frank's ruling after listening: "Mike and James are both
+  better than zach."** He has heard all of them; I have not, and a judgment
+  about how a voice sounds is his. **Zach is out. The product voice is Mike
+  `ewxUvnyvvOehYjKjUVKC` or James `kSvMZug5ZFM9sKGpLAei`, still to be chosen.**
+  My recommendation of Zach is overruled and stands only as a record of what I
+  argued and why. The age point was raised twice and is closed; do not reopen
+  it. Zach remains the website demo's voice and nothing about that changes.
