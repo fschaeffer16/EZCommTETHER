@@ -1690,3 +1690,36 @@ Pro is the talker alone and stays separate. No direct license needed.
   What this rating cannot see: timbre, pacing, how each handles a two-word
   phrase, and whether any sounds synthetic on short input. Those decide it and
   only listening settles them.
+- **11 Sep 2026, Frank on the product voice: "I liked Andray - not sure why but
+  I felt like for saying phrases he would be good."** Andray
+  `FsK9b8Cv2pGkFUtfpOyM`. Leaning, not yet a decision. It was second on my own
+  rating, so we agree on this one.
+- **11 Sep 2026, Frank's finding, and it is a real product insight: "I do not
+  like the way his voice pronounces the speed button words and even the
+  phrases. I am learning that annunciation matters with this app."**
+  The speed buttons are the always-visible quick strip at the top of the home
+  screen (`starterQuick()`): Hello, Goodbye, Good, Bad, Please, Thank You, More,
+  Done. **These are single words in isolation, which is the worst case for any
+  text-to-speech engine**, because there is no surrounding sentence to carry the
+  stress or the ending. The codebase already half-knew this: the comment at
+  `index.html:6694` records that Hi and Bye were replaced by Hello and Goodbye
+  because "a two-letter word is gone before the speech engine has finished
+  starting, and it came out clipped".
+  **Four levers exist, all confirmed in our own code, none of them approved:**
+  1. `ELEVENLABS_SPEED`, an env var, currently defaulting to **0.92**, clamped
+     0.7 to 1.2. Lower is slower and clearer. No code change; Frank sets it.
+  2. `ELEVENLABS_MODEL`, an env var, currently `eleven_multilingual_v2`.
+  3. **The spoken string is already independent of the button label** and is
+     tuned per button today: Done says "I'm done.", Hello says "Hello!". So a
+     word that enunciates badly alone can be given a slightly different spoken
+     form without changing the button, the picture or the caption.
+  4. The voice itself.
+  **Cost warning on levers 1 and 2, checked not assumed:** `voiceTag()` hashes
+  the voice id AND the speed, and that hash is part of every clip key. Changing
+  either re-buys every cached phrase at ElevenLabs, exactly like changing the
+  voice. Run `dub.html` straight after any such change.
+  **Recommendation, recorded as mine: audition on the hard case, not the easy
+  one.** When testing Andray or anything else, paste the eight quick-strip words
+  one per line rather than sentences. A voice that says "Good." "Bad." "More."
+  cleanly will handle full phrases; the reverse is not true, and full phrases are
+  what makes a bad voice sound fine in an audition.
