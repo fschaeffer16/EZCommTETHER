@@ -1,10 +1,6 @@
 # LEDGER — the running record Claude must not forget
 
-Apple Developer Program: ENROLLED AND PAID. 10 Sep 2026, order #W1949990147, EZ Voice LLC, Organization, $99/yr, one-year membership. Program License Agreement accepted the same evening. Activation details going to the Yahoo address. Supersedes the "not paid yet, by design" line and the "verification phone call expected" note — enrollment is done.
-
-Unblocks, in order: App Store Connect access → Agreements/Tax/Banking + W-9 → Small Business Program → native wrapper build → backup & restore → licensing → dress rehearsal → on sale.
-
-Two items from the PLA read, for later: (1) Apple disclaims life-safety use and the indemnity sits with us — relevant to the SOS path; (2) §3.3(F)(i) bars marketing location features for emergency purposes, while (F)(vi)(a) permits sharing location with explicitly approved contacts. Store listing should describe SOS as one-tap location sharing with approved family contacts, not as an emergency service. Attorney review before the listing goes live, not before now.Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
+Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
 My conversation memory gets condensed over time; this file does not. **Any
 standing fact or decision from a conversation gets written here in the same
 commit as the work, or it will eventually be forgotten.** Newest facts win;
@@ -26,16 +22,24 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 ## Business status
 
 - **EZ Voice LLC** exists, Florida, with an EIN. Frank is sole owner/signer.
-- **Apple Developer Program: ENROLLED AND PAID (Frank, 10 Sep 2026).**
-  Order #W1949990147, EZ Voice LLC, Organization, $99 a year, one-year
-  membership. Program License Agreement accepted the same evening.
-  Activation details go to Frank's Yahoo address. Apple's confirmation screen
-  was shown to me and matches: "You're all set", order #W1949990147, "Apple
-  Developer Program - Membership for one year". Enrollment was submitted
-  4 Sep 2026 at 4:05 PM through the Apple Developer app, enrollment ID
-  FA22WL2678, work email frank@ezvoxa.com. **This supersedes the old "not
-  paid yet, by design" line and the "verification phone call expected"
-  note. Enrollment is done; nothing about Apple membership is pending.**
+- **Apple Developer Program: ENROLLED AND PAID.** Frank's own words, 10 Sep 2026, kept verbatim:
+
+  > Apple Developer Program: ENROLLED AND PAID. 10 Sep 2026, order #W1949990147, EZ Voice LLC, Organization, $99/yr, one-year membership. Program License Agreement accepted the same evening. Activation details going to the Yahoo address. Supersedes the "not paid yet, by design" line and the "verification phone call expected" note — enrollment is done.
+  >
+  > Unblocks, in order: App Store Connect access → Agreements/Tax/Banking + W-9 → Small Business Program → native wrapper build → backup & restore → licensing → dress rehearsal → on sale.
+  >
+  > Two items from the PLA read, for later: (1) Apple disclaims life-safety use and the indemnity sits with us — relevant to the SOS path; (2) §3.3(F)(i) bars marketing location features for emergency purposes, while (F)(vi)(a) permits sharing location with explicitly approved contacts. Store listing should describe SOS as one-tap location sharing with approved family contacts, not as an emergency service. Attorney review before the listing goes live, not before now.
+
+  Corroboration and the parts that are mine, not his: Apple's confirmation
+  screen was shown to me and matches ("You're all set", order #W1949990147,
+  "Apple Developer Program - Membership for one year"). Enrollment was
+  submitted 4 Sep 2026 at 4:05 PM, enrollment ID FA22WL2678, work email
+  frank@ezvoxa.com. **The PLA reading above is HIS and is not verified here:
+  the agreement cannot be opened from this environment, so neither section
+  citation has been checked.** When the rewording happens it covers more than
+  the store listing: the app's own button and sent-screen copy, the website,
+  and the review notes in APPSTORE.md all currently use emergency language.
+
 - **Business bank account opened 4 Sep 2026.** Frank enrolls in the Apple
   Developer Program (Organization, $99) on 5 Sep, following EZvoxa Apple
   Developer Enrollment.docx, then Agreements, Tax, and Banking with this
@@ -1469,24 +1473,4 @@ Pro is the talker alone and stays separate. No direct license needed.
   put the approved policy at `ezvoxa.com/privacy.html` and it is live there,
   verified from the live page. A correction was appended to `NOTICES.md` so the
   WEB thread does not act on a stale entry of mine.
-
-- **10 Sep 2026, Frank's reading of the Apple Program License Agreement, for
-  the store listing. HIS reading, not verified here: the PLA is not readable
-  from this environment.** Two items he flagged:
-  1. Apple disclaims life-safety use, and the indemnity sits with us. That
-     bears on the SOS path specifically.
-  2. §3.3(F)(i) bars marketing location features for emergency purposes,
-     while §3.3(F)(vi)(a) permits sharing location with explicitly approved
-     contacts.
-  **What follows for the listing (Frank):** describe SOS as one-tap location
-  sharing with approved family contacts, NOT as an emergency service.
-  **Attorney review before the listing goes live, not before now (Frank).**
-  Nothing is to be reworded on his account yet. When it is, the wording lives
-  on more than the store listing: the app's own button and sent-screen copy,
-  the website, and the review notes in APPSTORE.md all currently use
-  emergency language.
-- **10 Sep 2026, Frank's order of operations now that Apple is paid:**
-  App Store Connect access, then Agreements/Tax/Banking plus the W-9, then
-  the Small Business Program, then the native wrapper build, then backup and
-  restore, then licensing, then a dress rehearsal, then on sale.
 
