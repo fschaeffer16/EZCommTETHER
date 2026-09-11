@@ -1723,3 +1723,37 @@ Pro is the talker alone and stays separate. No direct license needed.
   one per line rather than sentences. A voice that says "Good." "Bad." "More."
   cleanly will handle full phrases; the reverse is not true, and full phrases are
   what makes a bad voice sound fine in an audition.
+- **11 Sep 2026. THE AUDITIONS AND THE APP ARE NOT USING THE SAME SETTINGS.
+  This probably explains Frank's enunciation complaint, and it means no voice
+  can be judged until it is fixed.**
+  Frank uploaded three renders. Their filenames carry ElevenLabs' own render
+  settings: `..._pvc_sp88_s95_sb66_v3.mp3`. Read as speed 0.88, stability 0.95,
+  similarity boost 0.66, model v3, professional voice clone. **That reading of
+  the filename abbreviations is MY inference, not a documented source;
+  elevenlabs.io's docs render only in a browser and could not be read here.**
+  What `api/speak.js:99` actually sends, which is fact, not inference:
+  `voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: speed() }`
+  with `speed()` defaulting to **0.92** and `model_id` defaulting to
+  **`eleven_multilingual_v2`**.
+  So every single setting differs between what Frank is listening to and what
+  the app produces: stability 0.95 against 0.5, similarity boost 0.66 against
+  0.75, speed 0.88 against 0.92, and a different model. **Stability is the one
+  that most plausibly explains "I do not like the way his voice pronounces the
+  speed button words", because low stability makes delivery more variable and a
+  single word in isolation has nothing to steady it. That is my inference and is
+  not sourced.**
+  Measured from the three files by parsing their MPEG frame headers (no audio
+  tools in this environment, so duration only, and this assumes all three read
+  the same script):
+  - Mike `ewxUvnyvvOehYjKjUVKC` - 31.56 s
+  - Hugh H `8n9Xb8GOqw6yNVOQ6ewr` - 25.16 s
+  - James `kSvMZug5ZFM9sKGpLAei` - 24.92 s
+  Mike takes **27% longer** than the other two. Slower usually reads as better
+  enunciated, and for an AAC user it is also a real cost: a boy tapping "More."
+  is waiting to be heard.
+  **Recommendation, mine, and not approved: do not pick a voice yet.** Match the
+  app's settings to the audition settings first, then listen again. The voice
+  may not be the problem. Changing speed re-buys the cache (`voiceTag()` hashes
+  it); changing stability, similarity boost or the model does NOT, because those
+  are not in the key, so clips made before such a change would keep the OLD
+  sound until re-dubbed. That asymmetry is a trap and is worth a code fix.
