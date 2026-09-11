@@ -1593,3 +1593,27 @@ Pro is the talker alone and stays separate. No direct license needed.
   `FsK9b8Cv2pGkFUtfpOyM`. Out: Zach `GVERRoGD1VgvkBmxamFb` (Frank's ruling,
   stays the website demo voice). Not revisited since the first pass: Rodney
   `eY2VJs4Gi8QKG2RV01sS`.
+- **11 Sep 2026, sixth candidate, and the first aimed at EVAN'S app rather than
+  the product: `VlUmeC1Uzj3NnwiVR9K9`** - "Julius AI Social Media Voice". From
+  ElevenLabs' own page: "a conversational, authentic African American male voice
+  with a relaxed, confident cadence... natural, expressive, and relatable".
+  Frank, 11 Sep: "This might be the one for Evan's app..." Not decided.
+  **Two consequences that do not apply to the product-voice candidates, both
+  checked in the code, not assumed:**
+  1. **Switching Evan's voice re-buys every phrase.** `clipKey()` in
+     `api/speak.js` is `'tts:' + voiceTag() + ':' + sha1(text)`, and
+     `voiceTag()` is a hash of `ELEVENLABS_VOICE_ID` plus the speed. Change the
+     voice id and every key changes, so every clip Evan already has is orphaned
+     and every phrase is paid for again at ElevenLabs. This is exactly the bill
+     Frank objected to on 7 Sep ("using up all my credits every time Evan uses
+     his device"). **Mitigation: run `dub.html` once immediately after the
+     switch**, which buys the whole board in one controlled pass instead of
+     dribbling charges through Evan's day. The old clips stay in the store as
+     dead keys until cleared.
+  2. **One variable still drives both apps.** Until `api/speak.js` is split,
+     setting Julius for Evan also makes the product speak in Julius. The split
+     is still not approved.
+  Said once and not to be repeated: Evan has been speaking in Quardell, and
+  changing it changes how he sounds to himself and to everyone around him. That
+  is Frank's call about his own son, recorded so the cost note above is not
+  mistaken for the only consideration.
