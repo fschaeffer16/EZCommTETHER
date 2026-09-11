@@ -1511,10 +1511,18 @@ Pro is the talker alone and stays separate. No direct license needed.
     clear American male narrator. Direct, practical, conversational without
     sounding casual. Pitched for courses, tutorials, explainers and app
     walkthroughs.
-  **Frank has not said which of the two.** My recommendation, 11 Sep, recorded
-  as mine: Rodney, because short first-person phrases ("my arm hurts") want a
-  neutral conversational read, and James's Southern colour is a character choice
-  that every customer inherits.
+  - `ewxUvnyvvOehYjKjUVKC` - "Mike AI Conversational Voice" (Mike Rashid).
+    African-American masculine, deep and direct, authoritative and confident,
+    yet warm and sincere. **The only one of the three that ElevenLabs classes
+    as a conversational voice rather than a narration voice.**
+  **Frank has not chosen yet ("not sure which one yet", 11 Sep).** My
+  recommendation, recorded as mine and revised as candidates arrived: first
+  Rodney over James, then **Mike once it appeared**, on one consistent test. An
+  AAC voice has to sound like a person asking for something, not like someone
+  reading a sentence about asking for something. Mike is the only one of the
+  three built as conversational; the other two are narration voices, and James
+  additionally carries a regional colour that every customer would inherit.
+  Frank overrules freely; this is an ear, not a decision.
   Whichever wins, this ends the product speaking in Quardell, which is Evan's.
   **Not in effect, and it cannot be until:** (1) Frank sets the variable in
   Vercel, which is his access, not mine; (2) `api/speak.js` stops reading ONE
@@ -1524,8 +1532,8 @@ Pro is the talker alone and stays separate. No direct license needed.
   voice (`voiceTag()` over voice id plus speed), so a second voice keeps its own
   stored clips. Evan's clips are untouched and nothing already paid for is
   re-bought.
-  **The concern I owe him, stated once and recorded as mine:** both candidates
-  are adult male narrator voices. Evan's own voice was chosen to sound like a
+  **The concern I owe him, stated once and recorded as mine:** all three
+  candidates are adult male voices. Evan's own voice was chosen to sound like a
   teenage boy, and Frank's own principle is that nonverbal teens just want a
   voice. The in-app "Choose Voice" button offers only the phone's built-in
   voices (`window.speechSynthesis`), NOT ElevenLabs, so whichever of these is
