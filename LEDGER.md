@@ -1501,24 +1501,34 @@ Pro is the talker alone and stays separate. No direct license needed.
   A customer who writes their own phrases still pays on first tap. That is the
   `voicePerFamilyMonth` line in the model, still an unmeasured placeholder.
 
-- **11 Sep 2026: Frank chose the product's natural voice. ElevenLabs voice ID
-  `kSvMZug5ZFM9sKGpLAei`**, sent as a link and then as the bare ID. From
-  ElevenLabs' own page for it: "James - Smooth, Steady, and Southern AI
-  Narration Voice", described there as calm, confident, subtly Southern, and
-  pitched for narration, brand voiceovers, explainer videos and audiobooks.
-  This answers the open question of what the template speaks in, so the product
-  no longer has to speak in Quardell, which belongs to Evan.
-  **Not yet in effect, and it cannot be until two things happen.** (1) The
-  variable lives in Vercel and Frank sets it; there is no Vercel access here.
-  (2) `api/speak.js` reads ONE `ELEVENLABS_VOICE_ID` for both apps, so setting
-  it today would change Evan's voice too. Splitting them is a build and is
-  **not approved yet**.
-  Checked while sizing that build: the clip cache key already includes a voice
-  fingerprint (`voiceTag()` over the voice id plus speed), so a second voice
-  gets its own stored clips automatically. Evan's existing clips are untouched
-  and nothing already paid for is re-bought.
-  Also checked, and it matters commercially: the in-app "Choose Voice" button
-  picks from the phone's OWN built-in voices (`window.speechSynthesis`), not
-  from ElevenLabs. So the natural voice is one voice for every paying customer,
-  and a family cannot change it. Raised with Frank 11 Sep; no build proposed
-  beyond the split.
+- **11 Sep 2026: two candidate voices for the PRODUCT'S SPEAKING VOICE**, sent
+  by Frank and confirmed by him as the voice a customer's nonverbal user speaks
+  in, not demo narration. Both read from ElevenLabs' own pages:
+  - `kSvMZug5ZFM9sKGpLAei` - "James - Smooth, Steady, and Southern AI Narration
+    Voice". Calm, confident, subtly Southern. Pitched for narration, brand
+    voiceovers, explainers and audiobooks.
+  - `eY2VJs4Gi8QKG2RV01sS` - "Rodney AI Informative Educational Voice". Calm,
+    clear American male narrator. Direct, practical, conversational without
+    sounding casual. Pitched for courses, tutorials, explainers and app
+    walkthroughs.
+  **Frank has not said which of the two.** My recommendation, 11 Sep, recorded
+  as mine: Rodney, because short first-person phrases ("my arm hurts") want a
+  neutral conversational read, and James's Southern colour is a character choice
+  that every customer inherits.
+  Whichever wins, this ends the product speaking in Quardell, which is Evan's.
+  **Not in effect, and it cannot be until:** (1) Frank sets the variable in
+  Vercel, which is his access, not mine; (2) `api/speak.js` stops reading ONE
+  `ELEVENLABS_VOICE_ID` for both apps, or setting it changes Evan's voice too.
+  That split is a build and is **not approved**.
+  Sizing note, checked in the code: the clip cache key already fingerprints the
+  voice (`voiceTag()` over voice id plus speed), so a second voice keeps its own
+  stored clips. Evan's clips are untouched and nothing already paid for is
+  re-bought.
+  **The concern I owe him, stated once and recorded as mine:** both candidates
+  are adult male narrator voices. Evan's own voice was chosen to sound like a
+  teenage boy, and Frank's own principle is that nonverbal teens just want a
+  voice. The in-app "Choose Voice" button offers only the phone's built-in
+  voices (`window.speechSynthesis`), NOT ElevenLabs, so whichever of these is
+  set becomes the single natural voice of every paying customer, including girls
+  and younger users, with no way for a family to change it. Letting families pick
+  the natural voice is the real fix and is a separate future build, not proposed.
