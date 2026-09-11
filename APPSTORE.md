@@ -56,9 +56,12 @@ deploy lanes changes.
 
 ### This week (enrollment lands Thursday or Friday)
 
-1. **Apple Developer Program**, Organization, $99. Have the D-U-N-S email
-   open; copy the legal name exactly as D&B spelled it. Expect the
-   verification phone call within about a week; answer unknown numbers.
+1. ~~**Apple Developer Program**, Organization, $99.~~ **DONE 10 Sep 2026.**
+   Enrolled and paid, order #W1949990147, one-year membership, Program
+   License Agreement accepted the same evening. No phone call was needed.
+   Next on the Apple side: App Store Connect access, then Agreements, Tax
+   and Banking with the W-9, then the Small Business Program (the 15%
+   commission tier, which must be enrolled BEFORE the first sale).
 2. **Google Play Console**, organization account, $25 one-time. Needs the
    D-U-N-S, LLC docs, address proof, your ID.
 3. **Codemagic**: sign up with the GitHub account, add this repo. Then the

@@ -965,3 +965,33 @@ a dated line saying it was reversed. Dates are the day it happened.
   that his edited wording becomes the master, his words replaced mine rather
   than the other way round. The note in the file records that the earlier line
   was mine, so nobody re-derives the contradiction later.
+
+- **10 Sep 2026. Apple Developer Program enrolled and paid. The longest-running
+  blocker in this project is gone.** Frank: "ENROLLED AND PAID. 10 Sep 2026,
+  order #W1949990147, EZ Voice LLC, Organization, $99/yr, one-year membership.
+  Program License Agreement accepted the same evening." Apple's confirmation
+  screen was shown to me and matches. No verification phone call was ever
+  needed, so that note is struck rather than left to worry anyone.
+  Corrected in place: LEDGER.md (two entries), APPSTORE.md step 1, and four
+  places in "EZvoxa Business and Product Handoff.docx" that listed enrollment
+  as a blocker. The handoff's risk table now names the Google Play account,
+  not Apple, as the store still closed.
+  Frank's order of operations, recorded as his: App Store Connect access,
+  Agreements/Tax/Banking plus the W-9, Small Business Program, native wrapper
+  build, backup and restore, licensing, dress rehearsal, on sale.
+- **10 Sep 2026. Frank's reading of the Program License Agreement, and the
+  constraint it puts on the store listing. Recorded, not acted on.** His two
+  items: Apple disclaims life-safety use with the indemnity on us, which bears
+  on the SOS path; and §3.3(F)(i) bars marketing location features for
+  emergency purposes while §3.3(F)(vi)(a) permits sharing location with
+  explicitly approved contacts. His conclusion: the listing should describe SOS
+  as one-tap location sharing with approved family contacts, not as an
+  emergency service. **His instruction: attorney review before the listing goes
+  live, not before now.** So nothing has been reworded.
+  This is HIS reading. The PLA cannot be opened from this environment, so I
+  have not verified either citation and have labeled it that way in LEDGER.
+  What I did add, because it is checkable and he will need it when the rewording
+  happens: the emergency framing is not only in the store listing. It is in the
+  app's own button and sent-screen copy, on the website, and in the review notes
+  in APPSTORE.md. Whoever does that pass has to do all four, or the listing will
+  say one thing and the product another.

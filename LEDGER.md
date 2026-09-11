@@ -22,12 +22,16 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
 ## Business status
 
 - **EZ Voice LLC** exists, Florida, with an EIN. Frank is sole owner/signer.
-- **Apple Developer Program enrollment submitted 4 Sep 2026, 4:05 PM**, as
-  Organization, through the Apple Developer app on Frank's iPhone.
-  Enrollment ID FA22WL2678. Identity verified in the app; work email
-  frank@ezvoxa.com. Apple reviews the organization first (phone call
-  expected) and emails a link to pay the $99 after approval. Not paid
-  yet, by design.
+- **Apple Developer Program: ENROLLED AND PAID (Frank, 10 Sep 2026).**
+  Order #W1949990147, EZ Voice LLC, Organization, $99 a year, one-year
+  membership. Program License Agreement accepted the same evening.
+  Activation details go to Frank's Yahoo address. Apple's confirmation screen
+  was shown to me and matches: "You're all set", order #W1949990147, "Apple
+  Developer Program - Membership for one year". Enrollment was submitted
+  4 Sep 2026 at 4:05 PM through the Apple Developer app, enrollment ID
+  FA22WL2678, work email frank@ezvoxa.com. **This supersedes the old "not
+  paid yet, by design" line and the "verification phone call expected"
+  note. Enrollment is done; nothing about Apple membership is pending.**
 - **Business bank account opened 4 Sep 2026.** Frank enrolls in the Apple
   Developer Program (Organization, $99) on 5 Sep, following EZvoxa Apple
   Developer Enrollment.docx, then Agreements, Tax, and Banking with this
@@ -36,9 +40,9 @@ editing DNS). Frank's Apple/GoDaddy logins are his; never ask for passwords.
   Registration.docx; Frank resubmitted on 4 Sep with those answers; no rejection by that evening.
 - **D-U-N-S number: arrived 1 Sep 2026** (email from D&B — Frank keeps it;
   the legal-name spelling in that email is the one to copy everywhere).
-- **Apple Developer Program**: enrolling as Organization, $99/yr, when money
-  lands Thursday or Friday (4–5 Sep 2026). Then: verification phone call
-  within ~a week — answer unknown numbers.
+- **Apple Developer Program**: DONE. Enrolled and paid 10 Sep 2026, see the
+  entry above. The old "verification phone call within a week" note is gone;
+  it never became a blocker.
 - **Google Play**: $25 one-time org account; needs the D-U-N-S, LLC docs,
   physical address proof, Frank's ID. Org accounts skip the 12-tester rule.
 - **Store plan** (audit of 26 Aug): template only, wrapped with Capacitor,
@@ -1449,3 +1453,24 @@ Pro is the talker alone and stays separate. No direct license needed.
   put the approved policy at `ezvoxa.com/privacy.html` and it is live there,
   verified from the live page. A correction was appended to `NOTICES.md` so the
   WEB thread does not act on a stale entry of mine.
+
+- **10 Sep 2026, Frank's reading of the Apple Program License Agreement, for
+  the store listing. HIS reading, not verified here: the PLA is not readable
+  from this environment.** Two items he flagged:
+  1. Apple disclaims life-safety use, and the indemnity sits with us. That
+     bears on the SOS path specifically.
+  2. §3.3(F)(i) bars marketing location features for emergency purposes,
+     while §3.3(F)(vi)(a) permits sharing location with explicitly approved
+     contacts.
+  **What follows for the listing (Frank):** describe SOS as one-tap location
+  sharing with approved family contacts, NOT as an emergency service.
+  **Attorney review before the listing goes live, not before now (Frank).**
+  Nothing is to be reworded on his account yet. When it is, the wording lives
+  on more than the store listing: the app's own button and sent-screen copy,
+  the website, and the review notes in APPSTORE.md all currently use
+  emergency language.
+- **10 Sep 2026, Frank's order of operations now that Apple is paid:**
+  App Store Connect access, then Agreements/Tax/Banking plus the W-9, then
+  the Small Business Program, then the native wrapper build, then backup and
+  restore, then licensing, then a dress rehearsal, then on sale.
+
