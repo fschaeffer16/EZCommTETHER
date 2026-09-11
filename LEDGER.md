@@ -1808,3 +1808,13 @@ Pro is the talker alone and stays separate. No direct license needed.
   nothing to try. Note the trap already recorded: stability is NOT part of the
   clip cache key, so old clips keep the old sound until re-dubbed, and the board
   would sound half-fixed.
+- **11 Sep 2026, guard against a misreading of the entries above.** Frank asked
+  "So you think Mike - that last one should be the app voice?" **No, and nothing
+  above says that.** The Mike renders were measured because he sent the SAME
+  voice twice at different settings, which is what made it possible to isolate
+  the settings effect. That is why Mike appears twice in the numbers. It is not
+  an endorsement. **I cannot hear any of these files and have not recommended
+  any voice on sound. Every voice ranking I have given is a rating of the
+  makers' written descriptions and is labeled as such.** The only thing the
+  measurements support is that the app's settings should be fixed before any
+  voice is judged.
