@@ -1540,3 +1540,26 @@ Pro is the talker alone and stays separate. No direct license needed.
   set becomes the single natural voice of every paying customer, including girls
   and younger users, with no way for a family to change it. Letting families pick
   the natural voice is the real fix and is a separate future build, not proposed.
+
+- **11 Sep 2026. Frank: "They do not have teenage voices." Checked, and that is
+  not right, with the evidence inside our own project.**
+  `api/demo-audio.js:16` carries `const DEFAULT_DEMO_VOICE =
+  'GVERRoGD1VgvkBmxamFb'; // "Zach" - clear, natural, teenage`, and line 14
+  calls it "the runner-up from the audition". So Frank auditioned voices once,
+  picked Quardell for Evan, and Zach placed second. Zach has been the website
+  demo's voice ever since.
+  Verified independently from ElevenLabs' own page for that id, 11 Sep 2026:
+  **"Zach AI Conversational Voice", "A natural Gen-Z voice that doesn't try too
+  hard."** Conversational, not narration, and young.
+  Also checked: the shared-voices API does expose an `age` filter, but it
+  answers `401 "You must be logged in to use filters"` from here, so the
+  library can only be searched by age while signed in. That is Frank's to do,
+  not mine.
+  **My recommendation, revised again and recorded as mine: Zach for the
+  product.** It is the only candidate that is both young and conversational, he
+  already liked it enough to place it second, it is not Evan's voice so the
+  template rule is satisfied, and it already speaks the website demo, so the
+  marketing and the product would sound like the same thing. James, Rodney and
+  Mike are all adult narrators by comparison; Mike is the best of those three.
+  Frank decides; this is an ear.
+
