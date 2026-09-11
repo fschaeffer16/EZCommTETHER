@@ -1,6 +1,10 @@
 # LEDGER — the running record Claude must not forget
 
-Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
+Apple Developer Program: ENROLLED AND PAID. 10 Sep 2026, order #W1949990147, EZ Voice LLC, Organization, $99/yr, one-year membership. Program License Agreement accepted the same evening. Activation details going to the Yahoo address. Supersedes the "not paid yet, by design" line and the "verification phone call expected" note — enrollment is done.
+
+Unblocks, in order: App Store Connect access → Agreements/Tax/Banking + W-9 → Small Business Program → native wrapper build → backup & restore → licensing → dress rehearsal → on sale.
+
+Two items from the PLA read, for later: (1) Apple disclaims life-safety use and the indemnity sits with us — relevant to the SOS path; (2) §3.3(F)(i) bars marketing location features for emergency purposes, while (F)(vi)(a) permits sharing location with explicitly approved contacts. Store listing should describe SOS as one-tap location sharing with approved family contacts, not as an emergency service. Attorney review before the listing goes live, not before now.Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
 My conversation memory gets condensed over time; this file does not. **Any
 standing fact or decision from a conversation gets written here in the same
 commit as the work, or it will eventually be forgotten.** Newest facts win;
