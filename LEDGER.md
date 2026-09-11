@@ -1500,3 +1500,25 @@ Pro is the talker alone and stays separate. No direct license needed.
      product speaks in is Frank's decision and he has not made it.**
   A customer who writes their own phrases still pays on first tap. That is the
   `voicePerFamilyMonth` line in the model, still an unmeasured placeholder.
+
+- **11 Sep 2026: Frank chose the product's natural voice. ElevenLabs voice ID
+  `kSvMZug5ZFM9sKGpLAei`**, sent as a link and then as the bare ID. From
+  ElevenLabs' own page for it: "James - Smooth, Steady, and Southern AI
+  Narration Voice", described there as calm, confident, subtly Southern, and
+  pitched for narration, brand voiceovers, explainer videos and audiobooks.
+  This answers the open question of what the template speaks in, so the product
+  no longer has to speak in Quardell, which belongs to Evan.
+  **Not yet in effect, and it cannot be until two things happen.** (1) The
+  variable lives in Vercel and Frank sets it; there is no Vercel access here.
+  (2) `api/speak.js` reads ONE `ELEVENLABS_VOICE_ID` for both apps, so setting
+  it today would change Evan's voice too. Splitting them is a build and is
+  **not approved yet**.
+  Checked while sizing that build: the clip cache key already includes a voice
+  fingerprint (`voiceTag()` over the voice id plus speed), so a second voice
+  gets its own stored clips automatically. Evan's existing clips are untouched
+  and nothing already paid for is re-bought.
+  Also checked, and it matters commercially: the in-app "Choose Voice" button
+  picks from the phone's OWN built-in voices (`window.speechSynthesis`), not
+  from ElevenLabs. So the natural voice is one voice for every paying customer,
+  and a family cannot change it. Raised with Frank 11 Sep; no build proposed
+  beyond the split.
