@@ -1782,3 +1782,29 @@ Pro is the talker alone and stays separate. No direct license needed.
   they stand. **Recommendation, mine: fix one settings set, ideally the app's
   own, and re-render every candidate at it. Otherwise the winner is a winner of
   a test the app will not reproduce.**
+- **11 Sep 2026. MEASURED PROOF that the settings, not just the voice, decide
+  how this sounds.** Frank sent Mike a second time at different settings, which
+  isolates the variable. Same voice, same script, speed factored out:
+  - Mike at stability 0.95 / similarity 0.66 -> **27.77 s** normalised
+  - Mike at stability 0.82 / similarity 0.72 -> **32.03 s** normalised
+  - **15.3% longer from the settings alone**, with speed already divided out.
+  All five renders, normalised to speed 1.00 (assumes linear inverse scaling of
+  the speed setting, my assumption; assumes one script, not established):
+  James 21.93 s, Hugh H 22.14 s, Mike 27.77 s, Mike again 32.03 s,
+  Shavant 34.19 s.
+  So the spread between the fastest and slowest VOICE is about 56%, and the
+  spread within ONE voice from settings alone is about 15%. Settings are roughly
+  a third of everything being heard. They are not a detail.
+  **Observed trend, two points on one voice plus one on another, so a trend and
+  not a law: lower stability produces slower delivery.** 0.95 fastest, 0.82
+  slower, 0.40 (Shavant) slowest of all.
+  **The consequence that matters: `api/speak.js` runs stability 0.50**, lower
+  than every render Frank has liked except Shavant's 0.40. Slower AND more
+  variable is the combination that sounds wrong on single words, which is
+  exactly the complaint. **That is my inference from these measurements, not a
+  sourced claim about what ElevenLabs' stability parameter does.**
+  **Recommendation, unchanged and now with evidence: set the app's settings
+  first, then judge voices.** Raising stability is one value in Vercel and costs
+  nothing to try. Note the trap already recorded: stability is NOT part of the
+  clip cache key, so old clips keep the old sound until re-dubbed, and the board
+  would sound half-fixed.
