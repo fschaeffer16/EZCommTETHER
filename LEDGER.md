@@ -1657,3 +1657,36 @@ Pro is the talker alone and stays separate. No direct license needed.
   replacing it on the website was NOT stated and has NOT been actioned. Ask
   before changing the demo narrator; that is live marketing.
   Not revisited since the first pass: Rodney `eY2VJs4Gi8QKG2RV01sS`.
+- **11 Sep 2026, Frank: "Rate the six you have there." My rating, recorded as
+  MINE and as a rating of the makers' own descriptions, NOT of the sound. I
+  cannot play audio. Where this disagrees with Frank's ear, his ear wins; he
+  has already overruled me once on Zach.**
+  Criteria used, in the order they matter for an AAC voice: (a) does the
+  description say conversational or say narration/advertisement, because the
+  voice has to sound like a person talking, not reading; (b) does it read as
+  short-phrase capable, since most output is two to eight words and long-form
+  voices need runway; (c) register, because "my arm hurts" is not a sales line
+  or an announcement; (d) age signal; (e) neutrality, since every customer
+  inherits whatever is chosen.
+  1. **Julius `VlUmeC1Uzj3NnwiVR9K9`** - the only description that names the
+     target directly: "a friendly, modern, human tone matters more than hype",
+     plus conversational, relaxed, natural, expressive, relatable.
+  2. **Andray `FsK9b8Cv2pGkFUtfpOyM`** - youthful, encouraging, honest, modeled
+     on a real person. Marked down only because it is filed as an advertisement
+     voice and "urban comedy main character" suggests performance energy.
+  3. **Jake `hxPRa8HUuKYsm1kiWDEi`** - youthful and relatable, but "energetic"
+     and "captivates with energy" is a creator register. Energy is wrong for
+     asking to go to the bathroom.
+  4. **Mike `ewxUvnyvvOehYjKjUVKC`** - conversational, warm, sincere, but
+     "deep... authoritative... commanding attention" is the wrong register for a
+     teenager asking for something.
+  5. **Hugh H `8n9Xb8GOqw6yNVOQ6ewr`** - explicitly versatile and includes
+     casual conversation, and the most neutral of the six, which suits a voice
+     every customer inherits. No age signal at all, and filed as advertisement.
+  6. **James `kSvMZug5ZFM9sKGpLAei`** - narration first, and the Southern
+     marking is the one trait every customer carries whether it fits them or
+     not. **Frank rated this one highly by ear, so this placement is the
+     likeliest place my rating is simply wrong.**
+  What this rating cannot see: timbre, pacing, how each handles a two-word
+  phrase, and whether any sounds synthetic on short input. Those decide it and
+  only listening settles them.
