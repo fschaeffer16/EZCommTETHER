@@ -1582,3 +1582,14 @@ Pro is the talker alone and stays separate. No direct license needed.
   `hxPRa8HUuKYsm1kiWDEi`. Out: Zach `GVERRoGD1VgvkBmxamFb` (his ruling; stays
   the website demo voice), Rodney `eY2VJs4Gi8QKG2RV01sS` (not mentioned since
   the first pass).
+- **11 Sep 2026, fifth candidate: `FsK9b8Cv2pGkFUtfpOyM`** - "Andray AI
+  Advertisement Voice". From ElevenLabs' own page, in its creator's words:
+  "modeled after my own real-life personal voice... encouraging and youthful,
+  as well as honest and quick witted...almost like your favorite main character
+  from an Urban Comedy." The second candidate whose page calls it youthful.
+  No recommendation attached.
+  Product voice shortlist, all open: Mike `ewxUvnyvvOehYjKjUVKC`, James
+  `kSvMZug5ZFM9sKGpLAei`, Jake `hxPRa8HUuKYsm1kiWDEi`, Andray
+  `FsK9b8Cv2pGkFUtfpOyM`. Out: Zach `GVERRoGD1VgvkBmxamFb` (Frank's ruling,
+  stays the website demo voice). Not revisited since the first pass: Rodney
+  `eY2VJs4Gi8QKG2RV01sS`.
