@@ -1619,19 +1619,21 @@ Pro is the talker alone and stays separate. No direct license needed.
   mistaken for the only consideration.
 - **11 Sep 2026: Frank sent a link and a bare ID that DO NOT MATCH.** Every
   earlier pair matched. Both were looked up; both are real and they are
-  different voices. **Which he meant is not established and must not be
-  guessed.**
+  different voices. **RESOLVED by Frank the same evening: he re-sent both the
+  link and the bare id as `8n9Xb8GOqw6yNVOQ6ewr`, and said plainly "the
+  singaporean male was a mistake". Hugh H is the candidate.**
   - `8n9Xb8GOqw6yNVOQ6ewr` (the link) - "Hugh H AI Advertisement Voice".
     "Versatile voice with a natural, modern delivery, equally suited for
     real-life narration, fiction, technical content, serious oratory, and
     casual conversation."
   - `aSXZu6bgEOS8MXVRzjPi` (the bare ID) - "James AI Conversational Voice".
     "A young Singaporean male voice. Great for conversations."
-  **NAME COLLISION, and it is the dangerous kind.** There are now TWO different
+  **NAME COLLISION, kept on record though one side is now out.** Two different
   voices called James on this list:
   - James `kSvMZug5ZFM9sKGpLAei` - Southern narration voice, the 11 Sep
     candidate Frank rated above Zach.
-  - James `aSXZu6bgEOS8MXVRzjPi` - young Singaporean conversational voice, new.
+  - James `aSXZu6bgEOS8MXVRzjPi` - young Singaporean conversational voice. NOT a
+    candidate; a mistyped id, confirmed a mistake by Frank 11 Sep.
   They sound nothing alike. **Never write "James" in a decision, a commit, or a
   Vercel variable without the full ID beside it.** Anyone reading "use James"
   later has a coin flip between a Southern narrator and a young Singaporean
@@ -1645,6 +1647,13 @@ Pro is the talker alone and stays separate. No direct license needed.
   - Hugh H `8n9Xb8GOqw6yNVOQ6ewr` - versatile, natural, modern. **Frank has not
     said whether this one is for the product or for Evan's app.**
   For Evan's app, unconfirmed: Julius `VlUmeC1Uzj3NnwiVR9K9`.
-  Out: Zach `GVERRoGD1VgvkBmxamFb` (Frank's ruling; stays the website demo
-  voice), James `aSXZu6bgEOS8MXVRzjPi` (mistyped id, never a candidate).
+  **Out, on Frank's word 11 Sep ("Get rid of zach and the singaporean male was
+  a mistake"):** Zach `GVERRoGD1VgvkBmxamFb` and James `aSXZu6bgEOS8MXVRzjPi`.
+  Neither is a candidate for either app. Do not re-suggest them.
+  **Open question this leaves, flagged not assumed:** Zach is still the LIVE
+  website demo narrator, hard-coded as `DEFAULT_DEMO_VOICE` in
+  `api/demo-audio.js:16` and used by the guided demo on ezvoxa.com. "Get rid of
+  zach" plainly removes it as a voice candidate. Whether it also means
+  replacing it on the website was NOT stated and has NOT been actioned. Ask
+  before changing the demo narrator; that is live marketing.
   Not revisited since the first pass: Rodney `eY2VJs4Gi8QKG2RV01sS`.
