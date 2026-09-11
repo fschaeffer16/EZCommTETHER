@@ -1757,3 +1757,28 @@ Pro is the talker alone and stays separate. No direct license needed.
   it); changing stability, similarity boost or the model does NOT, because those
   are not in the key, so clips made before such a change would keep the OLD
   sound until re-dubbed. That asymmetry is a trap and is worth a code fix.
+- **11 Sep 2026, fourth render: Shavant, "Smooth, Clear & Resonant"**, settings
+  in the filename `pvc_sp100_s40_sb75_v3`, so speed 1.00, stability 0.40,
+  similarity 0.75, model v3. Voice id not supplied by Frank; **the id is still
+  needed before this one can be used.**
+  Two things measured, both from the MPEG frame headers:
+  1. **Shavant is the slowest talker of the four by a wide margin, and it is not
+     close.** Raw duration 34.19 s, but it was rendered at speed 1.00 while the
+     other three were at 0.88. Normalising all four to speed 1.00 (assuming the
+     speed setting scales duration inversely and linearly, which is my
+     assumption, not a documented fact, and assuming all four read the same
+     script, which is not established): James about 21.9 s, Hugh H about 22.1 s,
+     Mike about 27.8 s, **Shavant 34.2 s**. That is roughly 56% longer than
+     James for the same words.
+  2. **Shavant's render settings are the closest yet to what the app actually
+     sends.** Similarity 0.75 is an exact match, stability 0.40 against the
+     app's 0.50, speed 1.00 against 0.92. Only the model still differs, v3
+     against `eleven_multilingual_v2`. So of the four, this render is the least
+     misleading preview of how the app would really sound.
+  **Method note, recorded because it is now affecting the decision:** Frank has
+  changed the render settings between auditions (sp88/s95/sb66 for the first
+  three, sp100/s40/sb75 for this one). That means the four files differ by
+  settings as much as by voice, and cannot be compared against each other as
+  they stand. **Recommendation, mine: fix one settings set, ideally the app's
+  own, and re-render every candidate at it. Otherwise the winner is a winner of
+  a test the app will not reproduce.**
