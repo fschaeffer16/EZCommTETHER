@@ -1,6 +1,10 @@
 # LEDGER — the running record Claude must not forget
 
-Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
+Apple Developer Program: ENROLLED AND PAID. 10 Sep 2026, order #W1949990147, EZ Voice LLC, Organization, $99/yr, one-year membership. Program License Agreement accepted the same evening. Activation details going to the Yahoo address. Supersedes the "not paid yet, by design" line and the "verification phone call expected" note — enrollment is done.
+
+Unblocks, in order: App Store Connect access → Agreements/Tax/Banking + W-9 → Small Business Program → native wrapper build → backup & restore → licensing → dress rehearsal → on sale.
+
+Two items from the PLA read, for later: (1) Apple disclaims life-safety use and the indemnity sits with us — relevant to the SOS path; (2) §3.3(F)(i) bars marketing location features for emergency purposes, while (F)(vi)(a) permits sharing location with explicitly approved contacts. Store listing should describe SOS as one-tap location sharing with approved family contacts, not as an emergency service. Attorney review before the listing goes live, not before now.Frank asked for this on 1 Sep 2026 after Claude forgot which domains he owns.
 My conversation memory gets condensed over time; this file does not. **Any
 standing fact or decision from a conversation gets written here in the same
 commit as the work, or it will eventually be forgotten.** Newest facts win;
@@ -1419,6 +1423,18 @@ Pro is the talker alone and stays separate. No direct license needed.
   `privacy.html` is unchanged and still serves at
   `ez-comm-tether.vercel.app/privacy.html`; if it is edited, the website copy
   must be re-copied or the two will diverge again.
+- **Which privacy page wins: `privacy.html` in EZCommTETHER is CANONICAL; the
+  copy in the website repo is a MIRROR.** The approved 2 Sep wording is the
+  legal artifact and it lives here. The website copy carries the same wording
+  inside the site's own chrome (topbar, site.css, site footer), plus a clearly
+  marked "This website" section below the policy covering ezvoxa.com's
+  page-view counting, which the app policy does not describe. Frank approved
+  that section's wording 10 Sep 2026 and it is live.
+  If the two ever disagree on the *policy* text, this file wins
+  and the mirror is wrong: re-copy the 9 approved sections from here. Nothing
+  keeps them in sync automatically, so an edit here is not live at
+  `ezvoxa.com/privacy.html` until someone copies it over. The website-only
+  section is the one part that is deliberately not in this repo's copy.
 - **OPEN, for Frank, 10 Sep 2026: the website's page-view counting is no
   longer disclosed anywhere.** That disclosure lived only in the website
   placeholder page that was just replaced. The approved app policy now at
