@@ -1474,3 +1474,29 @@ Pro is the talker alone and stays separate. No direct license needed.
   verified from the live page. A correction was appended to `NOTICES.md` so the
   WEB thread does not act on a stale entry of mine.
 
+
+- **10 Sep 2026, the AI voice and what pre-caching actually needs. Answering
+  Frank's "if I have to hit buttons and record or whatever, tell me."**
+  He does not have to record anything, and does not have to tap through the
+  app. The caching is built: a phrase costs ElevenLabs once, ever. Every clip
+  is kept in the Family Sync store under the voice and the exact words, and the
+  next request for those words from any phone on any day is served from there.
+  `dub.html` (family password) speaks a whole phrase list into that store ahead
+  of time, in batches of six, skipping anything already stored. Run once, and
+  again after adding buttons or changing the voice.
+  Health check, run 10 Sep 2026 against the family lane with a valid origin:
+  `{"ok":true,"configured":true,"v":"f25a6407"}`. So the key and voice are set
+  there. Vercel's variables themselves cannot be read from here.
+  **Two gaps found the same day, both Monday work, neither one approved:**
+  1. `dub.html` loads `index.html` only, and `demo.html` has NO `dubPhrases()`
+     function. So the template we sell has never had its phrases pre-cached. An
+     App Store reviewer tapping around, and every new customer, bills
+     ElevenLabs on each new phrase.
+  2. `api/speak.js` reads ONE `ELEVENLABS_VOICE_ID` with no per-app override,
+     so on any single deployment the product speaks in the same voice as Evan's
+     app. This file records that Quardell belongs to Evan and the demo must not
+     speak in it. Whether the customer lane sets a different value cannot be
+     checked from here, because there is no Vercel access. **Which voice the
+     product speaks in is Frank's decision and he has not made it.**
+  A customer who writes their own phrases still pays on first tap. That is the
+  `voicePerFamilyMonth` line in the model, still an unmeasured placeholder.
