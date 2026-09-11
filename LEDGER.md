@@ -1570,3 +1570,15 @@ Pro is the talker alone and stays separate. No direct license needed.
   My recommendation of Zach is overruled and stands only as a record of what I
   argued and why. The age point was raised twice and is closed; do not reopen
   it. Zach remains the website demo's voice and nothing about that changes.
+- **11 Sep 2026, fourth candidate: `hxPRa8HUuKYsm1kiWDEi`** - "Jake -
+  Informative and Energetic AI Informative Educational Voice". From
+  ElevenLabs' own page: "A youthful, dynamic American male voice that
+  captivates with energy and relatability", pitched at podcasts, interactive
+  storytelling, short-form content, YouTube and how-to guides. Recorded as the
+  source describes it: it is the first candidate whose own page calls it
+  youthful. No recommendation attached; Frank is listening and the ear is his.
+  Running shortlist for the product voice, all still open: Mike
+  `ewxUvnyvvOehYjKjUVKC`, James `kSvMZug5ZFM9sKGpLAei`, Jake
+  `hxPRa8HUuKYsm1kiWDEi`. Out: Zach `GVERRoGD1VgvkBmxamFb` (his ruling; stays
+  the website demo voice), Rodney `eY2VJs4Gi8QKG2RV01sS` (not mentioned since
+  the first pass).
