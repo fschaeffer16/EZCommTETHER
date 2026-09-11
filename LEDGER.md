@@ -1617,3 +1617,22 @@ Pro is the talker alone and stays separate. No direct license needed.
   changing it changes how he sounds to himself and to everyone around him. That
   is Frank's call about his own son, recorded so the cost note above is not
   mistaken for the only consideration.
+- **11 Sep 2026: Frank sent a link and a bare ID that DO NOT MATCH.** Every
+  earlier pair matched. Both were looked up; both are real and they are
+  different voices. **Which he meant is not established and must not be
+  guessed.**
+  - `8n9Xb8GOqw6yNVOQ6ewr` (the link) - "Hugh H AI Advertisement Voice".
+    "Versatile voice with a natural, modern delivery, equally suited for
+    real-life narration, fiction, technical content, serious oratory, and
+    casual conversation."
+  - `aSXZu6bgEOS8MXVRzjPi` (the bare ID) - "James AI Conversational Voice".
+    "A young Singaporean male voice. Great for conversations."
+  **NAME COLLISION, and it is the dangerous kind.** There are now TWO different
+  voices called James on this list:
+  - James `kSvMZug5ZFM9sKGpLAei` - Southern narration voice, the 11 Sep
+    candidate Frank rated above Zach.
+  - James `aSXZu6bgEOS8MXVRzjPi` - young Singaporean conversational voice, new.
+  They sound nothing alike. **Never write "James" in a decision, a commit, or a
+  Vercel variable without the full ID beside it.** Anyone reading "use James"
+  later has a coin flip between a Southern narrator and a young Singaporean
+  voice, and the mistake would only surface after customers heard it.
